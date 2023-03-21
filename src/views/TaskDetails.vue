@@ -1,9 +1,8 @@
 <template>
   <section class="task-details main">
-    <!-- <RouterLink :to="'/task'" class="btn">
-      <span>X</span>
-    </RouterLink> -->
-    <header class="task-cover">x</header>
+    <header class="task-cover">
+      <RouterLink :to="'/board'" class="btn">X </RouterLink>
+    </header>
     <button @click="test()">test</button>
     <div class="task-container">
       <h2 contenteditable="true" @input="updateTitle">
@@ -48,6 +47,11 @@ export default {
       userIsEditing: false,
     }
   },
+  created() {
+    const { taskId } = this.$route.params
+    // console.log(task)
+    this.task = this.$store.getters.emptyTask
+  },
   methods: {
     test() {
       console.log(this.task)
@@ -55,12 +59,15 @@ export default {
     updateTitle(ev) {
       this.task.title = ev.target.innerText
     },
+    async saveTask() {
+      let task = { ...this.task }
+      await this.$store.dispatch({ type: 'saveTask', task })
+    },
   },
-  created() {
-    const { taskId } = this.$route.params
-    // console.log(task)
-    this.task = this.$store.getters.emptyTask
+  unmounted() {
+    this.saveTask()
   },
+
   //   watch: {
   //     '$route.params': {
   //       handler() {
