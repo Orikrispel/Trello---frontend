@@ -1,0 +1,15 @@
+.group-wrapper {
+  background-color: $secondary-clr6;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin: 0 4px;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 272px;
+
+  &:first-child {
+    margin-left: 12px;
+  }
+
+}

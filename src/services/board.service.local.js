@@ -3,22 +3,28 @@ import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'board'
-// _createBoard()
 export const boardService = {
   query,
   getById,
   save,
   remove,
   getEmptyBoard,
+  getEmptyGroup,
+  getEmptyTask,
   addBoardMsg,
+
+  queryGroups,
+  getGroupById,
+  saveGroup,
+  removeGroup,
 }
 window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
   var boards = await storageService.query(STORAGE_KEY)
-  //   if (!boards || !boards.length) {
-  //     _createBoard()
-  //   }
+  if (!boards || !boards.length) {
+    _createBoard()
+  }
 
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
@@ -83,6 +89,45 @@ function getEmptyBoard(
     createdBy,
     groups,
   }
+}
+
+// GROUPS:
+
+async function queryGroups(boardId, filterBy = { txt: '' }) {
+  let boardWithGroups = await getById(boardId)
+  let groups = boardWithGroups.groups
+  if (!groups) return
+
+  if (filterBy.txt) {
+    const regex = new RegExp(filterBy.txt, 'i')
+    groups = groups.filter(
+      (group) => regex.test(group.vendor) || regex.test(group.description)
+    )
+  }
+  // if (filterBy.price) {
+  //   groups = groups.filter((group) => group.price <= filterBy.price)
+  // }
+  return groups
+}
+
+function getGroupById(boardId) {
+  return storageService.get(STORAGE_KEY, boardId)
+}
+
+async function removeGroup(boardId) {
+  await storageService.remove(STORAGE_KEY, boardId)
+}
+
+async function saveGroup(group) {
+  var savedGroup
+  if (group._id) {
+    savedGroup = await storageService.put(STORAGE_KEY, group)
+  } else {
+    // Later, owner is set by the backend
+    group.owner = userService.getLoggedinUser()
+    savedGroup = await storageService.post(STORAGE_KEY, group)
+  }
+  return savedGroup
 }
 
 function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {

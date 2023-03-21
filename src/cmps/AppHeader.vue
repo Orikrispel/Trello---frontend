@@ -5,7 +5,6 @@
         <span role="img" aria-label="logo">Trello</span>
       </RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
-      <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
     </nav>
     <section class="loggedin-user" v-if="loggedInUser">

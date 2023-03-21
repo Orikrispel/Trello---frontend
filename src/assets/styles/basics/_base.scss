@@ -1,25 +1,25 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 ::selection {
-    background-color: $primary-clr1;
-    color: $primary-clr2;
+  background-color: $primary-clr1;
+  color: $primary-clr2;
 }
 
 html {
-    font-family: 'Segoe UI Regular';
-    line-height: 1.6;
-    color: $primary-clr2;
+  font-family: 'Segoe UI Regular';
+  line-height: 1.6;
+  color: $primary-clr2;
 }
 
 body {
-    font-size: rem(18px);
-    margin: 0;
+  font-size: rem(18px);
+  margin: 0;
 }
 
 .main {
-    height: calc(100vh - $header-height);
+  height: calc(100vh - $header-height);
 }
 
 h1,
@@ -28,22 +28,23 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 0.6em;
-    line-height: 1;
+  margin: 0 0 0.6em;
+  line-height: 1;
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 p {
-    margin: 0 0 1em;
+  margin: 0 0 1em;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
