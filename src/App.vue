@@ -1,6 +1,5 @@
 <template>
   <section>
-    <h1>ori and ori are the best</h1>
     <AppHeader />
     <RouterView />
     <UserMsg />
