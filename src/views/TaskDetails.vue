@@ -7,7 +7,6 @@
       <h1>
         {{ task.title }}
       </h1>
-      <h3>{{ task.price }}$</h3>
       <p>{{ task.description }}</p>
       <ul v-if="task.comments" class="clean-list">
         <li v-for="(comment, idx) in task.comments" :key="idx">

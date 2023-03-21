@@ -30,6 +30,7 @@ export function getActionAddBoardMsg(boardId) {
 export const boardStore = {
   state: {
     boards: [],
+    currTask: null,
   },
   getters: {
     boards({ boards }) {

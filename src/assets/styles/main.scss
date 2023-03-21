@@ -1,17 +1,18 @@
 // Setup
-@import "setup/vars";
-@import "setup/functions";
-@import "setup/mixins";
-@import "setup/typography";
+@import 'setup/vars';
+@import 'setup/functions';
+@import 'setup/mixins';
+@import 'setup/typography';
 
 // Basics
-@import "basics/helpers";
-@import "basics/layout";
-@import "basics/base";
-@import "basics/links";
-@import "basics/forms";
+@import 'basics/helpers';
+@import 'basics/layout';
+@import 'basics/base';
+@import 'basics/links';
+@import 'basics/forms';
 
 // Components
-@import "cmps/AppHeader";
-@import "cmps/UserMsg";
-@import "cmps/BoardList";
+@import 'cmps/AppHeader';
+@import 'cmps/UserMsg';
+@import 'cmps/BoardList';
+@import 'cmps/TaskDetails';
