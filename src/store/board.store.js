@@ -31,10 +31,14 @@ export const boardStore = {
   state: {
     boards: [],
     currTask: null,
+    groups: [],
   },
   getters: {
     boards({ boards }) {
       return boards
+    },
+    groups({ groups }) {
+      return groups
     },
     emptyBoard() {
       return boardService.getEmptyBoard()
@@ -111,6 +115,15 @@ export const boardStore = {
         context.commit({ type: 'addBoardMsg', boardId, msg })
       } catch (err) {
         console.log('boardStore: Error in addBoardMsg', err)
+        throw err
+      }
+    },
+    async loadGroups(context) {
+      try {
+        const groups = await boardService.query()
+        context.commit({ type: 'setBoards', boards })
+      } catch (err) {
+        console.log('boardStore: Error in loadBoards', err)
         throw err
       }
     },
