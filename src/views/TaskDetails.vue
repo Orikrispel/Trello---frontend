@@ -4,12 +4,15 @@
       <span>X</span>
     </RouterLink> -->
     <header class="task-cover">x</header>
+    <button @click="test()">test</button>
     <div class="task-container">
-      <h1>
-        {{ task.title }}
-      </h1>
+      <h2 contenteditable="true" @input="updateTitle">
+        {{ task.title ? task.title : 'new title' }}
+      </h2>
+
       <form @submit.prevent="handleDesc">
-        <textarea v-model="task.description"></textarea>
+        <p v-if="!userIsEditing"></p>
+        <textarea v-if="userIsEditing" v-model="task.description"></textarea>
       </form>
 
       <aside class="btns-container">
@@ -36,7 +39,16 @@ export default {
   data() {
     return {
       task: {},
+      userIsEditing: false,
     }
+  },
+  methods: {
+    test() {
+      console.log(this.task)
+    },
+    updateTitle(ev) {
+      this.task.title = ev.target.innerText
+    },
   },
   created() {
     const { taskId } = this.$route.params

@@ -9,6 +9,12 @@
     display: grid;
     min-height: 100%;
     grid-template-columns: 1em 2em 1fr 4em 1em;
+
+    h2 {
+      grid-column: 2/4;
+      justify-self: center;
+      align-self: center;
+    }
     .btns-container {
       grid-column: 4;
       button {
