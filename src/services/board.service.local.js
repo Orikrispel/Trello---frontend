@@ -96,8 +96,7 @@ function getEmptyBoard(
 async function queryGroups(boardId, filterBy = { txt: '' }) {
   let boardWithGroups = await getById(boardId)
   let groups = boardWithGroups.groups
-  console.log('groups', groups)
-  if (groups) return
+  if (!groups) return
 
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
@@ -108,7 +107,6 @@ async function queryGroups(boardId, filterBy = { txt: '' }) {
   // if (filterBy.price) {
   //   groups = groups.filter((group) => group.price <= filterBy.price)
   // }
-  console.log('groups', groups)
   return groups
 }
 

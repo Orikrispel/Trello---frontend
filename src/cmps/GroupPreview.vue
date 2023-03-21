@@ -1,11 +1,9 @@
 <template>
-  <section class="main">
-    <ul class="board-list">
-      <li v-for="group in groups" :key="groud._id">
-      </li>
-    </ul>
+  <article class="group-wrapper clean-list">
+    <p>{{ group.title }}</p>
+    <pre class="fs12">{{ group }}</pre>
     <hr />
-  </section>
+  </article>
 </template>
 
 <script>
@@ -13,6 +11,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
 export default {
+  props: ["group"],
   data() {
     return {
       boardToAdd: boardService.getEmptyBoard()
