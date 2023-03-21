@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { taskService } from '../services/task.service.js'
 export default {
   name: 'TaskDetails',
   data() {
@@ -35,21 +34,17 @@ export default {
   },
   created() {
     const { taskId } = this.$route.params
-    taskService.get(taskId).then((task) => {
-      console.log(task)
-      this.task = task
-    })
+    // console.log(task)
+    this.task = this.$store.getters.emptyTask
   },
-  watch: {
-    '$route.params': {
-      handler() {
-        const { taskId } = this.$route.params
-        taskService.get(taskId).then((task) => {
-          this.task = task
-        })
-      },
-      immediate: true,
-    },
-  },
+  //   watch: {
+  //     '$route.params': {
+  //       handler() {
+  //         const { taskId } = this.$route.params
+  //         this.task = task
+  //       },
+  //       immediate: true,
+  //     },
+  //   },
 }
 </script>

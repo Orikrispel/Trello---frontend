@@ -35,6 +35,15 @@ export const boardStore = {
     boards({ boards }) {
       return boards
     },
+    emptyBoard() {
+      return boardService.getEmptyBoard()
+    },
+    emptyGroup() {
+      return boardService.getEmptyGroup()
+    },
+    emptyTask() {
+      return boardService.getEmptyTask()
+    },
   },
   mutations: {
     setBoards(state, { boards }) {
