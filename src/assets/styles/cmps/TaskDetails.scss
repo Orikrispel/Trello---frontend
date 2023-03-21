@@ -1,0 +1,33 @@
+.task-details {
+  background-color: $secondary-clr3;
+
+  .task-cover {
+    background-color: $secondary-clr4;
+  }
+
+  .task-container {
+    display: grid;
+    min-height: 100%;
+    grid-template-columns: 1em 2em 1fr 4em 1em;
+    .btns-container {
+      grid-column: 4;
+      button {
+        background-color: $secondary-clr5;
+        color: $fontColor1;
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    form {
+      grid-column: 3;
+      width: 100%;
+      justify-self: center;
+
+      textarea {
+        width: 100%;
+        min-height: 30%;
+      }
+    }
+  }
+}

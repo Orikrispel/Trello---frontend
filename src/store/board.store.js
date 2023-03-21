@@ -55,6 +55,7 @@ export function getActionAddGroupMsg(groupId) {
 export const boardStore = {
   state: {
     boards: [],
+    currTask: null,
     groups: [],
   },
   getters: {

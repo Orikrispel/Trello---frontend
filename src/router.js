@@ -29,6 +29,11 @@ const routes = [
     component: BoardDetails,
   },
   {
+    path: '/task/:taskId?',
+    name: 'TaskDetails',
+    component: TaskDetails,
+  },
+  {
     path: '/login',
     name: 'LoginSignup',
     component: LoginSignup,
