@@ -51,6 +51,31 @@ export function getActionAddGroupMsg(groupId) {
     txt: 'Stam txt',
   }
 }
+export function getActionRemoveTask(taskId) {
+  return {
+    type: 'removeTask',
+    taskId,
+  }
+}
+export function getActionAddTask(task) {
+  return {
+    type: 'addTask',
+    task,
+  }
+}
+export function getActionUpdateTask(task) {
+  return {
+    type: 'updateTask',
+    task,
+  }
+}
+export function getActionAddTaskMsg(taskId) {
+  return {
+    type: 'addTaskMsg',
+    taskId,
+    txt: 'Stam txt',
+  }
+}
 
 export const boardStore = {
   state: {
@@ -60,7 +85,6 @@ export const boardStore = {
   },
   getters: {
     boards({ boards }) {
-      console.log('BOARDS', boards)
       return boards
     },
     groups({ groups }) {
@@ -77,6 +101,8 @@ export const boardStore = {
     },
   },
   mutations: {
+    // BOARDS
+
     setBoards(state, { boards }) {
       state.boards = boards
     },
@@ -95,6 +121,9 @@ export const boardStore = {
       if (!board.msgs) board.msgs = []
       board.msgs.push(msg)
     },
+
+    // GROUPS
+
     setGroups(state, { groups }) {
       state.groups = groups
     },
@@ -107,6 +136,10 @@ export const boardStore = {
     },
     removeGroup(state, { groupId }) {
       state.groups = state.groups.filter((group) => group._id !== groupId)
+    },
+    //  TASKS
+    savedTask(state, { task }) {
+      state.currGroup.tasks.push(task)
     },
   },
   actions: {
@@ -133,7 +166,6 @@ export const boardStore = {
     async loadBoards(context) {
       try {
         const boards = await boardService.query()
-        console.log('boards', boards)
         context.commit({ type: 'setBoards', boards })
       } catch (err) {
         console.log('boardStore: Error in loadBoards', err)
@@ -194,6 +226,14 @@ export const boardStore = {
       } catch (err) {
         console.log('boardStore: Error in removeGroup', err)
         throw err
+      }
+    },
+    async saveTask({ commit }, { task }) {
+      try {
+        let savedTask = await boardService.save(task)
+        commit(getActionAddTask(savedTask))
+      } catch (err) {
+        console.log('could not save task at the moment')
       }
     },
   },
