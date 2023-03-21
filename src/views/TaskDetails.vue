@@ -11,8 +11,14 @@
       </h2>
 
       <form @submit.prevent="handleDesc">
-        <p v-if="!userIsEditing"></p>
-        <textarea v-if="userIsEditing" v-model="task.description"></textarea>
+        <button v-if="!userIsEditing" @click="userIsEditing = !userIsEditing">
+          Edit
+        </button>
+        <p v-if="!userIsEditing">{{ task.description }}</p>
+        <textarea
+          v-if="userIsEditing"
+          v-model="task.description"
+          @blur="userIsEditing = !userIsEditing"></textarea>
       </form>
 
       <aside class="btns-container">
