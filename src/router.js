@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from './views/Home.vue'
-import Chat from './views/Chat.vue'
 import BoardIndex from './views/BoardIndex.vue'
+import BoardDetails from './views/BoardDetails.vue'
 import LoginSignup from './views/LoginSignup.vue'
 import UserDetails from './views/UserDetails.vue'
 
@@ -18,9 +18,9 @@ const routes = [
     component: BoardIndex
   },
   {
-    path: '/chat',
-    name: 'Chat',
-    component: Chat
+    path: '/board/:id?',
+    name: 'Groups',
+    component: BoardDetails
   },
   {
     path: '/login',
