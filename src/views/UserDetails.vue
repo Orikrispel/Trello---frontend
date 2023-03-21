@@ -4,14 +4,6 @@
     <h2 v-if="isMe">Its me</h2>
     <h3>{{ user.username }} score: {{ user.score }}</h3>
     <img style="max-width: 200px;" :src="user.imgUrl" />
-    <ul>
-      <li v-for="review in user.givenReviews" :key="review._id">
-        {{ review.txt }}
-        <RouterLink :to="`/user/${review.aboutUser._id}`">
-          About {{ review.aboutUser.fullname }}
-        </RouterLink>
-      </li>
-    </ul>
 
     <details>
       <summary>Full JSON</summary>
@@ -36,8 +28,8 @@ export default {
   watch: {
     userId: {
       handler() {
-        if(this.userId){
-            this.$store.dispatch({ type: "loadAndWatchUser", userId: this.userId })
+        if (this.userId) {
+          this.$store.dispatch({ type: "loadAndWatchUser", userId: this.userId })
         }
       },
       immediate: true,

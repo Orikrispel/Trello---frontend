@@ -5,7 +5,6 @@
         <span role="img" aria-label="logo">🙏</span>
       </RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
-      <RouterLink to="/review">Reviews</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
     </nav>
