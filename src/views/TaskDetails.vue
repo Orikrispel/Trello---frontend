@@ -1,19 +1,25 @@
 <template>
   <section class="task-details">
-    <RouterLink :to="'/task'" class="btn">
+    <!-- <RouterLink :to="'/task'" class="btn">
       <span>X</span>
-    </RouterLink>
+    </RouterLink> -->
     <div class="task-container">
       <h1>
-        {{ task.name }}
-        <small>{{ task.inStock ? 'available' : 'out of stock' }}</small>
+        {{ task.title }}
       </h1>
       <h3>{{ task.price }}$</h3>
-      <ul class="clean-list">
-        <li v-for="(label, idx) in task.labels" :key="idx">
-          {{ label }}
+      <p>{{ task.description }}</p>
+      <ul v-if="task.comments" class="clean-list">
+        <li v-for="(comment, idx) in task.comments" :key="idx">
+          {{ comment }}
         </li>
       </ul>
+      <aside class="btns-container">
+        <button>Labels</button>
+        <button>Checklist</button>
+        <button>Dates</button>
+        <button>Location</button>
+      </aside>
     </div>
   </section>
 </template>
