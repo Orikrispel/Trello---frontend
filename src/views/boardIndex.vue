@@ -1,25 +1,9 @@
 <template>
-  <div class="container home">
-    <ul class="board-list">
-      <li v-for="board in boards" :key="board._id">
-        <p>
-          {{ board.title }}
-        </p>
-        <p>
-          ${{ board.price?.toLocaleString() }}
-        </p>
-        <button @click="removeBoard(board._id)">x</button>
-        <button @click="updateBoard(board)">Update</button>
-        <hr />
-        <button @click="addBoardMsg(board._id)">Add board msg</button>
-        <button @click="printBoardToConsole(board)">Print msgs to console</button>
-
-      </li>
-    </ul>
-    <hr />
+  <div class="index-container container home">
+    <BoardList @removeBoard="removeBoard" />
     <form @submit.prevent="addBoard()">
       <h2>Add board</h2>
-      <input type="text" v-model="boardToAdd.title" />
+      <input type="text" v-model="boardToAdd.title" placeholder="enter title...." />
       <button>Save</button>
     </form>
   </div>
@@ -29,6 +13,7 @@
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
+import BoardList from '../cmps/BoardList.vue'
 export default {
   data() {
     return {
@@ -39,9 +24,7 @@ export default {
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
-    boards() {
-      return this.$store.getters.boards
-    }
+
   },
   created() {
     this.$store.dispatch({ type: 'loadBoards' })
@@ -91,6 +74,9 @@ export default {
     printBoardToConsole(board) {
       console.log('Board msgs:', board.msgs)
     }
+  },
+  components: {
+    BoardList,
   }
 
 

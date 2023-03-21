@@ -60,6 +60,7 @@ export const boardStore = {
   },
   getters: {
     boards({ boards }) {
+      console.log('BOARDS', boards)
       return boards
     },
     groups({ groups }) {
@@ -132,6 +133,7 @@ export const boardStore = {
     async loadBoards(context) {
       try {
         const boards = await boardService.query()
+        console.log('boards', boards)
         context.commit({ type: 'setBoards', boards })
       } catch (err) {
         console.log('boardStore: Error in loadBoards', err)
