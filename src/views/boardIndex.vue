@@ -1,6 +1,6 @@
 <template>
   <div class="index-container container home">
-    <BoardList @removeBoard="removeBoard" />
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" />
     <form @submit.prevent="addBoard()">
       <h2>Add board</h2>
       <input type="text" v-model="boardToAdd.title" placeholder="enter title...." />
@@ -50,30 +50,41 @@ export default {
         showErrorMsg('Cannot remove board')
       }
     },
-    async updateBoard(board) {
+    async starBoard(boardId) {
       try {
-        board = { ...board }
-        board.price = +prompt('New price?', board.price)
-        await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
+        console.log('starred index', boardId)
+        // await this.$store.dispatch(getActionStarBoard(boardId))
+        // showSuccessMsg('Board removed')
 
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot update board')
+        showErrorMsg('Cannot remove board')
       }
-    },
-    async addBoardMsg(boardId) {
-      try {
-        await this.$store.dispatch(getActionAddBoardMsg(boardId))
-        showSuccessMsg('Board msg added')
-      } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot add board msg')
-      }
-    },
-    printBoardToConsole(board) {
-      console.log('Board msgs:', board.msgs)
     }
+    // async updateBoard(board) {
+    //   try {
+    //     board = { ...board }
+    //     board.price = +prompt('New price?', board.price)
+    //     await this.$store.dispatch(getActionUpdateBoard(board))
+    //     showSuccessMsg('Board updated')
+
+    //   } catch (err) {
+    //     console.log(err)
+    //     showErrorMsg('Cannot update board')
+    //   }
+    // },
+    // async addBoardMsg(boardId) {
+    //   try {
+    //     await this.$store.dispatch(getActionAddBoardMsg(boardId))
+    //     showSuccessMsg('Board msg added')
+    //   } catch (err) {
+    //     console.log(err)
+    //     showErrorMsg('Cannot add board msg')
+    //   }
+    // },
+    // printBoardToConsole(board) {
+    //   console.log('Board msgs:', board.msgs)
+    // }
   },
   components: {
     BoardList,

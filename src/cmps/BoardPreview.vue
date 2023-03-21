@@ -1,13 +1,15 @@
 <template>
     <div class="board-preview">
-        {{ board.title }}
+        <h5>{{ board.title }}</h5>
+        <button @click="onStarBoard(board._id)">⭐</button>
+        <button @click="onRemoveBoard(board._id)">x</button>
     </div>
 </template>
 
 <script>
 
 export default {
-    name: 'BoardList',
+    name: 'BoardPreview',
     props: {
         board: {
             type: Object,
@@ -28,7 +30,14 @@ export default {
 
     },
     methods: {
-
+        onStarBoard(boardId) {
+            console.log('preview', boardId)
+            this.$emit('starBoard', boardId)
+        },
+        onRemoveBoard(boardId) {
+            console.log('hello')
+            this.$emit('onRemoveBoard', boardId)
+        }
     }
 }
 </script>

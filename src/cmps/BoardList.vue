@@ -1,9 +1,15 @@
 <template>
     <div>
+        <h3>Starred Boards:</h3>
+        <ul class="board-list">
+            <li v-for="board in starredBoards" :key="board._id">
+                <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+            </li>
+        </ul>
+        <h3>Boards:</h3>
         <ul class="board-list">
             <li v-for="board in boards" :key="board._id">
-                <BoardPreview :board="board" />
-                <button @click="removeBoard(board._id)">x</button>
+                <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
             </li>
         </ul>
     </div>
@@ -13,19 +19,26 @@
 import BoardPreview from './BoardPreview.vue';
 export default {
     name: 'BoardList',
-    data() {
-    },
+
     computed: {
         loggedInUser() {
         },
+        starredBoards() {
+            const boards = this.$store.getters.boards
+            return boards.filter(board => board.isStarred)
+        },
         boards() {
-            return this.$store.getters.boards
+            const boards = this.$store.getters.boards
+            return boards.filter(board => !board.isStarred)
         }
     },
     methods: {
         removeBoard(boardId) {
-            console.log('hello')
             this.$emit('removeBoard', boardId)
+        },
+        starBoard(boardId) {
+            console.log('list', boardId)
+            this.$emit('starBoard', boardId)
         }
 
     },
@@ -34,7 +47,7 @@ export default {
     },
 
     components: {
-        BoardPreview
+        BoardPreview,
     }
 
 
