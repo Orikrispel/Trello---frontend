@@ -36,9 +36,8 @@ export default {
         removeBoard(boardId) {
             this.$emit('removeBoard', boardId)
         },
-        starBoard(boardId) {
-            console.log('list', boardId)
-            this.$emit('starBoard', boardId)
+        starBoard(board) {
+            this.$emit('starBoard', board)
         }
 
     },

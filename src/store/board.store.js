@@ -13,6 +13,12 @@ export function getActionAddBoard(board) {
     board,
   }
 }
+export function getActionStarBoard(board) {
+  return {
+    type: 'starBoard',
+    board,
+  }
+}
 export function getActionUpdateBoard(board) {
   return {
     type: 'updateBoard',
@@ -113,6 +119,10 @@ export const boardStore = {
       const idx = state.boards.findIndex((b) => b._id === board._id)
       state.boards.splice(idx, 1, board)
     },
+    starBoard(state, { board }) {
+      const idx = state.boards.findIndex((b) => b._id === board._id)
+      state.boards[idx].isStarred = !state.boards[idx].isStarred
+    },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
@@ -190,6 +200,18 @@ export const boardStore = {
         throw err
       }
     },
+
+    async starBoard(context, { board }) {
+      try {
+        board = await boardService.save(board)
+        context.commit(getActionStarBoard(board))
+        return board
+      } catch (err) {
+        console.log('boardStore: Error in starBoard', err)
+        throw err
+      }
+    },
+
     async loadGroups(context, { boardId }) {
       try {
         const groups = await boardService.queryGroups(boardId)

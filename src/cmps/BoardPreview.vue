@@ -1,7 +1,7 @@
 <template>
     <div class="board-preview">
         <h5>{{ board.title }}</h5>
-        <button @click="onStarBoard(board._id)">⭐</button>
+        <button @click="onStarBoard(board)">⭐</button>
         <button @click="onRemoveBoard(board._id)">x</button>
     </div>
 </template>
@@ -30,12 +30,10 @@ export default {
 
     },
     methods: {
-        onStarBoard(boardId) {
-            console.log('preview', boardId)
-            this.$emit('starBoard', boardId)
+        onStarBoard(board) {
+            this.$emit('starBoard', board)
         },
         onRemoveBoard(boardId) {
-            console.log('hello')
             this.$emit('onRemoveBoard', boardId)
         }
     }

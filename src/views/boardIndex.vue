@@ -12,7 +12,7 @@
 <script>
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
-import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
+import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg, getActionStarBoard } from '../store/board.store'
 import BoardList from '../cmps/BoardList.vue'
 export default {
   data() {
@@ -50,15 +50,14 @@ export default {
         showErrorMsg('Cannot remove board')
       }
     },
-    async starBoard(boardId) {
+    async starBoard(board) {
       try {
-        console.log('starred index', boardId)
-        // await this.$store.dispatch(getActionStarBoard(boardId))
-        // showSuccessMsg('Board removed')
+        await this.$store.dispatch(getActionStarBoard(board))
+        showSuccessMsg('Board starred!')
 
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot remove board')
+        showErrorMsg('Cannot star board')
       }
     }
     // async updateBoard(board) {
