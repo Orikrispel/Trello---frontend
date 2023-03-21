@@ -1,24 +1,31 @@
 <template>
-  <section class="task-details">
+  <section class="task-details main">
     <!-- <RouterLink :to="'/task'" class="btn">
       <span>X</span>
     </RouterLink> -->
+    <header class="task-cover">x</header>
     <div class="task-container">
       <h1>
         {{ task.title }}
       </h1>
-      <p>{{ task.description }}</p>
-      <ul v-if="task.comments" class="clean-list">
-        <li v-for="(comment, idx) in task.comments" :key="idx">
-          {{ comment }}
-        </li>
-      </ul>
+      <form @submit.prevent="handleDesc">
+        <textarea v-model="task.description"></textarea>
+      </form>
+
       <aside class="btns-container">
         <button>Labels</button>
         <button>Checklist</button>
         <button>Dates</button>
         <button>Location</button>
       </aside>
+      <ul v-if="task.comments" class="clean-list">
+        <li v-for="(comment, idx) in task.comments" :key="idx">
+          {{ comment }}
+        </li>
+      </ul>
+      <form class="comment-form" @submit.prevent="handleComment">
+        <textarea name="comment"></textarea>
+      </form>
     </div>
   </section>
 </template>
