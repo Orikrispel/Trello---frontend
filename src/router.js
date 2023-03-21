@@ -19,15 +19,15 @@ const routes = [
     component: BoardIndex,
   },
   {
-    path: '/board/:boardId?',
+    path: '/board/:boardId',
     name: 'BoardDetails',
     component: BoardDetails,
   },
-  {
-    path: '/board/:id?',
-    name: 'Groups',
-    component: BoardDetails,
-  },
+  // {
+  //   path: '/board/:id?',
+  //   name: 'Groups',
+  //   component: BoardDetails,
+  // },
   {
     path: '/task/:taskId?',
     name: 'TaskDetails',

@@ -22,9 +22,9 @@ window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
   var boards = await storageService.query(STORAGE_KEY)
-  if (!boards || !boards.length) {
-    _createBoard()
-  }
+  // if (!boards || !boards.length) {
+  //   _createBoard()
+  // }
 
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
@@ -94,6 +94,7 @@ function getEmptyBoard(
 // GROUPS:
 
 async function queryGroups(boardId, filterBy = { txt: '' }) {
+  if (!boardId) boardId = 'E1C0w'
   let boardWithGroups = await getById(boardId)
   let groups = boardWithGroups.groups
   if (!groups) return

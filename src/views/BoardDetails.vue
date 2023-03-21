@@ -11,12 +11,16 @@
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import GroupList from '../cmps/GroupList.vue'
-import { getActionRemoveGroup, getActionUpdateGroup, getActionAddGroupMsg } from '../store/board.store'
+import {
+  getActionRemoveGroup,
+  getActionUpdateGroup,
+  getActionAddGroupMsg,
+} from '../store/board.store'
 
 export default {
   data() {
     return {
-      groupToAdd: boardService.getEmptyGroup()
+      groupToAdd: boardService.getEmptyGroup(),
     }
   },
   computed: {
@@ -49,7 +53,6 @@ export default {
       try {
         await this.$store.dispatch(getActionRemoveGroup(groupId))
         showSuccessMsg('Group removed')
-
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove group')
@@ -61,7 +64,6 @@ export default {
         group.price = +prompt('New price?', group.price)
         await this.$store.dispatch(getActionUpdateGroup(group))
         showSuccessMsg('Group updated')
-
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot update group')
@@ -78,10 +80,10 @@ export default {
     },
     printGroupToConsole(group) {
       console.log('Group msgs:', group.msgs)
-    }
+    },
   },
   components: {
     GroupList,
-  }
+  },
 }
 </script>
