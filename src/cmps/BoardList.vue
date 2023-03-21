@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="board-lists-container">
         <h3>Starred Boards:</h3>
         <ul class="board-list">
             <li v-for="board in starredBoards" :key="board._id">
