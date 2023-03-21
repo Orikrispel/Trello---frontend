@@ -1,11 +1,8 @@
 <template>
   <section>
-    <p>gee</p>
-    <ul v-if="groups" class="group-list">
-      <li v-for="group in groups" :key="groud._id">
-        <pre>{{ group }}</pre>
-        <p>{{ group.title }}</p>
-        <p>nice</p>
+    <ul class="group-list flex">
+      <li v-for="group in groups" :key="group._id">
+        <GroupPreview :group="group" />
       </li>
     </ul>
   </section>
@@ -14,6 +11,7 @@
 <script>
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
+import GroupPreview from '../cmps/GroupPreview.vue'
 import { getActionRemoveGroup, getActionUpdateGroup, getActionAddGroupMsg } from '../store/board.store'
 export default {
   props: ["groups"],
@@ -72,6 +70,9 @@ export default {
     printGroupToConsole(group) {
       console.log('Group msgs:', group.msgs)
     }
+  },
+  components: {
+    GroupPreview,
   }
 
 

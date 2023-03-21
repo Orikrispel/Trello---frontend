@@ -1,7 +1,7 @@
 <template>
   <div class="container main">
     <h1>hello</h1>
-    <GroupList :groups="groups" />
+    <GroupList v-if="groups" :groups="groups" />
     <p></p>
     <hr />
   </div>
