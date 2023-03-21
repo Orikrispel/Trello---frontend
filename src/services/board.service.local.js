@@ -3,7 +3,7 @@ import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'board'
-_createBoard()
+// _createBoard()
 export const boardService = {
   query,
   getById,

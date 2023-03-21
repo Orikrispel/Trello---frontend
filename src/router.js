@@ -18,8 +18,8 @@ const routes = [
     component: BoardIndex
   },
   {
-    path: '/board/:id?',
-    name: 'Groups',
+    path: '/board/:id',
+    name: 'BoardDetails',
     component: BoardDetails
   },
   {
