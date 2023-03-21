@@ -3,14 +3,14 @@
 }
 
 ::selection {
-    background-color: $clr1;
-    color: $clr6;
+    background-color: $primary-clr1;
+    color: $primary-clr2;
 }
 
 html {
-    font-family: montserrat;
+    font-family: 'Segoe UI Regular';
     line-height: 1.6;
-    color: $clr2;
+    color: $primary-clr2;
 }
 
 body {
@@ -18,30 +18,32 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: caveat;
+.main {
+    height: calc(100vh - $header-height);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0 0 0.6em;
     line-height: 1;
 }
 
-
-section, main, footer {
-    padding: 5px;
+img {
+    width: 100%;
 }
-
-// img {
-//     width: 100%;
-// }
 
 p {
     margin: 0 0 1em;
-    max-width: 40ch;
 }
 
 a {
     text-decoration: none;
 }
+
 a:hover {
     text-decoration: underline;
 }
-

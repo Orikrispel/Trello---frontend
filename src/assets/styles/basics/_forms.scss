@@ -1,12 +1,12 @@
 button {
-    border:0;
-    background-color: $clr1;
-    color:whitesmoke;
+    border: 0;
+    background-color: $primary-clr1;
+    color: whitesmoke;
     padding: 5px 10px;
     margin: 5px;
 }
 
-form > * {
+form>* {
     display: block;
     width: 200px;
     margin: 10px 0px;

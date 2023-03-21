@@ -2,24 +2,24 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
+
     li {
-        background-color: $clr2;
-        color: $clr6;
+        background-color: $primary-clr2;
+        color: $secondary-clr2;
         padding: 5px;
         margin: 5px;
     }
+
     a {
-        color: $clr1;
+        color: $primary-clr1;
         padding: 10px;
-    }    
+    }
+
     pre {
         background-color: #ddd;
         font-size: .5em;
         color: #333;
         padding: .2em;
         margin: .2em;
-    }    
+    }
 }
-
-
-

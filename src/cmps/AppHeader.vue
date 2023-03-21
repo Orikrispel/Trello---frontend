@@ -2,7 +2,7 @@
   <header>
     <nav>
       <RouterLink to="/">
-        <span role="img" aria-label="logo">🙏</span>
+        <span role="img" aria-label="logo">Trello</span>
       </RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
