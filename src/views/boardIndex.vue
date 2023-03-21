@@ -3,10 +3,10 @@
     <ul class="board-list">
       <li v-for="board in boards" :key="board._id">
         <p>
-          {{board.vendor}}
+          {{ board.title }}
         </p>
         <p>
-          ${{board.price?.toLocaleString()}}
+          ${{ board.price?.toLocaleString() }}
         </p>
         <button @click="removeBoard(board._id)">x</button>
         <button @click="updateBoard(board)">Update</button>
@@ -19,15 +19,15 @@
     <hr />
     <form @submit.prevent="addBoard()">
       <h2>Add board</h2>
-      <input type="text" v-model="boardToAdd.vendor" />
+      <input type="text" v-model="boardToAdd.title" />
       <button>Save</button>
     </form>
   </div>
 </template>
 
 <script>
-import {showErrorMsg, showSuccessMsg} from '../services/event-bus.service'
-import {boardService} from '../services/board.service.local'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { boardService } from '../services/board.service.local'
 import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
 export default {
   data() {
@@ -44,15 +44,15 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch({type: 'loadBoards'})
+    this.$store.dispatch({ type: 'loadBoards' })
   },
   methods: {
     async addBoard() {
       try {
-        await this.$store.dispatch({type: 'addBoard', board: this.boardToAdd})
+        await this.$store.dispatch({ type: 'addBoard', board: this.boardToAdd })
         showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot add board')
       }
@@ -62,19 +62,19 @@ export default {
         await this.$store.dispatch(getActionRemoveBoard(boardId))
         showSuccessMsg('Board removed')
 
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove board')
       }
     },
     async updateBoard(board) {
       try {
-        board = {...board}
+        board = { ...board }
         board.price = +prompt('New price?', board.price)
         await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
 
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot update board')
       }
@@ -83,7 +83,7 @@ export default {
       try {
         await this.$store.dispatch(getActionAddBoardMsg(boardId))
         showSuccessMsg('Board msg added')
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot add board msg')
       }
@@ -93,6 +93,6 @@ export default {
     }
   }
 
-  
+
 }
 </script>
