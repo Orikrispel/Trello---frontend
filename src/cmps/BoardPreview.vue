@@ -3,6 +3,7 @@
         <h5>{{ board.title }}</h5>
         <button @click="onStarBoard(board)">⭐</button>
         <button @click="onRemoveBoard(board._id)">x</button>
+        <RouterLink :to="`/board/${board._id}`" class="board-link">Use This</RouterLink>
     </div>
 </template>
 

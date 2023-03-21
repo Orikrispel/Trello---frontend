@@ -8,6 +8,12 @@
     color: $secondary-clr2;
     padding: 5px;
     margin: 5px;
+    width: 200px;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.9;
+    }
   }
 
   a {
