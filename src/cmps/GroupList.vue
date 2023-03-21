@@ -1,78 +1,76 @@
 <template>
-  <section class="main">
-    <ul class="board-list">
+  <section>
+    <p>gee</p>
+    <ul v-if="groups" class="group-list">
       <li v-for="group in groups" :key="groud._id">
+        <pre>{{ group }}</pre>
+        <p>{{ group.title }}</p>
+        <p>nice</p>
       </li>
     </ul>
-    <hr />
   </section>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
-import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
+import { getActionRemoveGroup, getActionUpdateGroup, getActionAddGroupMsg } from '../store/board.store'
 export default {
+  props: ["groups"],
   data() {
     return {
-      boardToAdd: boardService.getEmptyBoard()
+      groupToAdd: boardService.getEmptyGroup()
     }
   },
   computed: {
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
-    boards() {
-      return this.$store.getters.boards
-    }
-  },
-  created() {
-    this.$store.dispatch({ type: 'loadBoards' })
   },
   methods: {
-    async addBoard() {
+    async addGroup() {
       try {
-        await this.$store.dispatch({ type: 'addBoard', board: this.boardToAdd })
-        showSuccessMsg('Board added')
-        this.boardToAdd = boardService.getEmptyBoard()
+        await this.$store.dispatch({ type: 'addGroup', group: this.groupToAdd })
+        showSuccessMsg('Group added')
+        this.groupToAdd = groupService.getEmptyGroup()
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add board')
+        showErrorMsg('Cannot add group')
       }
     },
-    async removeBoard(boardId) {
+    async removeGroup(groupId) {
       try {
-        await this.$store.dispatch(getActionRemoveBoard(boardId))
-        showSuccessMsg('Board removed')
+        await this.$store.dispatch(getActionRemoveGroup(groupId))
+        showSuccessMsg('Group removed')
 
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot remove board')
+        showErrorMsg('Cannot remove group')
       }
     },
-    async updateBoard(board) {
+    async updateGroup(group) {
       try {
-        board = { ...board }
-        board.price = +prompt('New price?', board.price)
-        await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
+        group = { ...group }
+        group.price = +prompt('New price?', group.price)
+        await this.$store.dispatch(getActionUpdateGroup(group))
+        showSuccessMsg('Group updated')
 
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot update board')
+        showErrorMsg('Cannot update group')
       }
     },
-    async addBoardMsg(boardId) {
+    async addGroupMsg(groupId) {
       try {
-        await this.$store.dispatch(getActionAddBoardMsg(boardId))
-        showSuccessMsg('Board msg added')
+        await this.$store.dispatch(getActionAddGroupMsg(groupId))
+        showSuccessMsg('Group msg added')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add board msg')
+        showErrorMsg('Cannot add group msg')
       }
     },
-    printBoardToConsole(board) {
-      console.log('Board msgs:', board.msgs)
+    printGroupToConsole(group) {
+      console.log('Group msgs:', group.msgs)
     }
   }
 
