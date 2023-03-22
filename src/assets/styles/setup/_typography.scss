@@ -1,27 +1,32 @@
 @font-face {
-    font-family: 'Segoe UI Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: url('../font/SegoeUI.woff') format("woff");
+  font-family: 'Segoe UI Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/Segoe UI.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'Segoe UI Italic';
-    font-style: normal;
-    font-weight: normal;
-    src: url('../font/Segoe UI Italiddc.woff') format("woff");
+  font-family: 'Segoe UI Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/Segoe UI Italiddc.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'Segoe UI Bold';
-    font-style: normal;
-    font-weight: normal;
-    src: url('../font/Segoe UI Bold.woff') format("woff");
+  font-family: 'Segoe UI Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/Segoe UI Bold.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'Segoe UI Bold Italic';
-    font-style: normal;
-    font-weight: normal;
-    src: url('../font/Segoe UI Bold Italic.woff') format("woff");
+  font-family: 'Segoe UI Bold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../font/Segoe UI Bold Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: trellicons;
+  src: url('../font/trellicons\ .ttf');
 }

@@ -5,24 +5,28 @@
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
     </header>
-
     <div class="task-container">
       <div class="task-container-heading">
-        <div class="txt-container">
-          <h2 contenteditable="true" @input="updateTitle">
-            {{ task.title ? task.title : 'new title' }}
-          </h2>
-          <small>in list {{ task.list }}</small>
-        </div>
+        <!-- <div class="txt-container"> -->
+        <h2 contenteditable="true" @input="updateTitle">
+          <span class="icon header-icon"></span>
+          {{ task.title ? task.title : 'new title' }}
+        </h2>
+        <small>
+          <span class="icon header-icon"></span> in list {{ task.list }}</small
+        >
+        <!-- </div> -->
         <RouterLink v-if="!task.cover" :to="'/board'" class="btn-close"
           ><div class="icon" v-html="getSvg('close')"></div>
         </RouterLink>
       </div>
-      <ul>
+      <ul class="label-list flex">
+        <h3>Labels</h3>
         <li v-for="label in task.labels">{{ label }}</li>
       </ul>
       <form class="description-editor" @submit.prevent="handleDesc">
         <h3>
+          <span class="icon description-icon"></span>
           Description
           <button
             v-if="!userIsEditing && task.description"
@@ -35,39 +39,45 @@
           @click="userIsEditing = !userIsEditing">
           Add a more detailed description...
         </div>
-        <p v-if="!userIsEditing" @click="userIsEditing = !userIsEditing">
+        <p v-if="!userIsEditing" @click="handleDesc">
           {{ task.description }}
         </p>
         <textarea
           v-if="userIsEditing"
           v-model="task.description"
-          @blur="userIsEditing = !userIsEditing"></textarea>
+          @blur="userIsEditing = !userIsEditing"
+          autofocus></textarea>
+        <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
+          Save
+        </button>
+        <button class="btn-cancel-submit" v-if="userIsEditing" type="submit">
+          Cancel
+        </button>
       </form>
 
       <aside class="btns-container flex">
         <h4>Add to card</h4>
-        <button class="flex align-center">
-          <div class="icon" v-html="getSvg('addMember')"></div>
-          Members
-        </button>
-
-        <button>Labels</button>
-        <button class="flex align-center">
-          <div class="icon" v-html="getSvg('checkInsideBox')"></div>
+        <button><span class="icon member-icon"></span> Members</button>
+        <button><span class="icon label-icon"></span>Labels</button>
+        <button>
+          <span class="icon checklist-icon"></span>
           Checklist
         </button>
-        <button class="flex align-center">
-          <div class="icon" v-html="getSvg('clock')"></div>
+        <button>
+          <span class="icon watch-icon"></span>
           Dates
         </button>
-        <button class="flex align-center">
-          <div class="icon" v-html="getSvg('attachment')"></div>
+        <button>
+          <span class="icon attachments-icon"></span>
           Attachment
         </button>
-        <button>Location</button>
+        <button v-if="!task.cover">
+          <span class="icon card-cover-icon"></span>
+          Cover
+        </button>
       </aside>
       <div class="comments-activity-container">
-        <h3>Activity</h3>
+        <h3><span class="icon activity-icon"></span> Activity</h3>
         <form class="comment-form" @submit.prevent="handleComment">
           <textarea name="comment" placeholder="Write a comment..."></textarea>
         </form>
@@ -76,6 +86,12 @@
             {{ comment }}
           </li>
         </ul>
+        <ul v-if="task.activities" class="clean-list">
+          <li v-for="(activity, idx) in task.activities" :key="idx">
+            {{ activity }}
+          </li>
+        </ul>
+        <button @click="test">test</button>
       </div>
     </div>
   </section>
@@ -103,6 +119,10 @@ export default {
     },
     updateTitle(ev) {
       this.task.title = ev.target.innerText
+    },
+    handleDesc() {
+      userIsEditing = !this.userIsEditing
+      this.$refs.taskDesc.focus()
     },
     async saveTask() {
       let task = { ...this.task }
