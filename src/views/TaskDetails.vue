@@ -3,17 +3,28 @@
     <header class="task-cover">
       <RouterLink :to="'/board'" class="btn">X </RouterLink>
     </header>
-    <button @click="test()">test</button>
     <div class="task-container">
       <h2 contenteditable="true" @input="updateTitle">
         {{ task.title ? task.title : 'new title' }}
       </h2>
 
       <form @submit.prevent="handleDesc">
-        <button v-if="!userIsEditing" @click="userIsEditing = !userIsEditing">
-          Edit
-        </button>
-        <p v-if="!userIsEditing">{{ task.description }}</p>
+        <h3>
+          Description
+          <button
+            v-if="!userIsEditing && task.description"
+            @click="userIsEditing = !userIsEditing">
+            Edit
+          </button>
+        </h3>
+        <div
+          v-if="!userIsEditing && !task.description"
+          @click="userIsEditing = !userIsEditing">
+          Add a more detailed description...
+        </div>
+        <p v-if="!userIsEditing" @click="userIsEditing = !userIsEditing">
+          {{ task.description }}
+        </p>
         <textarea
           v-if="userIsEditing"
           v-model="task.description"
