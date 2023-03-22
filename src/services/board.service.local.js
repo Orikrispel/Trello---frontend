@@ -87,7 +87,7 @@ function getEmptyBoard(
     title,
     isStarred,
     style,
-    labels,
+    labels: getDefaultEmptyLabels(),
     createdBy,
     groups,
   }
@@ -215,7 +215,7 @@ async function _createBoard() {
       {
         id: 'l102',
         title: 'Progress',
-        color: '#61bd33',
+        color: '#faf3c0',
       },
     ],
     members: [
@@ -360,7 +360,7 @@ export const demoBoard = {
     {
       id: 'l102',
       title: 'Progress',
-      color: '#61bd33',
+      color: '#faf3c0',
     },
   ],
   members: [
