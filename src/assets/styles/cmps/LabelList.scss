@@ -1,0 +1,41 @@
+.labels-list {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  min-height: 29em;
+  top: 10em;
+  width: 16.5em;
+  right: 0.5em;
+  gap: 0.1em;
+  background-color: $secondary-clr1;
+  .btn-close {
+    justify-self: end;
+    align-self: end;
+    background-color: inherit;
+    cursor: pointer;
+  }
+
+  h3 {
+    align-self: center;
+  }
+
+  input[name='label-search'] {
+    width: 100%;
+    margin-inline: 0.5em;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .label-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1em;
+    .label-container {
+      padding-inline: 0.5em;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+}

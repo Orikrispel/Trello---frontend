@@ -1,29 +1,65 @@
 <template>
-  <div class="labels-container">
-    <button>X</button>
+  <div class="labels-list">
+    <span class="icon btn-close" v-html="getSvg('close')"></span>
     <h3>Labels</h3>
     <hr />
     <input type="text" name="label-search" placeholder="Search labels" />
     <h4>Labels</h4>
-    <ul>
-      <li v-for="label in labels">
+    <ul class="clean-list">
+      <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
-        <div class="label-container">
-          <span>{{ label.txt }}</span>
+        <div
+          :style="{
+            'background-color': label.color || 'white',
+          }"
+          class="label-container">
+          <span>{{ label.title }}</span>
         </div>
-        <button @click="editLabel">edit</button>
+        <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
       </li>
     </ul>
+    <button @click="test">test</button>
   </div>
 </template>
 
 <script>
+import { svgService } from '../services/svg.service'
 export default {
+  name: 'LabelList',
+
   data() {
     return {
       labels: [],
-      label: {},
     }
+  },
+  computed: {
+    currLabels() {
+      let board = this.$store.getters.currBoard
+      if (!board) board = this.$store.getters.demoBoard
+
+      let { labels } = demoBoard
+      if (!labels || !labels.length)
+        labels = this.$store.getters.defaultEmptyLabels
+
+      this.labels = labels
+    },
+  },
+  created() {
+    let board = this.$store.getters.currBoard
+    if (!board) board = this.$store.getters.demoBoard
+    let { labels } = board
+    if (!labels || !labels.length)
+      labels = this.$store.getters.defaultEmptyLabels
+
+    this.labels = labels
+  },
+  methods: {
+    test() {
+      console.log(this.labels)
+    },
+    getSvg(iconName) {
+      return svgService.getSvg(iconName)
+    },
   },
 }
 </script>
