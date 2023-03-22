@@ -3,6 +3,12 @@
 
   .task-cover {
     background-color: $secondary-clr4;
+    display: flex;
+    justify-content: end;
+    .btn {
+      padding-inline: 1em;
+      font-weight: 700;
+    }
   }
 
   .task-container {
@@ -12,8 +18,8 @@
 
     h2 {
       grid-column: 2/4;
-      justify-self: center;
-      align-self: center;
+      justify-self: start;
+      align-self: start;
     }
     .btns-container {
       grid-column: 4;
@@ -29,7 +35,9 @@
       grid-column: 3;
       width: 100%;
       justify-self: center;
-
+      p {
+        cursor: pointer;
+      }
       textarea {
         width: 100%;
         min-height: 30%;

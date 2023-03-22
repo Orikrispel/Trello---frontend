@@ -86,8 +86,10 @@ export function getActionAddTaskMsg(taskId) {
 export const boardStore = {
   state: {
     boards: [],
-    currTask: null,
     groups: [],
+    currBoard: null,
+    currGroup: null,
+    currTask: null,
   },
   getters: {
     boards({ boards }) {
