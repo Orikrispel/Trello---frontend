@@ -191,6 +191,16 @@ function getDefaultEmptyLabels() {
       title: '',
       color: '#bcd9ea',
     },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#bdecf3',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#dfe1e6',
+    },
   ]
 }
 
@@ -351,18 +361,19 @@ export const demoBoard = {
     imgUrl: 'http://some-img',
   },
   style: {},
-  labels: [
-    {
-      id: 'l101',
-      title: 'Done',
-      color: '#61bd4f',
-    },
-    {
-      id: 'l102',
-      title: 'Progress',
-      color: '#faf3c0',
-    },
-  ],
+  labels: getDefaultEmptyLabels(),
+  // [
+  // {
+  //   id: 'l101',
+  //   title: 'Done',
+  //   color: '#61bd4f',
+  // },
+  // {
+  //   id: 'l102',
+  //   title: 'Progress',
+  //   color: '#faf3c0',
+  // },
+  // ],
   members: [
     {
       _id: 'u101',
