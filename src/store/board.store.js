@@ -203,8 +203,8 @@ export const boardStore = {
 
     async starBoard(context, { board }) {
       try {
-        board = await boardService.save(board)
         context.commit(getActionStarBoard(board))
+        board = await boardService.save(board)
         return board
       } catch (err) {
         console.log('boardStore: Error in starBoard', err)
