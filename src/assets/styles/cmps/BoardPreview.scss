@@ -1,9 +1,9 @@
 .board-preview {
-  padding: 5px;
   .board-preview-actions {
+    padding: 27px 0px;
     display: flex;
-    flex-direction: row;
-    align-items: end;
+    align-items: center;
     justify-content: flex-end;
+    z-index: 100;
   }
 }
