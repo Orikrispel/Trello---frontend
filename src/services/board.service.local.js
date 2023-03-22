@@ -12,11 +12,11 @@ export const boardService = {
   getEmptyGroup,
   getEmptyTask,
   addBoardMsg,
-
   queryGroups,
   getGroupById,
   saveGroup,
   removeGroup,
+  getDefaultEmptyLabels,
 }
 window.cs = boardService
 
@@ -157,6 +157,41 @@ function getEmptyTask(
     description: '',
     labels: [],
   }
+}
+
+function getDefaultEmptyLabels() {
+  return [
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#d6ecd2',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#faf3c0',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#fce6c6',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#f5d3ce',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#eddbf4',
+    },
+    {
+      id: utilService.makeId(),
+      title: '',
+      color: '#bcd9ea',
+    },
+  ]
 }
 
 async function _createBoard() {
@@ -304,6 +339,156 @@ async function _createBoard() {
   board = await save(board)
   return board
 }
+
+export const demoBoard = {
+  _id: '',
+  title: 'Robot dev proj',
+  isStarred: false,
+  archivedAt: 1589983468418,
+  createdBy: {
+    _id: 'u101',
+    fullname: 'Abi Abambi',
+    imgUrl: 'http://some-img',
+  },
+  style: {},
+  labels: [
+    {
+      id: 'l101',
+      title: 'Done',
+      color: '#61bd4f',
+    },
+    {
+      id: 'l102',
+      title: 'Progress',
+      color: '#61bd33',
+    },
+  ],
+  members: [
+    {
+      _id: 'u101',
+      fullname: 'Tal Tarablus',
+      imgUrl: 'https://www.google.com',
+    },
+  ],
+  groups: [
+    {
+      id: 'g101',
+      title: 'Group 1',
+      type: 'container',
+      props: {
+        orientation: 'vertical',
+      },
+      archivedAt: 1589983468418,
+      tasks: [
+        {
+          id: 'c101',
+          title: 'Replace logo',
+          type: 'draggable',
+          loading: false,
+          cover: {},
+        },
+        {
+          id: 'c102',
+          title: 'Add Samples',
+          type: 'draggable',
+          loading: false,
+          cover: {},
+        },
+      ],
+      style: {},
+    },
+    {
+      id: 'g102',
+      title: 'Group 2',
+      type: 'container',
+      props: {
+        orientation: 'vertical',
+      },
+      tasks: [
+        {
+          id: 'c103',
+          title: 'Do that',
+          archivedAt: 1589983468418,
+          type: 'draggable',
+          loading: false,
+          cover: {},
+          labels: [
+            { id: '', txt: 'urgent', bgc: '' },
+            { txt: 'backend', bgc: '' },
+          ],
+        },
+        {
+          id: 'c104',
+          title: 'Help me',
+          status: 'in-progress', // monday
+          priority: 'high',
+          description: 'description',
+          type: 'draggable',
+          loading: false,
+          comments: [
+            {
+              id: 'ZdPnm',
+              txt: 'also @yaronb please CR this',
+              createdAt: 1590999817436,
+              byMember: {
+                _id: 'u101',
+                fullname: 'Tal Tarablus',
+                imgUrl:
+                  'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'YEhmF',
+              title: 'Checklist',
+              todos: [
+                {
+                  id: '212jX',
+                  title: 'To Do 1',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          memberIds: ['u101'],
+          labelIds: ['l101', 'l102'],
+          dueDate: 16156215211,
+          byMember: {
+            _id: 'u101',
+            username: 'Tal',
+            fullname: 'Tal Tarablus',
+            imgUrl:
+              'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+          },
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+      ],
+      style: {},
+    },
+  ],
+  activities: [
+    {
+      id: 'a101',
+      txt: 'Changed Color',
+      createdAt: 154514,
+      byMember: {
+        _id: 'u101',
+        fullname: 'Abi Abambi',
+        imgUrl: 'http://some-img',
+      },
+      task: {
+        id: 'c101',
+        title: 'Replace Logo',
+      },
+    },
+  ],
+
+  cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
+}
+
 // TEST DATA
 // ;(async ()=>{
 //     await storageService.post(STORAGE_KEY, {vendor: 'Subali Karov 1', price: 180})

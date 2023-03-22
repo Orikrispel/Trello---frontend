@@ -1,10 +1,10 @@
 <template>
   <section class="task-details main">
-    <header v-if="task.cover" class="task-cover">
+    <!-- <header v-if="task.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
-    </header>
+    </header> -->
     <div class="task-container">
       <div class="task-container-heading">
         <!-- <div class="txt-container"> -->
@@ -20,9 +20,9 @@
           ><div class="icon" v-html="getSvg('close')"></div>
         </RouterLink>
       </div>
-      <ul class="label-list flex">
+      <ul class="task-heading-label-list flex clean-list">
         <h3>Labels</h3>
-        <li v-for="label in task.labels">{{ label }}</li>
+        <li v-for="label in task.labels">{{ label.txt }}</li>
       </ul>
       <form class="description-editor" @submit.prevent="handleDesc">
         <h3>
@@ -94,12 +94,13 @@
         <button @click="test">test</button>
       </div>
     </div>
+    <LabelList />
   </section>
 </template>
 
 <script>
 import { svgService } from '../services/svg.service'
-
+import LabelList from '../cmps/LabelList.vue'
 export default {
   name: 'TaskDetails',
   data() {
@@ -108,14 +109,15 @@ export default {
       userIsEditing: false,
     }
   },
-  created() {
+  async created() {
     const { taskId } = this.$route.params
-    // console.log(task)
-    this.task = this.$store.getters.emptyTask
+    let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
+    console.log(task)
+    this.task = task
   },
   methods: {
     test() {
-      console.log(this.task)
+      console.log(this.$route.params)
     },
     updateTitle(ev) {
       this.task.title = ev.target.innerText
@@ -132,18 +134,31 @@ export default {
       return svgService.getSvg(iconName)
     },
   },
+
+  computed: {
+    currTask() {
+      let task = this.$store.getters.currTask
+      if (!task) task = this.$store.getters.emptyTask
+      this.task = this.currTask
+    },
+  },
+
   unmounted() {
     this.saveTask()
   },
 
-  //   watch: {
-  //     '$route.params': {
-  //       handler() {
-  //         const { taskId } = this.$route.params
-  //         this.task = task
-  //       },
-  //       immediate: true,
-  //     },
-  //   },
+  watch: {
+    '$route.params': {
+      async handler() {
+        const { taskId } = this.$route.params
+        let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
+        this.task = task
+      },
+      immediate: true,
+    },
+  },
+  components: {
+    LabelList,
+  },
 }
 </script>

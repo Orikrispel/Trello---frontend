@@ -1,5 +1,5 @@
 // import { boardService } from '../services/board.service.local'
-import { boardService } from '../services/board.service.local'
+import { boardService, demoBoard } from '../services/board.service.local'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -58,7 +58,6 @@ export function getActionAddGroupMsg(groupId) {
     txt: 'Stam txt',
   }
 }
-
 // TASKS
 export function getActionRemoveTask(taskId) {
   return {
@@ -100,6 +99,18 @@ export const boardStore = {
     },
     currBoard({ currBoard }) {
       return currBoard
+    },
+    currLabels({ currBoard }) {
+      return currBoard.labels
+    },
+    defaultEmptyLabels() {
+      return boardService.getDefaultEmptyLabels()
+    },
+    demoBoard() {
+      return demoBoard
+    },
+    currTask({ currTask }) {
+      return currTask
     },
     groups({ groups }) {
       return groups
@@ -159,8 +170,11 @@ export const boardStore = {
       state.groups = state.groups.filter((group) => group._id !== groupId)
     },
     //  TASKS
-    savedTask(state, { task }) {
+    saveTask(state, { task }) {
       state.currGroup.tasks.push(task)
+    },
+    setCurrTask({ currTask }, { task }) {
+      currTask = task
     },
   },
   actions: {
@@ -211,7 +225,6 @@ export const boardStore = {
         throw err
       }
     },
-
     async starBoard(context, { board }) {
       try {
         context.commit(getActionStarBoard(board))
@@ -262,7 +275,6 @@ export const boardStore = {
         throw err
       }
     },
-
     //TASKS
     async saveTask({ commit }, { task }) {
       try {
@@ -271,6 +283,18 @@ export const boardStore = {
       } catch (err) {
         console.log('could not save task at the moment')
       }
+    },
+    async setCurrTask({ state, commit }, { taskId }) {
+      // let board = state.currBoard
+      let board = demoBoard
+      let groups = board.groups
+      let currTask
+      groups.forEach((group) => {
+        let { tasks } = group
+        currTask = tasks.find((task) => task.id === taskId)
+      })
+      commit({ type: 'setCurrTask', task: currTask })
+      return currTask
     },
   },
 }
