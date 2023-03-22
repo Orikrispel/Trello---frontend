@@ -1,14 +1,19 @@
 <template>
     <div class="board-lists-container">
-        <h3>Starred Boards:</h3>
+        <h3 v-if="starredBoards.length">Starred Boards:</h3>
         <ul class="board-list">
-            <li v-for="board in starredBoards" :key="board._id">
+            <li v-for="board in starredBoards" :key="board._id"
+                :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
             </li>
         </ul>
         <h3>Boards:</h3>
         <ul class="board-list">
-            <li v-for="board in boards" :key="board._id">
+            <li class="new-board" @click="setCreateMode">
+                <h5>Create new board</h5>
+            </li>
+            <li v-for="board in boards" :key="board._id"
+                :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
             </li>
         </ul>
@@ -19,7 +24,10 @@
 import BoardPreview from './BoardPreview.vue';
 export default {
     name: 'BoardList',
-
+    data() {
+        return {
+        }
+    },
     computed: {
         loggedInUser() {
         },
@@ -28,8 +36,7 @@ export default {
             return boards.filter(board => board.isStarred)
         },
         boards() {
-            const boards = this.$store.getters.boards
-            return boards.filter(board => !board.isStarred)
+            return this.$store.getters.boards
         }
     },
     methods: {
@@ -38,8 +45,10 @@ export default {
         },
         starBoard(board) {
             this.$emit('starBoard', board)
+        },
+        setCreateMode() {
+            this.$emit('setCreateMode')
         }
-
     },
     created() {
 
@@ -51,4 +60,7 @@ export default {
 
 
 }
+
+//    <router-link :to="`/board/${board._id}`" class="board-link">
 </script>
+
