@@ -3,12 +3,13 @@
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
     <form @submit.prevent="addBoard()" class="board-add-form" v-if="isCreateMode">
       <div class="add-form-header">
-        <p @click="setCreateMode">x</p>
         <h5>Create Board</h5>
+        <p @click="setCreateMode">x</p>
       </div>
-      <input type="text" v-model="boardToAdd.title" placeholder="enter title...." />
-      <button>Save</button>
-      <ColorPicker @setBgColor="setBoardBgColor" />
+      <ColorPicker @setColor="setBoardBgColor" />
+      <label for="board-title">Board title</label>
+      <input name="board-title" type="text" v-model="boardToAdd.title" />
+      <button>Create</button>
     </form>
   </div>
 </template>
@@ -105,7 +106,6 @@ export default {
     ColorPicker,
     ActionModal,
   },
-  emits: ['setBgColor']
 
 
 }

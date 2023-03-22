@@ -1,5 +1,4 @@
 .index-container {
-  width: fit-content;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -8,27 +7,67 @@
 }
 
 .board-add-form {
-  text-align: center;
+  color: $fontColor3;
   display: flex;
-  align-items: center;
+  padding-left: 10px;
+  align-items: flex-start;
   flex-direction: column;
   background-color: #fff;
   border-radius: 3px;
-  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.251),
-    0 0 0 1px rgba(9, 30, 66, 0.078);
-  min-width: 304px;
+  box-shadow: $action-modal-shadow;
   position: fixed;
   margin-top: 100px;
+  padding: 20px;
   z-index: 100;
-  .add-form-header {
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    justify-content: space-around;
+
+  label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+  }
+
+  input {
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    box-shadow: $input-shadow;
+    outline: none;
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  button {
+    border-radius: 5px;
+    width: 100%;
   }
   p {
     &:hover {
+      color: $fontColor3;
       cursor: pointer;
     }
+  }
+  .board-display {
+    margin: 30px;
+    width: 220px;
+    height: 120px;
+  }
+}
+
+.add-form-header {
+  h5 {
+    font-weight: 100;
+    margin: auto;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid $secondary-clr4;
+  p {
+    color: $fontColor3;
+    margin: 0;
+    float: right;
   }
 }

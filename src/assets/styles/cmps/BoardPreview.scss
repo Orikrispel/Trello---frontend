@@ -1,9 +1,15 @@
 .board-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-inline: 5px;
+  padding-block-start: 5px;
+
   .board-preview-actions {
     padding: 27px 0px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    z-index: 100;
   }
 }
