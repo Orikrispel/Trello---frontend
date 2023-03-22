@@ -52,7 +52,9 @@ export default {
     },
     async starBoard(board) {
       try {
-        await this.$store.dispatch(getActionStarBoard(board))
+        const newBoard = { ...board }
+        newBoard.isStarred = !newBoard.isStarred
+        await this.$store.dispatch(getActionStarBoard(newBoard))
         showSuccessMsg('Board starred!')
 
       } catch (err) {
