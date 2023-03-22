@@ -10,7 +10,7 @@
         <h3>Boards:</h3>
         <ul class="board-list">
             <li class="new-board" @click="setCreateMode">
-                <h5>Create new board</h5>
+                <p>Create new board</p>
             </li>
             <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
@@ -52,9 +52,6 @@ export default {
         showBoardDetails(boardId) {
             this.$router.push(`/board/${boardId}`);
         },
-    },
-    created() {
-
     },
 
     components: {

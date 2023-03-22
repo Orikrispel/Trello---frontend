@@ -5,11 +5,6 @@
 }
 
 .board-list {
-  // list-style: none;
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  // padding: 0px 0px;
-  // gap: 7px;
   list-style: none;
   justify-items: center;
   display: grid;
@@ -26,7 +21,7 @@
     border-radius: 3px;
     &:hover {
       cursor: pointer;
-      opacity: 0.9;
+      filter: brightness(90%);
     }
   }
 
@@ -51,4 +46,7 @@
   justify-content: center;
   align-items: center;
   color: #172b4d;
+  p {
+    font-size: 1rem;
+  }
 }

@@ -1,16 +1,20 @@
 <template>
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
-    <form @submit.prevent="addBoard()" class="board-add-form" v-if="isCreateMode">
+
+    <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
       <div class="add-form-header">
         <h5>Create Board</h5>
         <p @click="setCreateMode">x</p>
       </div>
+      <div class="board-display" :style="{ 'background-color': boardPickedColor }"></div>
+      <label for="color-picker">Background</label>
       <ColorPicker @setColor="setBoardBgColor" />
       <label for="board-title">Board title</label>
       <input name="board-title" type="text" v-model="boardToAdd.title" />
       <button>Create</button>
     </form>
+
   </div>
 </template>
 
@@ -21,13 +25,13 @@ import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg, getAc
 
 import BoardList from '../cmps/BoardList.vue'
 import ColorPicker from '../cmps/ColorPicker.vue'
-import ActionModal from '../cmps/ColorPicker.vue'
 
 export default {
   data() {
     return {
       boardToAdd: boardService.getEmptyBoard(),
       isCreateMode: false,
+      boardPickedColor: 'white'
     }
   },
   computed: {
@@ -83,11 +87,23 @@ export default {
       }
     },
     setBoardBgColor(color) {
+      this.boardPickedColor = color
       this.boardToAdd.style.backgroundColor = color
     },
     setCreateMode() {
       this.isCreateMode = !this.isCreateMode
     }
+
+  },
+  components: {
+    BoardList,
+    ColorPicker,
+  },
+
+
+}
+
+
     // async addBoardMsg(boardId) {
     //   try {
     //     await this.$store.dispatch(getActionAddBoardMsg(boardId))
@@ -100,13 +116,8 @@ export default {
     // printBoardToConsole(board) {
     //   console.log('Board msgs:', board.msgs)
     // }
-  },
-  components: {
-    BoardList,
-    ColorPicker,
-    ActionModal,
-  },
-
-
-}
 </script>
+
+
+
+
