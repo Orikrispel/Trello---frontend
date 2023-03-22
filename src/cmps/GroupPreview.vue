@@ -1,8 +1,9 @@
 <template>
   <section class="group-wrapper" v-if="group">
-    <h2>{{ group.id }}</h2>
-    <Container :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)">
-      <Draggable v-for=" task in group.tasks" :key="task.id">
+    <h2>{{ group.title }}</h2>
+    <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
+      group-name="col-items" :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)">
+      <Draggable class="task-container" v-for=" task in group.tasks" :key="task.id">
         <div>
           {{ task.title }}
         </div>
@@ -25,7 +26,7 @@ export default {
   components: { Container, Draggable },
   methods: {
     onTaskDrop(groupId, dropResult) {
-      // check if element where ADDED or REMOVED in current collumn
+      // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
         const board = Object.assign({}, this.board)
