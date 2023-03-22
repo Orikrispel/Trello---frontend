@@ -117,6 +117,7 @@ function getRandomTasks(idx = getRandomIntInclusive(0, 9)) {
 
 
 export const applyDrag = (arr, dragResult) => {
+  console.log('dragResult:', dragResult)
   const { removedIndex, addedIndex, payload } = dragResult
   if (removedIndex === null && addedIndex === null) return arr
 

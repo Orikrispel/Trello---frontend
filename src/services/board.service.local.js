@@ -23,7 +23,7 @@ window.cs = boardService
 async function query(filterBy = { txt: '', price: 0 }) {
   var boards = await storageService.query(STORAGE_KEY)
   // if (!boards || !boards.length) {
-  //   _createBoard()
+  //   // _createBoard()
   // }
 
   if (filterBy.txt) {

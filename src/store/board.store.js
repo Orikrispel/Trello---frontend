@@ -58,6 +58,12 @@ export function getActionAddGroupMsg(groupId) {
     txt: 'Stam txt',
   }
 }
+export function getActionLoadGroups(boardId) {
+  return {
+    type: 'loadGroups',
+    boardId,
+  }
+}
 
 // TASKS
 export function getActionRemoveTask(taskId) {
@@ -139,8 +145,8 @@ export const boardStore = {
       if (!board.msgs) board.msgs = []
       board.msgs.push(msg)
     },
-    setCurrBoard(state, { boardId }) {
-      state.currBoard = state.boards.find((board) => board._id === boardId)
+    setCurrBoard(state, { board }) {
+      state.currBoard = board
     },
 
     // GROUPS
@@ -222,12 +228,23 @@ export const boardStore = {
         throw err
       }
     },
+
+    async loadCurrBoard(context, { boardId }) {
+      try {
+        const board = await boardService.getById(boardId)
+        context.commit({ type: 'setCurrBoard', board })
+        return board
+      } catch (err) {
+        console.log('boardStore: Error in finding current board', err)
+        throw err
+      }
+    },
     // GROUPS
     async loadGroups(context, { boardId }) {
       try {
         const groups = await boardService.queryGroups(boardId)
         context.commit({ type: 'setGroups', groups })
-        context.commit({ type: 'setCurrBoard', boardId })
+        return groups
       } catch (err) {
         console.log('boardStore: Error in loadGroups', err)
         throw err
