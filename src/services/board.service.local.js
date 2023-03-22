@@ -193,15 +193,23 @@ async function _createBoard() {
       {
         id: 'g101',
         title: 'Group 1',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
+        },
         archivedAt: 1589983468418,
         tasks: [
           {
             id: 'c101',
             title: 'Replace logo',
+            type: 'draggable',
+            loading: false,
           },
           {
             id: 'c102',
             title: 'Add Samples',
+            type: 'draggable',
+            loading: false,
           },
         ],
         style: {},
@@ -209,11 +217,17 @@ async function _createBoard() {
       {
         id: 'g102',
         title: 'Group 2',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
+        },
         tasks: [
           {
             id: 'c103',
             title: 'Do that',
             archivedAt: 1589983468418,
+            type: 'draggable',
+            loading: false,
           },
           {
             id: 'c104',
@@ -221,6 +235,8 @@ async function _createBoard() {
             status: 'in-progress', // monday
             priority: 'high',
             description: 'description',
+            type: 'draggable',
+            loading: false,
             comments: [
               {
                 id: 'ZdPnm',

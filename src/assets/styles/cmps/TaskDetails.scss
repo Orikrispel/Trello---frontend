@@ -1,38 +1,73 @@
 .task-details {
   background-color: $secondary-clr3;
 
+  & * {
+    color: $fontColor2;
+  }
+
+  button {
+    background-color: $secondary-clr5;
+    padding: 0.5em;
+  }
+  .btn-close {
+    justify-self: end;
+  }
   .task-cover {
-    background-color: $secondary-clr4;
+    background-color: $coverClr2;
+    min-height: 6em;
+    display: flex;
+    justify-content: end;
+    .btn-close {
+      padding-inline: 1em;
+      font-weight: 700;
+    }
   }
 
   .task-container {
     display: grid;
     min-height: 100%;
-    grid-template-columns: 1em 2em 1fr 4em 1em;
+    grid-template-columns: 1em 2em 1fr 8em 1em;
 
-    h2 {
-      grid-column: 2/4;
-      justify-self: center;
-      align-self: center;
+    &-heading {
+      padding-top: 1em;
+      grid-column: 3/4;
+      justify-self: start;
+      align-self: start;
     }
+
+    .description-editor {
+      grid-column: 3;
+    }
+
     .btns-container {
       grid-column: 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      h4 {
+        font-size: 0.8em;
+      }
+
       button {
-        background-color: $secondary-clr5;
         color: $fontColor1;
         width: 100%;
         text-align: left;
       }
     }
 
-    form {
+    .comments-activity-container {
       grid-column: 3;
       width: 100%;
-      justify-self: center;
-
-      textarea {
-        width: 100%;
-        min-height: 30%;
+      form {
+        justify-self: center;
+        p {
+          cursor: pointer;
+        }
+        textarea {
+          width: 100%;
+          min-height: 30%;
+        }
       }
     }
   }

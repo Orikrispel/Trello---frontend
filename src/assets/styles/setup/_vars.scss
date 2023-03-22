@@ -23,6 +23,15 @@ $coverClr10: #172b4d;
 
 // FONT COLORS
 $fontColor1: #172b4d;
+$fontColor2: #2d3f5e;
+
+// LABEL DEFAULT COLORS
+$labelClr1: #d6ecd2;
+$labelClr2: #faf3c0;
+$labelClr3: #fce6c6;
+$labelClr4: #f5d3ce;
+$labelClr5: #eddbf4;
+$labelClr6: #bcd9ea;
 
 // Breakpoints
 $mobile-breakpoint: 460px;
@@ -31,7 +40,3 @@ $normal-breakpoint: 960px;
 
 // vars
 $header-height: 44px;
-
-// box-shadows
-$modalShadow1: 0 8px 16px -4px rgba(9, 30, 66, 0.251),
-  0 0 0 1px rgba(9, 30, 66, 0.078);
