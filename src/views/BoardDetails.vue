@@ -1,8 +1,7 @@
 <template>
   <div class="container main">
     <h1>hello</h1>
-    <GroupList v-if="groups" :groups="groups" />
-    <p></p>
+    <GroupList v-if="board" :board="board" />
     <hr />
   </div>
 </template>
@@ -21,9 +20,18 @@ export default {
   data() {
     return {
       groupToAdd: boardService.getEmptyGroup(),
+      board: null
     }
   },
+  async created() {
+    // this.$store.dispatch({ type: 'loadGroups', boardId: this.boardId })
+    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
+    console.log('board:', this.board)
+  },
   computed: {
+    // board() {
+    //   // return this.$store.getters.currBoard
+    // },
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -31,12 +39,6 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
-    groups() {
-      return this.$store.getters.groups
-    },
-  },
-  created() {
-    this.$store.dispatch({ type: 'loadGroups', boardId: this.boardId })
   },
   methods: {
     async addGroup() {

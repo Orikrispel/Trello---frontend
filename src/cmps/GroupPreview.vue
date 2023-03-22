@@ -1,33 +1,15 @@
 <template>
-  <Container class="flex" group-name="cols" tag="div" orientation="horizontal" @drop="onGroupDrop($event)">
-    <Draggable class="group-wrapper ">
-      <div class="flex column">
-
-        <!-- header-->
-        <div class="cursor-move rounded-t-lg p-4 space-x-4 bg-primary text-white flex space-x-2">
-          <span class="text-lg">{{ group.title }}</span>
+  <section class="group-wrapper" v-if="group">
+    <h2>{{ group.title }}</h2>
+    <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
+      group-name="col-items" :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)">
+      <Draggable class="task-container" v-for=" task in group.tasks" :key="task.id">
+        <div>
+          {{ task.title }}
         </div>
-        <!-- group -->
-        <Container class="group-wrapper" orientation="vertical" group-name="col-tasks"
-          :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-tasks' && !payload.loading)"
-          :get-child-payload="getGroupPayload(group.id)" :drop-placeholder="{
-            className: ``,
-            animationDuration: '200',
-            showOnTop: true
-          }" drag-class="" drop-class="" @drop="(e) => onGroupDrop(group.id, e)">
-
-          <!-- Tasks -->
-          <Draggable v-for="task in group.tasks" :key="task.id">
-            <div v-if="task.loading" class="flex">
-              <span>Processing...</span>
-            </div>
-            <p>{{ task.title }}</p>
-            <pre>{{ task }}</pre>
-          </Draggable>
-        </Container>
-      </div>
-    </Draggable>
-  </Container>
+      </Draggable>
+    </Container>
+  </section>
 </template>
 
 <script>
@@ -39,25 +21,12 @@ import { applyDrag, generateItems } from '../services/util.service'
 
 
 export default {
-  props: ['group'],
+  name: 'GroupPreview',
+  props: ['board', 'group'],
   components: { Container, Draggable },
-  data() {
-    return {
-      board: null
-    }
-  },
-  created() {
-    this.board = JSON.parse(JSON.stringify(this.$store.getters.currBoard))
-  },
   methods: {
-    onGroupDrop(dropResult) {
-      const board = Object.assign({}, this.board)
-      board.groups = applyDrag(board.groups, dropResult)
-      this.board = board
-    },
-    onGroupDrop(groupId, dropResult) {
-
-      // check if element where ADDED or REMOVED in current collumn
+    onTaskDrop(groupId, dropResult) {
+      // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
         const board = Object.assign({}, this.board)
@@ -75,13 +44,12 @@ export default {
 
         newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
         board.groups.splice(taskIndex, 1, newGroup)
-        this.board = board
+        this.$emit('updateBoard', board)
       }
     },
     getGroupPayload(groupId) {
-      console.log('groupId:', groupId)
       return index => {
-        return this.board.groups.filter(g => g.id === groupId)[0].groups[index]
+        return this.board.groups.filter(g => g.id === groupId)[0].tasks[index]
       }
     },
   }
