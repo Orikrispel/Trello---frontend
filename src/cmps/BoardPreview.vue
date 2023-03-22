@@ -2,7 +2,6 @@
     <div class="board-preview">
         <h5>{{ board.title }}</h5>
         <div class="board-preview-actions">
-            <button @click.stop="onRemoveBoard(board._id)">Remove</button>
             <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div>
         </div>
     </div>

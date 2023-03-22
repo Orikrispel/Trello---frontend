@@ -2,7 +2,7 @@
     <div class="board-lists-container">
         <h3 v-if="starredBoards.length">Starred Boards:</h3>
         <ul class="board-list">
-            <li v-for="board in starredBoards" :key="board._id"
+            <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
             </li>

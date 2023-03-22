@@ -1,14 +1,27 @@
-.board-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  flex-wrap: wrap;
+.board-lists-container {
+  h3 {
+    padding: 6px;
+  }
+}
 
+.board-list {
+  // list-style: none;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  // padding: 0px 0px;
+  // gap: 7px;
+  list-style: none;
+  justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  padding: 0px 0px;
+  gap: 7px;
   li {
     color: $secondary-clr2;
     padding: 7px;
     margin: 5px;
     width: 194px;
+    gap: 20px;
     height: 96px;
     border-radius: 3px;
     &:hover {

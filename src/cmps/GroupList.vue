@@ -1,10 +1,10 @@
 <template>
-  <section>
-    <ul class="group-list flex">
-      <li v-for="group in groups" :key="group._id">
-        <GroupPreview :group="group" />
-      </li>
-    </ul>
+  <section class="flex">
+    <Container v-if="boardCopy" class="flex" @drop="onDrop" orientation="horizontal">
+      <Draggable v-for="group in boardCopy.groups" :key="group.id">
+        <GroupPreview :board="boardCopy" :group="group" @updateBoard="updateBoard" />
+      </Draggable>
+    </Container>
   </section>
 </template>
 
@@ -12,20 +12,35 @@
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import GroupPreview from '../cmps/GroupPreview.vue'
-import { getActionRemoveGroup, getActionUpdateGroup, getActionAddGroupMsg } from '../store/board.store'
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { applyDrag } from '../services/util.service'
+import { getActionLoadGroups } from '../store/board.store'
 export default {
-  props: ["groups"],
+  name: 'GroupList',
+  props: ['board'],
   data() {
     return {
-      groupToAdd: boardService.getEmptyGroup()
+      groupToAdd: boardService.getEmptyGroup(),
+      boardCopy: JSON.parse(JSON.stringify(this.board))
     }
   },
-  computed: {
-    loggedInUser() {
-      return this.$store.getters.loggedinUser
-    },
-  },
   methods: {
+    onDrop(dropResult) {
+      console.log('dropResult:', dropResult)
+      this.boardCopy.groups = applyDrag(this.boardCopy.groups, dropResult)
+      this.updateBoard(this.boardCopy)
+    },
+
+    async updateBoard(board) {
+      try {
+        await this.$store.dispatch({ type: 'updateBoard', board })
+        showSuccessMsg('Board updated')
+        this.boardCopy = board
+      } catch (err) {
+        console.log(err)
+        showErrorMsg('Cannot update group')
+      }
+    },
     async addGroup() {
       try {
         await this.$store.dispatch({ type: 'addGroup', group: this.groupToAdd })
@@ -67,12 +82,11 @@ export default {
         showErrorMsg('Cannot add group msg')
       }
     },
-    printGroupToConsole(group) {
-      console.log('Group msgs:', group.msgs)
-    }
   },
   components: {
     GroupPreview,
+    Container,
+    Draggable
   }
 
 
