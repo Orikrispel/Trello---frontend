@@ -1,15 +1,22 @@
 <template>
   <section class="task-details main">
-    <header class="task-cover">
-      <RouterLink :to="'/board'" class="btn-close">X </RouterLink>
+    <header v-if="task.cover" class="task-cover">
+      <RouterLink :to="'/board'" class="btn-close">
+        <div class="icon" v-html="getSvg('close')"></div>
+      </RouterLink>
     </header>
-    <RouterLink :to="'/board'" class="btn-close">X </RouterLink>
+
     <div class="task-container">
       <div class="task-container-heading">
-        <h2 contenteditable="true" @input="updateTitle">
-          {{ task.title ? task.title : 'new title' }}
-        </h2>
-        <small>in list {{ task.list }}</small>
+        <div class="txt-container">
+          <h2 contenteditable="true" @input="updateTitle">
+            {{ task.title ? task.title : 'new title' }}
+          </h2>
+          <small>in list {{ task.list }}</small>
+        </div>
+        <RouterLink v-if="!task.cover" :to="'/board'" class="btn-close"
+          ><div class="icon" v-html="getSvg('close')"></div>
+        </RouterLink>
       </div>
       <ul>
         <li v-for="label in task.labels">{{ label }}</li>
@@ -37,15 +44,26 @@
           @blur="userIsEditing = !userIsEditing"></textarea>
       </form>
 
-      <aside class="btns-container">
+      <aside class="btns-container flex">
         <h4>Add to card</h4>
-        <button>
-          <div class="icon" v-html="getSvg('star')"></div>
+        <button class="flex align-center">
+          <div class="icon" v-html="getSvg('addMember')"></div>
+          Members
         </button>
+
         <button>Labels</button>
-        <button>Checklist</button>
-        <button>Dates</button>
-        <button>Attachment</button>
+        <button class="flex align-center">
+          <div class="icon" v-html="getSvg('checkInsideBox')"></div>
+          Checklist
+        </button>
+        <button class="flex align-center">
+          <div class="icon" v-html="getSvg('clock')"></div>
+          Dates
+        </button>
+        <button class="flex align-center">
+          <div class="icon" v-html="getSvg('attachment')"></div>
+          Attachment
+        </button>
         <button>Location</button>
       </aside>
       <div class="comments-activity-container">
