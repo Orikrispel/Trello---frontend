@@ -1,14 +1,14 @@
 .board-list {
   list-style: none;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   flex-wrap: wrap;
 
   li {
-    // background-color: $primary-clr2;
     color: $secondary-clr2;
     padding: 7px;
     margin: 5px;
-    width: 190px;
+    width: 194px;
     height: 96px;
     border-radius: 3px;
     &:hover {
