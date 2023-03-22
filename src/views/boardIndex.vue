@@ -20,6 +20,8 @@ import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg, getAc
 
 import BoardList from '../cmps/BoardList.vue'
 import ColorPicker from '../cmps/ColorPicker.vue'
+import ActionModal from '../cmps/ColorPicker.vue'
+
 export default {
   data() {
     return {
@@ -101,6 +103,7 @@ export default {
   components: {
     BoardList,
     ColorPicker,
+    ActionModal,
   },
   emits: ['setBgColor']
 

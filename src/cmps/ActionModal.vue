@@ -1,8 +1,4 @@
-<template>
-    <div class="action-modal">
-
-    </div>
-</template>
+<template></template>
 
 <script>
 export default {

@@ -1,49 +1,47 @@
 header {
+  background-color: $primary-clr1;
+  padding: 6px 12px;
+  height: rem(44px);
+  display: flex;
+  justify-content: space-between;
+
+  .loggedin-user {
     background-color: $primary-clr1;
-    padding: 6px 4px;
-    height: rem(44px);
-    display: flex;
-    justify-content: space-between;
+    padding: 2px 8px;
+    border-radius: 1em;
+    align-self: flex-end;
+    color: whitesmoke;
 
-    .loggedin-user {
-        background-color: $primary-clr1;
-        padding: 2px 8px;
-        border-radius: 1em;
-        align-self: flex-end;
-        color: whitesmoke;
-
-        span {
-            background-color: $primary-clr2;
-            padding: 4px;
-            margin: 10px;
-            border-radius: 50%;
-        }
-
-        img {
-            width: 2em;
-            height: 2em;
-            border-radius: 50%;
-        }
+    span {
+      background-color: $primary-clr2;
+      padding: 4px;
+      margin: 10px;
+      border-radius: 50%;
     }
 
-    nav {
-        color: $secondary-clr1
+    img {
+      width: 2em;
+      height: 2em;
+      border-radius: 50%;
     }
+  }
 
-    nav a {
-        color: $secondary-clr1;
+  nav {
+    color: $secondary-clr1;
+  }
 
-        &:not(:first-child) {
-            font-size: rem(14px);
-            border-top: 1px solid $primary-clr1;
-            padding: 0 5px;
-            margin: 10px;
-        }
+  nav a {
+    color: $secondary-clr1;
+
+    &:not(:first-child) {
+      font-size: rem(14px);
+      border-top: 1px solid $primary-clr1;
+      padding: 0 5px;
+      margin: 10px;
     }
+  }
 
-
-    nav .active {
-        color: $primary-clr1;
-    }
-
+  nav .active {
+    color: $primary-clr1;
+  }
 }

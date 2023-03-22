@@ -35,7 +35,8 @@ export default {
         setColor(color) {
             this.pickedColor = color
             this.$emit('setBgColor', color)
-        }
+        },
+
     },
     emits: ['setColor']
 }

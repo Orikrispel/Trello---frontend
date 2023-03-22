@@ -155,6 +155,7 @@ function getEmptyTask(
     status: '',
     priority: '',
     description: '',
+    labels: [],
   }
 }
 
