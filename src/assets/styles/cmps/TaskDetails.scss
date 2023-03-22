@@ -1,17 +1,25 @@
 .task-details {
   background-color: $secondary-clr3;
-
+  display: flex;
+  flex-direction: column;
   & * {
     color: $fontColor2;
   }
 
+  // & > .btn-close {
+  //   padding-block-start: 1em;
+  //   padding-inline-end: 1em;
+  //   align-self: end;
+  // }
+
   button {
     background-color: $secondary-clr5;
-    padding: 0.5em;
+    .icon {
+      font-size: 10px;
+      padding-inline: 1em;
+    }
   }
-  .btn-close {
-    justify-self: end;
-  }
+
   .task-cover {
     background-color: $coverClr2;
     min-height: 6em;
@@ -29,10 +37,21 @@
     grid-template-columns: 1em 2em 1fr 8em 1em;
 
     &-heading {
+      display: grid;
+      grid-template-columns: 1em 2em 1fr 8em 1em;
+      width: 100%;
       padding-top: 1em;
-      grid-column: 3/4;
-      justify-self: start;
-      align-self: start;
+      padding-inline-end: 1em;
+
+      grid-column: 1/-1;
+      // justify-self: start;
+      // align-self: start;
+      .txt-container {
+        grid-column: 2/4;
+      }
+      .btn-close {
+        grid-column: 5;
+      }
     }
 
     .description-editor {
@@ -41,10 +60,9 @@
 
     .btns-container {
       grid-column: 4;
-      display: flex;
       flex-direction: column;
       justify-content: start;
-
+      width: 100%;
       h4 {
         font-size: 0.8em;
       }
@@ -53,6 +71,7 @@
         color: $fontColor1;
         width: 100%;
         text-align: left;
+        padding-inline-end: 1em;
       }
     }
 
