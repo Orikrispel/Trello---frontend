@@ -16,7 +16,7 @@ export default {
     name: 'ColorPicker',
     data() {
         return {
-            pickedColor: '#f2f2f2',
+            pickedColor: 'white',
         }
     },
     computed: {
@@ -43,7 +43,3 @@ export default {
     emits: ['setColor']
 }
 </script>
-
-<style lang="scss">
-@import "../assets/styles/setup/vars";
-</style>

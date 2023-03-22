@@ -7,18 +7,17 @@
 }
 
 .board-add-form {
-  color: $fontColor3;
+  position: fixed;
   display: flex;
+  color: $fontColor3;
   padding-left: 10px;
   align-items: flex-start;
   flex-direction: column;
   background-color: #fff;
   border-radius: 3px;
   box-shadow: $action-modal-shadow;
-  position: fixed;
-  margin-top: 100px;
+  margin-top: 200px;
   padding: 20px;
-  z-index: 100;
 
   label {
     margin: 0;
@@ -38,8 +37,16 @@
   }
 
   button {
+    margin-top: 10px;
+    padding: 5px;
     border-radius: 5px;
     width: 100%;
+    border: none;
+    &:hover {
+      background-color: $primary-clr1;
+      color: $secondary-clr2;
+      cursor: pointer;
+    }
   }
   p {
     &:hover {
@@ -51,6 +58,8 @@
     margin: 30px;
     width: 220px;
     height: 120px;
+    border-radius: 5px;
+    box-shadow: $board-display-shadow;
   }
 }
 
