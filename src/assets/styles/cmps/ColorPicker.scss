@@ -1,0 +1,20 @@
+.colors-container {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+}
+
+.color-item {
+  border-radius: 3px;
+  width: 40px;
+  height: 32px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+}
+
+.board-display {
+  width: 220px;
+  height: 150px;
+}

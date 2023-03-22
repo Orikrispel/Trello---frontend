@@ -1,3 +1,9 @@
 .board-preview {
   padding: 5px;
+  .board-preview-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: flex-end;
+  }
 }

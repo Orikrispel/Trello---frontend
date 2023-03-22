@@ -79,12 +79,14 @@ function getEmptyBoard(
   isStarred = false,
   labels = [],
   createdBy = {},
+  style = {},
   groups = [getEmptyGroup()]
 ) {
   return {
     _id: '',
     title,
     isStarred,
+    style,
     labels,
     createdBy,
     groups,

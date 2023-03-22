@@ -1,10 +1,14 @@
 <template>
   <div class="index-container container home">
-    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" />
-    <form @submit.prevent="addBoard()">
-      <h2>Add board</h2>
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
+    <form @submit.prevent="addBoard()" class="board-add-form" v-if="isCreateMode">
+      <div class="add-form-header">
+        <p @click="setCreateMode">x</p>
+        <h5>Create Board</h5>
+      </div>
       <input type="text" v-model="boardToAdd.title" placeholder="enter title...." />
       <button>Save</button>
+      <ColorPicker @setBgColor="setBoardBgColor" />
     </form>
   </div>
 </template>
@@ -13,11 +17,14 @@
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg, getActionStarBoard } from '../store/board.store'
+
 import BoardList from '../cmps/BoardList.vue'
+import ColorPicker from '../cmps/ColorPicker.vue'
 export default {
   data() {
     return {
-      boardToAdd: boardService.getEmptyBoard()
+      boardToAdd: boardService.getEmptyBoard(),
+      isCreateMode: false,
     }
   },
   computed: {
@@ -33,7 +40,8 @@ export default {
     async addBoard() {
       try {
         await this.$store.dispatch({ type: 'addBoard', board: this.boardToAdd })
-        showSuccessMsg('Board added')
+        this.isCreateMode = false,
+          showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
@@ -43,7 +51,6 @@ export default {
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch(getActionRemoveBoard(boardId))
-        showSuccessMsg('Board removed')
 
       } catch (err) {
         console.log(err)
@@ -55,25 +62,29 @@ export default {
         const newBoard = { ...board }
         newBoard.isStarred = !newBoard.isStarred
         await this.$store.dispatch(getActionStarBoard(newBoard))
-        showSuccessMsg('Board starred!')
 
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot star board')
       }
-    }
-    // async updateBoard(board) {
-    //   try {
-    //     board = { ...board }
-    //     board.price = +prompt('New price?', board.price)
-    //     await this.$store.dispatch(getActionUpdateBoard(board))
-    //     showSuccessMsg('Board updated')
+    },
+    async updateBoard(board) {
+      try {
+        board = { ...board }
+        await this.$store.dispatch(getActionUpdateBoard(board))
+        showSuccessMsg('Board updated')
 
-    //   } catch (err) {
-    //     console.log(err)
-    //     showErrorMsg('Cannot update board')
-    //   }
-    // },
+      } catch (err) {
+        console.log(err)
+        showErrorMsg('Cannot update board')
+      }
+    },
+    setBoardBgColor(color) {
+      this.boardToAdd.style.backgroundColor = color
+    },
+    setCreateMode() {
+      this.isCreateMode = !this.isCreateMode
+    }
     // async addBoardMsg(boardId) {
     //   try {
     //     await this.$store.dispatch(getActionAddBoardMsg(boardId))
@@ -89,7 +100,9 @@ export default {
   },
   components: {
     BoardList,
-  }
+    ColorPicker,
+  },
+  emits: ['setBgColor']
 
 
 }
