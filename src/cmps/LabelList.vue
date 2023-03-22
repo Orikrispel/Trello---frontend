@@ -3,22 +3,22 @@
     <span class="icon btn-close" v-html="getSvg('close')"></span>
     <h3>Labels</h3>
     <hr />
-    <input type="text" name="label-search" placeholder="Search labels" />
+    <input type="text" name="label-search" placeholder="Search labels..." />
     <h4>Labels</h4>
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
         <div
           :style="{
-            'background-color': label.color || 'white',
+            'background-color': label.color || '#bcd9ea',
           }"
           class="label-container">
           <span>{{ label.title }}</span>
         </div>
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
       </li>
+      <button>Create a new label</button>
     </ul>
-    <button @click="test">test</button>
   </div>
 </template>
 
