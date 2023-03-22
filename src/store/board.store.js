@@ -98,6 +98,9 @@ export const boardStore = {
     boards({ boards }) {
       return boards
     },
+    currBoard({ currBoard }) {
+      return currBoard
+    },
     groups({ groups }) {
       return groups
     },
@@ -135,6 +138,9 @@ export const boardStore = {
       const board = state.boards.find((board) => board._id === boardId)
       if (!board.msgs) board.msgs = []
       board.msgs.push(msg)
+    },
+    setCurrBoard(state, { boardId }) {
+      state.currBoard = state.boards.find((board) => board._id === boardId)
     },
 
     // GROUPS
@@ -221,6 +227,7 @@ export const boardStore = {
       try {
         const groups = await boardService.queryGroups(boardId)
         context.commit({ type: 'setGroups', groups })
+        context.commit({ type: 'setCurrBoard', boardId })
       } catch (err) {
         console.log('boardStore: Error in loadGroups', err)
         throw err

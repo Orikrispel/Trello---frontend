@@ -2,7 +2,7 @@
   <section>
     <ul class="group-list flex">
       <li v-for="group in groups" :key="group._id">
-        <GroupPreview :group="group" :board="board" />
+        <GroupPreview :group="group" />
       </li>
     </ul>
   </section>

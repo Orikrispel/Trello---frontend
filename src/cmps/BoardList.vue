@@ -5,6 +5,7 @@
             <li v-for="board in starredBoards" :key="board._id"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+                <router-link :to="`/board/${board._id}`" class="board-link">Use This</router-link>
             </li>
         </ul>
         <h3>Boards:</h3>
@@ -15,6 +16,7 @@
             <li v-for="board in boards" :key="board._id"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+                <router-link :to="`/board/${board._id}`" class="board-link">Use This</router-link>
             </li>
         </ul>
     </div>

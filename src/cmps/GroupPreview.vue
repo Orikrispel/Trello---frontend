@@ -1,6 +1,6 @@
 <template>
-  <Container class="group-wrapper flex" group-name="cols" tag="div" orientation="horizontal" @drop="onGroupDrop($event)">
-    <Draggable class="">
+  <Container class="flex" group-name="cols" tag="div" orientation="horizontal" @drop="onGroupDrop($event)">
+    <Draggable class="group-wrapper ">
       <div class="flex column">
 
         <!-- header-->
@@ -10,14 +10,14 @@
         <!-- group -->
         <Container class="group-wrapper" orientation="vertical" group-name="col-tasks"
           :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-tasks' && !payload.loading)"
-          :get-child-payload="getCardPayload(group.id)" :drop-placeholder="{
+          :get-child-payload="getGroupPayload(group.id)" :drop-placeholder="{
             className: ``,
             animationDuration: '200',
             showOnTop: true
-          }" drag-class="" drop-class="" @drop="(e) => onCardDrop(group.id, e)">
+          }" drag-class="" drop-class="" @drop="(e) => onGroupDrop(group.id, e)">
 
           <!-- Tasks -->
-          <Draggable v-for="task in group.tasks" :key="task.id" :task="task">
+          <Draggable v-for="task in group.tasks" :key="task.id">
             <div v-if="task.loading" class="flex">
               <span>Processing...</span>
             </div>
@@ -39,30 +39,30 @@ import { applyDrag, generateItems } from '../services/util.service'
 
 
 export default {
-  props: ['group, board'],
+  props: ['group'],
   components: { Container, Draggable },
   data() {
     return {
+      board: null
     }
   },
+  created() {
+    this.board = JSON.parse(JSON.stringify(this.$store.getters.currBoard))
+  },
   methods: {
-    getGroupHeightPx() {
-      let kanban = document.getElementById('kanbanContainer');
-      return kanban ? kanban.offsetHeight - 122 : 0;
-    },
     onGroupDrop(dropResult) {
-      const scene = Object.assign({}, this.scene)
-      scene.children = applyDrag(scene.children, dropResult)
-      this.scene = scene
+      const board = Object.assign({}, this.board)
+      board.groups = applyDrag(board.groups, dropResult)
+      this.board = board
     },
-    onCardDrop(groupId, dropResult) {
+    onGroupDrop(groupId, dropResult) {
 
       // check if element where ADDED or REMOVED in current collumn
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
-        const scene = Object.assign({}, this.scene)
-        const group = scene.children.filter(p => p.id === groupId)[0]
-        const taskIndex = scene.children.indexOf(group)
+        const board = Object.assign({}, this.board)
+        const group = board.groups.filter(g => g.id === groupId)[0]
+        const taskIndex = board.groups.indexOf(group)
         const newGroup = Object.assign({}, group)
 
         // check if element was ADDED in current group
@@ -73,14 +73,15 @@ export default {
           setTimeout(function () { dropResult.payload.loading = false }, (Math.random() * 5000) + 1000);
         }
 
-        newGroup.children = applyDrag(newGroup.children, dropResult)
-        scene.children.splice(taskIndex, 1, newGroup)
-        this.scene = scene
+        newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
+        board.groups.splice(taskIndex, 1, newGroup)
+        this.board = board
       }
     },
-    getCardPayload(groupId) {
+    getGroupPayload(groupId) {
+      console.log('groupId:', groupId)
       return index => {
-        return this.scene.children.filter(p => p.id === groupId)[0].children[index]
+        return this.board.groups.filter(g => g.id === groupId)[0].groups[index]
       }
     },
   }
