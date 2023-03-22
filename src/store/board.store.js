@@ -32,6 +32,7 @@ export function getActionAddBoardMsg(boardId) {
     txt: 'Stam txt',
   }
 }
+// GROUPS
 export function getActionRemoveGroup(groupId) {
   return {
     type: 'removeGroup',
@@ -57,6 +58,8 @@ export function getActionAddGroupMsg(groupId) {
     txt: 'Stam txt',
   }
 }
+
+// TASKS
 export function getActionRemoveTask(taskId) {
   return {
     type: 'removeTask',
@@ -211,7 +214,7 @@ export const boardStore = {
         throw err
       }
     },
-
+    // GROUPS
     async loadGroups(context, { boardId }) {
       try {
         const groups = await boardService.queryGroups(boardId)
@@ -250,6 +253,8 @@ export const boardStore = {
         throw err
       }
     },
+
+    //TASKS
     async saveTask({ commit }, { task }) {
       try {
         let savedTask = await boardService.save(task)
