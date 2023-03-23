@@ -2,12 +2,14 @@
   <section class="task-details main">
     <!-- <header v-if="task.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
-        <div class="icon" v-html="getSvg('close')"></div>
+        '<div class="icon" v-html="getSvg("close")"></div>',
       </RouterLink>
     </header> -->
+    '
     <div class="task-container">
+      '
       <div class="task-container-heading">
-        <!-- <div class="txt-container"> -->
+        <!-- '<div class="txt-container"> -->
         <h2 contenteditable="true" @input="updateTitle">
           <span class="icon header-icon"></span>
           {{ task.title ? task.title : 'new title' }}
@@ -17,7 +19,9 @@
         >
         <!-- </div> -->
         <RouterLink v-if="!task.cover" :to="'/board'" class="btn-close">
+          '
           <div class="icon" v-html="getSvg('close')"></div>
+          ',
         </RouterLink>
       </div>
       <ul class="task-heading-label-list flex clean-list">
@@ -34,6 +38,7 @@
             Edit
           </button>
         </h3>
+        '
         <div
           v-if="!userIsEditing && !task.description"
           @click="userIsEditing = !userIsEditing">
@@ -68,6 +73,7 @@
           <span class="icon card-cover-icon"></span>Cover
         </button>
       </aside>
+      '
       <div class="comments-activity-container">
         <h3><span class="icon activity-icon"></span> Activity</h3>
         <form class="comment-form" @submit.prevent="handleComment">
