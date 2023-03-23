@@ -1,0 +1,18 @@
+.btn {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  padding: 6px 12px;
+  color: $fontColor1;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+
+  &.btn-dark {
+    background-color: $btn-clr1;
+  }
+}

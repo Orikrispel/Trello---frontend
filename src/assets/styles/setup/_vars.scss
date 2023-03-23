@@ -9,7 +9,11 @@ $secondary-clr3: #f4f5f7;
 $secondary-clr4: #e2e4e9;
 $secondary-clr5: #eaecf0;
 $secondary-clr6: #f5f6f8;
-$shadow-clr1: #091e4240;
+
+// BUTTONS 
+$btn-clr1: #172b4d;
+$btn-clr2: #0079bf;
+$btn-clr3: #0000001a;
 
 // COVER COLORS
 $coverClr1: #7bc86c;
@@ -44,8 +48,9 @@ $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
 $normal-breakpoint: 960px;
 
-// vars
+// OTHERS
 $header-height: 44px;
+$shadow-clr1: #091e4240;
 $action-modal-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.251),
   0 0 0 1px rgba(9, 30, 66, 0.078);
 $input-shadow: inset 0 0 0 2px #dfe1e6;
