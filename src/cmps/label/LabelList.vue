@@ -1,6 +1,5 @@
 <template>
   <div class="labels-list">
-    <h3>Labels</h3>
     <hr />
     <input type="text" name="label-search" placeholder="Search labels..." />
     <h4>Labels</h4>

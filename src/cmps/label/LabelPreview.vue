@@ -3,7 +3,7 @@
     :style="{
       'background-color': label.color || '#bcd9ea',
     }"
-    class="label-container"
+    class="label-preview"
     @mouseover="getLabelStyle"
     @mouseout="getLabelStyle">
     <span>{{ label.title }}</span>
