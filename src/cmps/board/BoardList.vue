@@ -30,7 +30,7 @@
 
 <script>
 import { svgService } from '../../services/svg.service'
-import BoardPreview from '../Board/BoardPreview.vue'
+import BoardPreview from '../board/BoardPreview.vue'
 export default {
   name: 'BoardList',
   data() {

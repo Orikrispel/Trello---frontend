@@ -27,7 +27,7 @@ import {
   getActionStarBoard,
 } from '../../store/board.store'
 
-import BoardList from '../../cmps/Board/BoardList.vue'
+import BoardList from '../../cmps/board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import ImgPicker from '../../cmps/ImgPicker.vue'
 
@@ -37,6 +37,7 @@ export default {
       boardToAdd: boardService.getEmptyBoard(),
       isCreateMode: false,
       boardPickedColor: 'white',
+      boardPickedImg: ''
     }
   },
   computed: {
