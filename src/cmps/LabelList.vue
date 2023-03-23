@@ -12,7 +12,9 @@
           :style="{
             'background-color': label.color || '#bcd9ea',
           }"
-           :class="{ 'hovered': isHovered }" @mouseover="isHovered = true" @mouseout="isHovered = false">
+          class="label-container"
+          @mouseover="getLabelClass"
+          @mouseout="getLabelClass">
           <span>{{ label.title }}</span>
         </div>
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
@@ -59,6 +61,15 @@ export default {
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
+    },
+    getLabelClass(ev) {
+      if (ev.type === 'mouseover') {
+        ev.target.style.filter = 'brightness(85%)'
+      } else if (ev.type === 'mouseout') {
+        ev.target.style.filter = 'brightness(100%)'
+      }
+
+      // console.log(ev.target.style)
     },
   },
 }
