@@ -1,0 +1,34 @@
+.label-preview {
+  min-height: 2em;
+  span {
+    padding: 0.8em;
+    margin-inline-start: 1em;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1em;
+      bottom: 0.5em;
+      left: -0.5em;
+      border-radius: 50%;
+      width: 1em;
+      height: 1em;
+
+      background-blend-mode: darken;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1em;
+      bottom: 0.5em;
+      left: -0.5em;
+
+      border-radius: 50%;
+      width: 1em;
+      height: 1em;
+      background-color: black;
+      opacity: 0.2;
+    }
+  }
+}

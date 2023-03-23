@@ -1,27 +1,21 @@
 <template>
   <div class="labels-list">
-    <span class="icon btn-close" v-html="getSvg('close')"></span>
-    <h3>Labels</h3>
     <hr />
     <input type="text" name="label-search" placeholder="Search labels..." />
     <h4>Labels</h4>
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
-        <div :style="{
-          'background-color': label.color || '#bcd9ea',
-        }" class="label-container" @mouseover="getLabelStyle" @mouseout="getLabelStyle">
-          <span>{{ label.title }}</span>
-        </div>
+        <LabelPreview :label="label" />
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
       </li>
-      <button @click="userIsEditing = true">Create a new label</button>
+      <button @click="$emit('toggleLabelEdit')">Create a new label</button>
     </ul>
   </div>
 </template>
 
 <script>
-import LabelEdit from './LabelEdit.vue'
+import LabelPreview from './LabelPreview.vue'
 import { svgService } from '../../services/svg.service'
 export default {
   name: 'LabelList',
@@ -63,7 +57,7 @@ export default {
     },
   },
   components: {
-    LabelEdit,
+    LabelPreview,
   },
 }
 </script>

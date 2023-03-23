@@ -1,0 +1,44 @@
+.label-menu {
+  position: fixed;
+  background-color: $secondary-clr1;
+  display: flex;
+  flex-direction: column;
+  min-height: 29em;
+  top: 5%;
+  width: 16.5em;
+  right: 0.5em;
+  padding-inline: 1em;
+  padding-block: 1em;
+
+  & * {
+    font-size: 0.9em;
+  }
+  &-header {
+    display: grid;
+    justify-self: center;
+    grid-template-columns: 1em 1fr 1em;
+    grid-template-rows: 1fr;
+    align-self: center;
+    place-items: center;
+    width: 100%;
+    & > * {
+      grid-row: 1;
+    }
+
+    h3 {
+      justify-self: center;
+      grid-column: 2;
+    }
+    .btn-back {
+      grid-column: 1;
+      cursor: pointer;
+      scale: 1.5;
+    }
+    .btn-close {
+      grid-column: 3;
+      align-self: end;
+      background-color: inherit;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.label-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .label-preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $secondary-clr3;
+    min-height: 6em;
+
+    .label-preview {
+      width: 80%;
+    }
+  }
+
+  input {
+    box-shadow: $input-shadow;
+    border: none;
+    min-height: 2.2em;
+  }
+
+  .colors-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 7px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

@@ -1,0 +1,14 @@
+.img-picker-container {
+  display: flex;
+  gap: 5px;
+  .img-picker-item {
+    display: flex;
+    border-radius: 3px;
+    width: 60px;
+    height: 40px;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(90%);
+    }
+  }
+}

@@ -5,17 +5,10 @@
       <h3>Starred Boards</h3>
     </div>
     <ul class="board-list">
-      <li
-        v-for="board in starredBoards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
     <div class="boards-header">
@@ -26,32 +19,28 @@
       <li class="new-board" @click="setCreateMode">
         <p>Create new board</p>
       </li>
-      <li
-        v-for="board in boards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service'
 import { svgService } from '../../services/svg.service'
-import BoardPreview from '../Board/BoardPreview.vue'
+import BoardPreview from '../board/BoardPreview.vue'
 export default {
   name: 'BoardList',
   data() {
     return {}
   },
+  created() {
+  },
   computed: {
-    loggedInUser() {},
+    loggedInUser() { },
     starredBoards() {
       const boards = this.$store.getters.boards
       return boards.filter((board) => board.isStarred)
@@ -68,7 +57,7 @@ export default {
       this.$emit('starBoard', board)
     },
     setCreateMode() {
-      this.$emit('setCreateMode')
+      eventBus.emit('setCreateMode', true)
     },
     showBoardDetails(boardId) {
       this.$router.push(`/board/${boardId}`)
@@ -83,5 +72,4 @@ export default {
   },
 }
 
-//    <router-link :to="`/board/${board._id}`" class="board-link">
 </script>

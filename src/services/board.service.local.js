@@ -13,6 +13,7 @@ export const boardService = {
   getEmptyTask,
   addBoardMsg,
   getDefaultEmptyLabels,
+  getDefaultEmptyLabel,
 }
 window.cs = boardService
 
@@ -117,6 +118,14 @@ function getEmptyTask(title = '', status = '', priority = '', description = '') 
     priority,
     description,
     labels: [],
+  }
+}
+
+function getDefaultEmptyLabel() {
+  return {
+    id: '',
+    title: ' ',
+    color: '#d6ecd2',
   }
 }
 

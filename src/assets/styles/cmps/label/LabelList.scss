@@ -1,23 +1,7 @@
 .labels-list {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  min-height: 29em;
-  top: 5%;
-  width: 16.5em;
-  right: 0.5em;
   gap: 0.1em;
-  background-color: $secondary-clr1;
-  .btn-close {
-    justify-self: end;
-    align-self: end;
-    background-color: inherit;
-    cursor: pointer;
-  }
-
-  h3 {
-    align-self: center;
-  }
 
   input[name='label-search'] {
     width: 90%;
@@ -59,14 +43,11 @@
       margin-inline-start: 0.6em;
       border-radius: 3px;
     }
-    .label-container {
+    .label-preview {
       width: 80%;
       min-height: 100%;
       cursor: pointer;
       border-radius: 3px;
-      &:hover {
-        background-color: darken($secondary-clr1, 10%);
-      }
     }
     .pencil-icon {
       cursor: pointer;
