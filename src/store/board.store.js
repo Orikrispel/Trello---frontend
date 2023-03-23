@@ -118,6 +118,9 @@ export const boardStore = {
     setCurrBoard(state, { board }) {
       state.currBoard = board
     },
+    setCurrTask(state, { task }) {
+      state.currTask = task
+    },
   },
   actions: {
     async addBoard(context, { board }) {

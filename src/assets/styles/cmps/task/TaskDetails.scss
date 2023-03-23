@@ -1,17 +1,27 @@
 .task-details {
+  z-index: 11;
+  border-radius: 0.2em;
+  position: fixed;
   background-color: $secondary-clr3;
   display: flex;
   flex-direction: column;
+  align-self: center;
+  right: 50%;
+  transform: translateX(50%);
+  overflow-y: scroll;
+  width: 40em;
+  min-height: 100%;
 
   & * {
     color: $font-clr2;
   }
 
-  // & > .btn-close {
-  //   padding-block-start: 1em;
-  //   padding-inline-end: 1em;
-  //   align-self: end;
-  // }
+  & > .btn-close {
+    padding-block-start: 1em;
+    padding-inline-end: 1em;
+    align-self: end;
+    z-index: 12;
+  }
 
   button {
     background-color: $secondary-clr5;
@@ -33,7 +43,9 @@
   }
 
   .task-container {
+    position: absolute;
     display: grid;
+    width: 100%;
     min-height: 100%;
     grid-template-rows: 4em 3em 3em 1fr 1fr;
     grid-template-columns: 1em 2em 1fr 10em 1em;
