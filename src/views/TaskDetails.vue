@@ -21,7 +21,7 @@
       </div>
       <ul class="task-heading-label-list flex clean-list">
         <h3>Labels</h3>
-        <li v-for="label in task.labels">{{ label.txt }}</li>
+        <li v-for="label in task.labels" :key="label.id">{{ label.txt }}</li>
       </ul>
       <form class="description-editor" @submit.prevent="handleDesc">
         <h3>
