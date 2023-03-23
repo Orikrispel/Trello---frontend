@@ -12,7 +12,7 @@
           :style="{
             'background-color': label.color || '#bcd9ea',
           }"
-          class="label-container">
+           :class="{ 'hovered': isHovered }" @mouseover="isHovered = true" @mouseout="isHovered = false">
           <span>{{ label.title }}</span>
         </div>
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>

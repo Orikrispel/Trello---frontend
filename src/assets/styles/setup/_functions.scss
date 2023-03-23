@@ -8,7 +8,3 @@
 @function em($pixels, $context: 16px) {
   @return calc(($pixels/$context) * 1em);
 }
-
-@function darkify($color, $percentage: 10%) {
-  @return darken($color, $percentage);
-}
