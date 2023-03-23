@@ -9,44 +9,56 @@
   border-radius: 3px;
   width: 40px;
   height: 32px;
+
   &:hover {
     cursor: pointer;
   }
 }
 
 .color-item-1 {
-  background-color: $coverClr1;
+  background-color: $cover-clr1;
+
   &:hover {
-    background-color: darken($coverClr1, 10);
+    background-color: darken($cover-clr1, 10);
   }
 }
+
 .color-item-2 {
-  background-color: $coverClr2;
+  background-color: $cover-clr2;
+
   &:hover {
-    background-color: darken($coverClr2, 10);
+    background-color: darken($cover-clr2, 10);
   }
 }
+
 .color-item-3 {
-  background-color: $coverClr3;
+  background-color: $cover-clr3;
+
   &:hover {
-    background-color: darken($coverClr3, 10);
+    background-color: darken($cover-clr3, 10);
   }
 }
+
 .color-item-4 {
-  background-color: $coverClr4;
+  background-color: $cover-clr4;
+
   &:hover {
-    background-color: darken($coverClr4, 10);
+    background-color: darken($cover-clr4, 10);
   }
 }
+
 .color-item-5 {
-  background-color: $coverClr5;
+  background-color: $cover-clr5;
+
   &:hover {
-    background-color: darken($coverClr5, 10);
+    background-color: darken($cover-clr5, 10);
   }
 }
+
 .color-item-6 {
-  background-color: $coverClr6;
+  background-color: $cover-clr6;
+
   &:hover {
-    background-color: darken($coverClr6, 10);
+    background-color: darken($cover-clr6, 10);
   }
 }
