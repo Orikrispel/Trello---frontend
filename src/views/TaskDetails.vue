@@ -13,7 +13,8 @@
           {{ task.title ? task.title : 'new title' }}
         </h2>
         <small>
-          <span class="icon header-icon"></span> in list {{ task.list }}</small>
+          <span class="icon header-icon"></span> in list {{ task.list }}</small
+        >
         <!-- </div> -->
         <RouterLink v-if="!task.cover" :to="'/board'" class="btn-close">
           <div class="icon" v-html="getSvg('close')"></div>
@@ -27,17 +28,24 @@
         <h3>
           <span class="icon description-icon"></span>
           Description
-          <button v-if="!userIsEditing && task.description" @click="userIsEditing = !userIsEditing">
+          <button
+            v-if="!userIsEditing && task.description"
+            @click="userIsEditing = !userIsEditing">
             Edit
           </button>
         </h3>
-        <div v-if="!userIsEditing && !task.description" @click="userIsEditing = !userIsEditing">
+        <div
+          v-if="!userIsEditing && !task.description"
+          @click="userIsEditing = !userIsEditing">
           Add a more detailed description...
         </div>
         <p v-if="!userIsEditing" @click="handleDesc">
           {{ task.description }}
         </p>
-        <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = !userIsEditing"
+        <textarea
+          v-if="userIsEditing"
+          v-model="task.description"
+          @blur="userIsEditing = !userIsEditing"
           autofocus></textarea>
         <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
           Save
@@ -86,13 +94,13 @@
         <button @click="test">test</button>
       </div>
     </div>
-    <LabelList />
+    <LabelMenu />
   </section>
 </template>
 
 <script>
 import { svgService } from '../services/svg.service'
-import LabelList from '../cmps/LabelList.vue'
+import LabelMenu from '../cmps/LabelMenu.vue'
 export default {
   name: 'TaskDetails',
   data() {
@@ -150,7 +158,7 @@ export default {
     },
   },
   components: {
-    LabelList,
+    LabelMenu,
   },
 }
 </script>

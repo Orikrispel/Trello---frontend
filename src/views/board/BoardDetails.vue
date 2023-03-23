@@ -7,25 +7,28 @@
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { boardService } from '../services/board.service.local'
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
+import { boardService } from '../../services/board.service.local'
 import GroupList from '../cmps/GroupList.vue'
 import {
   getActionRemoveGroup,
   getActionUpdateGroup,
   getActionAddGroupMsg,
-} from '../store/board.store'
+} from '../../store/board.store'
 
 export default {
   data() {
     return {
       groupToAdd: boardService.getEmptyGroup(),
-      board: null
+      board: null,
     }
   },
   async created() {
     // this.$store.dispatch({ type: 'loadGroups', boardId: this.boardId })
-    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
     console.log('board:', this.board)
   },
   computed: {
