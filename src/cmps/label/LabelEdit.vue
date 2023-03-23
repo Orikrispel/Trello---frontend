@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ColorPicker from '../cmps/ColorPicker.vue'
+import ColorPicker from '../../cmps/ColorPicker.vue'
 export default {
   methods: {
     setColor(color) {

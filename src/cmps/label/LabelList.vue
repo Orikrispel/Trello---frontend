@@ -8,13 +8,9 @@
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
-        <div
-          :style="{
-            'background-color': label.color || '#bcd9ea',
-          }"
-          class="label-container"
-          @mouseover="getLabelStyle"
-          @mouseout="getLabelStyle">
+        <div :style="{
+          'background-color': label.color || '#bcd9ea',
+        }" class="label-container" @mouseover="getLabelStyle" @mouseout="getLabelStyle">
           <span>{{ label.title }}</span>
         </div>
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
@@ -26,7 +22,7 @@
 
 <script>
 import LabelEdit from './LabelEdit.vue'
-import { svgService } from '../services/svg.service'
+import { svgService } from '../../services/svg.service'
 export default {
   name: 'LabelList',
   data() {

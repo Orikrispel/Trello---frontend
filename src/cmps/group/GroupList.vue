@@ -9,12 +9,11 @@
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { boardService } from '../services/board.service.local'
-import GroupPreview from '../cmps/GroupPreview.vue'
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
+import { boardService } from '../../services/board.service.local'
+import GroupPreview from './GroupPreview.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
-import { applyDrag } from '../services/util.service'
-import { getActionLoadGroups } from '../store/board.store'
+import { applyDrag } from '../../services/util.service'
 export default {
   name: 'GroupList',
   props: ['board'],
