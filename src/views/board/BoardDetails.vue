@@ -1,6 +1,6 @@
 <template>
   <div v-if="board" class="board-container main flex column">
-    <section class="board-header flex gap">
+    <section class="board-header flex align-center gap">
       <h1 class="board-title fs18">{{ board.title }}</h1>
       <button class="btn">
         <div class="star-svg" v-html="getSvg('star')" @click="starBoard"></div>
