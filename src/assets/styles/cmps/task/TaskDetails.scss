@@ -2,8 +2,9 @@
   background-color: $secondary-clr3;
   display: flex;
   flex-direction: column;
+
   & * {
-    color: $fontColor2;
+    color: $font-clr2;
   }
 
   // & > .btn-close {
@@ -20,10 +21,11 @@
   }
 
   .task-cover {
-    background-color: $coverClr2;
+    background-color: $cover-clr2;
     min-height: 6em;
     display: flex;
     justify-content: end;
+
     .btn-close {
       padding-inline: 1em;
       font-weight: 700;
@@ -59,6 +61,7 @@
       small {
         grid-column: 1/4;
         align-self: start;
+
         span {
           opacity: 0;
         }
@@ -68,9 +71,11 @@
         grid-column: 5;
       }
     }
+
     .task-heading-label-list {
       grid-column: 3;
       grid-row: 3;
+
       h3 {
         font-size: 0.7em;
       }
@@ -81,23 +86,26 @@
       align-self: start;
       grid-column: 2/4;
       width: 100%;
+
       p {
         margin: 0;
         margin-block-start: 0;
         margin-block-end: 0;
       }
+
       textarea {
         width: 100%;
         min-height: 100%;
       }
+
       .btn-submit-desc {
         background-color: $primary-clr4;
         color: $secondary-clr1;
         padding: 0.7em;
         border-radius: 10%;
       }
-      .btn-cancel-desc {
-      }
+
+      .btn-cancel-desc {}
     }
 
     .btns-container {
@@ -106,6 +114,7 @@
       flex-direction: column;
       justify-content: start;
       width: 100%;
+
       h4 {
         font-size: 0.8em;
       }
@@ -114,7 +123,7 @@
         display: flex;
         align-items: center;
         justify-content: start;
-        color: $fontColor1;
+        color: $font-clr1;
         width: 100%;
         text-align: left;
         padding-inline-end: 1em;
@@ -130,11 +139,14 @@
 
       grid-column: 2/4;
       width: 100%;
+
       form {
         justify-self: center;
+
         p {
           cursor: pointer;
         }
+
         textarea {
           width: 100%;
           min-height: 30%;

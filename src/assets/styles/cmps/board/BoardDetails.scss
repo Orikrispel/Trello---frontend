@@ -5,7 +5,9 @@
     position: relative;
 
     h1 {
-      color: $fontColor1;
+      font-family: 'Segoe UI Bold';
+      color: $font-clr1;
+      margin: 0;
     }
   }
 }
