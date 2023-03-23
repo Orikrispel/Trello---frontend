@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="app-haeder">
     <nav>
       <RouterLink to="/">
         <span role="img" aria-label="logo">Trello</span>

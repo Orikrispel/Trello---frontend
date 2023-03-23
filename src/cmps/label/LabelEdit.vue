@@ -1,8 +1,14 @@
 <template>
   <section class="label-edit">
-    <labelPreview :label="label" />
+    <div class="label-preview-container">
+      <labelPreview :label="label" />
+    </div>
+    <h4>Title</h4>
     <input type="text" name="label-title" v-model="label.title" />
+    <h4>Select a color</h4>
     <ColorPicker :quantity="30" @setColor="setColor" />
+    <button>X Remove color</button>
+    <button>Create</button>
   </section>
 </template>
 
@@ -23,8 +29,7 @@ export default {
   },
   methods: {
     setColor(color) {
-      console.log(this.label)
-      this.pickedColor = color
+      this.label.color = color
       this.$emit('setColor', color)
     },
   },

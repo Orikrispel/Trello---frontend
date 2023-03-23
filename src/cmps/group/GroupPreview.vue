@@ -1,27 +1,32 @@
 <template>
-  <section class="group-wrapper" v-if="group">
-    <div class="group-header flex">
-      <h2 class="fs14" contenteditable="true">{{ group.title }}</h2>
-    </div>
-    <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-      group-name="col-items" :shouldAcceptDrop="(e) => (e.groupName === 'col-items')">
+  <section class="group-wrapper flex column" v-if="group">
+    <header class="group-header flex">
+      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">{{ group.title
+      }}</h2>
+      <button>∙∙∙</button>
+    </header>
 
-      <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
-        <RouterLink :to="`/task/${task.id}`">
-          <span class="task-title fs14">
-            {{ task.title }}
-          </span>
-        </RouterLink>
-      </Draggable>
+    <main class="tasks-wrapper">
+      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items" :shouldAcceptDrop="(e) => (e.groupName === 'col-items')" drag-class="card-ghost"
+        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
+        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
+          <RouterLink :to="`/task/${task.id}`">
+            <span class="task-title fs14">
+              {{ task.title }}
+            </span>
+          </RouterLink>
+        </Draggable>
+      </Container>
 
-      <button v-show="!isAddTask" class="clean-btn" @click="toggleAddTask">+ add a card</button>
-      <div v-show="isAddTask" class="add-task-container flex gap">
-        <textarea class="task-container" name="add-task" cols="30" rows="5"
+      <button v-show="!isAddTask" class="btn clean-btn" @click="toggleAddTask">+ add a card</button>
+      <div v-show="isAddTask" class="new-task-container flex">
+        <textarea class="task-container" ref="newTask" name="add-task" cols="30" rows="3"
           placeholder="Enter a title for this card..."></textarea>
-        <button class="btn btn-blue" @click="">add card</button>
-        <button class="btn clean-btn" @click="toggleAddTask">X</button>
+        <button class="btn btn-blue" @click="onAddTask">Add card</button>
+        <button class="btn clean-btn" @click="toggleAddTask"><i v-html="getSvg('close')"></i></button>
       </div>
-    </Container>
+    </main>
   </section>
 </template>
 
@@ -29,6 +34,8 @@
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'
+import { utilService } from '../../services/util.service'
+import { svgService } from '../../services/svg.service'
 
 
 export default {
@@ -38,29 +45,36 @@ export default {
   data() {
     return {
       isAddTask: false,
+      dropPlaceholderOptions: {
+        className: 'drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      }
     }
   },
   methods: {
     onTaskDrop(groupId, dropResult) {
-      console.log('hi')
       // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
-        const board = Object.assign({}, this.board)
-        const group = board.groups.filter(g => g.id === groupId)[0]
-        const taskIndex = board.groups.indexOf(group)
-        const newGroup = Object.assign({}, group)
+        // const board = Object.assign({}, this.board)
+        // const group = board.groups.filter(g => g.id === groupId)[0]
+        // const groupIndex = board.groups.indexOf(group)
+        // const newGroup = Object.assign({}, group)
+
+        let board = { ...this.board }
+        let newGroup = { ...this.group }
+        const groupIndex = board.groups.indexOf(group)
+
 
         // check if element was ADDED in current group
         if ((dropResult.removedIndex == null && dropResult.addedIndex >= 0)) {
-          // your action / api call
           dropResult.payload.loading = true
-          // simulate api call
           setTimeout(function () { dropResult.payload.loading = false }, (Math.random() * 5000) + 1000);
         }
 
         newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
-        board.groups.splice(taskIndex, 1, newGroup)
+        board.groups.splice(groupIndex, 1, newGroup)
         this.$emit('updateBoard', board)
       }
     },
@@ -71,7 +85,34 @@ export default {
     },
     toggleAddTask() {
       this.isAddTask = !this.isAddTask
-    }
+      if (this.isAddTask) this.$nextTick(() => this.$refs.newTask.focus())
+    },
+    onAddTask() {
+      let board = utilService.makeCopy(this.board)
+      let group = utilService.makeCopy(this.group)
+      const idx = board.groups.findIndex(g => g.id === group.id)
+
+      let newTask = this.$store.getters.emptyTask
+      newTask.title = this.$refs.newTask.value
+
+      group.tasks.push(newTask)
+      board.groups.splice(idx, 1, group)
+
+      this.$emit('updateBoard', board)
+      this.$refs.newTask.value = ''
+    },
+    updateGroupTitle() {
+      let board = { ...this.board }
+      let group = { ...this.group }
+      const idx = board.groups.findIndex(g => g.id === group.id)
+      group.title = this.$refs.groupTitle.innerText
+      board.groups.splice(idx, 1, group)
+      console.log('title tried to be changed')
+      this.$emit('updateBoard', board)
+    },
+    getSvg(iconName) {
+      return svgService.getSvg(iconName)
+    },
   }
 }
 </script>

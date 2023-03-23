@@ -32,39 +32,6 @@ export function getActionAddBoardMsg(boardId) {
     txt: 'Stam txt',
   }
 }
-// GROUPS
-export function getActionRemoveGroup(groupId) {
-  return {
-    type: 'removeGroup',
-    groupId,
-  }
-}
-export function getActionAddGroup(group) {
-  return {
-    type: 'addGroup',
-    group,
-  }
-}
-export function getActionUpdateGroup(group) {
-  return {
-    type: 'updateGroup',
-    group,
-  }
-}
-export function getActionAddGroupMsg(groupId) {
-  return {
-    type: 'addGroupMsg',
-    groupId,
-    txt: 'Stam txt',
-  }
-}
-export function getActionLoadGroups(boardId) {
-  return {
-    type: 'loadGroups',
-    boardId,
-  }
-}
-
 // TASKS
 export function getActionRemoveTask(taskId) {
   return {
@@ -82,13 +49,6 @@ export function getActionUpdateTask(task) {
   return {
     type: 'updateTask',
     task,
-  }
-}
-export function getActionAddTaskMsg(taskId) {
-  return {
-    type: 'addTaskMsg',
-    taskId,
-    txt: 'Stam txt',
   }
 }
 
@@ -155,36 +115,8 @@ export const boardStore = {
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
-    addBoardMsg(state, { boardId, msg }) {
-      const board = state.boards.find((board) => board._id === boardId)
-      if (!board.msgs) board.msgs = []
-      board.msgs.push(msg)
-    },
     setCurrBoard(state, { board }) {
       state.currBoard = board
-    },
-
-    // GROUPS
-
-    setGroups(state, { groups }) {
-      state.groups = groups
-    },
-    addGroup(state, { group }) {
-      state.groups.push(group)
-    },
-    updateGroup(state, { group }) {
-      const idx = state.groups.findIndex((g) => g._id === group._id)
-      state.groups.splice(idx, 1, group)
-    },
-    removeGroup(state, { groupId }) {
-      state.groups = state.groups.filter((group) => group._id !== groupId)
-    },
-    //  TASKS
-    saveTask(state, { task }) {
-      state.currGroup.tasks.push(task)
-    },
-    setCurrTask({ currTask }, { task }) {
-      currTask = task
     },
   },
   actions: {
@@ -256,46 +188,7 @@ export const boardStore = {
         throw err
       }
     },
-    // GROUPS
-    async loadGroups(context, { boardId }) {
-      try {
-        const groups = await boardService.queryGroups(boardId)
-        context.commit({ type: 'setGroups', groups })
-        return groups
-      } catch (err) {
-        console.log('boardStore: Error in loadGroups', err)
-        throw err
-      }
-    },
-    async addGroup(context, { group }) {
-      try {
-        group = await boardService.save(group)
-        context.commit(getActionAddGroup(group))
-        return group
-      } catch (err) {
-        console.log('boardStore: Error in addGroup', err)
-        throw err
-      }
-    },
-    async updateGroup(context, { group }) {
-      try {
-        group = await boardService.save(group)
-        context.commit(getActionUpdateGroup(group))
-        return group
-      } catch (err) {
-        console.log('boardStore: Error in updateGroup', err)
-        throw err
-      }
-    },
-    async removeGroup(context, { groupId }) {
-      try {
-        await boardService.remove(groupId)
-        context.commit(getActionRemoveGroup(groupId))
-      } catch (err) {
-        console.log('boardStore: Error in removeGroup', err)
-        throw err
-      }
-    },
+
     //TASKS
     async saveTask({ commit }, { task }) {
       try {

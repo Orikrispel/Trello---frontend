@@ -12,10 +12,6 @@ export const boardService = {
   getEmptyGroup,
   getEmptyTask,
   addBoardMsg,
-  queryGroups,
-  getGroupById,
-  saveGroup,
-  removeGroup,
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
 }
@@ -95,67 +91,32 @@ function getEmptyBoard(
 }
 
 // GROUPS:
-
-async function queryGroups(boardId, filterBy = { txt: '' }) {
-  if (!boardId) boardId = 'E1C0w'
-  let boardWithGroups = await getById(boardId)
-  let groups = boardWithGroups.groups
-  if (!groups) return
-
-  if (filterBy.txt) {
-    const regex = new RegExp(filterBy.txt, 'i')
-    groups = groups.filter(
-      (group) => regex.test(group.vendor) || regex.test(group.description)
-    )
-  }
-  // if (filterBy.price) {
-  //   groups = groups.filter((group) => group.price <= filterBy.price)
-  // }
-  return groups
-}
-
-function getGroupById(boardId) {
-  return storageService.get(STORAGE_KEY, boardId)
-}
-
-async function removeGroup(boardId) {
-  await storageService.remove(STORAGE_KEY, boardId)
-}
-
-async function saveGroup(group) {
-  var savedGroup
-  if (group._id) {
-    savedGroup = await storageService.put(STORAGE_KEY, group)
-  } else {
-    // Later, owner is set by the backend
-    group.owner = userService.getLoggedinUser()
-    savedGroup = await storageService.post(STORAGE_KEY, group)
-  }
-  return savedGroup
-}
-
 function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   return {
-    id: '',
-    title: '',
-    archivedAt: null,
-    tasks: [getEmptyTask()],
-    style: {},
+    id: utilService.makeId(),
+    title,
+    type: 'container',
+    props: {
+      orientation: 'vertical',
+      className: 'card-container'
+    },
+    archivedAt,
+    tasks,
+    style,
   }
 }
 
-function getEmptyTask(
-  title = '',
-  status = '',
-  priority = '',
-  description = ''
-) {
+function getEmptyTask(title = '', status = '', priority = '', description = '') {
   return {
-    id: '',
-    title: '',
-    status: '',
-    priority: '',
-    description: '',
+    id: utilService.makeId(),
+    title,
+    status,
+    type: 'draggable',
+    props: {
+      className: 'card',
+    },
+    priority,
+    description,
     labels: [],
   }
 }
@@ -251,6 +212,7 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
+          className: 'card-container'
         },
         archivedAt: 1589983468418,
         tasks: [
@@ -258,12 +220,18 @@ async function _createBoard() {
             id: 'c101',
             title: 'Replace logo',
             type: 'draggable',
+            props: {
+              className: 'card',
+            },
             loading: false,
           },
           {
             id: 'c102',
             title: 'Add Samples',
             type: 'draggable',
+            props: {
+              className: 'card',
+            },
             loading: false,
           },
         ],
@@ -275,6 +243,7 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
+          className: 'card-container'
         },
         tasks: [
           {
@@ -282,6 +251,9 @@ async function _createBoard() {
             title: 'Do that',
             archivedAt: 1589983468418,
             type: 'draggable',
+            props: {
+              className: 'card',
+            },
             loading: false,
           },
           {
@@ -291,6 +263,9 @@ async function _createBoard() {
             priority: 'high',
             description: 'description',
             type: 'draggable',
+            props: {
+              className: 'card',
+            },
             loading: false,
             comments: [
               {

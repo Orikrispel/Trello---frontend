@@ -1,6 +1,5 @@
 .btn {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: rem(14px);
   font-weight: 400;
   display: inline-flex;
   align-items: center;
@@ -15,7 +14,7 @@
 
   &.btn-dark {
     background-color: $btn-clr1;
-    color: $font-clr1;
+    color: $font-clr4;
   }
 
   &.btn-blue {
@@ -25,7 +24,11 @@
 
   &.btn-light {
     background-color: $btn-clr3;
-    color: $font-clr4;
+    color: $font-clr1;
+  }
+
+  &.big {
+    padding: 6px 12px;
   }
 
 

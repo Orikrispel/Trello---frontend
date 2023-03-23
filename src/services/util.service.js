@@ -7,6 +7,7 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   getRandomTasks,
+  makeCopy
 }
 
 function makeId(length = 6) {
@@ -64,6 +65,10 @@ function makeLorem(size = 100) {
   return txt
 }
 
+function makeCopy(entity) {
+  return JSON.parse(JSON.stringify(entity))
+}
+
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -117,7 +122,6 @@ function getRandomTasks(idx = getRandomIntInclusive(0, 9)) {
 
 
 export const applyDrag = (arr, dragResult) => {
-  console.log('dragResult:', dragResult)
   const { removedIndex, addedIndex, payload } = dragResult
   if (removedIndex === null && addedIndex === null) return arr
 
