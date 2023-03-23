@@ -6,7 +6,7 @@ import axios from 'axios'
 const API = 'TNd4Z9ubrPbnItRTUVp8LuWDZHK2gYNEXR9koj3EvIk'
 
 export const unsplashService = {
-    getImg,
+    getImgs,
 }
 
 
