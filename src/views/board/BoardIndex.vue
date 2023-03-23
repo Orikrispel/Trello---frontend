@@ -13,6 +13,7 @@
       <input name="board-title" type="text" v-model="boardToAdd.title" />
       <button>Create</button>
     </form>
+    <ImgPicker />
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import {
 
 import BoardList from '../../cmps/Board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
+import ImgPicker from '../../cmps/ImgPicker.vue'
 
 export default {
   data() {
@@ -95,6 +97,7 @@ export default {
   components: {
     BoardList,
     ColorPicker,
+    ImgPicker,
   },
 }
 

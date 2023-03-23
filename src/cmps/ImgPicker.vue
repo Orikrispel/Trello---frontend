@@ -1,9 +1,9 @@
 <template>
     <div class="colors-container">
-        <div class="Img-item Img-item-1"></div>
-        <div class="Img-item Img-item-2"></div>
-        <div class="Img-item Img-item-3"></div>
-        <div class="Img-item Img-item-4"></div>
+        <img class="color-item" :src="imgs[0]">
+        <img class="color-item" :src="imgs[1]">
+        <img class="color-item" :src="imgs[2]">
+        <img class="color-item" :src="imgs[3]">
     </div>
 </template>
 
@@ -13,16 +13,13 @@ export default {
     name: 'ImgPicker',
     data() {
         return {
-            pickedImg: '',
+            imgs: []
         }
     },
     computed: {
-        getImg() {
-            return unsplashService.getImg()
-        }
+
     },
     created() {
-
     },
     methods: {
         onStarBoard(board) {
