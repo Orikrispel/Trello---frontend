@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       pickedColor: 'white',
-      colorItems:
+      colorItems: [],
     }
   },
   computed: {
