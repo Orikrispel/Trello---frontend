@@ -2,10 +2,7 @@
   <div class="board-preview">
     <h5 class="board-title">{{ board.title }}</h5>
     <div class="board-preview-actions">
-      <div
-        class="star-svg"
-        v-html="getSvg('star')"
-        @click.stop="onStarBoard(board)"></div>
+      <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div>
     </div>
   </div>
 </template>
@@ -26,7 +23,7 @@ export default {
     }
   },
   computed: {},
-  created() {},
+  created() { },
   methods: {
     onStarBoard(board) {
       this.isStarred = !this.isStarred
