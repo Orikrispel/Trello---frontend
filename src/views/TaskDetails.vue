@@ -105,13 +105,9 @@ export default {
   async created() {
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
-    console.log(task)
     this.task = task
   },
   methods: {
-    test() {
-      console.log(this.$route.params)
-    },
     updateTitle(ev) {
       this.task.title = ev.target.innerText
     },
