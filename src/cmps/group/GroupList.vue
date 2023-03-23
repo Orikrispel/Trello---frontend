@@ -30,13 +30,11 @@ export default {
   },
   methods: {
     onDrop(dropResult) {
-      console.log('boardCopy before', this.boardCopy)
       this.boardCopy.groups = applyDrag(this.boardCopy.groups, dropResult)
       this.updateBoard()
     },
 
     updateBoard() {
-      console.log('boardCopy after', this.boardCopy)
       this.$emit('updateBoard', this.boardCopy)
     },
   },
