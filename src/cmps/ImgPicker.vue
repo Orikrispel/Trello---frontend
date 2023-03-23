@@ -1,21 +1,25 @@
 <template>
-    <div class="board-display" :style="{ 'background': pickedImg }"></div>
     <div class="colors-container">
+        <div class="Img-item Img-item-1"></div>
+        <div class="Img-item Img-item-2"></div>
+        <div class="Img-item Img-item-3"></div>
+        <div class="Img-item Img-item-4"></div>
     </div>
 </template>
 
 <script>
+import { unsplashService } from '../services/unsplash.service'
 export default {
     name: 'ImgPicker',
     data() {
         return {
-            pickedImg: '#f2f2f2',
+            pickedImg: '',
         }
     },
     computed: {
-        loggedInUser() {
-
-        },
+        getImg() {
+            return unsplashService.getImg()
+        }
     },
     created() {
 

@@ -1,7 +1,6 @@
 <template>
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
-
     <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
       <div class="add-form-header">
         <h5>Create Board</h5>

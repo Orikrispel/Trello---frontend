@@ -5,17 +5,10 @@
       <h3>Starred Boards</h3>
     </div>
     <ul class="board-list">
-      <li
-        v-for="board in starredBoards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
     <div class="boards-header">
@@ -26,17 +19,10 @@
       <li class="new-board" @click="setCreateMode">
         <p>Create new board</p>
       </li>
-      <li
-        v-for="board in boards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
   </div>
@@ -51,7 +37,7 @@ export default {
     return {}
   },
   computed: {
-    loggedInUser() {},
+    loggedInUser() { },
     starredBoards() {
       const boards = this.$store.getters.boards
       return boards.filter((board) => board.isStarred)
@@ -83,5 +69,4 @@ export default {
   },
 }
 
-//    <router-link :to="`/board/${board._id}`" class="board-link">
 </script>
