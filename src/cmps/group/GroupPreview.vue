@@ -18,7 +18,7 @@
       <div v-show="isAddTask" class="add-task-container flex gap">
         <textarea class="task-container" name="add-task" cols="30" rows="5"
           placeholder="Enter a title for this card..."></textarea>
-        <button class="btn" @click="">add card</button>
+        <button class="btn btn-blue" @click="">add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">X</button>
       </div>
     </Container>

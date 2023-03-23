@@ -13,7 +13,8 @@
           {{ task.title ? task.title : 'new title' }}
         </h2>
         <small>
-          <span class="icon header-icon"></span> in list {{ task.list }}</small>
+          <span class="icon header-icon"></span> in list {{ task.list }}</small
+        >
         <!-- </div> -->
         <RouterLink v-if="!task.cover" :to="'/board'" class="btn-close">
           <div class="icon" v-html="getSvg('close')"></div>
@@ -27,17 +28,24 @@
         <h3>
           <span class="icon description-icon"></span>
           Description
-          <button v-if="!userIsEditing && task.description" @click="userIsEditing = !userIsEditing">
+          <button
+            v-if="!userIsEditing && task.description"
+            @click="userIsEditing = !userIsEditing">
             Edit
           </button>
         </h3>
-        <div v-if="!userIsEditing && !task.description" @click="userIsEditing = !userIsEditing">
+        <div
+          v-if="!userIsEditing && !task.description"
+          @click="userIsEditing = !userIsEditing">
           Add a more detailed description...
         </div>
         <p v-if="!userIsEditing" @click="handleDesc">
           {{ task.description }}
         </p>
-        <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = !userIsEditing"
+        <textarea
+          v-if="userIsEditing"
+          v-model="task.description"
+          @blur="userIsEditing = !userIsEditing"
           autofocus></textarea>
         <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
           Save
@@ -50,22 +58,14 @@
       <aside class="btns-container flex">
         <h4>Add to card</h4>
         <button><span class="icon member-icon"></span> Members</button>
-        <button><span class="icon label-icon"></span>Labels</button>
-        <button>
-          <span class="icon checklist-icon"></span>
-          Checklist
+        <button @click="labelMenuOpen = true">
+          <span class="icon label-icon"></span>Labels
         </button>
-        <button>
-          <span class="icon watch-icon"></span>
-          Dates
-        </button>
-        <button>
-          <span class="icon attachments-icon"></span>
-          Attachment
-        </button>
+        <button><span class="icon checklist-icon"></span>Checklist</button>
+        <button><span class="icon watch-icon"></span>Dates</button>
+        <button><span class="icon attachments-icon"></span>Attachment</button>
         <button v-if="!task.cover">
-          <span class="icon card-cover-icon"></span>
-          Cover
+          <span class="icon card-cover-icon"></span>Cover
         </button>
       </aside>
       <div class="comments-activity-container">
@@ -86,7 +86,7 @@
         <button @click="test">test</button>
       </div>
     </div>
-    <LabelMenu />
+    <LabelMenu v-if="labelMenuOpen" />
   </section>
 </template>
 
@@ -99,18 +99,15 @@ export default {
     return {
       task: {},
       userIsEditing: false,
+      labelMenuOpen: false,
     }
   },
   async created() {
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
-    console.log(task)
     this.task = task
   },
   methods: {
-    test() {
-      console.log(this.$route.params)
-    },
     updateTitle(ev) {
       this.task.title = ev.target.innerText
     },
