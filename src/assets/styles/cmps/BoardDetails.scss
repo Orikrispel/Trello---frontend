@@ -1,0 +1,11 @@
+.board-container {
+  .board-header {
+    height: auto;
+    padding: 8px 4px 4px 12px;
+    position: relative;
+
+    h1 {
+      color: $fontColor1;
+    }
+  }
+}
