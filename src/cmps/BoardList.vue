@@ -1,8 +1,8 @@
 <template>
     <div class="board-lists-container">
-        <div class="boards-header">
+        <div class="boards-header" v-if="starredBoards.length">
             <h3 v-html="getSvg('star')"></h3>
-            <h3 v-if="starredBoards.length">Starred Boards</h3>
+            <h3>Starred Boards</h3>
         </div>
         <ul class="board-list">
             <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)"
