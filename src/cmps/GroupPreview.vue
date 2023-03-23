@@ -1,13 +1,25 @@
 <template>
   <section class="group-wrapper" v-if="group">
-    <h2>{{ group.title }}</h2>
+    <div class="group-header flex">
+      <h2 class="fs14" contenteditable="true">{{ group.title }}</h2>
+    </div>
     <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-      group-name="col-items" :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)">
-      <Draggable class="task-container" v-for=" task in group.tasks" :key="task.id">
-        <div>
-          {{ task.title }}
-        </div>
+      group-name="col-items" :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items')">
+
+      <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
+        <RouterLink :to="`/task/${task.id}`">
+          <span class="task-title fs14">
+            {{ task.title }}
+          </span>
+        </RouterLink>
       </Draggable>
+
+      <button v-show="!isAddTask" class="clean-btn" @click="toggleAddTask">+ add a card</button>
+      <div v-show="isAddTask" class="add-task-container flex">
+        <textarea name="add-task" cols="30" rows="5" placeholder="Enter a title for this card..."></textarea>
+        <button class="btn" @click="">add card</button>
+        <button class="btn" @click="toggleAddTask">X</button>
+      </div>
     </Container>
   </section>
 </template>
@@ -24,8 +36,14 @@ export default {
   name: 'GroupPreview',
   props: ['board', 'group'],
   components: { Container, Draggable },
+  data() {
+    return {
+      isAddTask: false,
+    }
+  },
   methods: {
     onTaskDrop(groupId, dropResult) {
+      console.log('hi')
       // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
@@ -52,6 +70,9 @@ export default {
         return this.board.groups.filter(g => g.id === groupId)[0].tasks[index]
       }
     },
+    toggleAddTask() {
+      this.isAddTask = !this.isAddTask
+    }
   }
 }
 </script>

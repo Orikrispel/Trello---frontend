@@ -1,7 +1,12 @@
 <template>
-  <div class="container main">
-    <h1>hello</h1>
-    <GroupList v-if="board" :board="board" />
+  <div v-if="board" class="board-container main flex column">
+    <section class="board-header flex gap">
+      <h1 class="board-title fs18">{{ board.title }}</h1>
+      <button class="btn">
+        <div class="star-svg" v-html="getSvg('star')" @click="starBoard"></div>
+      </button>
+    </section>
+    <GroupList :board="board" />
     <hr />
   </div>
 </template>
@@ -10,10 +15,11 @@
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 import GroupList from '../cmps/GroupList.vue'
+import { svgService } from '../services/svg.service'
 import {
   getActionRemoveGroup,
   getActionUpdateGroup,
-  getActionAddGroupMsg,
+  getActionStarBoard,
 } from '../store/board.store'
 
 export default {
@@ -24,14 +30,10 @@ export default {
     }
   },
   async created() {
-    // this.$store.dispatch({ type: 'loadGroups', boardId: this.boardId })
+    this.board = await this.$store.dispatch({ type: 'loadBoards' })
     this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
-    console.log('board:', this.board)
   },
   computed: {
-    // board() {
-    //   // return this.$store.getters.currBoard
-    // },
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -71,17 +73,19 @@ export default {
         showErrorMsg('Cannot update group')
       }
     },
-    async addGroupMsg(groupId) {
+    async starBoard() {
       try {
-        await this.$store.dispatch(getActionAddGroupMsg(groupId))
-        showSuccessMsg('Group msg added')
+        const newBoard = JSON.parse(JSON.stringify(this.board))
+        newBoard.isStarred = !newBoard.isStarred
+        await this.$store.dispatch(getActionStarBoard(newBoard))
+
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add group msg')
+        showErrorMsg('Cannot star board')
       }
     },
-    printGroupToConsole(group) {
-      console.log('Group msgs:', group.msgs)
+    getSvg(iconName) {
+      return svgService.getSvg(iconName)
     },
   },
   components: {
