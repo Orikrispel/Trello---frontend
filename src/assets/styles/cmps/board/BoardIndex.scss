@@ -9,7 +9,7 @@
 .board-add-form {
   position: fixed;
   display: flex;
-  color: $fontColor3;
+  color: $font-clr3;
   padding-left: 10px;
   align-items: flex-start;
   flex-direction: column;
@@ -42,18 +42,21 @@
     border-radius: 5px;
     width: 100%;
     border: none;
+
     &:hover {
       background-color: $primary-clr1;
       color: $secondary-clr2;
       cursor: pointer;
     }
   }
+
   p {
     &:hover {
-      color: $fontColor3;
+      color: $font-clr3;
       cursor: pointer;
     }
   }
+
   .board-display {
     margin: 30px;
     width: 220px;
@@ -68,14 +71,16 @@
     font-weight: 100;
     margin: auto;
   }
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   width: 100%;
   border-bottom: 1px solid $secondary-clr4;
+
   p {
-    color: $fontColor3;
+    color: $font-clr3;
     margin: 0;
     float: right;
   }
