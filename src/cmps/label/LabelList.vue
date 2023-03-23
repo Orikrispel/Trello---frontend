@@ -13,22 +13,22 @@
             'background-color': label.color || '#bcd9ea',
           }"
           class="label-container"
-          @mouseover="getLabelClass"
-          @mouseout="getLabelClass">
+          @mouseover="getLabelStyle"
+          @mouseout="getLabelStyle">
           <span>{{ label.title }}</span>
         </div>
         <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
       </li>
-      <button>Create a new label</button>
+      <button @click="userIsEditing = true">Create a new label</button>
     </ul>
   </div>
 </template>
 
 <script>
+import LabelEdit from './LabelEdit.vue'
 import { svgService } from '../services/svg.service'
 export default {
   name: 'LabelList',
-
   data() {
     return {
       labels: [],
@@ -52,25 +52,22 @@ export default {
     let { labels } = board
     if (!labels || !labels.length)
       labels = this.$store.getters.defaultEmptyLabels
-
     this.labels = labels
   },
   methods: {
-    test() {
-      console.log(this.labels)
-    },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    getLabelClass(ev) {
+    getLabelStyle(ev) {
       if (ev.type === 'mouseover') {
         ev.target.style.filter = 'brightness(85%)'
       } else if (ev.type === 'mouseout') {
         ev.target.style.filter = 'brightness(100%)'
       }
-
-      // console.log(ev.target.style)
     },
+  },
+  components: {
+    LabelEdit,
   },
 }
 </script>
