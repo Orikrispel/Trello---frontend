@@ -22,12 +22,15 @@ const routes = [
     path: '/board/:boardId',
     name: 'BoardDetails',
     component: BoardDetails,
+    children: [
+      {
+        path: '/task/:taskId?',
+        name: 'TaskDetails',
+        component: TaskDetails,
+      },
+    ],
   },
-  {
-    path: '/task/:taskId?',
-    name: 'TaskDetails',
-    component: TaskDetails,
-  },
+
   {
     path: '/login',
     name: 'LoginSignup',

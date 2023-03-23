@@ -1,6 +1,7 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
+      <div v-if="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
       <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">{{ group.title
       }}</h2>
       <button>∙∙∙</button>
@@ -10,12 +11,9 @@
       <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
         group-name="col-items" :shouldAcceptDrop="(e) => (e.groupName === 'col-items')" drag-class="card-ghost"
         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
-        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
-          <RouterLink :to="`/task/${task.id}`">
-            <span class="task-title fs14">
-              {{ task.title }}
-            </span>
-          </RouterLink>
+        <Draggable class="task-container" @click="this.$router.push(`/board/${board._id}/task/${task.id}`)"
+          v-for="task in group.tasks" :key="task.id">
+          <span class="task-title fs14">{{ task.title }}</span>
         </Draggable>
       </Container>
 
@@ -48,7 +46,8 @@ export default {
       dropPlaceholderOptions: {
         className: 'drop-preview',
         animationDuration: '150',
-        showOnTop: true
+        showOnTop: true,
+        isEditGroupTitle: false,
       }
     }
   },
@@ -57,15 +56,10 @@ export default {
       // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
 
-        // const board = Object.assign({}, this.board)
-        // const group = board.groups.filter(g => g.id === groupId)[0]
-        // const groupIndex = board.groups.indexOf(group)
-        // const newGroup = Object.assign({}, group)
-
-        let board = { ...this.board }
-        let newGroup = { ...this.group }
+        const board = Object.assign({}, this.board)
+        const group = board.groups.filter(g => g.id === groupId)[0]
         const groupIndex = board.groups.indexOf(group)
-
+        const newGroup = Object.assign({}, group)
 
         // check if element was ADDED in current group
         if ((dropResult.removedIndex == null && dropResult.addedIndex >= 0)) {
@@ -109,10 +103,15 @@ export default {
       board.groups.splice(idx, 1, group)
       console.log('title tried to be changed')
       this.$emit('updateBoard', board)
+      this.isEditGroupTitle = !this.isEditGroupTitle
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
+    onFocusGroupTitle() {
+      this.$refs.groupTitle.focus()
+      this.isEditGroupTitle = !this.isEditGroupTitle
+    }
   }
 }
 </script>

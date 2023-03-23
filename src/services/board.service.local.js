@@ -98,7 +98,7 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
     type: 'container',
     props: {
       orientation: 'vertical',
-      className: 'card-container'
+      className: 'card-container',
     },
     archivedAt,
     tasks,
@@ -106,7 +106,12 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   }
 }
 
-function getEmptyTask(title = '', status = '', priority = '', description = '') {
+function getEmptyTask(
+  title = '',
+  status = '',
+  priority = '',
+  description = ''
+) {
   return {
     id: utilService.makeId(),
     title,
@@ -212,7 +217,7 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
-          className: 'card-container'
+          className: 'card-container',
         },
         archivedAt: 1589983468418,
         tasks: [
@@ -243,7 +248,7 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
-          className: 'card-container'
+          className: 'card-container',
         },
         tasks: [
           {

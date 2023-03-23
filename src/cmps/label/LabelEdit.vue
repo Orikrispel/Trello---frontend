@@ -8,7 +8,7 @@
     <h4>Select a color</h4>
     <ColorPicker :quantity="30" @setColor="setColor" />
     <button>X Remove color</button>
-    <button>Create</button>
+    <button @click="saveLabel">Create</button>
   </section>
 </template>
 
@@ -31,6 +31,9 @@ export default {
     setColor(color) {
       this.label.color = color
       this.$emit('setColor', color)
+    },
+    saveLabel() {
+      let label = { ...this.label }
     },
   },
   components: {
