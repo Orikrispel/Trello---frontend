@@ -1,8 +1,8 @@
 // Setup
-@import 'setup/vars';
-@import 'setup/functions';
-@import 'setup/mixins';
-@import 'setup/typography';
+@import "setup/vars";
+@import "setup/functions";
+@import "setup/mixins";
+@import "setup/typography";
 
 // Basics
 @import 'basics/helpers';
@@ -12,15 +12,17 @@
 @import 'basics/buttons';
 
 // Components
-@import 'cmps/AppHeader';
-@import 'cmps/UserMsg';
-@import 'cmps/BoardList';
-@import 'cmps/BoardPreview';
-@import 'cmps/BoardIndex';
+@import "cmps/AppHeader";
+@import "cmps/Home";
+@import "cmps/UserMsg";
+@import "cmps/BoardList";
+@import "cmps/BoardPreview";
+@import "cmps/BoardIndex";
 @import 'cmps/BoardDetails';
-@import 'cmps/ColorPicker';
+@import "cmps/ColorPicker";
+@import "cmps/AppHeader";
+@import "cmps/UserMsg";
+@import "cmps/GroupPreview";
+@import "cmps/TaskDetails";
+@import "cmps/LabelList";
 @import 'cmps/AppHeader';
-@import 'cmps/UserMsg';
-@import 'cmps/GroupPreview';
-@import 'cmps/TaskDetails';
-@import 'cmps/LabelList';
