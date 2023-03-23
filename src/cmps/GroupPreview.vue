@@ -4,7 +4,7 @@
       <h2 class="fs14" contenteditable="true">{{ group.title }}</h2>
     </div>
     <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-      group-name="col-items" :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items')">
+      group-name="col-items" :shouldAcceptDrop="(e) => (e.groupName === 'col-items')">
 
       <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
         <RouterLink :to="`/task/${task.id}`">
@@ -15,10 +15,11 @@
       </Draggable>
 
       <button v-show="!isAddTask" class="clean-btn" @click="toggleAddTask">+ add a card</button>
-      <div v-show="isAddTask" class="add-task-container flex">
-        <textarea name="add-task" cols="30" rows="5" placeholder="Enter a title for this card..."></textarea>
+      <div v-show="isAddTask" class="add-task-container flex gap">
+        <textarea class="task-container" name="add-task" cols="30" rows="5"
+          placeholder="Enter a title for this card..."></textarea>
         <button class="btn" @click="">add card</button>
-        <button class="btn" @click="toggleAddTask">X</button>
+        <button class="btn clean-btn" @click="toggleAddTask">X</button>
       </div>
     </Container>
   </section>
@@ -26,10 +27,8 @@
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { boardService } from '../services/board.service.local'
-import { getActionRemoveBoard, getActionUpdateBoard, getActionAddBoardMsg } from '../store/board.store'
 import { Container, Draggable } from 'vue3-smooth-dnd'
-import { applyDrag, generateItems } from '../services/util.service'
+import { applyDrag } from '../services/util.service'
 
 
 export default {

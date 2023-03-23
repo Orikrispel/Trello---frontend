@@ -5,7 +5,6 @@ import BoardIndex from './views/BoardIndex.vue'
 import BoardDetails from './views/BoardDetails.vue'
 import TaskDetails from './views/TaskDetails.vue'
 import LoginSignup from './views/LoginSignup.vue'
-import drag from './cmps/Drag.vue'
 import UserDetails from './views/UserDetails.vue'
 
 const routes = [
@@ -13,11 +12,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-  },
-  {
-    path: '/drag',
-    name: 'drag',
-    component: drag,
   },
   {
     path: '/board',
