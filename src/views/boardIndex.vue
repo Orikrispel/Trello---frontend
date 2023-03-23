@@ -66,7 +66,7 @@ export default {
     },
     async starBoard(board) {
       try {
-        const newBoard = { ...board }
+        const newBoard = JSON.parse(JSON.stringify(board))
         newBoard.isStarred = !newBoard.isStarred
         await this.$store.dispatch(getActionStarBoard(newBoard))
 
