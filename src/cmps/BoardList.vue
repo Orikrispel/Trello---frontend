@@ -1,16 +1,22 @@
 <template>
     <div class="board-lists-container">
-        <h3 v-if="starredBoards.length">Starred Boards:</h3>
+        <div class="boards-header" v-if="starredBoards.length">
+            <h3 v-html="getSvg('star')"></h3>
+            <h3>Starred Boards</h3>
+        </div>
         <ul class="board-list">
             <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
                 <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
             </li>
         </ul>
-        <h3>Boards:</h3>
+        <div class="boards-header">
+            <h3 v-html="getSvg('addMember')"></h3>
+            <h3>Your boards</h3>
+        </div>
         <ul class="board-list">
             <li class="new-board" @click="setCreateMode">
-                <h5>Create new board</h5>
+                <p>Create new board</p>
             </li>
             <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)"
                 :style="{ 'background-color': board.style?.backgroundColor || '#014a75' }">
@@ -21,6 +27,7 @@
 </template>
 
 <script>
+import { svgService } from '../services/svg.service';
 import BoardPreview from './BoardPreview.vue';
 export default {
     name: 'BoardList',
@@ -52,9 +59,9 @@ export default {
         showBoardDetails(boardId) {
             this.$router.push(`/board/${boardId}`);
         },
-    },
-    created() {
-
+        getSvg(iconName) {
+            return svgService.getSvg(iconName)
+        },
     },
 
     components: {

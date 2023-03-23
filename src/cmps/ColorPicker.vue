@@ -1,6 +1,4 @@
 <template>
-    <div class="board-display" :style="{ 'background-color': pickedColor }"></div>
-    <label for="board-title">Background</label>
     <div class="colors-container">
         <div class="color-item color-item-1" @click="setColor('#7bc86c')"></div>
         <div class="color-item color-item-2" @click="setColor('#f5dd29')"></div>
@@ -16,7 +14,7 @@ export default {
     name: 'ColorPicker',
     data() {
         return {
-            pickedColor: '#f2f2f2',
+            pickedColor: 'white',
         }
     },
     computed: {
@@ -43,7 +41,3 @@ export default {
     emits: ['setColor']
 }
 </script>
-
-<style lang="scss">
-@import "../assets/styles/setup/vars";
-</style>

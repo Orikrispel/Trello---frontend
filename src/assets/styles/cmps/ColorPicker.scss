@@ -2,6 +2,7 @@
   display: flex;
   gap: 7px;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 .color-item {
@@ -10,25 +11,42 @@
   height: 32px;
   &:hover {
     cursor: pointer;
-    opacity: 0.9;
   }
 }
 
 .color-item-1 {
   background-color: $coverClr1;
+  &:hover {
+    background-color: darken($coverClr1, 10);
+  }
 }
 .color-item-2 {
   background-color: $coverClr2;
+  &:hover {
+    background-color: darken($coverClr2, 10);
+  }
 }
 .color-item-3 {
   background-color: $coverClr3;
+  &:hover {
+    background-color: darken($coverClr3, 10);
+  }
 }
 .color-item-4 {
   background-color: $coverClr4;
+  &:hover {
+    background-color: darken($coverClr4, 10);
+  }
 }
 .color-item-5 {
   background-color: $coverClr5;
+  &:hover {
+    background-color: darken($coverClr5, 10);
+  }
 }
 .color-item-6 {
   background-color: $coverClr6;
+  &:hover {
+    background-color: darken($coverClr6, 10);
+  }
 }
