@@ -4,6 +4,7 @@
       @removeBoard="removeBoard"
       @starBoard="starBoard"
       @setCreateMode="setCreateMode" />
+
     <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
       <div class="add-form-header">
         <h5>Create Board</h5>
@@ -14,6 +15,11 @@
         :style="{ 'background-color': boardPickedColor }"></div>
       <label for="color-picker">Background</label>
       <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
+      <div
+        class="board-display"
+        :style="{ 'background-color': boardPickedColor }"></div>
+      <label for="color-picker">Background</label>
+      <ColorPicker @setColor="setBoardBgColor" />
       <label for="board-title">Board title</label>
       <input name="board-title" type="text" v-model="boardToAdd.title" />
       <button>Create</button>
