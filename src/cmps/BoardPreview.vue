@@ -1,6 +1,6 @@
 <template>
     <div class="board-preview">
-        <h5>{{ board.title }}</h5>
+        <h5 class="board-title">{{ board.title }}</h5>
         <div class="board-preview-actions">
             <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div>
         </div>

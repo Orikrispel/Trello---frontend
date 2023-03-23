@@ -1,6 +1,14 @@
 .board-lists-container {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  padding: 110px;
   h3 {
     padding: 6px;
+    font-size: 16px;
+    color: $primary-clr3;
+  }
+  .boards-header {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -40,13 +48,14 @@
 }
 
 .board-list .new-board {
-  background-color: rgba(9, 30, 66, 0.039);
+  background-color: $secondary-clr6;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #172b4d;
   p {
-    font-size: 1rem;
+    color: $fontColor0;
+    font-size: 0.9rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
   }
 }
