@@ -20,25 +20,15 @@ export default {
     },
     async mounted() {
         this.imgUrls = await unsplashService.getImgs('paris', 4)
-        console.log('this.imgUrls', this.imgUrls)
     },
     methods: {
-        onStarBoard(board) {
-            this.$emit('starBoard', board)
-        },
-        onRemoveBoard(boardId) {
-            this.$emit('onRemoveBoard', boardId)
-        },
-        setColor(color) {
-            this.pickedColor = color
-            this.$emit('setColor', color)
-        },
         setImg(imgUrls) {
             this.selectedImgUrls = imgUrls
-            this.$emit('setBoardImg', imgUrls)
+            console.log('JSON.stringify(imgUrls)', JSON.parse)
+            this.$emit('onSetBoardImg',)
         },
 
     },
-    emits: ['setColor']
+    emits: ['setColor', 'onSetBoardImg']
 }
 </script>

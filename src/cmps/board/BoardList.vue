@@ -21,7 +21,9 @@
       </li>
       <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
         'background-color': board.style?.backgroundColor || '#014a75',
+        'backgroundImage': board.style?.imgUrls || 'none'
       }">
+        <pre>{{ board.style.imgUrls }}</pre>
         <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>

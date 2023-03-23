@@ -1,8 +1,8 @@
 <template>
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
-    <ActionModal @addBoard="addBoard" />
-    <!-- <ImgPicker @setImg="setBoardImg" /> -->
+    <AddBoard @addBoard="addBoard" />
+    <!-- <component :is="actionType" /> -->
   </div>
 </template>
 
@@ -19,14 +19,15 @@ import {
 import BoardList from '../../cmps/board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import ImgPicker from '../../cmps/ImgPicker.vue'
-import ActionModal from '../../cmps/ActionModal.vue'
+import AddBoard from '../../cmps/AddBoard.vue'
 
 export default {
   data() {
     return {
       boardToAdd: boardService.getEmptyBoard(),
       boardPickedColor: 'white',
-      boardPickedImg: ''
+      boardPickedImg: '',
+      actionType: 'BoardList',
     }
   },
   computed: {
@@ -41,7 +42,7 @@ export default {
     async addBoard(board) {
       try {
         await this.$store.dispatch({ type: 'addBoard', board })
-          ; (this.isCreateMode = false), showSuccessMsg('Board added')
+          ; showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
@@ -82,13 +83,16 @@ export default {
     },
     setBoardImg(imgUrls) {
       this.boardToAdd.style.imgUrl = imgUrls
+    },
+    setAction(actionType) {
+      this.action.type = actionType
     }
   },
   components: {
     BoardList,
     ColorPicker,
     ImgPicker,
-    ActionModal
+    AddBoard
   },
 }
 
