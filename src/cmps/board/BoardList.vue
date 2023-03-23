@@ -7,6 +7,8 @@
     <ul class="board-list">
       <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
         'background-color': board.style?.backgroundColor || '#014a75',
+        'backgroundImage': getBoardBg(board) || 'none',
+        'backgroundSize': 'cover'
       }">
         <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
@@ -21,9 +23,9 @@
       </li>
       <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
         'background-color': board.style?.backgroundColor || '#014a75',
-        'backgroundImage': board.style?.imgUrls || 'none'
+        'backgroundImage': getBoardBg(board) || 'none',
+        'backgroundSize': 'cover'
       }">
-        <pre>{{ board.style.imgUrls }}</pre>
         <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
@@ -67,6 +69,11 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
+    getBoardBg(board) {
+      if (!board.style.imgUrls) return null
+      else return `url(${board.style.imgUrls.raw})`
+    }
+
   },
 
   components: {
