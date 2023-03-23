@@ -32,6 +32,5 @@ export default {
 
 }
 
-//    <router-link :to="`/board/${board._id}`" class="board-link">
 </script>
 
