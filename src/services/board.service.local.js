@@ -17,6 +17,7 @@ export const boardService = {
   saveGroup,
   removeGroup,
   getDefaultEmptyLabels,
+  getDefaultEmptyLabel,
 }
 window.cs = boardService
 
@@ -156,6 +157,14 @@ function getEmptyTask(
     priority: '',
     description: '',
     labels: [],
+  }
+}
+
+function getDefaultEmptyLabel() {
+  return {
+    id: '',
+    title: ' ',
+    color: '#d6ecd2',
   }
 }
 

@@ -113,6 +113,9 @@ export const boardStore = {
     defaultEmptyLabels() {
       return boardService.getDefaultEmptyLabels()
     },
+    defaultEmptyLabel() {
+      return boardService.getDefaultEmptyLabel()
+    },
     demoBoard() {
       return demoBoard
     },
