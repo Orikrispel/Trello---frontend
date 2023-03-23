@@ -1,18 +1,13 @@
 <template>
   <div class="index-container container home">
-    <BoardList
-      @removeBoard="removeBoard"
-      @starBoard="starBoard"
-      @setCreateMode="setCreateMode" />
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
 
     <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
       <div class="add-form-header">
         <h5>Create Board</h5>
         <p @click="setCreateMode">x</p>
       </div>
-      <div
-        class="board-display"
-        :style="{ 'background-color': boardPickedColor }"></div>
+      <div class="board-display" :style="{ 'background-color': boardPickedColor }"></div>
       <label for="color-picker">Background</label>
       <ColorPicker @setColor="setBoardBgColor" />
       <label for="board-title">Board title</label>
@@ -55,7 +50,7 @@ export default {
     async addBoard() {
       try {
         await this.$store.dispatch({ type: 'addBoard', board: this.boardToAdd })
-        ;(this.isCreateMode = false), showSuccessMsg('Board added')
+          ; (this.isCreateMode = false), showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
