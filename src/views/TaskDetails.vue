@@ -86,7 +86,7 @@
         <button @click="test">test</button>
       </div>
     </div>
-    <LabelMenu v-if="labelMenuOpen" />
+    <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
   </section>
 </template>
 

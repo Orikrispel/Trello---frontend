@@ -1,4 +1,6 @@
 <template>
+  <labelPreview />
+
   <ColorPicker @setColor="setColor" />
 </template>
 

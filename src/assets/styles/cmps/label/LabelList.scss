@@ -1,19 +1,7 @@
 .labels-list {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  min-height: 29em;
-  top: 5%;
-  width: 16.5em;
-  right: 0.5em;
   gap: 0.1em;
-  background-color: $secondary-clr1;
-  .btn-close {
-    justify-self: end;
-    align-self: end;
-    background-color: inherit;
-    cursor: pointer;
-  }
 
   h3 {
     align-self: center;

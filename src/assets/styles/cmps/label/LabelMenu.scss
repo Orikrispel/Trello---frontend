@@ -1,0 +1,17 @@
+.label-menu {
+  position: fixed;
+  background-color: $secondary-clr1;
+  display: flex;
+  flex-direction: column;
+  min-height: 29em;
+  top: 5%;
+  width: 16.5em;
+  right: 0.5em;
+
+  .btn-close {
+    justify-self: end;
+    align-self: end;
+    background-color: inherit;
+    cursor: pointer;
+  }
+}
