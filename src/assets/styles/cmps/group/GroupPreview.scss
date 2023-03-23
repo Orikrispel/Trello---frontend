@@ -1,42 +1,66 @@
 .group-wrapper {
   background-color: $secondary-clr6;
+  border-radius: 3px;
   height: 100%;
   margin: 0 4px;
   width: 272px;
-  height: 50vh;
+  height: max-content;
 
-  &:first-child {
-    margin-left: 12px;
-  }
-
-  .group-header {
-    min-height: 20px;
+  header.group-header {
     padding: 10px 8px;
     position: relative;
 
-    h2 {
-      margin: 0;
+    .group-title {
+      flex-grow: 1;
       border-radius: 3px;
-      box-shadow: none;
       color: $font-clr1;
-      height: 20px;
-      max-height: 256px;
-      min-height: 20px;
+      margin: 0;
       padding: 4px 8px;
+
+      &:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 2px $primary-clr4;
+      }
     }
   }
 
-  .task-list {
-    flex: 1 1 auto;
+  main.tasks-wrapper {
     margin: 0 4px;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
     padding: 1px 4px 0;
 
-    .add-task-container {
+    .task-list {
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    &>button:first-of-type {
+      color: $font-clr3;
+      margin: 2px 0 8px 8px;
+    }
+
+    .task-container {
+      background-color: $secondary-clr1;
+      border-radius: 3px;
+      box-shadow: 0 1px 0 $shadow-clr1;
+      color: $font-clr1;
+      cursor: pointer;
+      margin-bottom: 8px;
+      max-width: 300px;
+      min-height: 20px;
+      padding: 6px 8px 2px;
+      position: relative;
+
+      a {
+        font-weight: 200;
+        text-decoration: none;
+        color: $font-clr1;
+      }
+    }
+
+    .new-task-container {
       flex-wrap: wrap;
+      padding-bottom: 8px;
 
       textarea.task-container {
         font-family: 'Segoe UI Regular';
@@ -44,25 +68,6 @@
         border: none;
         outline: none;
       }
-    }
-  }
-
-  .task-container {
-    background-color: $secondary-clr1;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 $shadow-clr1;
-    color: $font-clr1;
-    cursor: pointer;
-    margin-bottom: 8px;
-    max-width: 300px;
-    min-height: 20px;
-    padding: 6px 8px 2px;
-    position: relative;
-
-    a {
-      font-weight: 200;
-      text-decoration: none;
-      color: $font-clr1;
     }
   }
 }

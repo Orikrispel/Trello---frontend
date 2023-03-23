@@ -1,32 +1,44 @@
 <template>
   <div v-if="board" class="board-container main flex column">
-    <section class="board-header flex align-center gap">
+    <header class="board-header flex align-center gap">
       <h1 class="board-title fs18">{{ board.title }}</h1>
       <button class="btn">
         <div class="star-svg" v-html="getSvg('star')" @click="starBoard"></div>
       </button>
-    </section>
-    <GroupList :board="board" />
-    <hr />
+    </header>
+
+    <main class="groups-wrapper flex">
+      <GroupList :board="board" @updateBoard="updateBoard" />
+
+      <article class="new-group-container flex">
+        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">+ add
+          another list</button>
+        <div v-show="isAddGroup" class="new-group-wrapper flex">
+          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
+          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">Add list</button>
+          <button class="btn clean-btn" @click="toggleAddGroup"><i v-html="getSvg('close')"></i></button>
+        </div>
+      </article>
+    </main>
   </div>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
-import { boardService } from '../../services/board.service.local'
 import GroupList from '../../cmps/group/GroupList.vue'
 import { svgService } from '../../services/svg.service'
 import {
-  getActionRemoveGroup,
-  getActionUpdateGroup,
+  getActionRemoveBoard,
+  getActionUpdateBoard,
   getActionStarBoard,
 } from '../../store/board.store'
 
 export default {
   data() {
     return {
-      groupToAdd: boardService.getEmptyGroup(),
-      board: null
+      board: null,
+      groupToAdd: this.$store.getters.emptyGroup,
+      isAddGroup: false,
     }
   },
   async created() {
@@ -41,36 +53,41 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
+    // board() {
+    //   console.log('board changed, getting the newest')
+    //   return this.$store.getters.currBoard
+    // }
   },
   methods: {
-    async addGroup() {
+    onAddGroup() {
+      let board = JSON.parse(JSON.stringify(this.board))
+      console.log('new group', this.groupToAdd)
+      this.groupToAdd.title = this.$refs.newGroup.value
+
+      board.groups.push(this.groupToAdd)
+      this.updateBoard(board)
+
+      this.groupToAdd = this.$store.getEmptyGroup
+      this.$refs.newGroup.value = ''
+      this.toggleAddGroup()
+    },
+    async removeBoard(boardId) {
       try {
-        await this.$store.dispatch({ type: 'addGroup', group: this.groupToAdd })
-        showSuccessMsg('Group added')
-        this.groupToAdd = groupService.getEmptyGroup()
+        await this.$store.dispatch(getActionRemoveBoard(boardId))
+        showSuccessMsg('Board removed')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add group')
+        showErrorMsg('Cannot remove board')
       }
     },
-    async removeGroup(groupId) {
+    async updateBoard(board) {
       try {
-        await this.$store.dispatch(getActionRemoveGroup(groupId))
-        showSuccessMsg('Group removed')
+        board = { ...board }
+        await this.$store.dispatch(getActionUpdateBoard(board))
+        showSuccessMsg('Board updated')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot remove group')
-      }
-    },
-    async updateGroup(group) {
-      try {
-        group = { ...group }
-        group.price = +prompt('New price?', group.price)
-        await this.$store.dispatch(getActionUpdateGroup(group))
-        showSuccessMsg('Group updated')
-      } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot update group')
+        showErrorMsg('Cannot update board')
       }
     },
     async starBoard() {
@@ -83,6 +100,10 @@ export default {
         console.log(err)
         showErrorMsg('Cannot star board')
       }
+    },
+    toggleAddGroup() {
+      this.isAddGroup = !this.isAddGroup
+      if (this.isAddGroup) this.$nextTick(() => this.$refs.newGroup.focus())
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
