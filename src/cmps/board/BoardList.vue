@@ -9,8 +9,6 @@
         'background-color': board.style?.backgroundColor || '#014a75',
         'backgroundImage': getBoardBg(board) || 'none',
         'backgroundSize': 'cover'
-
-
       }">
         <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>

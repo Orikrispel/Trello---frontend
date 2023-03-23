@@ -41,6 +41,7 @@ export default {
   methods: {
     async addBoard(board) {
       try {
+        console.log('ADDED board', board)
         await this.$store.dispatch({ type: 'addBoard', board })
           ; showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()

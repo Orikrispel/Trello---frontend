@@ -35,7 +35,7 @@ export default {
             boardToAdd: boardService.getEmptyBoard(),
             isCreateMode: false,
             pickedColor: 'white',
-            pickedImg: 'none',
+            pickedImg: {},
         }
     },
     computed: {
@@ -47,8 +47,9 @@ export default {
             this.isCreateMode = false
         },
         setBoardBgColor(color) {
-            this.pickedImg = 'none'
+            this.pickedImg = {}
             this.pickedColor = color
+            this.boardToAdd.style.imgUrls = {}
             this.boardToAdd.style.backgroundColor = color
         },
         setCreateMode() {
