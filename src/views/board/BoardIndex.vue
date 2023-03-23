@@ -1,26 +1,8 @@
 <template>
   <div class="index-container container home">
-    <BoardList
-      @removeBoard="removeBoard"
-      @starBoard="starBoard"
-      @setCreateMode="setCreateMode" />
-
-    <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
-      <div class="add-form-header">
-        <h5>Create Board</h5>
-        <p @click="setCreateMode">x</p>
-      </div>
-
-      <div
-        class="board-display"
-        :style="{ 'background-color': boardPickedColor }"></div>
-      <label for="color-picker">Background</label>
-      <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
-      <label for="board-title">Board title</label>
-      <input name="board-title" type="text" v-model="boardToAdd.title" />
-      <button>Create</button>
-    </form>
-    <ImgPicker />
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
+    <ActionModal @addBoard="addBoard" />
+    <!-- <ImgPicker @setImg="setBoardImg" /> -->
   </div>
 </template>
 
@@ -34,16 +16,17 @@ import {
   getActionStarBoard,
 } from '../../store/board.store'
 
-import BoardList from '../../cmps/Board/BoardList.vue'
+import BoardList from '../../cmps/board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import ImgPicker from '../../cmps/ImgPicker.vue'
+import ActionModal from '../../cmps/ActionModal.vue'
 
 export default {
   data() {
     return {
       boardToAdd: boardService.getEmptyBoard(),
-      isCreateMode: false,
       boardPickedColor: 'white',
+      boardPickedImg: ''
     }
   },
   computed: {
@@ -55,10 +38,10 @@ export default {
     this.$store.dispatch({ type: 'loadBoards' })
   },
   methods: {
-    async addBoard() {
+    async addBoard(board) {
       try {
-        await this.$store.dispatch({ type: 'addBoard', board: this.boardToAdd })
-        ;(this.isCreateMode = false), showSuccessMsg('Board added')
+        await this.$store.dispatch({ type: 'addBoard', board })
+          ; (this.isCreateMode = false), showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
@@ -93,18 +76,19 @@ export default {
         showErrorMsg('Cannot update board')
       }
     },
-    setBoardBgColor(color) {
-      this.boardPickedColor = color
-      this.boardToAdd.style.backgroundColor = color
-    },
     setCreateMode() {
       this.isCreateMode = !this.isCreateMode
+      console.log('isCreateMode', this.isCreateMode)
     },
+    setBoardImg(imgUrls) {
+      this.boardToAdd.style.imgUrl = imgUrls
+    }
   },
   components: {
     BoardList,
     ColorPicker,
     ImgPicker,
+    ActionModal
   },
 }
 

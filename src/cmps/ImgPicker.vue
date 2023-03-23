@@ -1,9 +1,7 @@
 <template>
-    <div class="colors-container">
-        <img class="color-item" :src="imgs[0]">
-        <img class="color-item" :src="imgs[1]">
-        <img class="color-item" :src="imgs[2]">
-        <img class="color-item" :src="imgs[3]">
+    <div class="img-picker-container">
+        <img :src="imgUrl.thumb" class="img-picker-item" v-for="(imgUrl, index) in imgUrls" :key="index"
+            @click="setImg(imgUrls[index])" />
     </div>
 </template>
 
@@ -13,13 +11,16 @@ export default {
     name: 'ImgPicker',
     data() {
         return {
-            imgs: []
+            imgUrls: [],
+            selectedImgUrls: null,
         }
     },
     computed: {
 
     },
-    created() {
+    async mounted() {
+        this.imgUrls = await unsplashService.getImgs('paris', 4)
+        console.log('this.imgUrls', this.imgUrls)
     },
     methods: {
         onStarBoard(board) {
@@ -31,6 +32,10 @@ export default {
         setColor(color) {
             this.pickedColor = color
             this.$emit('setColor', color)
+        },
+        setImg(imgUrls) {
+            this.selectedImgUrls = imgUrls
+            this.$emit('setBoardImg', imgUrls)
         },
 
     },

@@ -29,12 +29,15 @@
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service'
 import { svgService } from '../../services/svg.service'
-import BoardPreview from '../Board/BoardPreview.vue'
+import BoardPreview from '../board/BoardPreview.vue'
 export default {
   name: 'BoardList',
   data() {
     return {}
+  },
+  created() {
   },
   computed: {
     loggedInUser() { },
@@ -54,7 +57,7 @@ export default {
       this.$emit('starBoard', board)
     },
     setCreateMode() {
-      this.$emit('setCreateMode')
+      eventBus.emit('setCreateMode', true)
     },
     showBoardDetails(boardId) {
       this.$router.push(`/board/${boardId}`)
