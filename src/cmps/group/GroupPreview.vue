@@ -159,7 +159,6 @@ export default {
     '$route.params': {
       handler() {
         // this.showTaskDetails = !this.showTaskDetails
-        console.log(this.$route.params)
         let { taskId } = this.$route.params
 
         if (!taskId) this.showTaskDetails = false

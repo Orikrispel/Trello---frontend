@@ -7,7 +7,10 @@
       <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
         <LabelPreview :label="label" />
-        <div class="icon pencil-icon" v-html="getSvg('pencil')"></div>
+        <div
+          @click="editLabel(label.id)"
+          class="icon pencil-icon"
+          v-html="getSvg('pencil')"></div>
       </li>
       <button @click="$emit('toggleLabelEdit')">Create a new label</button>
     </ul>
@@ -54,6 +57,10 @@ export default {
       } else if (ev.type === 'mouseout') {
         ev.target.style.filter = 'brightness(100%)'
       }
+    },
+    async editLabel(labelId) {
+      await this.$store.dispatch({ type: 'setCurrLabel', labelId })
+      this.$emit('toggleLabelEdit')
     },
   },
   components: {
