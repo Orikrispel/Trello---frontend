@@ -7,7 +7,6 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   getRandomTasks,
-  makeCopy
 }
 
 function makeId(length = 6) {
@@ -63,10 +62,6 @@ function makeLorem(size = 100) {
     txt += words[Math.floor(Math.random() * words.length)] + ' '
   }
   return txt
-}
-
-function makeCopy(entity) {
-  return JSON.parse(JSON.stringify(entity))
 }
 
 function getRandomIntInclusive(min, max) {
