@@ -79,24 +79,14 @@ export default {
   methods: {
     onAddGroup() {
       let board = JSON.parse(JSON.stringify(this.board))
-      console.log('new group', this.groupToAdd)
-      this.groupToAdd.title = this.$refs.newGroup.value
 
+      this.groupToAdd.title = this.$refs.newGroup.value
       board.groups.push(this.groupToAdd)
       this.updateBoard(board)
 
       this.groupToAdd = this.$store.getEmptyGroup
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
-    },
-    async removeBoard(boardId) {
-      try {
-        await this.$store.dispatch(getActionRemoveBoard(boardId))
-        showSuccessMsg('Board removed')
-      } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot remove board')
-      }
     },
     async updateBoard(board) {
       try {
@@ -107,6 +97,15 @@ export default {
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot update board')
+      }
+    },
+    async removeBoard(boardId) {
+      try {
+        await this.$store.dispatch(getActionRemoveBoard(boardId))
+        showSuccessMsg('Board removed')
+      } catch (err) {
+        console.log(err)
+        showErrorMsg('Cannot remove board')
       }
     },
     async starBoard() {
