@@ -1,7 +1,7 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div v-if="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
+      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
       <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">{{ group.title
       }}</h2>
       <button>∙∙∙</button>
@@ -19,7 +19,7 @@
 
       <button v-show="!isAddTask" class="btn clean-btn" @click="toggleAddTask">+ add a card</button>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea class="task-container" ref="newTask" name="add-task" cols="30" rows="3"
+        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask"><i v-html="getSvg('close')"></i></button>
@@ -43,30 +43,30 @@ export default {
   data() {
     return {
       isAddTask: false,
+      isEditGroupTitle: false,
       dropPlaceholderOptions: {
         className: 'drop-preview',
         animationDuration: '150',
         showOnTop: true,
-        isEditGroupTitle: false,
-      }
+      },
     }
   },
   methods: {
     onTaskDrop(groupId, dropResult) {
       // check if element where ADDED or REMOVED in current group
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-
         const board = Object.assign({}, this.board)
-        const group = board.groups.filter(g => g.id === groupId)[0]
+        const group = board.groups.filter((g) => g.id === groupId)[0]
         const groupIndex = board.groups.indexOf(group)
         const newGroup = Object.assign({}, group)
 
         // check if element was ADDED in current group
-        if ((dropResult.removedIndex == null && dropResult.addedIndex >= 0)) {
+        if (dropResult.removedIndex == null && dropResult.addedIndex >= 0) {
           dropResult.payload.loading = true
-          setTimeout(function () { dropResult.payload.loading = false }, (Math.random() * 5000) + 1000);
+          setTimeout(function () {
+            dropResult.payload.loading = false
+          }, Math.random() * 5000 + 1000)
         }
-
         newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
         board.groups.splice(groupIndex, 1, newGroup)
         this.$emit('updateBoard', board)
@@ -79,21 +79,25 @@ export default {
     },
     toggleAddTask() {
       this.isAddTask = !this.isAddTask
-      if (this.isAddTask) this.$nextTick(() => this.$refs.newTask.focus())
+      if (this.isAddTask) this.$nextTick(() => this.$refs.taskTitle.focus())
     },
     onAddTask() {
-      let board = utilService.makeCopy(this.board)
-      let group = utilService.makeCopy(this.group)
-      const idx = board.groups.findIndex(g => g.id === group.id)
-
       let newTask = this.$store.getters.emptyTask
-      newTask.title = this.$refs.newTask.value
+      newTask.title = this.$refs.taskTitle.value
+      if (!newTask.title) {
+        this.$refs.taskTitle.focus()
+        return
+      }
+
+      let board = JSON.parse(JSON.stringify(this.board))
+      let group = JSON.parse(JSON.stringify(this.group))
+      const idx = board.groups.findIndex(g => g.id === group.id)
 
       group.tasks.push(newTask)
       board.groups.splice(idx, 1, group)
 
       this.$emit('updateBoard', board)
-      this.$refs.newTask.value = ''
+      this.$refs.taskTitle.value = ''
     },
     updateGroupTitle() {
       let board = { ...this.board }

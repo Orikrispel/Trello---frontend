@@ -42,7 +42,7 @@ export default {
     }
   },
   async created() {
-    this.board = await this.$store.dispatch({ type: 'loadBoards' })
+    await this.$store.dispatch({ type: 'loadBoards' })
     this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
   },
   computed: {
@@ -53,10 +53,6 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
-    // board() {
-    //   console.log('board changed, getting the newest')
-    //   return this.$store.getters.currBoard
-    // }
   },
   methods: {
     onAddGroup() {
@@ -82,7 +78,8 @@ export default {
     },
     async updateBoard(board) {
       try {
-        board = { ...board }
+        this.board = board
+        console.log('updated board groups:', this.board.groups)
         await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
       } catch (err) {
