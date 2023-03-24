@@ -1,6 +1,6 @@
 // import { boardService } from '../services/board.service.local'
 import { boardService, demoBoard } from '../services/board.service.local'
-
+import { utilService } from '../services/util.service'
 export function getActionRemoveBoard(boardId) {
   return {
     type: 'removeBoard',
@@ -79,6 +79,9 @@ export const boardStore = {
     },
     defaultEmptyLabel() {
       return boardService.getDefaultEmptyLabel()
+    },
+    makeId() {
+      return utilService.makeId()
     },
     demoBoard() {
       return demoBoard
