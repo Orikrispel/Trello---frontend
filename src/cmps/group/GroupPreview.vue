@@ -108,6 +108,7 @@ export default {
       let group = { ...this.group }
       const idx = board.groups.findIndex((g) => g.id === group.id)
       group.title = this.$refs.groupTitle.innerText
+      if (!group.title) return
       board.groups.splice(idx, 1, group)
       console.log('title tried to be changed')
       this.$emit('updateBoard', board)

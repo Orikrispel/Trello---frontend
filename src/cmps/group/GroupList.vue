@@ -20,12 +20,17 @@ export default {
   data() {
     return {
       groupToAdd: boardService.getEmptyGroup(),
-      boardCopy: JSON.parse(JSON.stringify(this.board)),
+      // boardCopy: JSON.parse(JSON.stringify(this.board)),
       upperDropPlaceholderOptions: {
         className: 'cards-drop-preview',
         animationDuration: '150',
         showOnTop: true
       },
+    }
+  },
+  computed: {
+    boardCopy() {
+      return JSON.parse(JSON.stringify(this.board))
     }
   },
   methods: {
@@ -36,7 +41,6 @@ export default {
     },
 
     updateBoard(board) {
-      this.boardCopy = board
       this.$emit('updateBoard', board)
     },
   },
