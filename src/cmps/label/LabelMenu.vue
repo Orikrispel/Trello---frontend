@@ -5,7 +5,7 @@
 
       <span
         v-if="userIsEditing"
-        @click="userIsEditing = false"
+        @click="backFromEdit"
         class="icon btn-back"
         v-html="getSvg('arrowLeft')"></span>
       <span
@@ -37,6 +37,11 @@ export default {
   methods: {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
+    },
+    async backFromEdit() {
+      this.userIsEditinguserIsEditing = false
+      await this.$store.dispatch({ type: 'setCurrLabel', labelId: null })
+      this.$emit('toggleLabelEdit')
     },
   },
   components: {
