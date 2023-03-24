@@ -24,8 +24,7 @@ export default {
     methods: {
         setImg(imgUrls) {
             this.selectedImgUrls = imgUrls
-            console.log('JSON.stringify(imgUrls)', JSON.parse)
-            this.$emit('onSetBoardImg',)
+            this.$emit('onSetBoardImg', imgUrls)
         },
 
     },

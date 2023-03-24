@@ -11,14 +11,20 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">+ add
-          another list</button>
+        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+          + add another list
+        </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
           <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">Add list</button>
-          <button class="btn clean-btn" @click="toggleAddGroup"><i v-html="getSvg('close')"></i></button>
+          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+            Add list
+          </button>
+          <button class="btn clean-btn" @click="toggleAddGroup">
+            <i v-html="getSvg('close')"></i>
+          </button>
         </div>
       </article>
+      <RouterView />
     </main>
   </div>
 </template>
@@ -92,7 +98,6 @@ export default {
         const newBoard = JSON.parse(JSON.stringify(this.board))
         newBoard.isStarred = !newBoard.isStarred
         await this.$store.dispatch(getActionStarBoard(newBoard))
-
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot star board')
