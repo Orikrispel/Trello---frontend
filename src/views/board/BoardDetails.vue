@@ -11,12 +11,21 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          class="btn btn-light"
+          @click="toggleAddGroup">
           + add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -26,6 +35,10 @@
       </article>
       <RouterView />
     </main>
+    <!-- <div
+      v-if="taskDetailsIsOpen"
+      @click="toggleTaskDetails('group')"
+      class="modal-overlay"></div> -->
   </div>
 </template>
 
@@ -49,7 +62,10 @@ export default {
   },
   async created() {
     await this.$store.dispatch({ type: 'loadBoards' })
-    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
   },
   computed: {
     loggedInUser() {
@@ -107,6 +123,9 @@ export default {
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
+    },
+    mounted() {
+      this.taskDetailsIsOpen = false
     },
   },
   components: {

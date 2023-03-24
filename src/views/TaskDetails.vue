@@ -1,11 +1,11 @@
 <template>
   <section class="task-details">
-    <header v-if="task?.cover" class="task-cover">
+    <header v-if="task.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
     </header>
-    <RouterLink v-if="!task?.cover" :to="`/board/${boardId}`" class="btn-close">
+    <RouterLink v-if="!task.cover" :to="`/board/${boardId}`" class="btn-close">
       <div class="icon" v-html="getSvg('close')"></div>
     </RouterLink>
     <div class="task-container">
@@ -118,6 +118,9 @@ export default {
     handleDesc() {
       userIsEditing = !this.userIsEditing
       this.$refs.taskDesc.focus()
+    },
+    handleComment() {
+      console.log(this.task)
     },
     async saveTask() {
       let task = { ...this.task }
