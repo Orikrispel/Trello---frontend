@@ -59,6 +59,7 @@ export const boardStore = {
     currBoard: null,
     currGroup: null,
     currTask: null,
+    currLabel: null,
   },
   getters: {
     boards({ boards }) {
@@ -69,6 +70,9 @@ export const boardStore = {
     },
     currLabels({ currBoard }) {
       return currBoard.labels
+    },
+    currLabel({ currLabel }) {
+      return currLabel
     },
     defaultEmptyLabels() {
       return boardService.getDefaultEmptyLabels()
@@ -120,6 +124,9 @@ export const boardStore = {
     },
     setCurrTask(state, { task }) {
       state.currTask = task
+    },
+    setCurrLabel(state, { label }) {
+      state.currLabel = label
     },
   },
   actions: {
@@ -202,8 +209,7 @@ export const boardStore = {
       }
     },
     async setCurrTask({ state, commit }, { taskId }) {
-      // let board = state.currBoard
-      let board = demoBoard
+      let board = state.currBoard
       let groups = board.groups
       let currTask
       groups.forEach((group) => {
@@ -212,6 +218,17 @@ export const boardStore = {
       })
       commit({ type: 'setCurrTask', task: currTask })
       return currTask
+    },
+    async setCurrLabel({ state, commit }, { labelId }) {
+      console.log(labelId)
+      let currLabel
+      if (labelId) {
+        let board = state.currBoard
+        currLabel = board.labels.find((label) => label.id === labelId)
+      } else {
+        currLabel = null
+      }
+      commit({ type: 'setCurrLabel', label: currLabel })
     },
   },
 }
