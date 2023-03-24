@@ -1,18 +1,35 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
-      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">{{ group.title
-      }}</h2>
+      <div
+        v-show="!isEditGroupTitle"
+        class="prevent-title-edit"
+        @click="onFocusGroupTitle"></div>
+      <h2
+        class="group-title fs14"
+        ref="groupTitle"
+        @blur="updateGroupTitle"
+        contenteditable="true">
+        {{ group.title }}
+      </h2>
       <button>∙∙∙</button>
     </header>
 
     <main class="tasks-wrapper">
-      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items" :shouldAcceptDrop="(e) => (e.groupName === 'col-items')" drag-class="card-ghost"
-        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
-        <Draggable class="task-container" @click="this.$router.push(`/board/${board._id}/task/${task.id}`)"
-          v-for="task in group.tasks" :key="task.id">
+      <Container
+        class="task-list"
+        :get-child-payload="getGroupPayload(group.id)"
+        @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items"
+        :shouldAcceptDrop="(e) => e.groupName === 'col-items'"
+        drag-class="card-ghost"
+        drop-class="card-ghost-drop"
+        :drop-placeholder="dropPlaceholderOptions">
+        <Draggable
+          class="task-container"
+          @click="this.$router.push(`/board/${board._id}/task/${task.id}`)"
+          v-for="task in group.tasks"
+          :key="task.id">
           <span class="task-title fs14">{{ task.title }}</span>
         </Draggable>
       </Container>
@@ -21,7 +38,12 @@
         + add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
+        <textarea
+          class="task-container"
+          ref="taskTitle"
+          name="add-task"
+          cols="30"
+          rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">
@@ -30,6 +52,10 @@
       </div>
     </main>
   </section>
+  <div
+    v-if="showTaskDetails"
+    @click="toggleTaskDetails"
+    class="modal-overlay"></div>
 </template>
 
 <script>
@@ -51,6 +77,7 @@ export default {
         className: 'drop-preview',
         animationDuration: '150',
         showOnTop: true,
+        showTaskDetails: null,
       },
     }
   },
@@ -95,7 +122,7 @@ export default {
 
       let board = JSON.parse(JSON.stringify(this.board))
       let group = JSON.parse(JSON.stringify(this.group))
-      const idx = board.groups.findIndex(g => g.id === group.id)
+      const idx = board.groups.findIndex((g) => g.id === group.id)
 
       group.tasks.push(newTask)
       board.groups.splice(idx, 1, group)
@@ -119,15 +146,23 @@ export default {
     onFocusGroupTitle() {
       this.$refs.groupTitle.focus()
       this.isEditGroupTitle = !this.isEditGroupTitle
-    }
+    },
+    toggleTaskDetails() {
+      this.showTaskDetails = false
+    },
   },
-  mounted() {
-    this.showTaskDetails = false
-  },
+  // mounted() {
+  //   this.showTaskDetails = true
+  // },
   watch: {
     '$route.params': {
       handler() {
-        this.showTaskDetails = !this.showTaskDetails
+        // this.showTaskDetails = !this.showTaskDetails
+        console.log(this.$route.params)
+        let { taskId } = this.$route.params
+
+        if (!taskId) this.showTaskDetails = false
+        else this.showTaskDetails = true
       },
       immediate: true,
     },
@@ -141,6 +176,5 @@ export default {
 */
 .smooth-dnd-container.horizontal {
   display: flex !important;
-
 }
 </style>
