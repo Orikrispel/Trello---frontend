@@ -1,0 +1,11 @@
+.mark-todo {
+  text-decoration: line-through;
+}
+
+.checklist-list {
+  .checklist-btn {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

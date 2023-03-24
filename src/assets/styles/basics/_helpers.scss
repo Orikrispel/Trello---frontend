@@ -116,54 +116,54 @@
 }
 
 .watch-icon:before {
-  content: '\e969';
+  content: "\e969";
 }
 
 .member-icon:before {
-  content: '\e946';
+  content: "\e946";
 }
 
 .label-icon:before {
-  content: '\e93f';
+  content: "\e93f";
 }
 
 .checklist-icon:before {
-  content: '\e91a';
+  content: "\e91a";
 }
 
 .header-icon {
   &::before {
-    content: '\e912';
+    content: "\e912";
   }
 }
 
 .description-icon {
   &::before {
-    content: '\e922';
+    content: "\e922";
   }
 }
 
 .activity-icon {
   &::before {
-    content: '\e900';
+    content: "\e900";
   }
 }
 
 .archive-icon:before {
-  content: '\e907';
+  content: "\e907";
 }
 
 .attachments-icon:before {
-  content: '\e908';
+  content: "\e908";
   font-family: trellicons;
 }
 
 .card-cover-icon:before {
-  content: '\e914';
+  content: "\e914";
 }
 
 .icon-add:before {
-  content: '\e901';
+  content: "\e901";
 }
 
 .modal-overlay {
@@ -182,4 +182,8 @@
 
   margin: 0;
   padding: 0;
+}
+
+.list-style-none {
+  list-style: none;
 }

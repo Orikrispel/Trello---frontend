@@ -2,7 +2,6 @@
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
     <AddBoard @addBoard="addBoard" />
-    <!-- <component :is="actionType" /> -->
   </div>
 </template>
 
@@ -16,6 +15,7 @@ import {
   getActionStarBoard,
 } from '../../store/board.store'
 
+import ChecklistList from '../../cmps/checklist/ChecklistList.vue'
 import BoardList from '../../cmps/board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import ImgPicker from '../../cmps/ImgPicker.vue'
@@ -93,7 +93,8 @@ export default {
     BoardList,
     ColorPicker,
     ImgPicker,
-    AddBoard
+    AddBoard,
+    ChecklistList,
   },
 }
 
