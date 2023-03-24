@@ -75,7 +75,6 @@ export default {
     async updateBoard(board) {
       try {
         this.board = board
-        console.log('updated board groups:', this.board.groups)
         await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
       } catch (err) {

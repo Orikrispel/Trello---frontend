@@ -1,6 +1,6 @@
 .task-details {
-  z-index: 11;
-  border-radius: 0.2em;
+  z-index: 10;
+  border-radius: 3px;
   position: fixed;
   background-color: $secondary-clr3;
   display: flex;
@@ -8,19 +8,31 @@
   align-self: center;
   right: 50%;
   transform: translateX(50%);
-  overflow-y: scroll;
-  width: 40em;
+  width: calc(100vw - 80px);
   min-height: 100%;
+  margin: 48px 0 80px;
+  // position: relative;
+
+  @include for-normal-layout {
+    width: em(768px);
+  }
 
   & * {
     color: $font-clr2;
   }
 
-  & > .btn-close {
-    padding-block-start: 1em;
-    padding-inline-end: 1em;
-    align-self: end;
+  a.btn-close {
+    position: absolute;
+    background-color: $btn-clr3;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    padding: 12px;
+    margin: 4px;
     z-index: 12;
+    line-height: 0;
+
+    .icon {}
   }
 
   button {
@@ -35,135 +47,125 @@
     min-height: 6em;
     display: flex;
     justify-content: end;
-
-    .btn-close {
-      padding-inline: 1em;
-      font-weight: 700;
-    }
   }
 
   .task-container {
-    position: absolute;
-    display: grid;
-    width: 100%;
-    min-height: 100%;
-    grid-template-rows: 4em 3em 3em 1fr 1fr;
-    grid-template-columns: 1em 2em 1fr 10em 1em;
 
     .icon {
       align-self: center;
     }
 
     &-heading {
-      display: grid;
-      grid-template-columns: 1em 2em 1fr 8em 1em;
+      min-height: rem(32px);
       width: 100%;
-      padding-top: 1em;
-      padding-inline-end: 1em;
-      grid-column: 2/-1;
-      grid-row: 1;
+      padding: 12px 40px 8px 56px;
+      align-items: start;
+      position: relative;
 
-      h2 {
-        font-size: 1.2em;
-        grid-column: 1/4;
-        height: 100%;
-        align-self: center;
-      }
+      .task-title-wrapper {
+        padding-top: 12px;
+        width: 100%;
 
-      small {
-        grid-column: 1/4;
-        align-self: start;
+        h2.task-title {
+          border-radius: 3px;
+          margin: -4px -8px;
+          padding: 4px 8px;
 
-        span {
-          opacity: 0;
+          &:focus {
+            outline: none;
+            box-shadow: inset 0 0 0 2px $primary-clr4;
+          }
         }
       }
 
-      .btn-close {
-        grid-column: 5;
+      .icon {
+        position: absolute;
+        left: rem(16px);
+        top: rem(20px);
+      }
+
+      .list-related {
+        margin-bottom: 8px;
       }
     }
 
-    .task-heading-label-list {
-      grid-column: 3;
-      grid-row: 3;
+    .task-main-container {
+      display: grid;
+      grid-template-columns: 1fr;
 
-      h3 {
-        font-size: 0.7em;
+      @include for-normal-layout {
+        grid-template-columns: 552px 1fr;
+      }
+
+      .task-main {
+        padding: 0 8px 8px 16px;
+
+        .label-container {
+          margin: 8px 8px 8px 40px;
+
+          h3 {
+            margin: 0 8px 4px 0;
+          }
+
+          .task-heading-label-list {
+            gap: 4px;
+
+            .label {
+              // Temporary color until label get inherited
+              background-color: $btn-clr3;
+              padding: 0 12px;
+            }
+
+          }
+        }
+
+        .editor {
+          position: relative;
+          padding: 8px 0;
+          margin: 0 0 4px 40px;
+        }
+
+        .icon {
+          position: absolute;
+          top: 8px;
+          left: -40px;
+        }
+      }
+
+      .side-bar {
+        flex-direction: column;
+        justify-content: start;
+        padding: 0 16px 8px 8px;
+
+        h4 {
+          font-size: 0.8em;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          color: $font-clr1;
+          text-align: left;
+          padding-inline-end: 1em;
+
+          .icon {
+            margin-inline-end: 1em;
+          }
+        }
+      }
+
+      textarea {
+        padding: 8px 12px;
       }
     }
 
     .description-editor {
-      grid-row: 4/5;
-      align-self: start;
-      grid-column: 2/4;
-      width: 100%;
-
-      p {
-        margin: 0;
-        margin-block-start: 0;
-        margin-block-end: 0;
-      }
-
-      textarea {
-        width: 100%;
-        min-height: 100%;
-      }
-
       .btn-submit-desc {
         background-color: $primary-clr4;
         color: $secondary-clr1;
         padding: 0.7em;
         border-radius: 10%;
-      }
-
-      .btn-cancel-desc {
-      }
-    }
-
-    .btns-container {
-      grid-column: 4;
-      grid-row: 2/5;
-      flex-direction: column;
-      justify-content: start;
-      width: 100%;
-
-      h4 {
-        font-size: 0.8em;
-      }
-
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        color: $font-clr1;
-        width: 100%;
-        text-align: left;
-        padding-inline-end: 1em;
-
-        .icon {
-          margin-inline-end: 1em;
-        }
-      }
-    }
-
-    .comments-activity-container {
-      grid-row: 5;
-
-      grid-column: 2/4;
-      width: 100%;
-
-      form {
-        justify-self: center;
-
-        p {
-          cursor: pointer;
-        }
-
-        textarea {
-          width: 100%;
-          min-height: 30%;
-        }
       }
     }
   }
