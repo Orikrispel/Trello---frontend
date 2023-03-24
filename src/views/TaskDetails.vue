@@ -1,93 +1,95 @@
 <template>
   <section class="task-details">
-    <header v-if="task?.cover" class="task-cover">
+    <header v-if="task.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
     </header>
-    <RouterLink v-if="!task?.cover" :to="`/board/${boardId}`" class="btn-close">
+    <RouterLink v-if="!task.cover" :to="`/board/${boardId}`" class="btn-close">
       <div class="icon" v-html="getSvg('close')"></div>
     </RouterLink>
     <div class="task-container">
-      <div class="task-container-heading">
+
+      <div class="task-container-heading flex column">
         <!-- '<div class="txt-container"> -->
-        <h2 contenteditable="true" @input="updateTitle">
-          <span class="icon header-icon"></span>
-          {{ task?.title ? task.title : 'new title' }}
-        </h2>
-        <small>
-          <span class="icon header-icon"></span> in list {{ task?.list }}</small
-        >
-      </div>
-      <ul class="task-heading-label-list flex clean-list">
-        <h3>Labels</h3>
-        <li v-for="label in task?.labels" :key="label.id">{{ label.txt }}</li>
-      </ul>
-      <form class="description-editor" @submit.prevent="handleDesc">
-        <h3>
-          <span class="icon description-icon"></span>
-          Description
-          <button
-            v-if="!userIsEditing && task?.description"
-            @click="userIsEditing = !userIsEditing">
-            Edit
-          </button>
-        </h3>
-
-        <div
-          v-if="!userIsEditing && !task?.description"
-          @click="userIsEditing = !userIsEditing">
-          Add a more detailed description...
+        <div class="task-title-wrapper">
+          <h2 class="task-title fs20" contenteditable="true" @input="updateTitle">
+            <span class="icon header-icon"></span>
+            {{ task?.title ? task.title : 'new title' }}
+          </h2>
         </div>
-        <p v-if="!userIsEditing" @click="handleDesc">
-          {{ task?.description }}
-        </p>
-        <textarea
-          v-if="userIsEditing"
-          v-model="task.description"
-          @blur="userIsEditing = !userIsEditing"
-          autofocus></textarea>
-        <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
-          Save
-        </button>
-        <button class="btn-cancel-submit" v-if="userIsEditing" type="submit">
-          Cancel
-        </button>
-      </form>
+        <span class="list-related"> in list {{ task?.list }}</span>
+      </div>
 
-      <aside class="btns-container flex">
-        <h4>Add to card</h4>
-        <button><span class="icon member-icon"></span> Members</button>
-        <button @click="labelMenuOpen = true">
-          <span class="icon label-icon"></span>Labels
-        </button>
-        <button><span class="icon checklist-icon"></span>Checklist</button>
-        <button><span class="icon watch-icon"></span>Dates</button>
-        <button><span class="icon attachments-icon"></span>Attachment</button>
-        <button v-if="!task?.cover">
-          <span class="icon card-cover-icon"></span>Cover
-        </button>
-      </aside>
+      <div class="task-main-container">
+        <main class="task-main">
 
-      <div class="comments-activity-container">
-        <h3><span class="icon activity-icon"></span> Activity</h3>
-        <form class="comment-form" @submit.prevent="handleComment">
-          <textarea name="comment" placeholder="Write a comment..."></textarea>
-        </form>
-        <ul v-if="task?.comments" class="clean-list">
-          <li v-for="(comment, idx) in task.comments" :key="idx">
-            {{ comment }}
-          </li>
-        </ul>
-        <ul v-if="task?.activities" class="clean-list">
-          <li v-for="(activity, idx) in task?.activities" :key="idx">
-            {{ activity }}
-          </li>
-        </ul>
-        <button @click="test">test</button>
+          <div class="label-container">
+            <h3 class="fs12">Labels</h3>
+            <ul class="task-heading-label-list flex clean-list">
+              <li class="label" v-for="label in task?.labels" :key="label.id">{{ label.txt }}</li>
+            </ul>
+          </div>
+
+          <form class="description-editor editor" @submit.prevent="handleDesc">
+            <h3><span class="icon description-icon"></span>Description</h3>
+            <button v-if="!userIsEditing && task?.description" @click="userIsEditing = !userIsEditing">
+              Edit
+            </button>
+
+
+            <div v-if="!userIsEditing && !task?.description" @click="userIsEditing = !userIsEditing">
+              Add a more detailed description...
+            </div>
+            <p v-if="!userIsEditing" @click="handleDesc">
+              {{ task?.description }}
+            </p>
+            <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = !userIsEditing"
+              autofocus></textarea>
+            <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
+              Save
+            </button>
+            <button class="btn-cancel-submit" v-if="userIsEditing" type="submit">
+              Cancel
+            </button>
+          </form>
+
+          <div class="comments-activity-container editor">
+            <h3><span class="icon activity-icon"></span> Activity</h3>
+            <form class="comment-form" @submit.prevent="handleComment">
+              <textarea name="comment" placeholder="Write a comment..."></textarea>
+            </form>
+            <ul v-if="task?.comments" class="clean-list">
+              <li v-for="(comment, idx) in task.comments" :key="idx">
+                {{ comment }}
+              </li>
+            </ul>
+            <ul v-if="task?.activities" class="clean-list">
+              <li v-for="(activity, idx) in task?.activities" :key="idx">
+                {{ activity }}
+              </li>
+            </ul>
+            <button @click="test">test</button>
+          </div>
+        </main>
+
+        <aside class="btns-container side-bar flex">
+          <h4>Add to card</h4>
+          <button><span class="icon member-icon"></span> Members</button>
+          <button @click="labelMenuOpen = true">
+            <span class="icon label-icon"></span>Labels
+          </button>
+          <button><span class="icon checklist-icon"></span>Checklist</button>
+          <button><span class="icon watch-icon"></span>Dates</button>
+          <button><span class="icon attachments-icon"></span>Attachment</button>
+          <button v-if="!task?.cover">
+            <span class="icon card-cover-icon"></span>Cover
+          </button>
+          <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
+        </aside>
+
       </div>
     </div>
-    <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
   </section>
 </template>
 
@@ -116,6 +118,9 @@ export default {
     handleDesc() {
       userIsEditing = !this.userIsEditing
       this.$refs.taskDesc.focus()
+    },
+    handleComment() {
+      console.log(this.task)
     },
     async saveTask() {
       let task = { ...this.task }

@@ -11,12 +11,21 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          class="btn btn-light"
+          @click="toggleAddGroup">
           + add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -26,6 +35,10 @@
       </article>
       <RouterView />
     </main>
+    <!-- <div
+      v-if="taskDetailsIsOpen"
+      @click="toggleTaskDetails('group')"
+      class="modal-overlay"></div> -->
   </div>
 </template>
 
@@ -49,7 +62,10 @@ export default {
   },
   async created() {
     await this.$store.dispatch({ type: 'loadBoards' })
-    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
   },
   computed: {
     loggedInUser() {
@@ -63,15 +79,24 @@ export default {
   methods: {
     onAddGroup() {
       let board = JSON.parse(JSON.stringify(this.board))
-      console.log('new group', this.groupToAdd)
-      this.groupToAdd.title = this.$refs.newGroup.value
 
+      this.groupToAdd.title = this.$refs.newGroup.value
       board.groups.push(this.groupToAdd)
       this.updateBoard(board)
 
       this.groupToAdd = this.$store.getEmptyGroup
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
+    },
+    async updateBoard(board) {
+      try {
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
+        showSuccessMsg('Board updated')
+      } catch (err) {
+        console.log(err)
+        showErrorMsg('Cannot update board')
+      }
     },
     async removeBoard(boardId) {
       try {
@@ -80,17 +105,6 @@ export default {
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove board')
-      }
-    },
-    async updateBoard(board) {
-      try {
-        this.board = board
-        console.log('updated board groups:', this.board.groups)
-        await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
-      } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot update board')
       }
     },
     async starBoard() {
@@ -109,6 +123,9 @@ export default {
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
+    },
+    mounted() {
+      this.taskDetailsIsOpen = false
     },
   },
   components: {

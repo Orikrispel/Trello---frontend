@@ -43,7 +43,7 @@
       overflow-y: auto;
     }
 
-    & > button:first-of-type {
+    &>button:first-of-type {
       color: $font-clr3;
       margin: 2px 0 8px 8px;
     }
@@ -70,13 +70,6 @@
     .new-task-container {
       flex-wrap: wrap;
       padding-bottom: 8px;
-
-      textarea.task-container {
-        font-family: 'Segoe UI Regular';
-        width: 100%;
-        border: none;
-        outline: none;
-      }
     }
   }
 }
