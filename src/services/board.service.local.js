@@ -14,6 +14,7 @@ export const boardService = {
   addBoardMsg,
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
+  getDefaultMembers,
 }
 window.cs = boardService
 
@@ -179,6 +180,26 @@ function getDefaultEmptyLabels() {
   ]
 }
 
+function getDefaultMembers() {
+  return [
+    {
+      _id: 'u101',
+      fullname: 'Yohai Korem',
+      imgUrl: 'https://www.google.com',
+    },
+    {
+      _id: 'u102',
+      fullname: 'Ori Krispel',
+      imgUrl: 'https://www.google.com',
+    },
+    {
+      _id: 'u103',
+      fullname: 'Ori Teicher',
+      imgUrl: 'https://www.google.com',
+    },
+  ]
+}
+
 async function _createBoard() {
   let board = {
     _id: '',
@@ -313,7 +334,7 @@ async function _createBoard() {
             dueDate: 16156215211,
             byMember: {
               _id: 'u101',
-              username: 'Tal',
+              username: 'yoyo',
               fullname: 'Yohai Korem',
               imgUrl:
                 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
