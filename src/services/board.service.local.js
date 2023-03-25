@@ -185,17 +185,17 @@ function getDefaultMembers() {
     {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: 'https://www.google.com',
+      imgUrl: '',
     },
     {
       _id: 'u102',
       fullname: 'Ori Krispel',
-      imgUrl: 'https://www.google.com',
+      imgUrl: '',
     },
     {
       _id: 'u103',
       fullname: 'Ori Teicher',
-      imgUrl: 'https://www.google.com',
+      imgUrl: '',
     },
   ]
 }
@@ -228,17 +228,17 @@ async function _createBoard() {
       {
         _id: 'u101',
         fullname: 'Yohai Korem',
-        imgUrl: 'https://www.google.com',
+        imgUrl: '',
       },
       {
         _id: 'u102',
         fullname: 'Ori Krispel',
-        imgUrl: 'https://www.google.com',
+        imgUrl: '',
       },
       {
         _id: 'u103',
         fullname: 'Ori Teicher',
-        imgUrl: 'https://www.google.com',
+        imgUrl: '',
       },
     ],
     groups: [
