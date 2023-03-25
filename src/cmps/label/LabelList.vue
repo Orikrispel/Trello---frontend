@@ -1,10 +1,18 @@
 <template>
   <div class="labels-list">
     <hr />
-    <input type="text" name="label-search" placeholder="Search labels..." />
+    <input
+      type="text"
+      name="label-search"
+      placeholder="Search labels..."
+      v-model="filterBy"
+      @input="searchLabels" />
     <h4>Labels</h4>
     <ul class="clean-list">
-      <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
+      <li
+        class="label-list-item"
+        v-for="(label, idx) in labels"
+        :key="label.id">
         <input type="checkbox" />
         <LabelPreview :label="label" @click="addLabelToTask(label)" />
         <div
@@ -28,6 +36,7 @@ export default {
       labels: [],
       board: null,
       task: null,
+      filterBy: '',
     }
   },
   computed: {
@@ -59,6 +68,18 @@ export default {
     this.labels = labels
   },
   methods: {
+    searchLabels() {
+      let labels
+      if (this.filterBy) {
+        const regex = new RegExp(this.filterBy, 'i')
+        labels = this.labels.filter((label) => regex.test(label.title))
+      } else {
+        labels = this.board.labels
+      }
+
+      this.labels = labels
+      console.log(this.labels)
+    },
     async addLabelToTask(label) {
       let task = JSON.parse(JSON.stringify(this.task))
       if (!task.labels) task.labels = []
@@ -88,13 +109,7 @@ export default {
       this.$emit('toggleLabelEdit')
     },
   },
-  watch: {
-    labels: {
-      async handler() {
-        this.labels = await this.currLabels
-      },
-    },
-  },
+
   components: {
     LabelPreview,
   },
