@@ -64,12 +64,19 @@ export default {
     },
     async addMemberToTask(memberId) {
       //   let user = await userService.getById(memberId)
-      let members = { ...this.board.members }
-      let assignedMember = members.find((member) => {
+      let task = JSON.parse(JSON.stringify(this.task))
+      let board = JSON.parse(JSON.stringify(this.board))
+      let { members } = board
+      let member = members.find((member) => {
         return member._id === memberId
       })
-      assignedMember.isSelected = true
-      console.log(assignedMember)
+      member.isSelected = true
+      if (!task.members) task.members = []
+      let hasLabel = task.members.some((l) => l.id === member.id)
+      if (hasLabel) task = this.removeLabelFromTask(task, member)
+      else task.members.push({ ...member })
+      eventBus.emit('updateTask', task)
+      this.task = task
     },
   },
   components: {
