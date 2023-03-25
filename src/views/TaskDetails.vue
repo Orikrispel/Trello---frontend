@@ -165,7 +165,7 @@ export default {
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
-      console.log(board.groups[groupIdx].tasks[taskIdx])
+      this.task = updatedTask
       try {
         await this.updateBoard(board, 'Task updated', 'Failed to updated task')
       } catch (err) {
