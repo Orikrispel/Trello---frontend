@@ -36,14 +36,20 @@ export default {
         async addChecklist() {
             this.checklistToAdd.id = 'cl' + utilService.makeId()
             let task = JSON.parse(JSON.stringify(this.actionData.task))
-            if (!task.checklists) task.checklists = []
+            if (!task.checklists) {
+                task.checklists = []
+                console.log('new checklist added')
+            }
+            console.log('this.checklistToAdd', this.checklistToAdd)
             task.checklists.push(this.checklistToAdd)
+            console.log('task after', task)
             this.checklistToAdd = checklistService.getEmptyChecklist()
             eventBus.emit('updateTask', task)
         }
 
     },
     created() {
+        console.log('this.actionData.task.id', this.actionData.task.id)
         this.task = this.actionData.task
     },
 

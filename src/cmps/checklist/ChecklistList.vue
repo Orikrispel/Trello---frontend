@@ -2,12 +2,12 @@
     <section class="checklist-list list-style-none">
         <h2>Checklists</h2>
         <ul class="list-style-none">
-            <li v-for="checklist in task.checklists" :key="checklist.id">
-                <!-- <ChecklistPreview :checklist="checklist" /> -->
-                <pre>{{ checklist }}</pre>
-                <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove
-                    Checklist</button>
-            </li>
+            <!-- <li v-for="checklist in task.checklists" :key="checklist.id"> -->
+            <!-- <ChecklistPreview :checklist="checklist" /> -->
+            <!-- <pre>{{ checklist }}</pre> -->
+            <!-- <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove -->
+            <!-- Checklist</button> -->
+            <!-- </li> -->
         </ul>
         <!-- <button class="btn" @click="addChecklist">Add Checklist</button> -->
     </section>
@@ -17,14 +17,9 @@
 import ChecklistPreview from './ChecklistPreview.vue'
 import { utilService } from '../../services/util.service'
 import { eventBus } from '../../services/event-bus.service'
-
 export default {
     name: 'ChecklistList',
     props: {
-        task: {
-            type: Object,
-            required: true
-        }
     },
     components: {
         ChecklistPreview
@@ -34,9 +29,15 @@ export default {
             currTask: null
         }
     },
+    computed: {
+        taskId() {
+            const { taskId } = this.$route.params
+            return taskId
+        },
+    },
     methods: {
         removeChecklist(checklistId) {
-            let task = JSON.parse(JSON.stringify(this.task))
+            let task = JSON.parse(JSON.stringify(this.currTask))
             console.log('task', task)
             console.log('checklistId', checklistId)
             console.log('this.currTask', task.checklists)
@@ -45,13 +46,17 @@ export default {
             eventBus.emit('updateTask', task)
         },
     },
-    created() {
-        this.currTask = this.task
+    async created() {
+        // this.currTask = this.task
+        this.currTask = await this.$store.dispatch({
+            type: 'loadCurrTask',
+            taskId: this.taskId,
+        })
+        console.log('this.currTask', this.currTask)
     },
     mounted() {
     },
     watch: {
-
     },
 }
 </script>

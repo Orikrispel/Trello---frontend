@@ -25,13 +25,19 @@
           <div class="label-container">
             <h3 class="fs12">Labels</h3>
             <ul class="task-heading-label-list flex clean-list">
+              <li v-for="member in task.members" :key="member._id" class="member">
+                <MemberPreview />
+              </li>
+            </ul>
+            <ul class="task-heading-label-list flex clean-list">
               <li class="label" v-for="label in task.labels" :key="label.id">
                 <LabelPreview :label="label" />
               </li>
             </ul>
           </div>
           <!-- checklist list -->
-          <ChecklistList :task="task" />
+          <ChecklistList />
+          <pre>{{ task.id }}</pre>
 
           <!-- description -->
           <form class="description-editor editor" @submit.prevent="handleDesc">
@@ -107,12 +113,12 @@ import {
 } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
 import MembersList from '../cmps/members/MembersList.vue'
+import MemberPreview from '../cmps/members/MemberPreview.vue'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
 import LabelPreview from '../cmps/label/LabelPreview.vue'
 import AddChecklist from '../cmps/AddChecklist.vue'
 import ChecklistList from '../cmps/checklist/ChecklistList.vue'
 import { getActionUpdateBoard } from '../store/board.store'
-
 export default {
   name: 'TaskDetails',
   data() {
@@ -182,7 +188,6 @@ export default {
       }
     },
   },
-
   computed: {
     // currTask() {
     //   let task = this.$store.getters.currTask
@@ -194,11 +199,9 @@ export default {
       return boardId
     },
   },
-
   unmounted() {
     this.saveTask(this.task)
   },
-
   watch: {
     '$route.params': {
       async handler() {
@@ -214,6 +217,7 @@ export default {
     LabelPreview,
     AddChecklist,
     MembersList,
+    MemberPreview,
     ChecklistList,
   },
 }
