@@ -2,6 +2,7 @@
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
     <AddBoard @addBoard="addBoard" />
+    <!-- <ChecklistList :checklists="checklists" /> -->
   </div>
 </template>
 
@@ -28,6 +29,29 @@ export default {
       boardPickedColor: 'white',
       boardPickedImg: '',
       actionType: 'BoardList',
+      checklists: [{
+        "id": "YEhmF",
+        "title": "Checklist",
+        "todos": [
+          {
+            "id": "212jX",
+            "title": "To Do 1",
+            "isDone": false
+          }
+        ]
+      },
+      {
+        "id": "YEhmF",
+        "title": "Checklist",
+        "todos": [
+          {
+            "id": "212jaX",
+            "title": "To Do 1",
+            "isDone": false
+          }
+        ]
+      },
+      ]
     }
   },
   computed: {

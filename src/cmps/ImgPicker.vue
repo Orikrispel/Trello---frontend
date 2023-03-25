@@ -19,7 +19,7 @@ export default {
 
     },
     async mounted() {
-        this.imgUrls = await unsplashService.getImgs('paris', 4)
+        this.imgUrls = await unsplashService.getImgs('japan', 4)
     },
     methods: {
         setImg(imgUrls) {

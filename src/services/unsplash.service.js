@@ -11,7 +11,7 @@ export const unsplashService = {
 }
 
 
-async function getImgs(query = '', count = 1) {
+async function getImgs(query = 'israel', count = 4) {
     const URL = `http://api.unsplash.com/search/photos?query=${query}&client_id=${API}&per_page=${count}`
     try {
         const savedImgs = utilService.loadFromStorage(UNSPLASH_KEY)
