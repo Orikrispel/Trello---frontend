@@ -85,7 +85,7 @@
             <span class="icon card-cover-icon"></span>Cover
           </button>
           <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
-          <ActionModal v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist' }" />
+          <ActionModal v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist', type: 'ColorPicker' }" />
         </aside>
       </div>
     </div>
