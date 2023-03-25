@@ -31,7 +31,7 @@ export default {
     data() {
         return {
             boardToAdd: boardService.getEmptyBoard(),
-            isCreateMode: false,
+            isCreateMode: true,
             pickedColor: 'white',
             pickedImg: {},
         }
