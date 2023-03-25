@@ -89,7 +89,8 @@
           </button>
           <MembersList v-if="membersMenuOpen" />
           <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
-          <ActionModal v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist' }" />
+          <AddChecklist v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist', task: task }"
+            @addChecklist="addChecklist" />
         </aside>
       </div>
     </div>
@@ -106,7 +107,7 @@ import { svgService } from '../services/svg.service'
 import MembersList from '../cmps/members/MembersList.vue'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
 import LabelPreview from '../cmps/label/LabelPreview.vue'
-import ActionModal from '../cmps/ActionModal.vue'
+import AddChecklist from '../cmps/AddChecklist.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 
 export default {
@@ -177,6 +178,7 @@ export default {
         showErrorMsg(errMsg)
       }
     },
+
   },
 
   computed: {
@@ -208,7 +210,7 @@ export default {
   components: {
     LabelMenu,
     LabelPreview,
-    ActionModal,
+    AddChecklist,
     MembersList,
   },
 }
