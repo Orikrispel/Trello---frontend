@@ -73,19 +73,23 @@
 
         <aside class="btns-container side-bar flex">
           <h4>Add to card</h4>
-          <button><span class="icon member-icon"></span> Members</button>
+          <button @click="membersMenuOpen = !membersMenuOpen">
+            <span class="icon member-icon"></span> Members
+          </button>
           <button @click="labelMenuOpen = true">
             <span class="icon label-icon"></span>Labels
           </button>
-          <button @click="checklistMenuOpen = !checklistMenuOpen"><span
-              class="icon checklist-icon"></span>Checklist</button>
+          <button @click="checklistMenuOpen = !checklistMenuOpen">
+            <span class="icon checklist-icon"></span>Checklist
+          </button>
           <button><span class="icon watch-icon"></span>Dates</button>
           <button><span class="icon attachments-icon"></span>Attachment</button>
           <button v-if="!task.cover">
             <span class="icon card-cover-icon"></span>Cover
           </button>
+          <MembersList v-if="membersMenuOpen" />
           <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
-          <ActionModal v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist', type: 'ColorPicker' }" />
+          <ActionModal v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist' }" />
         </aside>
       </div>
     </div>
@@ -99,10 +103,12 @@ import {
   showSuccessMsg,
 } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
+import MembersList from '../cmps/members/MembersList.vue'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
 import LabelPreview from '../cmps/label/LabelPreview.vue'
 import ActionModal from '../cmps/ActionModal.vue'
 import { getActionUpdateBoard } from '../store/board.store'
+
 export default {
   name: 'TaskDetails',
   data() {
@@ -112,6 +118,7 @@ export default {
       userIsEditing: false,
       labelMenuOpen: false,
       checklistMenuOpen: false,
+      membersMenuOpen: false,
     }
   },
   async created() {
@@ -202,6 +209,7 @@ export default {
     LabelMenu,
     LabelPreview,
     ActionModal,
+    MembersList,
   },
 }
 </script>
