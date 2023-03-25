@@ -261,6 +261,7 @@ async function _createBoard() {
               className: 'card',
             },
             loading: false,
+            checklists: [],
           },
           {
             id: 'c102',
@@ -269,6 +270,7 @@ async function _createBoard() {
             props: {
               className: 'card',
             },
+            checklists: [],
             loading: false,
           },
         ],
