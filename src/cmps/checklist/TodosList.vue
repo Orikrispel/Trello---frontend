@@ -5,7 +5,11 @@
                 <button @click="removeTodo(todo.id)" style="float:right;">...</button>
                 <TodosPreview :todo="todo" @updateTodos="onUpdateTodos" />
             </li>
-            <button class="btn" @click="addTodo">Add To Do</button>
+            <input type="text" v-model="addTodoTitle" class="add-todo-input" v-if="isEditorOn === true">
+            <div class="add-todo-btns">
+                <button class="btn btn-blue add-item-btn" @click="addTodo">Add Item</button>
+                <button class="btn add-item-btn" @click="isEditorOn = false">Cancel</button>
+            </div>
         </ul>
     </section>
 </template>
@@ -24,19 +28,26 @@ export default {
     },
     data() {
         return {
+            addTodoTitle: '',
+            isEditorOn: false,
         };
     },
     methods: {
         addTodo() {
+            if (!this.isEditorOn) {
+                this.isEditorOn = true
+                return
+            }
             const newTodos = JSON.parse(JSON.stringify(this.todos))
             console.log('newTodos', newTodos)
             const newTodo = {
                 id: 'td' + utilService.makeId(),
-                title: 'new todo...',
+                title: this.addTodoTitle,
                 isDone: false
             }
             newTodos.push(newTodo)
             this.$emit('updateChecklist', newTodos)
+            this.AddTodoTitle = ''
         },
         removeTodo(todoId) {
             const newTodos = JSON.parse(JSON.stringify(this.todos))

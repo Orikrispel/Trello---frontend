@@ -1,0 +1,10 @@
+.add-checklist-form {
+  display: flex;
+  flex-direction: column;
+  button {
+    width: fit-content;
+  }
+  #add-btn {
+    margin: 5px 0px;
+  }
+}

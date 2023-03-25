@@ -1,11 +1,13 @@
 <template>
-    <form @submit.prevent="addChecklist" class="board-add-form" v-if="isCreateMode">
-        <div class="add-form-header">
-            <h5 style="padding-right: 25px;">{{ actionData.title }}</h5>
+    <form @submit.prevent="addChecklist" class="board-add-form add-checklist-form" v-if="isCreateMode">
+        <div class="add-form-header add-checklist-header">
+            <h5>Add checklist</h5>
             <p @click="closeModal">x</p>
         </div>
-        <input type="text" style="margin-top: 25px;" v-model="checklistToAdd.title">
-        <button class="btn add-checklist-btn">Add</button>
+        <div>
+            <input type="text" style="margin-top: 25px;" v-model="checklistToAdd.title">
+            <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
+        </div>
     </form>
 </template>
 
@@ -38,6 +40,11 @@ export default {
             task.checklists.push(this.checklistToAdd)
             this.checklistToAdd = checklistService.getEmptyChecklist()
             eventBus.emit('updateTask', task)
+            this.$emit('setCreateModeOff')
+        },
+        closeModal() {
+            this.isCreateMode = false
+            this.$emit('setCreateModeOff')
         }
     },
     created() {

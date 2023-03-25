@@ -2,8 +2,7 @@
     <section class="checklist-list list-style-none">
         <ul class="list-style-none">
             <li v-for="checklist in task.checklists" :key="checklist.id" class="checklist-li">
-                <button class="btn" @click="removeChecklist(checklist.id)" style="float:right;">Delete
-                    Checklist</button>
+                <button class="btn" @click="removeChecklist(checklist.id)" style="float:right;">Delete</button>
                 <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask" />
             </li>
         </ul>

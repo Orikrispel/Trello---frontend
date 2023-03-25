@@ -10,6 +10,35 @@
   }
 }
 
-.checklist-li {
-  background-color: aliceblue;
+.checklist-preview {
+  margin-bottom: 15px;
+}
+
+.todos-list {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  button {
+    width: fit-content;
+  }
+  input {
+    border: none;
+    background-color: $secondary-clr3;
+  }
+  .add-todo-input {
+    box-shadow: $input-shadow;
+    background-color: white;
+  }
+
+  .add-item-btn {
+    margin: 5px 0px;
+  }
+}
+
+.add-todo-btns {
+  display: flex;
+  gap: 5px;
 }
