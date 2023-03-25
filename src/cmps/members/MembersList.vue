@@ -24,6 +24,7 @@
 </template>
 <script>
 import { userService } from '../../services/user.service'
+import { eventBus } from '../../services/event-bus.service'
 import MemberPreview from './MemberPreview.vue'
 export default {
   data() {
@@ -72,11 +73,18 @@ export default {
       })
       member.isSelected = true
       if (!task.members) task.members = []
-      let hasLabel = task.members.some((l) => l.id === member.id)
-      if (hasLabel) task = this.removeLabelFromTask(task, member)
+      let hasMember = task.members.some((m) => m.id === member.id)
+      if (hasMember) task = this.removeMemberFromTask(task, member)
       else task.members.push({ ...member })
       eventBus.emit('updateTask', task)
       this.task = task
+    },
+    removeMemberFromTask(task, member) {
+      const memberToRemoveIdx = task.members.findIndex(
+        (m) => m.id === member.id
+      )
+      task.members.splice(memberToRemoveIdx, 1)
+      return task
     },
   },
   components: {

@@ -1,6 +1,10 @@
 <template>
   <div class="member-preview">
-    <div>{{ member.imgUrl }}</div>
+    <div>
+      {{
+        member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase()
+      }}
+    </div>
     <div>{{ member.fullname }}</div>
     <div>{{ member.isActive }}</div>
   </div>
