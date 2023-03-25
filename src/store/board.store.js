@@ -212,7 +212,6 @@ export const boardStore = {
       }
     },
     async loadCurrTask({ state, commit }, { taskId }) {
-      log
       let board = state.currBoard
       let groups = board.groups
       let currTask

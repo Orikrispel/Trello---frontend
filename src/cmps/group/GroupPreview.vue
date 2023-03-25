@@ -67,6 +67,7 @@ import { svgService } from '../../services/svg.service'
 
 export default {
   name: 'GroupPreview',
+  emits: ['updateBoard'],
   props: ['board', 'group'],
   components: { Container, Draggable },
   data() {

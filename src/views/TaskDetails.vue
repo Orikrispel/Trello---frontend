@@ -1,6 +1,6 @@
 <template>
   <section class="task-details">
-    <header v-if="task?.cover" class="task-cover">
+    <header v-if="task.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
@@ -73,12 +73,14 @@
                 name="comment"
                 placeholder="Write a comment..."></textarea>
             </form>
-            <ul v-if="task.comments" class="clean-list">
+            <ul v-if="task.comments && task.comments.length" class="clean-list">
               <li v-for="(comment, idx) in task.comments" :key="idx">
                 {{ comment }}
               </li>
             </ul>
-            <ul v-if="task.activities" class="clean-list">
+            <ul
+              v-if="task.activities && task.activities.length"
+              class="clean-list">
               <li v-for="(activity, idx) in task.activities" :key="idx">
                 {{ activity }}
               </li>
@@ -122,8 +124,8 @@ export default {
   name: 'TaskDetails',
   data() {
     return {
-      task: null,
-      board: null,
+      task: {},
+      board: {},
       userIsEditing: false,
       labelMenuOpen: false,
     }
@@ -157,13 +159,12 @@ export default {
     async saveTask(task) {
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
-      console.log(board)
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
-      board = board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
+      board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
 
       try {
         await this.updateBoard(board, 'Task updated', 'Failed to updated task')
