@@ -1,14 +1,14 @@
 <template>
     <section class="checklist-list list-style-none">
         <h2>Checklists</h2>
-        <ul class="list-style-none">
-            <!-- <li v-for="checklist in task.checklists" :key="checklist.id"> -->
-            <!-- <ChecklistPreview :checklist="checklist" /> -->
-            <!-- <pre>{{ checklist }}</pre> -->
-            <!-- <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove -->
-            <!-- Checklist</button> -->
-            <!-- </li> -->
-        </ul>
+        <!-- <ul class="list-style-none"> -->
+        <!-- <li v-for="checklist in task.checklists" :key="checklist.id"> -->
+        <!-- <ChecklistPreview :checklist="checklist" /> -->
+        <!-- <pre>{{ checklist }}</pre> -->
+        <!-- <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove -->
+        <!-- Checklist</button> -->
+        <!-- </li> -->
+        <!-- </ul> -->
         <!-- <button class="btn" @click="addChecklist">Add Checklist</button> -->
     </section>
 </template>

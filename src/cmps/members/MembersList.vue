@@ -5,6 +5,7 @@
       <button class="btn btn-close">X</button>
     </div>
     <input
+      v-model="filterBy"
       type="text"
       placeholder="Search members"
       @input="searchMembers"
@@ -24,6 +25,7 @@
 </template>
 <script>
 import { userService } from '../../services/user.service'
+import { eventBus } from '../../services/event-bus.service'
 import MemberPreview from './MemberPreview.vue'
 export default {
   data() {
@@ -31,6 +33,7 @@ export default {
       members: [],
       board: null,
       task: null,
+      filterBy: '',
     }
   },
   computed: {
@@ -60,23 +63,41 @@ export default {
   },
   methods: {
     searchMembers() {
-      console.log(this.members)
+      let members
+      if (this.filterBy) {
+        const regex = new RegExp(filterBy, 'i')
+        members = this.members.filter((member) => regex.test(member.fullname))
+      } else {
+        members = this.board.members
+      }
+      this.members = members
     },
     async addMemberToTask(memberId) {
-      //   let user = await userService.getById(memberId)
       let task = JSON.parse(JSON.stringify(this.task))
       let board = JSON.parse(JSON.stringify(this.board))
       let { members } = board
       let member = members.find((member) => {
         return member._id === memberId
       })
-      member.isSelected = true
       if (!task.members) task.members = []
-      let hasLabel = task.members.some((l) => l.id === member.id)
-      if (hasLabel) task = this.removeLabelFromTask(task, member)
-      else task.members.push({ ...member })
+      let hasMember = task.members.some((member) => {
+        return member._id === memberId
+      })
+      if (hasMember) task = this.removeMemberFromTask(task, member)
+      else {
+        member.isSelected = true
+        task.members.push({ ...member })
+      }
+
       eventBus.emit('updateTask', task)
       this.task = task
+    },
+    removeMemberFromTask(task, member) {
+      const memberToRemoveIdx = task.members.findIndex(
+        (m) => m._id === member._id
+      )
+      task.members.splice(memberToRemoveIdx, 1)
+      return task
     },
   },
   components: {

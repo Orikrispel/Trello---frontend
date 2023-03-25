@@ -26,7 +26,7 @@
             <h3 class="fs12">Labels</h3>
             <ul class="task-heading-label-list flex clean-list">
               <li v-for="member in task.members" :key="member._id" class="member">
-                <MemberPreview />
+                <MemberPreview :member="member" />
               </li>
             </ul>
             <ul class="task-heading-label-list flex clean-list">

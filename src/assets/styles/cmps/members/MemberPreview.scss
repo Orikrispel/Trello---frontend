@@ -1,3 +1,24 @@
 .member-preview {
   cursor: pointer;
+  display: flex;
+
+  &:hover {
+    background-color: darken($color: $secondary-clr1, $amount: 10);
+  }
+
+  & > * {
+    padding: 0.5em;
+  }
+
+  .member-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    color: $secondary-clr1;
+    border-radius: 1em;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: #5243aa;
+  }
 }
