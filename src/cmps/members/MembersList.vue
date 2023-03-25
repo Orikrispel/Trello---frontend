@@ -72,7 +72,6 @@ export default {
       } else {
         members = this.board.members
       }
-      console.log(members)
       this.members = members
     },
     async addMemberToTask(memberId) {
