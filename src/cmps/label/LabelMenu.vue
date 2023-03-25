@@ -39,9 +39,16 @@ export default {
       return svgService.getSvg(iconName)
     },
     async backFromEdit() {
-      this.userIsEditinguserIsEditing = false
+      this.userIsEditing = false
       await this.$store.dispatch({ type: 'setCurrLabel', labelId: null })
-      this.$emit('toggleLabelEdit')
+    },
+  },
+  watch: {
+    userIsEditing: {
+      async handler() {
+        if (this.userIsEditing === false)
+          await this.$store.dispatch({ type: 'setCurrLabel', labelId: null })
+      },
     },
   },
   components: {

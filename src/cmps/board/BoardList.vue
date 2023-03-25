@@ -5,12 +5,19 @@
       <h3>Starred Boards</h3>
     </div>
     <ul class="board-list">
-      <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-        'background-color': board.style?.backgroundColor || '#014a75',
-        'backgroundImage': getBoardBg(board) || 'none',
-        'backgroundSize': 'cover'
-      }">
-        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+      <li
+        v-for="board in starredBoards"
+        :key="board._id"
+        @click="showBoardDetails(board._id)"
+        :style="{
+          'background-color': board.style?.backgroundColor || '#014a75',
+          backgroundImage: getBoardBg(board) || 'none',
+          backgroundSize: 'cover',
+        }">
+        <BoardPreview
+          :board="board"
+          @onRemoveBoard="removeBoard"
+          @starBoard="starBoard" />
       </li>
     </ul>
     <div class="boards-header">
@@ -21,12 +28,19 @@
       <li class="new-board" @click="setCreateMode">
         <p>Create new board</p>
       </li>
-      <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-        'background-color': board.style?.backgroundColor || '#014a75',
-        'backgroundImage': getBoardBg(board) || 'none',
-        'backgroundSize': 'cover'
-      }">
-        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+      <li
+        v-for="board in boards"
+        :key="board._id"
+        @click="showBoardDetails(board._id)"
+        :style="{
+          'background-color': board.style?.backgroundColor || '#014a75',
+          backgroundImage: getBoardBg(board) || 'none',
+          backgroundSize: 'cover',
+        }">
+        <BoardPreview
+          :board="board"
+          @onRemoveBoard="removeBoard"
+          @starBoard="starBoard" />
       </li>
     </ul>
   </div>
@@ -41,10 +55,9 @@ export default {
   data() {
     return {}
   },
-  created() {
-  },
+  created() {},
   computed: {
-    loggedInUser() { },
+    loggedInUser() {},
     starredBoards() {
       const boards = this.$store.getters.boards
       return boards.filter((board) => board.isStarred)
@@ -70,15 +83,13 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg(board) {
-      if (!board.style.imgUrls) return null
-      else return `url(${board.style.imgUrls.raw})`
-    }
-
+      if (!board.style?.imgUrls) return null
+      else return `url(${board.style?.imgUrls.raw})`
+    },
   },
 
   components: {
     BoardPreview,
   },
 }
-
 </script>
