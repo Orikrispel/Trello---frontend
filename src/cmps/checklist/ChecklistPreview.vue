@@ -1,7 +1,7 @@
 <template>
     <section class="checklist-preview">
-        <h2>{{ checklist.title }}</h2>
-        <TodosList :todos="checklist.todos" />
+        <pre>{{ checklist }}</pre>
+        <TodosList :todos="checklist.todos" @updateChecklist="onUpdateChecklist" />
     </section>
 </template>
 
@@ -25,7 +25,12 @@ export default {
         }
     },
     methods: {
-
+        onUpdateChecklist(todos) {
+            console.log('todos', todos)
+            const currCheckList = JSON.parse(JSON.stringify(this.checklist))
+            currCheckList.todos = [...todos]
+            this.$emit('updateTask', currCheckList)
+        },
     },
     mounted() {
     },

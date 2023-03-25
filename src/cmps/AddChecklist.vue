@@ -13,7 +13,6 @@
 import { checklistService } from '../services/checklist.service';
 import { eventBus } from '../services/event-bus.service';
 import { utilService } from '../services/util.service';
-
 export default {
     name: 'AddChecklist',
     props: {
@@ -30,34 +29,21 @@ export default {
         }
     },
     computed: {
-
     },
     methods: {
         async addChecklist() {
             this.checklistToAdd.id = 'cl' + utilService.makeId()
             let task = JSON.parse(JSON.stringify(this.actionData.task))
-            if (!task.checklists) {
-                task.checklists = []
-                console.log('new checklist added')
-            }
-            console.log('this.checklistToAdd', this.checklistToAdd)
+            if (!task.checklists) task.checklists = []
             task.checklists.push(this.checklistToAdd)
-            console.log('task after', task)
             this.checklistToAdd = checklistService.getEmptyChecklist()
             eventBus.emit('updateTask', task)
         }
-
     },
     created() {
-        console.log('this.actionData.task.id', this.actionData.task.id)
         this.task = this.actionData.task
     },
-
     components: {
     }
-
-
 }
-
 </script>
-

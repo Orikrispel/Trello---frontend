@@ -5,12 +5,13 @@
                 <button @click="removeTodo(todo.id)">x</button>
                 <TodosPreview :todo="todo" />
             </li>
-            <button class="btn" @click="addTodo">Add</button>
+            <button class="btn" @click="addTodo">Add To Do</button>
         </ul>
     </section>
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service';
 import { utilService } from '../../services/util.service'
 import TodosPreview from './TodosPreview.vue';
 export default {
@@ -27,18 +28,21 @@ export default {
     },
     methods: {
         addTodo() {
+            const newTodos = JSON.parse(JSON.stringify(this.todos))
+            console.log('newTodos', newTodos)
             const newTodo = {
                 id: 'td' + utilService.makeId(),
                 title: 'new todo...',
                 isDone: false
             }
-            this.todos.push(newTodo)
-            // this.$emit('updateTodos', this.todos)
+            newTodos.push(newTodo)
+            this.$emit('updateChecklist', newTodos)
         },
         removeTodo(todoId) {
-            const idx = this.todos.findIndex(todo => todo.id === todoId)
-            this.todos.splice(idx, 1)
-            // this.$emit('updateTodos', this.todos)
+            const newTodos = JSON.parse(JSON.stringify(this.todos))
+            const idx = newTodos.findIndex(todo => todo.id === todoId)
+            newTodos.splice(idx, 1)
+            this.$emit('updateChecklist', newTodos)
         }
     },
     mounted() {

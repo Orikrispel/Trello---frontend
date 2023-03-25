@@ -36,7 +36,7 @@
             </ul>
           </div>
           <!-- checklist list -->
-          <ChecklistList />
+          <ChecklistList :task="task" />
           <pre>{{ task.id }}</pre>
 
           <!-- description -->
