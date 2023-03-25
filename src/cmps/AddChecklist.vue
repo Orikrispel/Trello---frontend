@@ -6,13 +6,13 @@
         </div>
         <input type="text" style="margin-top: 25px;" v-model="checklistToAdd.title">
         <button class="btn add-checklist-btn">Add</button>
-        <pre>{{ actionData.task }}</pre>
     </form>
 </template>
 
 <script>
 import { checklistService } from '../services/checklist.service';
 import { eventBus } from '../services/event-bus.service';
+import { utilService } from '../services/util.service';
 
 export default {
     name: 'AddChecklist',
@@ -24,6 +24,7 @@ export default {
     },
     data() {
         return {
+            task: null,
             checklistToAdd: checklistService.getEmptyChecklist(),
             isCreateMode: true,
         }
@@ -33,17 +34,17 @@ export default {
     },
     methods: {
         async addChecklist() {
-            console.log('this.checklistToAdd', this.checklistToAdd)
-            if (!this.actionData.task.checklists) this.actionData.task.checklists = []
-            console.log('this.actionData.task', this.actionData.task)
+            this.checklistToAdd.id = 'cl' + utilService.makeId()
+            let task = JSON.parse(JSON.stringify(this.actionData.task))
+            if (!task.checklists) task.checklists = []
+            task.checklists.push(this.checklistToAdd)
             this.checklistToAdd = checklistService.getEmptyChecklist()
             eventBus.emit('updateTask', task)
         }
+
     },
     created() {
-        eventBus.on('updateTask', (task) => {
-            this.saveTask(task)
-        })
+        this.task = this.actionData.task
     },
 
     components: {

@@ -30,7 +30,10 @@
               </li>
             </ul>
           </div>
+          <!-- checklist list -->
+          <ChecklistList :task="task" />
 
+          <!-- description -->
           <form class="description-editor editor" @submit.prevent="handleDesc">
             <h3><span class="icon description-icon"></span>Description</h3>
             <button v-if="!userIsEditing && task.description" @click="userIsEditing = !userIsEditing">
@@ -89,8 +92,7 @@
           </button>
           <MembersList v-if="membersMenuOpen" />
           <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
-          <AddChecklist v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist', task: task }"
-            @addChecklist="addChecklist" />
+          <AddChecklist v-if="checklistMenuOpen" :actionData="{ title: 'Add Checklist', task: task }" />
         </aside>
       </div>
     </div>
@@ -108,6 +110,7 @@ import MembersList from '../cmps/members/MembersList.vue'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
 import LabelPreview from '../cmps/label/LabelPreview.vue'
 import AddChecklist from '../cmps/AddChecklist.vue'
+import ChecklistList from '../cmps/checklist/ChecklistList.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 
 export default {
@@ -212,6 +215,7 @@ export default {
     LabelPreview,
     AddChecklist,
     MembersList,
+    ChecklistList,
   },
 }
 </script>

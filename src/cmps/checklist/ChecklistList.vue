@@ -2,24 +2,27 @@
     <section class="checklist-list list-style-none">
         <h2>Checklists</h2>
         <ul class="list-style-none">
-            <li v-for="checklist in checklists" :key="checklist.id">
-                <ChecklistPreview :checklist="checklist" />
+            <li v-for="checklist in task.checklists" :key="checklist.id">
+                <!-- <ChecklistPreview :checklist="checklist" /> -->
+                <pre>{{ checklist }}</pre>
                 <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove
                     Checklist</button>
             </li>
         </ul>
-        <button class="btn" @click="addChecklist">Add Checklist</button>
+        <!-- <button class="btn" @click="addChecklist">Add Checklist</button> -->
     </section>
 </template>
 
 <script>
 import ChecklistPreview from './ChecklistPreview.vue'
 import { utilService } from '../../services/util.service'
+import { eventBus } from '../../services/event-bus.service'
+
 export default {
     name: 'ChecklistList',
     props: {
-        checklists: {
-            type: Array,
+        task: {
+            type: Object,
             required: true
         }
     },
@@ -27,23 +30,23 @@ export default {
         ChecklistPreview
     },
     data() {
-
+        return {
+            currTask: null
+        }
     },
     methods: {
-        addChecklist() {
-            const newChecklist = {
-                id: utilService.makeId(),
-                title: 'Checklist',
-                todos: []
-            }
-            this.checklists.push(newChecklist)
-            this.todoTitle = ''
-            // save to local storage
-        },
         removeChecklist(checklistId) {
-            this.checklists.splice(checklistId, 1)
-            // save to local storage
+            let task = JSON.parse(JSON.stringify(this.task))
+            console.log('task', task)
+            console.log('checklistId', checklistId)
+            console.log('this.currTask', task.checklists)
+            const idx = task.checklists.findIndex(checklist => checklist.id === checklistId)
+            task.checklists.splice(idx, 1)
+            eventBus.emit('updateTask', task)
         },
+    },
+    created() {
+        this.currTask = this.task
     },
     mounted() {
     },
