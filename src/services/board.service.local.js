@@ -206,7 +206,17 @@ async function _createBoard() {
     members: [
       {
         _id: 'u101',
-        fullname: 'Tal Tarablus',
+        fullname: 'Yohai Korem',
+        imgUrl: 'https://www.google.com',
+      },
+      {
+        _id: 'u102',
+        fullname: 'Ori Krispel',
+        imgUrl: 'https://www.google.com',
+      },
+      {
+        _id: 'u103',
+        fullname: 'Ori Teicher',
         imgUrl: 'https://www.google.com',
       },
     ],
@@ -279,7 +289,7 @@ async function _createBoard() {
                 createdAt: 1590999817436,
                 byMember: {
                   _id: 'u101',
-                  fullname: 'Tal Tarablus',
+                  fullname: 'Yohai Korem',
                   imgUrl:
                     'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
                 },
@@ -304,7 +314,7 @@ async function _createBoard() {
             byMember: {
               _id: 'u101',
               username: 'Tal',
-              fullname: 'Tal Tarablus',
+              fullname: 'Yohai Korem',
               imgUrl:
                 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
             },
@@ -366,7 +376,7 @@ export const demoBoard = {
   members: [
     {
       _id: 'u101',
-      fullname: 'Tal Tarablus',
+      fullname: 'Yohai Korem',
       imgUrl: 'https://www.google.com',
     },
   ],
@@ -432,7 +442,7 @@ export const demoBoard = {
               createdAt: 1590999817436,
               byMember: {
                 _id: 'u101',
-                fullname: 'Tal Tarablus',
+                fullname: 'Yohai Korem',
                 imgUrl:
                   'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
               },
@@ -457,7 +467,7 @@ export const demoBoard = {
           byMember: {
             _id: 'u101',
             username: 'Tal',
-            fullname: 'Tal Tarablus',
+            fullname: 'Yohai Korem',
             imgUrl:
               'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
           },
