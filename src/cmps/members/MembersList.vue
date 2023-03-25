@@ -2,7 +2,9 @@
   <div class="members-list-container">
     <div class="members-list-heading">
       <h4>Members</h4>
-      <button class="btn btn-close">X</button>
+      <button @click="$emit('closeMembersMenu')" class="btn btn-close">
+        X
+      </button>
     </div>
     <input
       v-model="filterBy"
