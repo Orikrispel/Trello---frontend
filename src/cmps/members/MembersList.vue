@@ -65,11 +65,12 @@ export default {
     searchMembers() {
       let members
       if (this.filterBy) {
-        const regex = new RegExp(filterBy, 'i')
+        const regex = new RegExp(this.filterBy, 'i')
         members = this.members.filter((member) => regex.test(member.fullname))
       } else {
         members = this.board.members
       }
+      console.log(members)
       this.members = members
     },
     async addMemberToTask(memberId) {
