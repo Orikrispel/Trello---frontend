@@ -2,7 +2,7 @@
   <div class="index-container container home">
     <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
     <AddBoard @addBoard="addBoard" />
-    <ChecklistList :checklists="checklists" />
+    <!-- <ChecklistList :checklists="checklists" /> -->
   </div>
 </template>
 
