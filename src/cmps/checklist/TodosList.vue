@@ -1,10 +1,11 @@
 <template>
     <section class="todos-list">
-        <ul class="todos-list">
+        <ul class="todos-list list-style-none">
             <li v-for="todo in todos" :key="todo.id">
+                <button @click="removeTodo(todo.id)">x</button>
                 <TodosPreview :todo="todo" />
-                <input type="text" @input="addTodo">
             </li>
+            <button class="btn" @click="addTodo">Add</button>
         </ul>
     </section>
 </template>
@@ -22,35 +23,23 @@ export default {
     },
     data() {
         return {
-            todoToAdd: {
-                id: '',
-                title: '',
-                createdAt: '',
-            }
         };
     },
     methods: {
-        // addChecklist() {
-        //     const newChecklist = {
-        //         id: utilService.makeId(),
-        //         title: '',
-        //         todos: []
-        //     }
-        //     this.checklists.push(newChecklist)
-        //     this.todoTitle = ''
-        // },
-        // removeChecklist(idx) {
-        //     this.checklists.splice(idx, 1)
-        // },
         addTodo() {
             const newTodo = {
                 id: 'td' + utilService.makeId(),
-                title: 'new todo',
+                title: 'new todo...',
                 isDone: false
             }
-            todos.push(newTodo)
-            // this.$emit('setTodos',todos)
+            this.todos.push(newTodo)
+            // this.$emit('updateTodos', this.todos)
         },
+        removeTodo(todoId) {
+            const idx = this.todos.findIndex(todo => todo.id === todoId)
+            this.todos.splice(idx, 1)
+            // this.$emit('updateTodos', this.todos)
+        }
     },
     mounted() {
     },
