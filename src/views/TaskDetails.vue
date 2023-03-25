@@ -32,7 +32,7 @@
                 v-for="member in task.members"
                 :key="member._id"
                 class="member">
-                <MemberPreview />
+                <MemberPreview :member="member" />
               </li>
             </ul>
             <ul class="task-heading-label-list flex clean-list">

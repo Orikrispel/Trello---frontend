@@ -116,6 +116,8 @@ export default {
     onAddTask() {
       let newTask = this.$store.getters.emptyTask
       newTask.title = this.$refs.taskTitle.value
+      newTask.id = this.$store.getters.makeId
+      console.log(newTask)
       if (!newTask.title) {
         this.$refs.taskTitle.focus()
         return

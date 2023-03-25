@@ -124,6 +124,7 @@ function getEmptyTask(
     priority,
     description,
     labels: [],
+    members: [],
   }
 }
 
