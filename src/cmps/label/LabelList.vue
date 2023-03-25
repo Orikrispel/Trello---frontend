@@ -31,16 +31,10 @@ export default {
     }
   },
   computed: {
-    // currLabels() {
-    //   // let board = this.$store.getters.currBoard
+    currLabels() {
+      return this.$store.getters.currLabels
+    },
 
-    //   let { labels } = this.board
-    //   if (!labels || !labels.length) {
-    //     labels = this.$store.getters.defaultEmptyLabels
-    //   }
-
-    //   this.labels = labels
-    // },
     taskId() {
       const { taskId } = this.$route.params
       return taskId
@@ -70,13 +64,22 @@ export default {
       let { groups } = board
       let task = JSON.parse(JSON.stringify(this.task))
       let currTask
-      groups.forEach((group) => {
-        let { tasks } = group
-        currTask = tasks.find((task) => task.id === this.taskId)
-      })
+      if (groups)
+        groups.forEach((group) => {
+          let { tasks } = group
+          currTask = tasks.find((task) => task.id === this.taskId)
+        })
       if (!task.labels) task.labels = []
-      task.labels.push({ ...label })
+      let hasLabel = task.labels.some((l) => l.id === label.id)
+      if (hasLabel) task = this.removeLabelFromTask(task, label)
+      else task.labels.push({ ...label })
       eventBus.emit('updateTask', task)
+      this.task = task
+    },
+    removeLabelFromTask(task, label) {
+      const labelToRemoveIdx = task.labels.findIndex((l) => l.id === label.id)
+      task.labels.splice(labelToRemoveIdx, 1)
+      return task
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
@@ -91,6 +94,13 @@ export default {
     async editLabel(labelId) {
       await this.$store.dispatch({ type: 'setCurrLabel', labelId })
       this.$emit('toggleLabelEdit')
+    },
+  },
+  watch: {
+    labels: {
+      async handler() {
+        this.labels = await this.currLabels
+      },
     },
   },
   components: {

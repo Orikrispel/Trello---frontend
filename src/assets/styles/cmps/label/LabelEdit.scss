@@ -29,4 +29,8 @@
     width: 100%;
     margin-bottom: 5px;
   }
+  .btn:not(.btn-light) {
+    max-width: 3em;
+    color: #fff;
+  }
 }

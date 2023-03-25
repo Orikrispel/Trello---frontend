@@ -27,7 +27,7 @@
         :drop-placeholder="dropPlaceholderOptions">
         <Draggable
           class="task-container"
-          @click="this.$router.push(`/board/${board._id}/task/${task.id}`)"
+          @click="handleTaskDetails(task.id)"
           v-for="task in group.tasks"
           :key="task.id">
           <span class="task-title fs14">{{ task.title }}</span>
@@ -74,11 +74,11 @@ export default {
     return {
       isAddTask: false,
       isEditGroupTitle: false,
+      showTaskDetails: false,
       dropPlaceholderOptions: {
         className: 'drop-preview',
         animationDuration: '150',
         showOnTop: true,
-        showTaskDetails: null,
       },
     }
   },
@@ -149,8 +149,13 @@ export default {
       this.$refs.groupTitle.focus()
       this.isEditGroupTitle = !this.isEditGroupTitle
     },
+    handleTaskDetails(taskId) {
+      this.$router.push(`/board/${this.board._id}/task/${taskId}`)
+      this.showTaskDetails = !this.showTaskDetails
+    },
     toggleTaskDetails() {
-      this.showTaskDetails = false
+      this.$router.push(`/board/${this.board._id}`)
+      this.showTaskDetails = !this.showTaskDetails
     },
   },
   // mounted() {
@@ -159,7 +164,6 @@ export default {
   watch: {
     '$route.params': {
       handler() {
-        // this.showTaskDetails = !this.showTaskDetails
         let { taskId } = this.$route.params
 
         if (!taskId) this.showTaskDetails = false

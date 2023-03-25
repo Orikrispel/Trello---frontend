@@ -32,7 +32,8 @@
     z-index: 12;
     line-height: 0;
 
-    .icon {}
+    .icon {
+    }
   }
 
   button {
@@ -50,7 +51,6 @@
   }
 
   .task-container {
-
     .icon {
       align-self: center;
     }
@@ -108,14 +108,9 @@
           }
 
           .task-heading-label-list {
-            gap: 4px;
-
             .label {
-              // Temporary color until label get inherited
-              background-color: $btn-clr3;
-              padding: 0 12px;
+              padding: 0 0.5em;
             }
-
           }
         }
 
