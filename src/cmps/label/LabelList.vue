@@ -74,8 +74,8 @@ export default {
         let { tasks } = group
         currTask = tasks.find((task) => task.id === this.taskId)
       })
-      if (!currTask.labels) currTask.labels = []
-      currTask.labels.push({ ...label })
+      if (!task.labels) task.labels = []
+      task.labels.push({ ...label })
       eventBus.emit('updateTask', task)
     },
     getSvg(iconName) {
