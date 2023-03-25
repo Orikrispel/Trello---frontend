@@ -7,13 +7,18 @@
     <input type="text" name="label-title" v-model="label.title" />
     <h4>Select a color</h4>
     <ColorPicker :quantity="30" @setColor="setColor" />
-    <button class="btn btn-light" @click="setColor('#e2e4e9')">
+    <button class="btn btn-light btn-remove-color" @click="setColor('#e2e4e9')">
       X Remove color
     </button>
-    <button class="btn btn-blue" @click="saveLabel">Save</button>
-    <button class="btn btn-red" v-if="!creatingNewLabel" @click="removeLabel">
-      Delete
-    </button>
+    <div class="label-btns-container">
+      <button class="btn btn-blue btn-label" @click="saveLabel">Save</button>
+      <button
+        class="btn btn-red btn-label"
+        v-if="!creatingNewLabel"
+        @click="removeLabel">
+        Delete
+      </button>
+    </div>
   </section>
 </template>
 

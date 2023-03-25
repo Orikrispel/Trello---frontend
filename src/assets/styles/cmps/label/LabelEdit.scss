@@ -29,8 +29,16 @@
     width: 100%;
     margin-bottom: 5px;
   }
-  .btn:not(.btn-light) {
-    max-width: 3em;
-    color: #fff;
+  .btn-remove-color {
+    text-align: center;
+  }
+  .label-btns-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .btn {
+      max-width: 3.5em;
+      color: #fff;
+    }
   }
 }
