@@ -2,15 +2,8 @@
     <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
         <div class="add-form-header">
             <h5>{{ actionData.title }}</h5>
-            <p @click="setCreateMode">x</p>
+            <component :is="actionData.type" />
         </div>
-        <div class="board-display" v-if="isBoardDisplay" :style="{
-            backgroundImage: 'url(' + pickedImg + ')', background: pickedColor,
-            backgroundSize: 'cover'
-        }">
-        </div>
-        <input name="board-title" type="text" />
-        <button type="submit">Create</button>
     </form>
 </template>
 
@@ -60,9 +53,7 @@ export default {
         }
     },
     created() {
-        eventBus.on('setCreateMode', (data) => {
-            this.isCreateMode = data
-        })
+
     },
 
     components: {
