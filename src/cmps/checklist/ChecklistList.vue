@@ -1,11 +1,10 @@
 <template>
     <section class="checklist-list list-style-none">
-        <h2>Checklists</h2>
         <ul class="list-style-none">
-            <li v-for="checklist in task.checklists" :key="checklist.id">
-                <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask" />
-                <button class="btn" @click="removeChecklist(checklist.id)" style="margin-right: 20px;">Remove
+            <li v-for="checklist in task.checklists" :key="checklist.id" class="checklist-li">
+                <button class="btn" @click="removeChecklist(checklist.id)" style="float:right;">Delete
                     Checklist</button>
+                <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask" />
             </li>
         </ul>
     </section>

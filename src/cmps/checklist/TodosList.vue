@@ -2,8 +2,8 @@
     <section class="todos-list">
         <ul class="todos-list list-style-none">
             <li v-for="todo in todos" :key="todo.id">
-                <button @click="removeTodo(todo.id)">x</button>
-                <TodosPreview :todo="todo" />
+                <button @click="removeTodo(todo.id)" style="float:right;">...</button>
+                <TodosPreview :todo="todo" @updateTodos="onUpdateTodos" />
             </li>
             <button class="btn" @click="addTodo">Add To Do</button>
         </ul>
@@ -42,6 +42,12 @@ export default {
             const newTodos = JSON.parse(JSON.stringify(this.todos))
             const idx = newTodos.findIndex(todo => todo.id === todoId)
             newTodos.splice(idx, 1)
+            this.$emit('updateChecklist', newTodos)
+        },
+        onUpdateTodos(todo) {
+            const newTodos = JSON.parse(JSON.stringify(this.todos))
+            const idx = newTodos.findIndex(td => todo.id === td.id)
+            newTodos.splice(idx, 1, todo)
             this.$emit('updateChecklist', newTodos)
         }
     },
