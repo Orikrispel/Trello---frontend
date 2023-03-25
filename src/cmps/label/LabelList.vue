@@ -6,7 +6,7 @@
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="idx">
         <input type="checkbox" />
-        <LabelPreview :label="label" />
+        <LabelPreview :label="label" @click="addLabelToTask(label)" />
         <div
           @click="editLabel(label.id)"
           class="icon pencil-icon"
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service'
 import LabelPreview from './LabelPreview.vue'
 import { svgService } from '../../services/svg.service'
 export default {
@@ -25,29 +26,58 @@ export default {
   data() {
     return {
       labels: [],
+      board: null,
+      task: null,
     }
   },
   computed: {
-    currLabels() {
-      let board = this.$store.getters.currBoard
-      if (!board) board = this.$store.getters.demoBoard
+    // currLabels() {
+    //   // let board = this.$store.getters.currBoard
 
-      let { labels } = demoBoard
-      if (!labels || !labels.length)
-        labels = this.$store.getters.defaultEmptyLabels
+    //   let { labels } = this.board
+    //   if (!labels || !labels.length) {
+    //     labels = this.$store.getters.defaultEmptyLabels
+    //   }
 
-      this.labels = labels
+    //   this.labels = labels
+    // },
+    taskId() {
+      const { taskId } = this.$route.params
+      return taskId
+    },
+    boardId() {
+      const { boardId } = this.$route.params
+      return boardId
     },
   },
-  created() {
-    let board = this.$store.getters.currBoard
-    if (!board) board = this.$store.getters.demoBoard
-    let { labels } = board
+  async created() {
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
+    this.task = await this.$store.dispatch({
+      type: 'loadCurrTask',
+      taskId: this.taskId,
+    })
+    let { labels } = this.board
     if (!labels || !labels.length)
       labels = this.$store.getters.defaultEmptyLabels
     this.labels = labels
   },
   methods: {
+    async addLabelToTask(label) {
+      let board = JSON.parse(JSON.stringify(this.board))
+      let { groups } = board
+      let task = JSON.parse(JSON.stringify(this.task))
+      let currTask
+      groups.forEach((group) => {
+        let { tasks } = group
+        currTask = tasks.find((task) => task.id === this.taskId)
+      })
+      if (!currTask.labels) currTask.labels = []
+      currTask.labels.push({ ...label })
+      eventBus.emit('updateTask', task)
+    },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },

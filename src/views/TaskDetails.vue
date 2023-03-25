@@ -1,6 +1,6 @@
 <template>
   <section class="task-details">
-    <header v-if="task.cover" class="task-cover">
+    <header v-if="task?.cover" class="task-cover">
       <RouterLink :to="'/board'" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
@@ -9,47 +9,59 @@
       <div class="icon" v-html="getSvg('close')"></div>
     </RouterLink>
     <div class="task-container">
-
       <div class="task-container-heading flex column">
         <!-- '<div class="txt-container"> -->
         <div class="task-title-wrapper">
-          <h2 class="task-title fs20" contenteditable="true" @input="updateTitle">
+          <h2
+            class="task-title fs20"
+            contenteditable="true"
+            @input="updateTitle">
             <span class="icon header-icon"></span>
-            {{ task?.title ? task.title : 'new title' }}
+            {{ task.title ? task.title : 'new title' }}
           </h2>
         </div>
-        <span class="list-related"> in list {{ task?.list }}</span>
+        <span class="list-related"> in list {{ task.list }}</span>
       </div>
 
       <div class="task-main-container">
         <main class="task-main">
-
           <div class="label-container">
             <h3 class="fs12">Labels</h3>
             <ul class="task-heading-label-list flex clean-list">
-              <li class="label" v-for="label in task?.labels" :key="label.id">{{ label.txt }}</li>
+              <li class="label" v-for="label in task.labels" :key="label.id">
+                <LabelPreview :label="label" />
+              </li>
             </ul>
           </div>
 
           <form class="description-editor editor" @submit.prevent="handleDesc">
             <h3><span class="icon description-icon"></span>Description</h3>
-            <button v-if="!userIsEditing && task?.description" @click="userIsEditing = !userIsEditing">
+            <button
+              v-if="!userIsEditing && task.description"
+              @click="userIsEditing = !userIsEditing">
               Edit
             </button>
 
-
-            <div v-if="!userIsEditing && !task?.description" @click="userIsEditing = !userIsEditing">
+            <div
+              v-if="!userIsEditing && !task.description"
+              @click="userIsEditing = !userIsEditing">
               Add a more detailed description...
             </div>
             <p v-if="!userIsEditing" @click="handleDesc">
-              {{ task?.description }}
+              {{ task.description }}
             </p>
-            <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = !userIsEditing"
+            <textarea
+              v-if="userIsEditing"
+              v-model="task.description"
+              @blur="userIsEditing = false"
               autofocus></textarea>
             <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
               Save
             </button>
-            <button class="btn-cancel-submit" v-if="userIsEditing" type="submit">
+            <button
+              class="btn-cancel-submit"
+              v-if="userIsEditing"
+              type="submit">
               Cancel
             </button>
           </form>
@@ -57,15 +69,17 @@
           <div class="comments-activity-container editor">
             <h3><span class="icon activity-icon"></span> Activity</h3>
             <form class="comment-form" @submit.prevent="handleComment">
-              <textarea name="comment" placeholder="Write a comment..."></textarea>
+              <textarea
+                name="comment"
+                placeholder="Write a comment..."></textarea>
             </form>
-            <ul v-if="task?.comments" class="clean-list">
+            <ul v-if="task.comments" class="clean-list">
               <li v-for="(comment, idx) in task.comments" :key="idx">
                 {{ comment }}
               </li>
             </ul>
-            <ul v-if="task?.activities" class="clean-list">
-              <li v-for="(activity, idx) in task?.activities" :key="idx">
+            <ul v-if="task.activities" class="clean-list">
+              <li v-for="(activity, idx) in task.activities" :key="idx">
                 {{ activity }}
               </li>
             </ul>
@@ -82,61 +96,103 @@
           <button><span class="icon checklist-icon"></span>Checklist</button>
           <button><span class="icon watch-icon"></span>Dates</button>
           <button><span class="icon attachments-icon"></span>Attachment</button>
-          <button v-if="!task?.cover">
+          <button v-if="!task.cover">
             <span class="icon card-cover-icon"></span>Cover
           </button>
-          <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
+          <LabelMenu
+            @closeLabelMenu="labelMenuOpen = false"
+            v-if="labelMenuOpen" />
         </aside>
-
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import {
+  eventBus,
+  showErrorMsg,
+  showSuccessMsg,
+} from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
+import LabelPreview from '../cmps/label/LabelPreview.vue'
+import { getActionUpdateBoard } from '../store/board.store'
 export default {
   name: 'TaskDetails',
   data() {
     return {
-      task: {},
+      task: null,
+      board: null,
       userIsEditing: false,
       labelMenuOpen: false,
     }
   },
   async created() {
+    eventBus.on('updateTask', (task) => {
+      this.saveTask(task)
+    })
     const { taskId } = this.$route.params
-    console.log(taskId)
-    let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
+    let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
+    if (!task) {
+      task = this.$store.getters.emptyTask
+    }
     this.task = task
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
   },
   methods: {
     updateTitle(ev) {
       this.task.title = ev.target.innerText
     },
     handleDesc() {
-      userIsEditing = !this.userIsEditing
-      this.$refs.taskDesc.focus()
+      this.userIsEditing = !this.userIsEditing
+      // this.$refs.taskDesc.focus()
     },
     handleComment() {
       console.log(this.task)
     },
-    async saveTask() {
-      let task = { ...this.task }
-      await this.$store.dispatch({ type: 'saveTask', task })
+    async saveTask(task) {
+      let board = JSON.parse(JSON.stringify(this.board))
+      let updatedTask = { ...task }
+      console.log(board)
+      let group = board.groups.find((group) => {
+        return group.tasks.some((t) => t.id === updatedTask.id)
+      })
+      const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
+      const groupIdx = board.groups.indexOf(group)
+      board = board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
+
+      try {
+        await this.updateBoard(board, 'Task updated', 'Failed to updated task')
+      } catch (err) {
+        console.log('failed to updated task')
+        throw err
+      }
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
+    async updateBoard(board, successMsg, errMsg) {
+      try {
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
+        showSuccessMsg(successMsg)
+      } catch (err) {
+        console.log(err)
+        showErrorMsg(errMsg)
+      }
+    },
   },
 
   computed: {
-    currTask() {
-      let task = this.$store.getters.currTask
-      if (!task) task = this.$store.getters.emptyTask
-      this.task = this.currTask
-    },
+    // currTask() {
+    //   let task = this.$store.getters.currTask
+    //   if (!task) task = this.$store.getters.emptyTask
+    //   this.task = this.currTask
+    // },
     boardId() {
       const { boardId } = this.$route.params
       return boardId
@@ -144,14 +200,14 @@ export default {
   },
 
   unmounted() {
-    this.saveTask()
+    this.saveTask(this.task)
   },
 
   watch: {
     '$route.params': {
       async handler() {
         const { taskId, boardId } = this.$route.params
-        let task = await this.$store.dispatch({ type: 'setCurrTask', taskId })
+        let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
         this.task = task
       },
       immediate: true,
@@ -159,6 +215,7 @@ export default {
   },
   components: {
     LabelMenu,
+    LabelPreview,
   },
 }
 </script>

@@ -11,7 +11,9 @@
       X Remove color
     </button>
     <button class="btn btn-blue" @click="saveLabel">Save</button>
-    <button class="btn btn-red" v-if="!creatingNewLabel">Delete</button>
+    <button class="btn btn-red" v-if="!creatingNewLabel" @click="removeLabel">
+      Delete
+    </button>
   </section>
 </template>
 
@@ -37,7 +39,6 @@ export default {
   },
   async created() {
     let label = await this.$store.getters.currLabel
-    console.log(label)
     if (!label) {
       label = this.$store.getters.defaultEmptyLabel
       this.creatingNewLabel = true
@@ -51,26 +52,46 @@ export default {
   methods: {
     setColor(color) {
       this.label.color = color
-      this.$emit('setColor', color)
     },
-    saveLabel() {
+    async saveLabel() {
       let label = { ...this.label }
       let board = JSON.parse(JSON.stringify(this.board))
       if (!label.id) {
+        label.id = this.$store.getters.makeId
         board.labels.push(label)
+      } else {
+        const labelIdx = board.labels.findIndex((l) => l.id === label.id)
+        board.labels.splice(labelIdx, 1, label)
       }
-
-      this.updateBoard(board)
+      try {
+        this.updateBoard(board, 'Label Saved', 'Failed to save label')
+      } catch (err) {
+        console.log('failed to save label')
+        throw err
+      }
+      this.$emit('toggleLabelEdit')
     },
-    async updateBoard(board) {
+    async updateBoard(board, successMsg, errMsg) {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
+        showSuccessMsg(successMsg)
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot update board')
+        showErrorMsg(errMsg)
       }
+    },
+    async removeLabel() {
+      let label = { ...this.label }
+      let board = JSON.parse(JSON.stringify(this.board))
+      const labelIdx = board.labels.findIndex((l) => l.id === label.id)
+      board.labels.splice(labelIdx, 1)
+      try {
+        await this.updateBoard(board, 'Label removed', 'Failed to remove label')
+      } catch (err) {
+        console.log(err, "couldn't remove label")
+      }
+      this.$emit('toggleLabelEdit')
     },
   },
   components: {
