@@ -60,15 +60,7 @@ export default {
   },
   methods: {
     async addLabelToTask(label) {
-      let board = JSON.parse(JSON.stringify(this.board))
-      let { groups } = board
       let task = JSON.parse(JSON.stringify(this.task))
-      let currTask
-      if (groups)
-        groups.forEach((group) => {
-          let { tasks } = group
-          currTask = tasks.find((task) => task.id === this.taskId)
-        })
       if (!task.labels) task.labels = []
       let hasLabel = task.labels.some((l) => l.id === label.id)
       if (hasLabel) task = this.removeLabelFromTask(task, label)
