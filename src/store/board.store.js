@@ -211,7 +211,8 @@ export const boardStore = {
         console.log('could not save task at the moment')
       }
     },
-    async setCurrTask({ state, commit }, { taskId }) {
+    async loadCurrTask({ state, commit }, { taskId }) {
+      log
       let board = state.currBoard
       let groups = board.groups
       let currTask
@@ -223,7 +224,6 @@ export const boardStore = {
       return currTask
     },
     async setCurrLabel({ state, commit }, { labelId }) {
-      console.log(labelId)
       let currLabel
       if (labelId) {
         let board = state.currBoard
