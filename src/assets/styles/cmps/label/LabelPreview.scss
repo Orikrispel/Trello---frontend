@@ -1,10 +1,13 @@
 .label-preview {
-  min-height: 2em;
-  max-height: 2.5em;
+  position: relative;
+  min-height: rem(32px);
+  padding: 0 12px 0 32px;
+  align-items: start;
+
   span {
-    padding: 0.8em;
-    margin-inline-start: 1em;
-    position: relative;
+
+    font-size: rem(14px);
+    line-height: rem(32px);
 
     &::before {
       content: '';
@@ -18,16 +21,16 @@
 
       background-blend-mode: darken;
     }
+
     &::after {
       content: '';
       position: absolute;
-      top: 1em;
-      bottom: 0.5em;
-      left: -0.5em;
-
+      top: 8px;
+      bottom: 8px;
+      left: -24px;
       border-radius: 50%;
-      width: 1em;
-      height: 1em;
+      width: 16px;
+      height: 16px;
       background-color: black;
       opacity: 0.2;
     }

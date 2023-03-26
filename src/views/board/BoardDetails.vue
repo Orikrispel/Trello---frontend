@@ -9,8 +9,8 @@
       </div>
 
       <div class="flex gap">
-        <button class="btn btn-light btn-filter">
-          <i v-html="getSvg('filter')"></i>Filter
+        <button class="btn btn-light">
+          <i class="icon" v-html="getSvg('filter')"></i>Filter
         </button>
       </div>
     </header>

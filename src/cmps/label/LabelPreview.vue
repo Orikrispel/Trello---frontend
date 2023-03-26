@@ -1,11 +1,7 @@
 <template>
-  <div
-    :style="{
-      'background-color': label.color || '#bcd9ea',
-    }"
-    class="label-preview"
-    @mouseover="getLabelStyle"
-    @mouseout="getLabelStyle">
+  <div :style="{
+    'background-color': label.color || '#bcd9ea',
+  }" class="label-preview flex" @mouseover="getLabelStyle" @mouseout="getLabelStyle">
     <span>{{ label.title }}</span>
   </div>
 </template>
