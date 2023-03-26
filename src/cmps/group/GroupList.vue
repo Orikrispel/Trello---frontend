@@ -20,7 +20,6 @@ export default {
   data() {
     return {
       groupToAdd: boardService.getEmptyGroup(),
-      // boardCopy: JSON.parse(JSON.stringify(this.board)),
       upperDropPlaceholderOptions: {
         className: 'cards-drop-preview',
         animationDuration: '150',
