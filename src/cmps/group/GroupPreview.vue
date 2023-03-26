@@ -1,36 +1,20 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div
-        v-show="!isEditGroupTitle"
-        class="prevent-title-edit"
-        @click="onFocusGroupTitle"></div>
-      <h2
-        class="group-title fs14"
-        ref="groupTitle"
-        @blur="updateGroupTitle"
-        contenteditable="true">
+      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
+      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
         {{ group.title }}
       </h2>
       <button>∙∙∙</button>
     </header>
 
     <main class="tasks-wrapper">
-      <Container
-        class="task-list"
-        :get-child-payload="getGroupPayload(group.id)"
-        @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items"
-        :shouldAcceptDrop="(e) => e.groupName === 'col-items'"
-        drag-class="card-ghost"
-        drop-class="card-ghost-drop"
-        :drop-placeholder="dropPlaceholderOptions">
-        <Draggable
-          class="task-container"
-          @click="handleTaskDetails(task.id)"
-          v-for="task in group.tasks"
-          :key="task.id">
+      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
+        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
+        <Draggable class="task-container" @click="handleTaskDetails(task.id)" v-for="task in group.tasks" :key="task.id">
           <span class="task-title fs14">{{ task.title }}</span>
+          <span class="todo-attachments"><TaskAttachments :task="task"/></span>
         </Draggable>
       </Container>
 
@@ -38,12 +22,7 @@
         + add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea
-          class="task-container"
-          ref="taskTitle"
-          name="add-task"
-          cols="30"
-          rows="3"
+        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">
@@ -52,16 +31,14 @@
       </div>
     </main>
   </section>
-  <div
-    v-if="showTaskDetails"
-    @click="toggleTaskDetails"
-    class="modal-overlay"></div>
+  <div v-if="showTaskDetails" @click="toggleTaskDetails" class="modal-overlay"></div>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'
+import TaskAttachments from '../task/TaskAttachments.vue'
 import { utilService } from '../../services/util.service'
 import { svgService } from '../../services/svg.service'
 
@@ -69,7 +46,7 @@ export default {
   name: 'GroupPreview',
   emits: ['updateBoard'],
   props: ['board', 'group'],
-  components: { Container, Draggable },
+  components: { Container, Draggable, TaskAttachments },
   data() {
     return {
       isAddTask: false,
@@ -81,6 +58,9 @@ export default {
         showOnTop: true,
       },
     }
+  },
+  computed: {
+
   },
   methods: {
     onTaskDrop(groupId, dropResult) {
