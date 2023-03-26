@@ -8,7 +8,7 @@
         </button>
       </div>
 
-      <div class="flex gap">
+      <div @click="showFilterMenu = !showFilterMenu" class="flex gap">
         <button class="btn btn-light btn-filter">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
@@ -32,6 +32,7 @@
           </button>
         </div>
       </article>
+      <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
       <RouterView />
     </main>
     <!-- <div
@@ -44,6 +45,7 @@
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
+import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
 import {
   getActionRemoveBoard,
@@ -57,6 +59,7 @@ export default {
       board: null,
       groupToAdd: this.$store.getters.emptyGroup,
       isAddGroup: false,
+      showFilterMenu: false,
     }
   },
   async created() {
@@ -76,7 +79,7 @@ export default {
     },
     isStarred() {
       return this.board.isStarred
-    }
+    },
   },
   methods: {
     onAddGroup() {
@@ -133,6 +136,7 @@ export default {
   },
   components: {
     GroupList,
+    GroupFilter,
   },
 }
 </script>

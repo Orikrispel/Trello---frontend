@@ -1,0 +1,12 @@
+.group-filter {
+  position: fixed;
+  top: rem(44px);
+  right: 0;
+  width: 20em;
+  height: 100%;
+  background-color: $secondary-clr2;
+
+  .members-list {
+    position: relative;
+  }
+}
