@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service';
 export default {
     name: 'TaskAttachments',
     props: {
@@ -16,14 +17,18 @@ export default {
     },
     data() {
         return {
-            currTask: {},
+            currTask: null,
         }
     },
     created() {
-        this.currTask = this.task
+        eventBus.on('updateTask', (task) => {
+            this.getCurrTask(task)
+        })
     },
     methods: {
-
+        getCurrTask(task) {
+            this.task = task
+        }
     },
     computed: {
         getChecklistStatus() {
@@ -38,9 +43,7 @@ export default {
         },
         getMembers() {
             if (!this.task.members) return
-            console.log('this.task.members', this.task.members)
             const members = this.task.members.map(member => member.fullname)
-            console.log('members', members)
             return `${members}`
         }
     }
