@@ -2,7 +2,8 @@
   <div class="board-preview">
     <h5 class="board-title">{{ board.title }}</h5>
     <div class="board-preview-actions">
-      <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div>
+      <span class="icon star" @click.stop="onStarBoard(board)"></span>
+      <!-- <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div> -->
     </div>
   </div>
 </template>

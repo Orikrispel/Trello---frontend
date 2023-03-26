@@ -5,7 +5,7 @@
       <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
         {{ group.title }}
       </h2>
-      <button>∙∙∙</button>
+      <button class="clean-btn">∙∙∙</button>
     </header>
 
     <main class="tasks-wrapper">
@@ -14,12 +14,14 @@
         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
         <Draggable class="task-container" @click="handleTaskDetails(task.id)" v-for="task in group.tasks" :key="task.id">
           <span class="task-title fs14">{{ task.title }}</span>
-          <span class="todo-attachments"><TaskAttachments :task="task"/></span>
+          <span class="todo-attachments">
+            <TaskAttachments :task="task" />
+          </span>
         </Draggable>
       </Container>
 
       <button v-show="!isAddTask" class="btn clean-btn" @click="toggleAddTask">
-        + add a card
+        <span class="icon icon-add"></span> add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
         <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"

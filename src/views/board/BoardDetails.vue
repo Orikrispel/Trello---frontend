@@ -2,7 +2,9 @@
   <div v-if="board" class="board-container main flex column">
     <header class="board-header flex align-center justify-between gap">
       <div class="flex gap">
-        <h1 class="board-title fs18">{{ board.title }}</h1>
+        <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
+          {{ board.title }}
+        </h1>
         <button class="btn btn-light btn-star" @click="starBoard">
           <span :class="[isStarred ? 'solid-star' : 'star', 'icon']"></span>
         </button>
@@ -20,7 +22,7 @@
 
       <article class="new-group-container flex">
         <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
-          + add another list
+          <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
           <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
@@ -123,6 +125,7 @@ export default {
         showErrorMsg('Cannot star board')
       }
     },
+
     toggleAddGroup() {
       this.isAddGroup = !this.isAddGroup
       if (this.isAddGroup) this.$nextTick(() => this.$refs.newGroup.focus())

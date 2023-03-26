@@ -3,7 +3,7 @@
     <section class="hero flex">
       <div class="hero-container">
         <div class="hero-intro">
-          <h1>Trello brings all your tasks, teammates, and tools together</h1>
+          <h1>Jello brings all your tasks, teammates, and tools together</h1>
           <p>Keep everything in the same place—even if your team isn’t.</p>
           <Router-Link to="/board" class="btn btn-blue">Start demo</Router-link>
         </div>

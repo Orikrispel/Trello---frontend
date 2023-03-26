@@ -109,6 +109,7 @@
 .member-icon,
 .label-icon,
 .watch-icon,
+.time-icon,
 .card-cover-icon {
   font-family: trellicons;
   place-self: center;
@@ -177,6 +178,7 @@
 .solid-star:before {
   content: "\e967";
 }
+
 
 .modal-overlay {
   cursor: auto;
