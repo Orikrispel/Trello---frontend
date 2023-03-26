@@ -36,7 +36,7 @@
 .flex {
   display: flex;
 
-  >*.full {
+  > *.full {
     flex: 1;
   }
 
@@ -111,7 +111,6 @@
 .watch-icon,
 .time-icon,
 .card-cover-icon {
-
   place-self: center;
   align-self: flex-start;
   font-size: 24px;
@@ -176,7 +175,7 @@
 }
 
 .icon-overflow-menu-horizontal:before {
-  content: "\e952";
+  content: '\e952';
 }
 
 .star:before {
@@ -188,7 +187,7 @@
 }
 
 .icon-close:before {
-  content: "\e91c";
+  content: '\e91c';
 }
 
 .icon-edit:before {
@@ -213,4 +212,17 @@
 
 .list-style-none {
   list-style: none;
+}
+
+.member-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  color: $secondary-clr1;
+  border-radius: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  background-color: #5243aa;
+  font-family: 'nunito regular';
 }

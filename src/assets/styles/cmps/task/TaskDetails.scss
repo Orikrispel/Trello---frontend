@@ -13,16 +13,24 @@
   width: calc(100vw - 80px);
   margin: 48px 0 80px;
   overflow: visible;
-  // overflow-y: scroll;
-  // overflow-x: hidden;
-  // position: relative;
 
   @include for-normal-layout {
     width: rem(768px);
   }
 
-  & * {
+  & * :not(.member-img) {
     color: $font-clr2;
+  }
+  &.icon-lg {
+    font-size: rem(24px);
+  }
+  &.icon-lg {
+    height: rem(32px);
+    line-height: rem(32px);
+    width: rem(32px);
+    font-weight: 400;
+    text-align: center;
+    vertical-align: bottom;
   }
 
   a.btn-close {
@@ -57,16 +65,6 @@
   .task-container {
     .icon {
       align-self: center;
-
-      &.icon-lg {
-        height: rem(32px);
-        line-height: rem(32px);
-        width: rem(32px);
-        font-size: rem(24px);
-        font-weight: 400;
-        text-align: center;
-        vertical-align: bottom;
-      }
     }
 
     &-heading {
@@ -117,10 +115,10 @@
           justify-content: left;
           text-align: left;
           width: 100%;
-          padding: 14px;
-
+          // padding: 14px;
+          background-color: $secondary-clr4;
           &:hover {
-            background-color: darken($secondary-clr3, 7%);
+            background-color: darken($secondary-clr4, 7%);
           }
         }
       }
@@ -150,6 +148,13 @@
           position: relative;
           padding: 8px 0;
           margin: 0 0 4px 40px;
+          .editor-header {
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 32px;
+          }
         }
 
         .icon {
@@ -195,6 +200,7 @@
 
       textarea {
         padding: 8px 12px;
+        resize: none;
       }
     }
 
@@ -207,31 +213,29 @@
       }
     }
     .comments-activity-container {
-      .activity-header {
-        // margin: 0 0 4px 40px;
-        padding: 8px 0;
+      .comment-box-input {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 32px;
-      }
-
-      textarea {
-        overflow: hidden;
-        overflow-wrap: break-word;
-        background: #fff;
-        box-sizing: initial;
-        margin: 0;
-        min-height: 20px;
+        width: 100%;
+        position: relative;
         transition-duration: 85ms;
-        transition-property: background-color, border-color, box-shadow;
+        transition-property: padding-bottom;
         transition-timing-function: ease;
-
-        &:focus {
-          display: block;
-          line-height: 20px;
-
-          padding: 8px 12px;
+        textarea {
+          overflow: hidden;
+          overflow-wrap: break-word;
+          background: #fff;
+          margin: 0;
+          transition-duration: 85ms;
+          transition-property: background-color, border-color, box-shadow;
+          transition-timing-function: ease;
+          text-transform: none;
+          text-indent: 0px;
+          text-shadow: none;
+          font-size: rem(14px);
+          column-count: initial;
+          &:focus {
+            line-height: 20px;
+          }
         }
       }
     }

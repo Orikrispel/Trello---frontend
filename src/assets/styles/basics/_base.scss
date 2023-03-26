@@ -61,7 +61,7 @@ i {
   line-height: 0;
 }
 
-.icon {
+.icon:not(.member-img) {
   font-family: trellicons;
 }
 

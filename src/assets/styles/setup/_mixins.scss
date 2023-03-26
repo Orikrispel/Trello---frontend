@@ -37,12 +37,12 @@
 
   &::before {
     display: block;
-    content: "";
+    content: '';
     width: 100%;
     padding-top: calc(($height / $width) * 100%);
   }
 
-  >* {
+  > * {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,7 +50,7 @@
     bottom: 0;
   }
 
-  >img {
+  > img {
     height: 100%;
     object-fit: cover;
   }
@@ -64,3 +64,44 @@
     }
   }
 }
+
+@mixin contrast-text-color($bg-color) {
+  $threshold: 0.5; // threshold value for color contrast
+
+  $r: red($bg-color);
+  $g: green($bg-color);
+  $b: blue($bg-color);
+
+  $luminance: 0.2126 * $r + 0.7152 * $g + 0.0722 * $b; // calculate the luminance of the background color
+
+  @if ($luminance > $threshold) {
+    background-color: #000000; // if the background is light, use black text
+  } @else {
+    background-color: #ffffff; // if the background is dark, use white text
+  }
+}
+// @mixin contrast-bg-color($bg-color) {
+//   $threshold: 0.5;
+
+//   $r: red($bg-color);
+//   $g: green($bg-color);
+//   $b: blue($bg-color);
+
+//   $luminance: 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+//   @if ($luminance > $threshold) {
+//     background-color: darken($bg-color, 10%);
+//   } @else {
+//     background-color: lighten($bg-color, 10%);
+//   }
+// }
+// @function contrast-bg-color($color) {
+//   $r: red($color);
+//   $g: green($color);
+//   $b: blue($color);
+//   $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+//   @if ($yiq >= 128) {
+//     @return #000000;
+//   } @else {
+//     @return #ffffff;
+//   }
+// }
