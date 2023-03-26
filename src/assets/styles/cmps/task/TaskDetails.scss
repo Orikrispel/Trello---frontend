@@ -7,9 +7,11 @@
   flex-direction: column;
   align-self: center;
   right: 50%;
+  top: 1%;
   transform: translateX(50%);
   width: calc(100vw - 80px);
   margin: 48px 0 80px;
+  overflow-x: scroll;
   // position: relative;
 
   @include for-normal-layout {
@@ -100,8 +102,14 @@
         }
 
         .btn-desc {
+          justify-content: left;
+          text-align: left;
           width: 100%;
           padding: 14px;
+
+          &:hover {
+            background-color: darken($secondary-clr3, 7%);
+          }
         }
       }
 
@@ -142,22 +150,35 @@
       .side-bar {
         flex-direction: column;
         justify-content: start;
-        padding: 0 16px 8px 8px;
+        padding: 0 1em 0 0.5em;
+        // gap: 8px;
 
         h4 {
-          font-size: 0.8em;
+          font-size: em(12px);
+          font-weight: 600;
+          padding: 0 1em 0.5em 0.5em;
+          margin-bottom: em(-4px);
+          line-height: em(20px);
         }
 
         button:not(.btn-label, .btn-remove-color) {
+          height: rem(32px);
+          max-width: rem(300px);
+          padding: 0;
           display: flex;
           align-items: center;
           justify-content: start;
           color: $font-clr1;
           text-align: left;
           padding-inline-end: 1em;
-
+          padding: 0 12px;
+          &:hover {
+            background-color: darken($secondary-clr3, 7%);
+          }
           .icon {
-            margin-inline-end: 1em;
+            // margin-inline-end: 1em;
+            height: rem(32px);
+            padding: rem(6px);
           }
         }
       }

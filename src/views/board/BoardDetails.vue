@@ -116,16 +116,21 @@ export default {
     },
     async starBoard() {
       try {
-        const newBoard = { ...this.board }
-        newBoard.isStarred = !newBoard.isStarred
-        this.board = newBoard
-        await this.$store.dispatch(getActionStarBoard(newBoard))
+        let board = { ...this.board }
+        board.isStarred = !board.isStarred
+        this.board = board
+        await this.$store.dispatch(getActionStarBoard(board))
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot star board')
       }
     },
-
+    updateBoardTitle() {
+      let board = { ...this.board }
+      board.title = this.$refs.boardTitle.innerText
+      if (!board.title) return
+      this.updateBoard(board)
+    },
     toggleAddGroup() {
       this.isAddGroup = !this.isAddGroup
       if (this.isAddGroup) this.$nextTick(() => this.$refs.newGroup.focus())
