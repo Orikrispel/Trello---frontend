@@ -13,7 +13,7 @@
       <div class="task-container-heading flex column">
         <!-- '<div class="txt-container"> -->
         <div class="task-title-wrapper">
-          <h2 class="task-title fs20" contenteditable="true" @input="updateTitle">
+          <h2 class="task-title fs20" contenteditable="true" @blur="updateTitle">
             <span contenteditable="false" class="icon header-icon icon-lg"></span>
             {{ task.title ? task.title : 'new title' }}
           </h2>
@@ -81,7 +81,7 @@
                   }}
                 </div>
                 <textarea name="comment" placeholder="Write a comment...">
-                  </textarea>
+                              </textarea>
               </div>
             </form>
             <ul v-if="task.comments && task.comments.length" class="clean-list">

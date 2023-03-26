@@ -4,6 +4,10 @@
       #c850c0 46%,
       #ffcc70 100%);
 
+  // overflow-x: auto;
+  // white-space: nowrap;
+  padding-bottom: 5px;
+
   header.board-header {
     height: auto;
     padding: 8px 4px 4px 12px;
@@ -100,4 +104,18 @@
       margin-inline-end: 4px;
     }
   }
+}
+
+::-webkit-scrollbar {
+  margin: 20px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #C8C3CD;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #DDDAE0;
+  border-radius: 5px;
 }

@@ -33,7 +33,6 @@ export default {
     },
     created() {
         this.currTodo = JSON.parse(JSON.stringify(this.todo))
-        console.log('this.currTodo', this.currTodo)
     }
 }
 </script>

@@ -140,7 +140,6 @@ export default {
       let groupToAdd = JSON.parse(JSON.stringify(this.group))
       groupToAdd.id = utilService.makeId()
       groupToAdd.tasks.forEach(task => task.id = utilService.makeId())
-      console.log('groupToAdd:', groupToAdd)
       board.groups.splice(idx, 0, groupToAdd)
       this.$emit('updateBoard', board)
     },
@@ -173,7 +172,7 @@ export default {
       this.showGroupMenu = !this.showGroupMenu
     },
     clickedOutGroupMenu(event) {
-      if (!this.showGroupMenu) return
+      if (!this.showGroupMenu || !this.$refs.groupMenu) return
       if (!this.$refs.groupMenu.contains(event.target)) {
         this.toggleGroupMenu()
       }

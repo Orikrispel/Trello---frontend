@@ -27,19 +27,21 @@ export default {
     },
     methods: {
         getCurrTask(task) {
-            this.task = task
+            this.currTask = task
         }
     },
     computed: {
         getChecklistStatus() {
-            let count = 0;
+            let count = 0
+            let counter = 0
             if (!this.task.checklists || this.task.checklists.length === 0) return
             this.task.checklists.forEach((checklist) => {
-                if (checklist.todos.every((todo) => todo.isDone)) {
-                    count++;
-                }
-            });
-            return `${count}/${this.task.checklists.length}`;
+                checklist.todos.forEach((todo) => {
+                    if (todo.isDone) count++
+                    counter++
+                })
+            })
+            return `${count}/${counter}`
         },
         getMembers() {
             if (!this.task.members) return

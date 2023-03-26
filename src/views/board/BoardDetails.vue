@@ -97,7 +97,6 @@ export default {
     },
     async updateBoard(board) {
       try {
-        this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
       } catch (err) {
@@ -145,9 +144,21 @@ export default {
       this.taskDetailsIsOpen = false
     },
   },
+  watch: {
+    board: {
+      async handler() {
+        if (this.board) {
+          // await this.$store.dispatch({ type: 'loadBoards' })
+          this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId, })
+        }
+      },
+      immediate: true,
+    },
+  },
   components: {
     GroupList,
     GroupFilter,
   },
+
 }
 </script>
