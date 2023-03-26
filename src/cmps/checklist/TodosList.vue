@@ -45,9 +45,9 @@ export default {
                 title: this.addTodoTitle,
                 isDone: false
             }
+            this.addTodoTitle = ''
             newTodos.push(newTodo)
             this.$emit('updateChecklist', newTodos)
-            this.AddTodoTitle = ''
         },
         removeTodo(todoId) {
             const newTodos = JSON.parse(JSON.stringify(this.todos))

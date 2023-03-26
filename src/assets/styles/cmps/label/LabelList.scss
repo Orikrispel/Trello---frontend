@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: 0.1em;
 
+  .btn-label {
+    text-align: center;
+  }
+
   input[name='label-search'] {
     width: 90%;
     align-self: center;
@@ -14,6 +18,7 @@
     background-color: $secondary-clr2;
     // border: 2px solid $secondary-clr4;
     box-shadow: $input-shadow;
+    opacity: 0.8;
 
     &:hover {
       background-color: $secondary-clr3;
@@ -36,15 +41,18 @@
   }
   .label-list-item {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+
     input {
       align-self: center;
-      padding: 0;
-      margin-inline-start: 0.6em;
+      margin: 0;
       border-radius: 3px;
     }
     .label-preview {
-      width: 80%;
+      width: 100%;
       min-height: 100%;
       cursor: pointer;
       border-radius: 3px;
