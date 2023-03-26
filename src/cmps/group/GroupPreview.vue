@@ -27,11 +27,7 @@
         group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
         <Draggable class="task-container" @click="handleTaskDetails(task.id)" v-for="task in group.tasks" :key="task.id">
-          <span v-html="getSvg('pencil')" class="icon pencil-icon" @click="openTaskOptions"></span>
-          <span class="task-title fs14">{{ task.title }}</span>
-          <span class="todo-attachments">
-            <TaskAttachments :task="task" />
-          </span>
+          <TaskPreview :task="task" />
         </Draggable>
       </Container>
 
@@ -52,18 +48,17 @@
 </template>
 
 <script>
-import { boardService } from '../../services/board.service.local'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'
-import TaskAttachments from '../task/TaskAttachments.vue'
 import { utilService } from '../../services/util.service'
 import { svgService } from '../../services/svg.service'
+import TaskPreview from '../task/TaskPreview.vue'
 
 export default {
   name: 'GroupPreview',
   emits: ['updateBoard'],
   props: ['board', 'group'],
-  components: { Container, Draggable, TaskAttachments },
+  components: { Container, Draggable, TaskPreview },
   data() {
     return {
       isAddTask: false,

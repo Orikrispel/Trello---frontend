@@ -13,13 +13,8 @@
       <div class="task-container-heading flex column">
         <!-- '<div class="txt-container"> -->
         <div class="task-title-wrapper">
-          <h2
-            class="task-title fs20"
-            contenteditable="true"
-            @input="updateTitle">
-            <span
-              contenteditable="false"
-              class="icon header-icon icon-lg"></span>
+          <h2 class="task-title fs20" contenteditable="true" @input="updateTitle">
+            <span contenteditable="false" class="icon header-icon icon-lg"></span>
             {{ task.title ? task.title : 'new title' }}
           </h2>
         </div>
@@ -31,10 +26,7 @@
           <div class="label-container">
             <h3 class="fs12">Labels</h3>
             <ul class="task-heading-label-list flex clean-list">
-              <li
-                v-for="member in task.members"
-                :key="member._id"
-                class="member">
+              <li v-for="member in task.members" :key="member._id" class="member">
                 <MemberPreview :member="member" />
               </li>
             </ul>
@@ -52,34 +44,23 @@
             <h3>
               <span class="icon description-icon icon-lg"></span>Description
             </h3>
-            <button
-              class="btn btn-light"
-              v-if="!userIsEditing && task.description"
+            <button class="btn btn-light" v-if="!userIsEditing && task.description"
               @click="userIsEditing = !userIsEditing">
               Edit
             </button>
 
-            <button
-              class="btn btn-desc"
-              v-if="!userIsEditing && !task.description"
+            <button class="btn btn-desc" v-if="!userIsEditing && !task.description"
               @click="userIsEditing = !userIsEditing">
               Add a more detailed description...
             </button>
             <p v-if="!userIsEditing" @click="handleDesc">
               {{ task.description }}
             </p>
-            <textarea
-              v-if="userIsEditing"
-              v-model="task.description"
-              @blur="userIsEditing = false"
-              autofocus></textarea>
+            <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = false" autofocus></textarea>
             <button class="btn btn-blue" v-if="userIsEditing" type="submit">
               Save
             </button>
-            <button
-              class="btn btn-cancel-submit"
-              v-if="userIsEditing"
-              type="submit">
+            <button class="btn btn-cancel-submit" v-if="userIsEditing" type="submit">
               Cancel
             </button>
           </form>
@@ -90,18 +71,14 @@
               <h3 class="activity-title">Activity</h3>
             </div>
             <form class="comment-form" @submit.prevent="handleComment">
-              <textarea
-                name="comment"
-                placeholder="Write a comment..."></textarea>
+              <textarea name="comment" placeholder="Write a comment..."></textarea>
             </form>
             <ul v-if="task.comments && task.comments.length" class="clean-list">
               <li v-for="(comment, idx) in task.comments" :key="idx">
                 {{ comment }}
               </li>
             </ul>
-            <ul
-              v-if="task.activities && task.activities.length"
-              class="clean-list">
+            <ul v-if="task.activities && task.activities.length" class="clean-list">
               <li v-for="(activity, idx) in task.activities" :key="idx">
                 {{ activity }}
               </li>
@@ -121,10 +98,7 @@
             <span class="icon icon-small checklist-icon"></span>Checklist
           </button>
           <button>
-            <span
-              class="icon icon-small time-icon"
-              v-html="getSvg('watch')"></span
-            >Dates
+            <span class="icon icon-small time-icon" v-html="getSvg('watch')"></span>Dates
           </button>
           <button>
             <span class="icon icon-small attachments-icon"></span>Attachment
@@ -132,15 +106,9 @@
           <button v-if="!task.cover">
             <span class="icon icon-small card-cover-icon"></span>Cover
           </button>
-          <MembersList
-            v-if="membersMenuOpen"
-            @closeMembersMenu="membersMenuOpen = false" />
-          <LabelMenu
-            @closeLabelMenu="labelMenuOpen = false"
-            v-if="labelMenuOpen" />
-          <AddChecklist
-            v-if="checklistMenuOpen"
-            :actionData="{ task: task }"
+          <MembersList v-if="membersMenuOpen" @closeMembersMenu="membersMenuOpen = false" />
+          <LabelMenu @closeLabelMenu="labelMenuOpen = false" v-if="labelMenuOpen" />
+          <AddChecklist v-if="checklistMenuOpen" :actionData="{ task: task }"
             @setCreateModeOff="checklistMenuOpen = false" />
         </aside>
       </div>

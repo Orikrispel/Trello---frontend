@@ -10,7 +10,7 @@
         </button>
       </div>
 
-      <div @click="showFilterMenu = !showFilterMenu" class="flex gap">
+      <div @click="showFilterMenu = !showFilterMenu" class="flex">
         <button class="btn btn-light btn-filter">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
@@ -127,8 +127,11 @@ export default {
     },
     updateBoardTitle() {
       let board = { ...this.board }
+      if (!this.$refs.boardTitle.innerText) {
+        this.$refs.boardTitle.innerText = board.title
+        return
+      }
       board.title = this.$refs.boardTitle.innerText
-      if (!board.title) return
       this.updateBoard(board)
     },
     toggleAddGroup() {

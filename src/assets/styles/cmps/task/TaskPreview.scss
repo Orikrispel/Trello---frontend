@@ -1,0 +1,22 @@
+.task-preview {
+
+  .icon-edit {
+    border-radius: 3px;
+    padding: 4px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    opacity: 0;
+    z-index: 2;
+  }
+
+  &:hover .icon-edit {
+    opacity: .6;
+  }
+
+  a {
+    font-weight: 200;
+    text-decoration: none;
+    color: $font-clr1;
+  }
+}
