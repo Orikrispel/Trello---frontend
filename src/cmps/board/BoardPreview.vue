@@ -2,8 +2,9 @@
   <div class="board-preview">
     <h5 class="board-title">{{ board.title }}</h5>
     <div class="board-preview-actions">
-      <span class="icon star" @click.stop="onStarBoard(board)"></span>
-      <!-- <div class="star-svg" v-html="getSvg('star')" @click.stop="onStarBoard(board)"></div> -->
+      <span class="board-star" @click.stop="onStarBoard(board)"
+        :class="[(isStarred && !isHoveringStar) ? 'solid-star' : 'star', 'icon']" @mouseenter="isHoveringStar = true"
+        @mouseout="isHoveringStar = false"></span>
     </div>
   </div>
 </template>
@@ -20,15 +21,21 @@ export default {
   },
   data() {
     return {
-      isStarred: false,
+      isHoveringStar: false,
+      isHoveringBoard: false,
     }
   },
-  computed: {},
+  computed: {
+    isStarred() {
+      return this.board.isStarred
+    }
+  },
   created() { },
   methods: {
-    onStarBoard(board) {
-      this.isStarred = !this.isStarred
-      this.$emit('starBoard', board)
+    onStarBoard() {
+      const currBoard = JSON.parse(JSON.stringify(this.board))
+      currBoard.isStarred = !currBoard.isStarred
+      this.$emit('starBoard', currBoard)
     },
     onRemoveBoard(boardId, event) {
       this.$emit('onRemoveBoard', boardId)
