@@ -5,7 +5,7 @@
       <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
         {{ group.title }}
       </h2>
-      <button class="clean-btn">∙∙∙</button>
+      <button class="clean-btn"><span class="icon icon-overflow-menu-horizontal"></span></button>
     </header>
 
     <main class="tasks-wrapper">

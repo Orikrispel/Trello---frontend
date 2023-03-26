@@ -111,7 +111,7 @@
 .watch-icon,
 .time-icon,
 .card-cover-icon {
-  font-family: trellicons;
+
   place-self: center;
   align-self: flex-start;
   font-size: 24px;
@@ -169,6 +169,10 @@
 
 .icon-add:before {
   content: "\e901";
+}
+
+.icon-overflow-menu-horizontal:before {
+  content: "\e952";
 }
 
 .star:before {
