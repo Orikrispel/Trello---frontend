@@ -3,43 +3,47 @@
   background-color: $secondary-clr1;
   display: flex;
   flex-direction: column;
-  min-height: 29em;
   top: 12em;
   width: 16.5em;
   right: -2.5em;
   padding-inline: 1em;
   padding-block: 1em;
+  border-radius: 3px;
+
   & * {
     font-size: 0.9em;
   }
+
   &-header {
     display: grid;
     justify-self: center;
     grid-template-columns: 1em 1fr 1em;
-    grid-template-rows: 1fr;
-    align-self: center;
     place-items: center;
     width: 100%;
     border-bottom: 1px solid var(--ds-border, rgba(9, 30, 66, 0.13));
     font-weight: 400;
     font-size: em(14px);
     opacity: 0.5;
-    & > * {
+
+    &>* {
       grid-row: 1;
     }
 
     h3 {
       justify-self: center;
       grid-column: 2;
+      margin: 0;
+      font-weight: 200;
     }
+
     .btn-back {
       grid-column: 1;
       cursor: pointer;
       scale: 1.5;
     }
+
     .btn-close {
       grid-column: 3;
-      align-self: end;
       background-color: inherit;
       cursor: pointer;
     }
