@@ -13,7 +13,7 @@ export const checklistService = {
 function getEmptyChecklist() {
     return {
         id: '',
-        title: 'title',
+        title: 'Checklist',
         todos: [],
     }
 }

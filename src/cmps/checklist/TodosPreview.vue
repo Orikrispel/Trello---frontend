@@ -1,10 +1,10 @@
 <template>
     <section class="todos-preview">
-        <input type="text" v-model="todo.title">
-
-
+        <input type="checkbox" v-model="currTodo.isDone" @change="updateTodo">
+        <input type="text" v-model="currTodo.title" @change="updateTodo"
+            :style="{ 'text-decoration': currTodo.isDone ? 'line-through' : 'none' }">
     </section>
-</template>
+</template> 
 
 <script>
 import { utilService } from '../../services/util.service'
@@ -18,39 +18,22 @@ export default {
     },
     data() {
         return {
-
+            currTodo: null,
         }
     },
     methods: {
-        // addChecklist() {
-        //     const newChecklist = {
-        //         id: utilService.makeId(),
-        //         title: '',
-        //         todos: []
-        //     }
-        //     this.checklists.push(newChecklist)
-        //     this.todoTitle = ''
-        // },
-        // removeChecklist(idx) {
-        //     this.checklists.splice(idx, 1)
-        // },
-        // addTodoToChecklist(checklist) {
-        //     const newTodo = {
-        //         id: 'cl' + utilService.makeId(),
-        //         title: '',
-        //         isDone: false
-        //     }
-        //     checklist.todos.push(newTodo)
-        // },
-        // removeTodoFromChecklist(checklist, todo) {
-        //     const idx = checklist.todos.indexOf(todo)
-        //     checklist.todos.splice(idx, 1)
-        // }
+        updateTodo() {
+            this.$emit('updateTodos', this.currTodo)
+        }
     },
     mounted() {
     },
     watch: {
 
     },
+    created() {
+        this.currTodo = JSON.parse(JSON.stringify(this.todo))
+        console.log('this.currTodo', this.currTodo)
+    }
 }
 </script>
