@@ -5,6 +5,7 @@
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
     </header>
+
     <RouterLink v-if="!task.cover" :to="`/board/${boardId}`" class="btn-close">
       <div class="icon" v-html="getSvg('close')"></div>
     </RouterLink>
@@ -17,7 +18,7 @@
             {{ task.title ? task.title : 'new title' }}
           </h2>
         </div>
-        <span class="list-related"> in list {{ task.list }}</span>
+        <p class="list-related"> in list {{ task.list }}</p>
       </div>
 
       <div class="task-main-container">
@@ -41,21 +42,23 @@
           <!-- description -->
           <form class="description-editor editor" @submit.prevent="handleDesc">
             <h3><span class="icon description-icon"></span>Description</h3>
-            <button v-if="!userIsEditing && task.description" @click="userIsEditing = !userIsEditing">
+            <button class="btn btn-light" v-if="!userIsEditing && task.description"
+              @click="userIsEditing = !userIsEditing">
               Edit
             </button>
 
-            <div v-if="!userIsEditing && !task.description" @click="userIsEditing = !userIsEditing">
+            <button class="btn btn-desc" v-if="!userIsEditing && !task.description"
+              @click="userIsEditing = !userIsEditing">
               Add a more detailed description...
-            </div>
+            </button>
             <p v-if="!userIsEditing" @click="handleDesc">
               {{ task.description }}
             </p>
             <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = false" autofocus></textarea>
-            <button class="btn-submit-desc" v-if="userIsEditing" type="submit">
+            <button class="btn btn-blue" v-if="userIsEditing" type="submit">
               Save
             </button>
-            <button class="btn-cancel-submit" v-if="userIsEditing" type="submit">
+            <button class="btn btn-cancel-submit" v-if="userIsEditing" type="submit">
               Cancel
             </button>
           </form>
@@ -90,7 +93,7 @@
           <button @click="checklistMenuOpen = !checklistMenuOpen">
             <span class="icon checklist-icon"></span>Checklist
           </button>
-          <button><span class="icon watch-icon"></span>Dates</button>
+          <button><span class="icon time-icon" v-html="getSvg('watch')"></span>Dates</button>
           <button><span class="icon attachments-icon"></span>Attachment</button>
           <button v-if="!task.cover">
             <span class="icon card-cover-icon"></span>Cover

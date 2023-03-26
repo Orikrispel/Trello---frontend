@@ -1,23 +1,16 @@
 <template>
   <div class="board-lists-container">
     <div class="boards-header" v-if="starredBoards.length">
-      <h3 v-html="getSvg('star')"></h3>
+      <h3> <span class="icon star"></span></h3>
       <h3>Starred Boards</h3>
     </div>
     <ul class="board-list">
-      <li
-        v-for="board in starredBoards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || 'none',
-          backgroundSize: 'cover',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+        backgroundImage: getBoardBg(board) || 'none',
+        backgroundSize: 'cover',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
     <div class="boards-header">
@@ -28,19 +21,12 @@
       <li class="new-board" @click="setCreateMode">
         <p>Create new board</p>
       </li>
-      <li
-        v-for="board in boards"
-        :key="board._id"
-        @click="showBoardDetails(board._id)"
-        :style="{
-          'background-color': board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || 'none',
-          backgroundSize: 'cover',
-        }">
-        <BoardPreview
-          :board="board"
-          @onRemoveBoard="removeBoard"
-          @starBoard="starBoard" />
+      <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
+        'background-color': board.style?.backgroundColor || '#014a75',
+        backgroundImage: getBoardBg(board) || 'none',
+        backgroundSize: 'cover',
+      }">
+        <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
       </li>
     </ul>
   </div>
@@ -55,9 +41,9 @@ export default {
   data() {
     return {}
   },
-  created() {},
+  created() { },
   computed: {
-    loggedInUser() {},
+    loggedInUser() { },
     starredBoards() {
       const boards = this.$store.getters.boards
       return boards.filter((board) => board.isStarred)

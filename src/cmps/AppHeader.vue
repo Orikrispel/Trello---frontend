@@ -2,7 +2,7 @@
   <header class="app-haeder">
     <nav>
       <RouterLink to="/">
-        <span role="img" aria-label="logo">Trello</span>
+        <span role="img" aria-label="logo">Jello</span>
       </RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
