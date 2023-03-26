@@ -1,25 +1,43 @@
 .homepage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  .intro-home-container {
-    display: flex;
-    flex-direction: row;
-  }
-  .intro-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: 'Charlie Display';
+
+  .hero-container {}
+
+  .hero {
     justify-content: center;
-    h1 {
-      font-size: 3rem;
+    background: url(../../imgs/homepage/white-wave.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+    background-blend-mode: normal, normal;
+    color: $font-clr4;
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      @include for-normal-layout {
+        max-width: em(720px);
+      }
+
+      @include for-wide-layout {
+        max-width: em(960px);
+      }
+
+      @include for-super-wide-layout {
+        max-width: em(1140px);
+      }
+
+      &>* {
+        padding: 8rem 1rem 1rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        line-height: 1.25;
+      }
     }
-    p {
-      font-size: 1.5em;
-    }
+
   }
-  .intro-img {
-    width: 600px;
-  }
+
+  .hero-intro {}
+
+  .intro-img {}
 }

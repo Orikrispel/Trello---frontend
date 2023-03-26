@@ -12,6 +12,18 @@
       color: $font-clr1;
       margin: 0;
     }
+
+    .btn-star {
+      padding: rem(6px);
+
+      &:hover {
+        color: $star-yellow;
+      }
+
+      .solid-star {
+        color: $star-yellow;
+      }
+    }
   }
 
   main.groups-wrapper {

@@ -1,31 +1,30 @@
 <template>
   <div v-if="board" class="board-container main flex column">
-    <header class="board-header flex align-center gap">
-      <h1 class="board-title fs18">{{ board.title }}</h1>
-      <button class="btn">
-        <div class="star-svg" v-html="getSvg('star')" @click="starBoard"></div>
-      </button>
+    <header class="board-header flex align-center justify-between gap">
+      <div class="flex gap">
+        <h1 class="board-title fs18">{{ board.title }}</h1>
+        <button class="btn btn-light btn-star" @click="starBoard">
+          <span :class="[isStarred ? 'solid-star' : 'star', 'icon']"></span>
+        </button>
+      </div>
+
+      <div class="flex gap">
+        <button class="btn btn-light btn-filter">
+          <i v-html="getSvg('filter')"></i>Filter
+        </button>
+      </div>
     </header>
 
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button
-          v-show="!isAddGroup"
-          class="btn btn-light"
-          @click="toggleAddGroup">
+        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
           + add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input
-            ref="newGroup"
-            name="add-group"
-            placeholder="Enter list title..." />
-          <button
-            class="btn btn-blue"
-            @keyup.enter="onAddGroup"
-            @click="onAddGroup">
+          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
+          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -75,6 +74,9 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
+    isStarred() {
+      return this.board.isStarred
+    }
   },
   methods: {
     onAddGroup() {
@@ -109,8 +111,9 @@ export default {
     },
     async starBoard() {
       try {
-        const newBoard = JSON.parse(JSON.stringify(this.board))
+        const newBoard = { ...this.board }
         newBoard.isStarred = !newBoard.isStarred
+        this.board = newBoard
         await this.$store.dispatch(getActionStarBoard(newBoard))
       } catch (err) {
         console.log(err)

@@ -36,7 +36,7 @@
 .flex {
   display: flex;
 
-  > *.full {
+  >*.full {
     flex: 1;
   }
 
@@ -46,6 +46,10 @@
 
   &.justify-center {
     justify-content: center;
+  }
+
+  &.justify-between {
+    justify-content: space-between;
   }
 
   &.align-center {
@@ -164,6 +168,14 @@
 
 .icon-add:before {
   content: "\e901";
+}
+
+.star:before {
+  content: "\e966";
+}
+
+.solid-star:before {
+  content: "\e967";
 }
 
 .modal-overlay {
