@@ -4,7 +4,7 @@
     <div class="board-preview-actions">
       <span class="board-star" @click.stop="onStarBoard(board)"
         :class="[(isStarred && !isHoveringStar) ? 'solid-star' : 'star', 'icon']" @mouseenter="isHoveringStar = true"
-        @mouseout="isHoveringStar = false"></span>
+        @mouseleave="isHoveringStar = false"></span>
     </div>
   </div>
 </template>
@@ -22,7 +22,6 @@ export default {
   data() {
     return {
       isHoveringStar: false,
-      isHoveringBoard: false,
     }
   },
   computed: {

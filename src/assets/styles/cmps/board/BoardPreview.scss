@@ -23,18 +23,23 @@
   }
   .solid-star {
     color: $star-yellow;
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     &:hover {
-      color: white;
-      transform: scale(1.1);
-      font-size: 20px;
+      transform: scale(1.2);
+    }
+  }
+
+  .icon.star {
+    transform: translateX(25px);
+    &:hover {
+      transform: scale(1.2);
     }
   }
 }
 
 .board-star {
+  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   &:hover {
-    color: white;
     transform: scale(1.2);
-    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
