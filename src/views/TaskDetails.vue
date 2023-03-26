@@ -1,7 +1,7 @@
 <template>
   <section class="task-details">
     <header v-if="task.cover" class="task-cover">
-      <RouterLink :to="'/board'" class="btn-close">
+      <RouterLink :to="`/board/${boardId}`" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
     </header>
@@ -49,9 +49,10 @@
 
           <!-- description -->
           <form class="description-editor editor" @submit.prevent="handleDesc">
-            <h3>
-              <span class="icon description-icon icon-lg"></span>Description
-            </h3>
+            <div class="editor-header">
+              <span class="icon description-icon icon-lg"></span>
+              <h3>Description</h3>
+            </div>
             <button
               class="btn btn-light"
               v-if="!userIsEditing && task.description"
@@ -59,12 +60,14 @@
               Edit
             </button>
 
-            <button
+            <p
               class="btn btn-desc"
               v-if="!userIsEditing && !task.description"
               @click="userIsEditing = !userIsEditing">
               Add a more detailed description...
-            </button>
+              <br />
+              <br />
+            </p>
             <p v-if="!userIsEditing" @click="handleDesc">
               {{ task.description }}
             </p>
@@ -85,14 +88,22 @@
           </form>
 
           <div class="comments-activity-container editor">
-            <div class="activity-header">
+            <div class="editor-header">
               <span class="icon activity-icon icon-lg"></span>
               <h3 class="activity-title">Activity</h3>
             </div>
             <form class="comment-form" @submit.prevent="handleComment">
-              <textarea
-                name="comment"
-                placeholder="Write a comment..."></textarea>
+              <div class="comment-box-input">
+                <div class="member-img icon icon-lg">
+                  {{
+                    loggedInUser.imgUrl
+                      ? loggedInUser.imgUrl
+                      : loggedInUser.fullname.charAt(0).toUpperCase()
+                  }}
+                </div>
+                <textarea name="comment" placeholder="Write a comment...">
+                </textarea>
+              </div>
             </form>
             <ul v-if="task.comments && task.comments.length" class="clean-list">
               <li v-for="(comment, idx) in task.comments" :key="idx">
@@ -172,6 +183,10 @@ export default {
       labelMenuOpen: false,
       checklistMenuOpen: false,
       membersMenuOpen: false,
+      loggedInUser: {
+        imgUrl: null,
+        fullname: 'Yohai Korem',
+      },
     }
   },
   async created() {
