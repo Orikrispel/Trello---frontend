@@ -44,7 +44,7 @@
       overflow-y: auto;
     }
 
-    &>button:first-of-type {
+    & > button:first-of-type {
       color: $font-clr3;
       margin: 2px 0 8px 8px;
     }
@@ -60,6 +60,17 @@
       min-height: 20px;
       padding: 6px 8px 2px;
       position: relative;
+
+      &:hover > .pencil-icon {
+        opacity: 1;
+      }
+
+      & .pencil-icon {
+        position: relative;
+        left: 15em;
+        transition: 0.6s;
+        opacity: 0;
+      }
 
       a {
         font-weight: 200;
