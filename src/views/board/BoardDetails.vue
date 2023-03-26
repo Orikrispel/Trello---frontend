@@ -8,7 +8,7 @@
         </button>
       </div>
 
-      <div class="flex gap">
+      <div @click="showFilterMenu = !showFilterMenu" class="flex gap">
         <button class="btn btn-light btn-filter">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
@@ -19,12 +19,21 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          class="btn btn-light"
+          @click="toggleAddGroup">
           + add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -32,6 +41,9 @@
           </button>
         </div>
       </article>
+      <GroupFilter
+        @closeFilterMenu="showFilterMenu = false"
+        v-if="showFilterMenu" />
       <RouterView />
     </main>
     <!-- <div
@@ -44,6 +56,7 @@
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
+import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
 import {
   getActionRemoveBoard,
@@ -57,6 +70,7 @@ export default {
       board: null,
       groupToAdd: this.$store.getters.emptyGroup,
       isAddGroup: false,
+      showFilterMenu: false,
     }
   },
   async created() {
@@ -76,7 +90,7 @@ export default {
     },
     isStarred() {
       return this.board.isStarred
-    }
+    },
   },
   methods: {
     onAddGroup() {
@@ -133,6 +147,7 @@ export default {
   },
   components: {
     GroupList,
+    GroupFilter,
   },
 }
 </script>
