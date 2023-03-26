@@ -3,11 +3,10 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding-inline: 1px;
+  padding-inline: 5px;
   padding-block-start: 5px;
 
   .board-preview-actions {
-    padding: 27px 0px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -15,5 +14,27 @@
 
   .board-title {
     font-size: 1rem;
+    word-wrap: break-word;
+  }
+  .star {
+    &:hover {
+      color: $star-yellow;
+    }
+  }
+  .solid-star {
+    color: $star-yellow;
+    &:hover {
+      color: white;
+      transform: scale(1.1);
+      font-size: 20px;
+    }
+  }
+}
+
+.board-star {
+  &:hover {
+    color: white;
+    transform: scale(1.2);
+    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }

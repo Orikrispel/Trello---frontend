@@ -1,6 +1,11 @@
 .board-container {
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
 
   header.board-header {
     height: auto;
@@ -8,7 +13,7 @@
     position: relative;
 
     h1 {
-      font-family: 'Segoe UI Bold';
+      font-family: "Segoe UI Bold";
       color: $font-clr1;
       margin: 0;
     }
@@ -40,9 +45,10 @@
       border-radius: 3px;
       height: max-content;
 
-      transition: background 85ms ease-in, opacity 40ms ease-in, border-color 85ms ease-in;
+      transition: background 85ms ease-in, opacity 40ms ease-in,
+        border-color 85ms ease-in;
 
-      &>button {
+      & > button {
         width: 100%;
         padding: 10px 12px;
         justify-content: start;
@@ -55,7 +61,7 @@
         padding: 4px;
 
         input {
-          font-family: 'Segoe UI Regular';
+          font-family: "Segoe UI Regular";
           width: 100%;
           border: none;
           outline: none;
@@ -66,14 +72,11 @@
             box-shadow: inset 0 0 0 2px $primary-clr4;
           }
         }
-
       }
-
     }
 
     .icon-add {
       margin-inline-end: 4px;
     }
-
   }
 }
