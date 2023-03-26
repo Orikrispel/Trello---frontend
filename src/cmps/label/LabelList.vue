@@ -20,7 +20,9 @@
           class="icon pencil-icon"
           v-html="getSvg('pencil')"></div>
       </li>
-      <button @click="$emit('toggleLabelEdit')">Create a new label</button>
+      <button class="btn btn-label" @click="$emit('toggleLabelEdit')">
+        Create a new label
+      </button>
     </ul>
   </div>
 </template>
@@ -76,9 +78,7 @@ export default {
       } else {
         labels = this.board.labels
       }
-
       this.labels = labels
-      console.log(this.labels)
     },
     async addLabelToTask(label) {
       let task = JSON.parse(JSON.stringify(this.task))
