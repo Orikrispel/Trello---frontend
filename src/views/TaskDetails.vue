@@ -17,7 +17,9 @@
             class="task-title fs20"
             contenteditable="true"
             @input="updateTitle">
-            <span contenteditable="false" class="icon header-icon"></span>
+            <span
+              contenteditable="false"
+              class="icon header-icon icon-lg"></span>
             {{ task.title ? task.title : 'new title' }}
           </h2>
         </div>
@@ -47,7 +49,9 @@
 
           <!-- description -->
           <form class="description-editor editor" @submit.prevent="handleDesc">
-            <h3><span class="icon description-icon"></span>Description</h3>
+            <h3>
+              <span class="icon description-icon icon-lg"></span>Description
+            </h3>
             <button
               class="btn btn-light"
               v-if="!userIsEditing && task.description"
@@ -81,7 +85,10 @@
           </form>
 
           <div class="comments-activity-container editor">
-            <h3><span class="icon activity-icon"></span> Activity</h3>
+            <div class="activity-header">
+              <span class="icon activity-icon icon-lg"></span>
+              <h3 class="activity-title">Activity</h3>
+            </div>
             <form class="comment-form" @submit.prevent="handleComment">
               <textarea
                 name="comment"
@@ -99,7 +106,6 @@
                 {{ activity }}
               </li>
             </ul>
-            <button @click="test">test</button>
           </div>
         </main>
 

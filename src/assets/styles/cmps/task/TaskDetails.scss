@@ -1,4 +1,5 @@
 .task-details {
+  min-height: 600px;
   z-index: 10;
   border-radius: 3px;
   position: absolute;
@@ -11,7 +12,9 @@
   transform: translateX(50%);
   width: calc(100vw - 80px);
   margin: 48px 0 80px;
-  overflow-x: scroll;
+  overflow: visible;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
   // position: relative;
 
   @include for-normal-layout {
@@ -42,7 +45,6 @@
     background-color: $secondary-clr5;
     border: 0;
     padding: 5px 10px;
-    margin: 5px;
   }
 
   .task-cover {
@@ -55,6 +57,16 @@
   .task-container {
     .icon {
       align-self: center;
+
+      &.icon-lg {
+        height: rem(32px);
+        line-height: rem(32px);
+        width: rem(32px);
+        font-size: rem(24px);
+        font-weight: 400;
+        text-align: center;
+        vertical-align: bottom;
+      }
     }
 
     &-heading {
@@ -150,15 +162,15 @@
       .side-bar {
         flex-direction: column;
         justify-content: start;
-        padding: 0 1em 0 0.5em;
-        // gap: 8px;
+        padding: 0 1em 0.5em 0.5em;
+        gap: 8px;
 
         h4 {
-          font-size: em(12px);
+          font-size: rem(12px);
           font-weight: 600;
           padding: 0 1em 0.5em 0.5em;
-          margin-bottom: em(-4px);
-          line-height: em(20px);
+          margin-bottom: rem(-4px);
+          // line-height: em(20px);
         }
 
         button:not(.btn-label, .btn-remove-color) {
@@ -170,8 +182,6 @@
           justify-content: start;
           color: $font-clr1;
           text-align: left;
-          padding-inline-end: 1em;
-          padding: 0 12px;
           &:hover {
             background-color: darken($secondary-clr3, 7%);
           }
@@ -194,6 +204,35 @@
         color: $secondary-clr1;
         padding: 0.7em;
         border-radius: 10%;
+      }
+    }
+    .comments-activity-container {
+      .activity-header {
+        // margin: 0 0 4px 40px;
+        padding: 8px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 32px;
+      }
+
+      textarea {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        background: #fff;
+        box-sizing: initial;
+        margin: 0;
+        min-height: 20px;
+        transition-duration: 85ms;
+        transition-property: background-color, border-color, box-shadow;
+        transition-timing-function: ease;
+
+        &:focus {
+          display: block;
+          line-height: 20px;
+
+          padding: 8px 12px;
+        }
       }
     }
   }
