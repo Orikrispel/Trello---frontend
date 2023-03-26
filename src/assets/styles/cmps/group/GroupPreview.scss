@@ -28,6 +28,18 @@
       }
     }
 
+    .icon.icon-overflow-menu-horizontal {
+      padding: 6px;
+      border-radius: 3px;
+      color: $font-clr3;
+
+      &:hover {
+        color: $font-clr1;
+        background-color: $btn-hover-clr1;
+      }
+    }
+
+
     button {
       z-index: 1;
     }
