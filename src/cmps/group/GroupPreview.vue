@@ -12,33 +12,32 @@
         contenteditable="true">
         {{ group.title }}
       </h2>
-      <button class="clean-btn btn-menu" @click.stop="toggleGroupMenu">
-        <span class="icon icon-overflow-menu-horizontal"></span>
-      </button>
 
-      <section
-        v-show="showGroupMenu"
-        ref="groupMenu"
-        class="group-menu flex column">
-        <div class="group-menu-header">
-          <h3>List actions</h3>
-          <span
-            class="icon btn-close icon-close"
-            @click="toggleGroupMenu"></span>
-        </div>
-        <div class="group-menu-content">
-          <button class="btn btn-list clean-btn" @click="toggleAddTask">
-            Add card...
-          </button>
-          <button class="btn btn-list clean-btn" @click="duplicateGroup">
-            Copy list...
-          </button>
-          <hr />
-          <button class="btn btn-list clean-btn" @click="removeGroup">
-            Archive this list
-          </button>
-        </div>
-      </section>
+      <VDropdown :distance="6">
+        <!-- This will be the popover reference (for the events and position) -->
+        <button class="clean-btn btn-menu"><span class="icon icon-overflow-menu-horizontal"></span></button>
+
+        <!-- This will be the content of the popover -->
+        <template #popper>
+          <DynamicModal>
+
+            <template v-slot:title>
+              List actions
+            </template>
+
+            <template v-slot scope="props">
+              <section ref="groupMenu" class="group-menu flex column">
+                <div class="group-menu-content" scope="props">
+                  <button class="btn btn-list clean-btn" @click="toggleAddTask">Add card...</button>
+                  <button class="btn btn-list clean-btn" @click="duplicateGroup">Copy list...</button>
+                  <hr />
+                  <button class="btn btn-list clean-btn" @click="removeGroup">Archive this list</button>
+                </div>
+              </section>
+            </template>
+          </DynamicModal>
+        </template>
+      </VDropdown>
     </header>
 
     <main class="tasks-wrapper">
@@ -78,9 +77,6 @@
       </div>
     </main>
   </section>
-  <div v-if="showTaskDetails" @click="toggleTaskDetails" class="modal-overlay">
-    <RouterView />
-  </div>
 </template>
 
 <script>
@@ -89,17 +85,18 @@ import { applyDrag } from '../../services/util.service'
 import { utilService } from '../../services/util.service'
 import { svgService } from '../../services/svg.service'
 import TaskPreview from '../task/TaskPreview.vue'
+import DynamicModal from '../DynamicModal.vue'
 
 export default {
   name: 'GroupPreview',
   emits: ['updateBoard'],
   props: ['board', 'group'],
-  components: { Container, Draggable, TaskPreview },
+  components: { Container, Draggable, TaskPreview, DynamicModal },
   data() {
     return {
       isAddTask: false,
       isEditGroupTitle: false,
-      showTaskDetails: false,
+      // showTaskDetails: false,
       dropPlaceholderOptions: {
         className: 'drop-preview',
         animationDuration: '150',
@@ -198,11 +195,6 @@ export default {
     },
     handleTaskDetails(taskId) {
       this.$router.push(`/board/${this.board._id}/task/${taskId}`)
-      this.showTaskDetails = !this.showTaskDetails
-    },
-    toggleTaskDetails() {
-      this.$router.push(`/board/${this.board._id}`)
-      this.showTaskDetails = !this.showTaskDetails
     },
     toggleGroupMenu() {
       this.showGroupMenu = !this.showGroupMenu
@@ -215,15 +207,15 @@ export default {
     },
   },
   watch: {
-    '$route.params': {
-      handler() {
-        let { taskId } = this.$route.params
+    // '$route.params': {
+    //   handler() {
+    //     let { taskId } = this.$route.params
 
-        if (!taskId) this.showTaskDetails = false
-        else this.showTaskDetails = true
-      },
-      immediate: true,
-    },
+    //     if (!taskId) this.showTaskDetails = false
+    //     else this.showTaskDetails = true
+    //   },
+    //   immediate: true,
+    // },
   },
   beforeDestroy() {
     document.removeEventListener('click', this.clickedOutGroupMenu)

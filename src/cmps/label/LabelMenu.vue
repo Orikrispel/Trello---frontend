@@ -1,24 +1,8 @@
 <template>
   <section class="label-menu">
-    <section class="label-menu-header">
-      <h3>{{ userIsEditing ? 'Create a label' : 'Labels' }}</h3>
-
-      <span
-        v-if="userIsEditing"
-        @click="backFromEdit"
-        class="icon btn-back"
-        v-html="getSvg('arrowLeft')"></span>
-      <span
-        @click="$emit('closeLabelMenu')"
-        class="icon btn-close"
-        v-html="getSvg('close')"></span>
-    </section>
-    <LabelEdit
-      @toggleLabelEdit="userIsEditing = !userIsEditing"
-      v-if="userIsEditing" />
-    <LabelList
-      @toggleLabelEdit="userIsEditing = !userIsEditing"
-      v-if="!userIsEditing" />
+    <span v-if="userIsEditing" @click="backFromEdit" class="icon btn-back" v-html="getSvg('arrowLeft')"></span>
+    <LabelEdit @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="userIsEditing" />
+    <LabelList @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="!userIsEditing" />
   </section>
 </template>
 

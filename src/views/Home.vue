@@ -9,7 +9,6 @@
         </div>
         <img class="intro-img" src="../../src/assets/imgs/homepage/homepage-2.png">
       </div>
-      <div class="divider" v-html="getSvg('divider')"></div>
     </section>
   </main>
 </template>
