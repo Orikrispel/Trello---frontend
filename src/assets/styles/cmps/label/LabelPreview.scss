@@ -14,26 +14,27 @@
     position: relative;
     font-size: rem(14px);
     line-height: rem(32px);
-    & .label-circle {
+    // & .label-circle {
+    //   position: absolute;
+    //   top: 8px;
+    //   bottom: 8px;
+    //   left: 8px;
+    //   border-radius: 50%;
+    //   width: 16px;
+    //   height: 16px;
+    //   display: inline-block;
+    // }
+
+    &::after {
+      content: '';
       position: absolute;
-      top: 8px;
-      bottom: 8px;
-      left: 8px;
+      top: 0.5em;
+      bottom: 0.5em;
+      left: -24px;
       border-radius: 50%;
       width: 16px;
       height: 16px;
-      display: inline-block;
+      // @include contrast-text-color(red);
     }
   }
 }
-// &::after {
-//   content: '';
-//   position: absolute;
-//   top: 8px;
-//   bottom: 8px;
-//   left: -24px;
-//   border-radius: 50%;
-//   width: 16px;
-//   height: 16px;
-//   @include contrast-text-color(red);
-// }
