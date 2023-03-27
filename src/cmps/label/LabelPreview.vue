@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { newShade } from '../../services/util.service'
+// import { newShade } from '../../services/util.service'
 export default {
   name: 'LabelPreview',
   props: {
@@ -33,11 +33,10 @@ export default {
     }
   },
   created() {
-    this.labelCircleClr = newShade(this.label.color, -15)
+    // this.labelCircleClr = newShade(this.label.color, -15)
   },
   methods: {
     getLabelStyle(ev) {
-      console.log(this.labelCircleClr, this.label.color)
       if (ev.type === 'mouseover') {
         ev.target.style.filter = 'brightness(85%)'
       } else if (ev.type === 'mouseout') {

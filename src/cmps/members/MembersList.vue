@@ -1,11 +1,5 @@
 <template>
   <div class="members-list-container">
-    <div class="members-list-heading">
-      <h4>Members</h4>
-      <button @click="$emit('closeMembersMenu')" class="btn btn-close">
-        X
-      </button>
-    </div>
     <input
       v-model="filterBy"
       type="text"
@@ -59,6 +53,7 @@ export default {
       taskId: this.taskId,
     })
     let { members } = this.board
+
     if (!members || !members.length)
       members = this.$store.getters.defaultMembers
     this.members = members
@@ -77,6 +72,7 @@ export default {
     async addMemberToTask(memberId) {
       let task = JSON.parse(JSON.stringify(this.task))
       let board = JSON.parse(JSON.stringify(this.board))
+      console.log(task.members)
       let { members } = board
       let member = members.find((member) => {
         return member._id === memberId

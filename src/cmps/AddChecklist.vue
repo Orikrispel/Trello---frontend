@@ -1,9 +1,5 @@
 <template>
-    <form @submit.prevent="addChecklist" class="board-add-form add-checklist-form">
-        <div class="add-form-header add-checklist-header">
-            <h5>Add checklist</h5>
-            <p @click="closeModal">x</p>
-        </div>
+    <form @submit.prevent="addChecklist" class="add-checklist-form">
         <div>
             <input type="text" style="margin-top: 25px;" v-model="checklistToAdd.title">
             <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
