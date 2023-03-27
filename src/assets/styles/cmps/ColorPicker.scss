@@ -5,11 +5,33 @@
   margin-bottom: 5px;
 }
 
+.selected {
+  filter: brightness(90%);
+}
+
+.selected::before {
+  filter: brightness(90%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/path/to/selected.svg"); /* replace with your SVG file path */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .color-item {
+  position: relative;
   border-radius: 3px;
   width: 40px;
   height: 32px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    color: white;
+    width: 18px;
+  }
   &:hover {
     cursor: pointer;
   }

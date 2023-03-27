@@ -1,11 +1,14 @@
 <template>
   <div class="colors-container">
     <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
-      :class="`color-item color-item-${idx + 1}`"></div>
+      :class="['color-item', `color-item-${idx + 1}`, { selected: color === pickedColor }]"
+      v-html="(color === pickedColor ? getSvg('vPicked') : '')">
+    </div>
   </div>
 </template>
-
+<!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
 <script>
+import { svgService } from '../services/svg.service'
 export default {
   props: ['quantity'],
   name: 'ColorPicker',
@@ -70,6 +73,9 @@ export default {
     },
     onRemoveBoard(boardId) {
       this.$emit('onRemoveBoard', boardId)
+    },
+    getSvg(iconName) {
+      return svgService.getSvg(iconName)
     },
     setColor(color) {
       this.pickedColor = color
