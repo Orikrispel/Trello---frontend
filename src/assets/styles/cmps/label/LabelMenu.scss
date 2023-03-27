@@ -1,17 +1,12 @@
 .label-menu {
-  position: fixed;
   background-color: $secondary-clr1;
   display: flex;
   flex-direction: column;
-  top: 12em;
-  width: rem(304px);
-  right: -2.5em;
-  padding-inline: 1em;
-  padding-block: 1em;
   border-radius: 3px;
   max-height: 814px;
   overflow-x: hidden;
   overflow-y: auto;
+
   & * {
     font-size: 0.9em;
   }
@@ -27,7 +22,7 @@
     font-size: em(14px);
     opacity: 0.5;
 
-    & > * {
+    &>* {
       grid-row: 1;
     }
 

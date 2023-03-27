@@ -215,16 +215,19 @@ export const boardStore = {
         console.log('could not save task at the moment')
       }
     },
-    async loadCurrTask({ state, commit }, { taskId }) {
+    loadCurrTask({ state, commit }, { taskId }) {
       let board = state.currBoard
       let groups = board.groups
-      let currTask
-      groups.forEach((group) => {
-        let { tasks } = group
-        currTask = tasks.find((task) => task.id === taskId)
-      })
-      commit({ type: 'setCurrTask', task: currTask })
-      return currTask
+      let currTask = null;
+      for (const group of groups) {
+        let { tasks } = group;
+        currTask = tasks.find((task) => task.id === taskId);
+        if (currTask) {
+          commit({ type: 'setCurrTask', task: currTask });
+          break;
+        }
+      }
+      return currTask;
     },
     async setCurrLabel({ state, commit }, { labelId }) {
       let currLabel

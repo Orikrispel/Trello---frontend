@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "floating-vue": "^2.0.0-beta.20",
     "sass": "^1.53.0",
     "socket.io-client": "^4.5.1",
     "vue": "^3.2.37",
