@@ -84,7 +84,7 @@ export default {
     },
     getBoardBg(board) {
       if (!board.style?.imgUrls) return null
-      else return `url(${board.style?.imgUrls.raw})`
+      else return `url(${board.style?.imgUrls.thumb})`
     },
     addBoard(board) {
       this.$emit('addBoard', board)

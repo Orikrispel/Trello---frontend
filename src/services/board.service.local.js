@@ -1,7 +1,7 @@
 import { storageService } from './async-storage.service.js'
 import { colorItems, utilService } from './util.service.js'
 import { userService } from './user.service.js'
-
+import { unsplashService } from './unsplash.service.js'
 const BOARD_STORAGE_KEY = 'board'
 export const boardService = {
   query,
@@ -273,7 +273,7 @@ async function _createBoard(
     },
     style: {
       backgroundColor: _getBoardRandomColor(),
-      imgUrls: _getRandomPicture(),
+      imgUrls: { thumb: unsplashService.getRandomImg() },
     },
     labels,
     members: getDefaultMembers(),
