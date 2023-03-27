@@ -1,7 +1,7 @@
 <template>
   <div class="index-container container home">
-    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @setCreateMode="setCreateMode" />
-    <AddBoard @addBoard="addBoard" />
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
+    <!-- <AddBoard @addBoard="addBoard" /> -->
     <!-- <ChecklistList :checklists="checklists" /> -->
   </div>
 </template>
@@ -103,10 +103,10 @@ export default {
         showErrorMsg('Cannot update board')
       }
     },
-    setCreateMode() {
-      this.isCreateMode = !this.isCreateMode
-      console.log('isCreateMode', this.isCreateMode)
-    },
+    // setCreateMode() {
+    //   this.isCreateMode = !this.isCreateMode
+    //   console.log('isCreateMode', this.isCreateMode)
+    // },
     setBoardImg(imgUrls) {
       this.boardToAdd.style.imgUrl = imgUrls
     },

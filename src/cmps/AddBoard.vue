@@ -1,8 +1,8 @@
 <template>
-    <form @submit.prevent="addBoard" class="board-add-form" v-if="isCreateMode">
+    <form @submit.prevent="addBoard" class="board-add-form">
         <div class="add-form-header">
             <h5>Create Board</h5>
-            <p @click="setCreateMode">x</p>
+            <span class="icon btn-close icon-close" @click="closeModal"></span>
         </div>
         <div class="board-display" :style="{
             backgroundImage: 'url(' + pickedImg + ')', background: pickedColor,
@@ -33,7 +33,6 @@ export default {
     data() {
         return {
             boardToAdd: boardService.getEmptyBoard(),
-            isCreateMode: false,
             pickedColor: 'white',
             pickedImg: {},
         }
@@ -43,8 +42,9 @@ export default {
     },
     methods: {
         addBoard() {
+            if (!this.boardToAdd.title) return
             this.$emit('addBoard', this.boardToAdd)
-            this.isCreateMode = false
+            this.$emit('closeModal', false)
         },
         setBoardBgColor(color) {
             this.pickedImg = {}
@@ -52,8 +52,8 @@ export default {
             this.boardToAdd.style.imgUrls = {}
             this.boardToAdd.style.backgroundColor = color
         },
-        setCreateMode() {
-            this.isCreateMode = !this.isCreateMode
+        closeModal() {
+            this.$emit('closeModal', false)
         },
         setBoardImg(imgUrls) {
             this.pickedColor = 'null'
@@ -62,9 +62,9 @@ export default {
         }
     },
     created() {
-        eventBus.on('setCreateMode', (data) => {
-            this.isCreateMode = data
-        })
+        // eventBus.on('setCreateMode', (data) => {
+        //     this.isCreateMode = data
+        // })
     },
 
     components: {

@@ -21,8 +21,9 @@
         <h3>Your boards</h3>
       </div>
       <ul class="board-list">
-        <li class="new-board" @click="setCreateMode">
+        <li class="new-board" @click="isCreateMode = true">
           <p>Create new board</p>
+          <AddBoard v-show="isCreateMode" class="modal" @addBoard="addBoard" @closeModal="closeModal" />
         </li>
         <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
           'background-color': board.style?.backgroundColor || '#014a75',
@@ -40,10 +41,13 @@
 import { eventBus } from '../../services/event-bus.service'
 import { svgService } from '../../services/svg.service'
 import BoardPreview from '../board/BoardPreview.vue'
+import AddBoard from '../AddBoard.vue'
 export default {
   name: 'BoardList',
   data() {
-    return {}
+    return {
+      isCreateMode: false,
+    }
   },
   created() { },
   computed: {
@@ -55,6 +59,9 @@ export default {
     boards() {
       return this.$store.getters.boards
     },
+    getCreateMode() {
+      return this.isCreateMode
+    }
   },
   methods: {
     removeBoard(boardId) {
@@ -63,8 +70,11 @@ export default {
     starBoard(board) {
       this.$emit('starBoard', board)
     },
-    setCreateMode() {
-      eventBus.emit('setCreateMode', true)
+    closeModal(data) {
+      this.isCreateMode = false
+      console.log('this.isCreateMode', this.isCreateMode)
+      // this.isCreateMode = true
+      // eventBus.emit('closeModal', true)
     },
     showBoardDetails(boardId) {
       this.$router.push(`/board/${boardId}`)
@@ -76,10 +86,14 @@ export default {
       if (!board.style?.imgUrls) return null
       else return `url(${board.style?.imgUrls.raw})`
     },
+    addBoard(board) {
+      this.$emit('addBoard', board)
+    }
   },
 
   components: {
     BoardPreview,
+    AddBoard,
   },
 }
 </script>

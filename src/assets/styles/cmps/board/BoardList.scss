@@ -3,12 +3,12 @@
   margin: 40px 16px;
   display: flex;
   flex-direction: column;
-  gap: 43px;
+  gap: 45px;
   h3 {
     padding: 6px;
     font-size: 16px;
     color: $font-clr0;
-    margin: 0;
+    margin-bottom: 5px;
   }
 
   .boards-header {
@@ -24,7 +24,7 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0px;
-  gap: 15px;
+  gap: 16px;
   margin: 0px;
 
   li {
@@ -35,7 +35,7 @@
     height: 96px;
     border-radius: 3px;
     overflow: hidden;
-    &:hover {
+    &:hover:not(.new-board) {
       cursor: pointer;
       filter: brightness(90%);
     }
@@ -59,6 +59,8 @@
 }
 
 .board-list .new-board {
+  position: relative;
+  overflow: visible;
   background-color: $secondary-clr6;
   text-align: center;
   display: flex;
@@ -70,5 +72,71 @@
     color: $font-clr0;
     font-size: 0.9rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #091e4214;
+  }
+}
+
+.board-add-form {
+  // fix to pixel perfect
+  right: -175%;
+  z-index: 10;
+  position: absolute;
+  display: flex;
+  color: $font-clr3;
+  padding-left: 10px;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: $action-modal-shadow;
+  padding: 20px;
+
+  label {
+    margin: 0;
+    font-size: em(14px);
+    font-weight: 700;
+  }
+
+  input {
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    box-shadow: $input-shadow;
+    outline: none;
+    padding: 8px 12px;
+    width: 100%;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+
+    &:hover {
+      filter: brightness(120%);
+      background-color: $primary-clr1;
+      color: $secondary-clr2;
+      cursor: pointer;
+    }
+  }
+
+  p {
+    &:hover {
+      color: $font-clr3;
+      cursor: pointer;
+    }
+  }
+
+  .board-display {
+    margin: 30px;
+    width: 220px;
+    height: 120px;
+    border-radius: 5px;
+    box-shadow: $board-display-shadow;
   }
 }

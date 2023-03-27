@@ -16,7 +16,6 @@ async function getImgs(query = 'israel', count = 4) {
     try {
         const savedImgs = utilService.loadFromStorage(UNSPLASH_KEY)
         if (savedImgs) {
-            console.log('savedImgs', savedImgs)
             return savedImgs
         }
         const imgs = await axios.get(URL)
