@@ -1,7 +1,8 @@
 <template>
     <div class="img-picker-container">
-        <img :src="imgUrl.thumb" class="img-picker-item" v-for="(imgUrl, index) in imgUrls" :key="index"
-            @click="setImg(imgUrls[index])" />
+        <img :src="imgUrl.thumb" v-for="(imgUrl, idx) in imgUrls" :key="idx" @click="setImg(imgUrls[idx])"
+            :class="['img-picker-item', `img-picker-item-${idx + 1}`, { selected: imgUrls[idx] === selectedImgUrls }]"
+            v-html="(imgUrls[idx] === selectedImgUrls ? getSvg('vPicked') : '')" />
     </div>
 </template>
 
@@ -27,6 +28,9 @@ export default {
         setImg(imgUrls) {
             this.selectedImgUrls = imgUrls
             this.$emit('onSetBoardImg', imgUrls)
+        },
+        getSvg(iconName) {
+            return svgService.getSvg(iconName)
         },
 
     },
