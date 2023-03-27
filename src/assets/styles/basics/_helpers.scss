@@ -191,23 +191,7 @@
 }
 
 .icon-edit:before {
-  content: "\e928";
-}
-
-.modal-overlay {
-  cursor: auto;
-  background-color: #0000002d;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-
-  transition: all 0.3s;
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  margin: 0;
-  padding: 0;
+  content: '\e928';
 }
 
 .list-style-none {
