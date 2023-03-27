@@ -7,11 +7,11 @@
     @mouseover="getLabelStyle"
     @mouseout="getLabelStyle">
     <span>
-      <span
+      <!-- <span
         :style="{
           'background-color': labelCircleClr,
         }"
-        class="label-circle"></span>
+        class="label-circle"></span> -->
       {{ label.title }}</span
     >
   </div>
