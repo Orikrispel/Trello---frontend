@@ -375,7 +375,7 @@ async function _createBoard() {
   return board
 }
 
-export const demoBoard = {
+export const demoBoards = [{
   _id: '',
   title: 'Robot dev proj',
   isStarred: false,
@@ -523,7 +523,145 @@ export const demoBoard = {
   ],
 
   cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
-}
+},
+{
+  _id: '',
+  title: 'Sprint 4 - Tasks',
+  isStarred: false,
+  archivedAt: 1589983468418,
+  createdBy: {
+    _id: 'u102',
+    fullname: 'Amit Cohen',
+    imgUrl: '',
+  },
+  style: {},
+  labels: getDefaultEmptyLabels(),
+  members: [
+    {
+      _id: 'u101',
+      fullname: 'Idan Amedi',
+      imgUrl: '',
+    },
+  ],
+  groups: [
+    {
+      id: 'g1011',
+      title: 'Group 1',
+      type: 'container',
+      props: {
+        orientation: 'vertical',
+      },
+      archivedAt: 1589983468418,
+      tasks: [
+        {
+          id: 'c1011',
+          title: 'End QA',
+          type: 'draggable',
+          loading: false,
+          cover: {},
+        },
+        {
+          id: 'c1021',
+          title: 'Start Backend',
+          type: 'draggable',
+          loading: false,
+          cover: {},
+        },
+      ],
+      style: {},
+    },
+    {
+      id: 'g1025',
+      title: 'Group 2',
+      type: 'container',
+      props: {
+        orientation: 'vertical',
+      },
+      tasks: [
+        {
+          id: 'c1031',
+          title: 'Do that',
+          archivedAt: 1589983468418,
+          type: 'draggable',
+          loading: false,
+          cover: {},
+          labels: [
+            { id: '', txt: 'urgent', bgc: '' },
+            { txt: 'backend', bgc: '' },
+          ],
+        },
+        {
+          id: 'c1041',
+          title: 'Finish Checklists',
+          status: 'in-progress', // monday
+          priority: 'high',
+          description: 'description',
+          type: 'draggable',
+          loading: false,
+          comments: [
+            {
+              id: 'ZdPnmvvv',
+              txt: 'let yaron biton to cr this horrible code',
+              createdAt: 1590999817436,
+              byMember: {
+                _id: 'u101',
+                fullname: 'Yohai Korem',
+                imgUrl:
+                  'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'YEhmF',
+              title: 'Checklist',
+              todos: [
+                {
+                  id: '212jXddd',
+                  title: 'To Do 1',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          memberIds: ['u1012'],
+          labelIds: ['l1012', 'l1022'],
+          dueDate: 16156215211,
+          byMember: {
+            _id: 'u1011',
+            username: 'Tal',
+            fullname: 'Ori Teicher',
+            imgUrl:
+              'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+          },
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+      ],
+      style: {},
+    },
+  ],
+  activities: [
+    {
+      id: 'a10111',
+      txt: 'Changed Color',
+      createdAt: 154514,
+      byMember: {
+        _id: 'u101ddd',
+        fullname: 'Abi Abambi',
+        imgUrl: 'http://some-img',
+      },
+      task: {
+        id: 'c1011sss',
+        title: 'Replace Logo',
+      },
+    },
+  ],
+
+  cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
+},
+]
 
 // TEST DATA
 // ;(async ()=>{

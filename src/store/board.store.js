@@ -1,5 +1,5 @@
 // import { boardService } from '../services/board.service.local'
-import { boardService, demoBoard } from '../services/board.service.local'
+import { boardService, demoBoards } from '../services/board.service.local'
 import { utilService } from '../services/util.service'
 export function getActionRemoveBoard(boardId) {
   return {
@@ -86,8 +86,8 @@ export const boardStore = {
     makeId() {
       return utilService.makeId()
     },
-    demoBoard() {
-      return demoBoard
+    demoBoards() {
+      return demoBoards
     },
     currTask({ currTask }) {
       return currTask
