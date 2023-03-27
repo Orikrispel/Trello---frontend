@@ -1,5 +1,9 @@
 <template>
-  <div v-if="board" class="board-container main flex column">
+  <div v-if="board" class="board-container main flex column" :style="{
+    'background-color': board.style?.backgroundColor || '#333',
+    backgroundImage: getBoardBg(board) || 'none',
+    backgroundSize: 'cover',
+  }">
     <header class="board-header flex align-center justify-between gap">
       <div class="flex gap">
         <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
@@ -66,6 +70,7 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
+    console.log('this.board', this.board.style.imgUrls)
   },
   computed: {
     loggedInUser() {
@@ -78,6 +83,7 @@ export default {
     isStarred() {
       return this.board.isStarred
     },
+
   },
   methods: {
     onAddGroup() {
@@ -90,6 +96,10 @@ export default {
       this.groupToAdd = this.$store.getEmptyGroup
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
+    },
+    getBoardBg(board) {
+      if (!board.style?.imgUrls) return null
+      else return `url(${board.style?.imgUrls.raw})`
     },
     async updateBoard(board) {
       try {

@@ -1,8 +1,8 @@
 .board-container {
-  background-image: linear-gradient(43deg,
-      #4158d0 0%,
-      #c850c0 46%,
-      #ffcc70 100%);
+  // background-image: linear-gradient(43deg,
+  //     #4158d0 0%,
+  //     #c850c0 46%,
+  //     #ffcc70 100%);
 
   // overflow-x: auto;
   // white-space: nowrap;
@@ -72,7 +72,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      &>button {
+      & > button {
         width: 100%;
         padding: 12px;
         justify-content: start;
@@ -112,10 +112,10 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #C8C3CD;
+  background-color: #c8c3cd;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #DDDAE0;
+  background-color: #dddae0;
   border-radius: 5px;
 }

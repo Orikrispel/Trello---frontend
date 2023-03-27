@@ -242,7 +242,7 @@ function getDefaultMembers() {
   ]
 }
 
-async function _createBoards(amount = 30) {
+async function _createBoards(amount = 20) {
   let boards = []
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
@@ -273,7 +273,7 @@ async function _createBoard(
     },
     style: {
       backgroundColor: _getBoardRandomColor(),
-      imgUrls: { thumb: unsplashService.getRandomImg() },
+      imgUrls: unsplashService.getRandomImg(),
     },
     labels,
     members: getDefaultMembers(),
