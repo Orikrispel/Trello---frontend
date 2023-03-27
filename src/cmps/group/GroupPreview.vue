@@ -1,15 +1,8 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div
-        v-show="!isEditGroupTitle"
-        class="prevent-title-edit"
-        @click="onFocusGroupTitle"></div>
-      <h2
-        class="group-title fs14"
-        ref="groupTitle"
-        @blur="updateGroupTitle"
-        contenteditable="true">
+      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
+      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
         {{ group.title }}
       </h2>
 
@@ -41,21 +34,11 @@
     </header>
 
     <main class="tasks-wrapper">
-      <Container
-        class="task-list"
-        :get-child-payload="getGroupPayload(group.id)"
-        @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items"
-        :shouldAcceptDrop="(e) => e.groupName === 'col-items'"
-        drag-class="card-ghost"
-        drop-class="card-ghost-drop"
-        :drop-placeholder="dropPlaceholderOptions">
-        <Draggable
-          class="task-container"
-          @click="handleTaskDetails(task.id)"
-          v-for="task in group.tasks"
-          :key="task.id">
-          <TaskPreview :task="task" />
+      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
+        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
+        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
+          <TaskPreview :task="task" @click="openTaskDetails(task.id)" />
         </Draggable>
       </Container>
 
@@ -63,12 +46,7 @@
         <span class="icon icon-add"></span> add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea
-          class="task-container"
-          ref="taskTitle"
-          name="add-task"
-          cols="30"
-          rows="3"
+        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">
@@ -78,6 +56,7 @@
     </main>
   </section>
 </template>
+
 
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -193,7 +172,7 @@ export default {
       this.$refs.groupTitle.focus()
       this.isEditGroupTitle = !this.isEditGroupTitle
     },
-    handleTaskDetails(taskId) {
+    openTaskDetails(taskId) {
       this.$router.push(`/board/${this.board._id}/task/${taskId}`)
     },
     toggleGroupMenu() {

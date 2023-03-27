@@ -1,5 +1,5 @@
 <template>
-  <div class="wrraper modal-overlay flex" @click="closeTaskDetails">
+  <div class="modal-overlay flex" @click="closeTaskDetails">
     <section class="task-details" @click.stop>
       <header v-if="task.cover" class="task-cover">
         <RouterLink :to="`/board/${boardId}`" class="btn-close">
@@ -159,8 +159,6 @@
             <button v-if="!task.cover">
               <span class="icon icon-small card-cover-icon"></span>Cover
             </button>
-
-
           </aside>
         </div>
       </div>
@@ -202,7 +200,6 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-    console.log('task:', task)
     if (!task) {
       task = this.$store.getters.emptyTask
     }
@@ -225,7 +222,6 @@ export default {
       console.log(this.task)
     },
     async saveTask(task) {
-      console.log('hi')
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
