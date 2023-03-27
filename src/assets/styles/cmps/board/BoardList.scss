@@ -90,14 +90,27 @@
   align-items: flex-start;
   flex-direction: column;
   background-color: #fff;
-  border-radius: 3px;
   box-shadow: $action-modal-shadow;
-  padding: 20px;
-
+  padding: 10px;
+  .background-label {
+    margin-top: 15px;
+  }
+  span {
+    font-size: 14px;
+  }
+  .board-title-label {
+    margin-top: 15px;
+  }
   label {
     margin: 0;
     font-size: em(14px);
     font-weight: 700;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  .picked {
+    filter: brightness(90%);
   }
 
   input {
@@ -106,7 +119,7 @@
     border-radius: 3px;
     box-shadow: $input-shadow;
     outline: none;
-    padding: 8px 12px;
+    padding: 10px 12px;
     width: 100%;
   }
 
@@ -133,13 +146,30 @@
   }
 
   .board-display {
+    margin: auto;
+    margin-top: 10px;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px;
-    width: 220px;
+    width: 200px;
     height: 120px;
     border-radius: 5px;
-    box-shadow: $board-display-shadow;
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.15);
+    margin-bottom: 5px;
   }
+
+  h2 {
+    margin: auto;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #5e6c84;
+  }
+}
+
+.add-form-header {
+  padding-bottom: 6px;
 }

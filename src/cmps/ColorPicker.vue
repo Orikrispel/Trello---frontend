@@ -1,9 +1,6 @@
 <template>
   <div class="colors-container">
-    <div
-      @click="setColor(color)"
-      v-for="(color, idx) in colorsForDisplay"
-      :key="idx"
+    <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
       :class="`color-item color-item-${idx + 1}`"></div>
   </div>
 </template>
@@ -58,15 +55,15 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {},
+    loggedInUser() { },
     colorsForDisplay() {
       let { quantity } = this.$props
       return this.colorItems.filter((item, idx) => {
-        if (idx <= quantity -1) return item
+        if (idx <= quantity - 1) return item
       })
     },
   },
-  created() {},
+  created() { },
   methods: {
     onStarBoard(board) {
       this.$emit('starBoard', board)

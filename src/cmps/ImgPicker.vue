@@ -7,6 +7,7 @@
 
 <script>
 import { unsplashService } from '../services/unsplash.service'
+import { svgService } from '../services/svg.service'
 export default {
     name: 'ImgPicker',
     data() {
@@ -21,6 +22,7 @@ export default {
     async mounted() {
         this.imgUrls = await unsplashService.getImgs('japan', 4)
     },
+
     methods: {
         setImg(imgUrls) {
             this.selectedImgUrls = imgUrls
