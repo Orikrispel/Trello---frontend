@@ -8,8 +8,8 @@
           <Router-Link to="/board" class="btn btn-blue">Start demo</Router-link>
         </div>
         <img class="intro-img" src="../../src/assets/imgs/homepage/homepage-2.png">
-        <div class="divider" v-html="getSvg('divider')"></div>
       </div>
+      <div class="divider" v-html="getSvg('divider')"></div>
     </section>
   </main>
 </template>
