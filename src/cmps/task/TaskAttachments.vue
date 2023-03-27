@@ -1,53 +1,53 @@
 <template>
-    <section class="task-attachments">
-        <p> {{ getChecklistStatus }}</p>
-        <p> {{ getMembers }}</p>
-    </section>
+  <section class="task-attachments">
+    <p>{{ getChecklistStatus }}</p>
+    <p>{{ getMembers }}</p>
+  </section>
 </template>
 
 <script>
-import { eventBus } from '../../services/event-bus.service';
+import { eventBus } from '../../services/event-bus.service'
 export default {
-    name: 'TaskAttachments',
-    props: {
-        task: {
-            type: Object,
-            required: true,
-        }
+  name: 'TaskAttachments',
+  props: {
+    task: {
+      type: Object,
+      required: true,
     },
-    data() {
-        return {
-            currTask: null,
-        }
-    },
-    created() {
-        eventBus.on('updateTask', (task) => {
-            this.getCurrTask(task)
-        })
-    },
-    methods: {
-        getCurrTask(task) {
-            this.currTask = task
-        }
-    },
-    computed: {
-        getChecklistStatus() {
-            let count = 0
-            let counter = 0
-            if (!this.task.checklists || this.task.checklists.length === 0) return
-            this.task.checklists.forEach((checklist) => {
-                checklist.todos.forEach((todo) => {
-                    if (todo.isDone) count++
-                    counter++
-                })
-            })
-            return `${count}/${counter}`
-        },
-        getMembers() {
-            if (!this.task.members) return
-            const members = this.task.members.map(member => member.fullname)
-            return `${members}`
-        }
+  },
+  data() {
+    return {
+      currTask: null,
     }
+  },
+  created() {
+    eventBus.on('updateTask', (task) => {
+      this.getCurrTask(task)
+    })
+  },
+  methods: {
+    getCurrTask(task) {
+      this.currTask = task
+    },
+  },
+  computed: {
+    getChecklistStatus() {
+      let count = 0
+      let counter = 0
+      if (!this.task.checklists || this.task.checklists.length === 0) return
+      this.task.checklists.forEach((checklist) => {
+        checklist.todos.forEach((todo) => {
+          if (todo.isDone) count++
+          counter++
+        })
+      })
+      return `${count}/${counter}`
+    },
+    getMembers() {
+      if (!this.task.members) return
+      const members = this.task.members.map((member) => member.fullname)
+      return `${members}`
+    },
+  },
 }
 </script>
