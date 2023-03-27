@@ -10,11 +10,9 @@
 }
 
 .selected::before {
-  filter: brightness(90%);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("/path/to/selected.svg"); /* replace with your SVG file path */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

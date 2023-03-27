@@ -1,6 +1,6 @@
 <template>
   <div class="colors-container">
-    <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
+    <div @blur="handleBlur" @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
       :class="['color-item', `color-item-${idx + 1}`, { selected: color === pickedColor }]"
       v-html="(color === pickedColor ? getSvg('vPicked') : '')">
     </div>

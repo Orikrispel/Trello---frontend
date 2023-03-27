@@ -1,6 +1,7 @@
 <template>
     <div class="img-picker-container">
-        <img :src="imgUrl.thumb" v-for="(imgUrl, idx) in imgUrls" :key="idx" @click="setImg(imgUrls[idx])"
+        <div :style="{ 'background': 'url(' + imgUrl.thumb + ')', 'background-size': 'cover' }"
+            v-for="(imgUrl, idx) in imgUrls" :key="idx" @click="setImg(imgUrls[idx])"
             :class="['img-picker-item', `img-picker-item-${idx + 1}`, { selected: imgUrls[idx] === selectedImgUrls }]"
             v-html="(imgUrls[idx] === selectedImgUrls ? getSvg('vPicked') : '')" />
     </div>
