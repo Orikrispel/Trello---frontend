@@ -1,22 +1,13 @@
 <template>
-  <div class="members-list-container">
-    <input
-      v-model="filterBy"
-      type="text"
-      placeholder="Search members"
-      @input="searchMembers"
-      name="members-search" />
-    <div class="members-container">
-      <h5>Board members</h5>
-      <ul class="clean-list">
-        <li
-          @click="addMemberToTask(member._id)"
-          v-for="member in members"
-          :key="member._id">
-          <MemberPreview :member="member" />
-        </li>
-      </ul>
-    </div>
+  <div class="members-list-container ">
+    <input v-model="filterBy" type="text" placeholder="Search members" @input="searchMembers" name="members-search" />
+    <h4>Board members</h4>
+    <ul class="clean-list">
+      <li @click="addMemberToTask(member._id)" v-for="member in members" :key="member._id">
+        <MemberPreview :member="member" />
+      </li>
+    </ul>
+
   </div>
 </template>
 <script>

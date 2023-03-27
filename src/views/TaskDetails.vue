@@ -263,7 +263,6 @@ export default {
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
-      console.log('this.task.description:', this.task.description)
       // this.$refs.taskDesc.focus()
     },
     handleComment() {
@@ -323,12 +322,6 @@ export default {
         const { taskId, boardId } = this.$route.params
         let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
         this.task = task
-      },
-      immediate: true,
-    },
-    task: {
-      async handler() {
-        console.log('task.description:', this.task.description)
       },
       immediate: true,
     },

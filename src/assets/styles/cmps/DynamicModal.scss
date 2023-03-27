@@ -1,7 +1,5 @@
 .modal-container {
-  padding: 0 12px 0;
-  top: 40px;
-  right: -100%;
+  padding: 0 12px 12px 12px;
   border-radius: 3px;
   box-shadow: 0 8px 16px -4px $btn-hover-clr1;
   background-color: $secondary-clr1;
@@ -16,6 +14,7 @@
     overflow: hidden;
     padding: 0 32px;
     position: relative;
+    margin-bottom: 8px;
 
     h3 {
       font-size: rem(14px);

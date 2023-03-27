@@ -1,7 +1,7 @@
 <template>
   <section class="task-attachments">
-    <!-- <p>{{ getChecklistStatus }}</p>
-    <p>{{ getMembers }}</p> -->
+    <p>{{ getChecklistStatus }}</p>
+    <p>{{ getMembers }}</p>
   </section>
 </template>
 
