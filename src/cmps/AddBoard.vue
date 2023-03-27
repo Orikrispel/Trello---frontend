@@ -15,7 +15,8 @@
             <ImgPicker @onSetBoardImg="setBoardImg" />
             <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
         </div>
-        <label for="board-title" class="board-title-label">Board title</label>
+        <label for="board-title" class="board-title-label">Board title<span v-if="!boardToAdd.title"
+                class="required-field">*</span></label>
         <input name="board-title" type="text" v-model="boardToAdd.title" />
         <button type="submit">Create</button>
     </form>
@@ -69,9 +70,9 @@ export default {
         }
     },
     created() {
-        // eventBus.on('setCreateMode', (data) => {
-        //     this.isCreateMode = data
-        // })
+        eventBus.on('setPickerOff', (task) => {
+            this.saveTask(task)
+        })
     },
 
     components: {

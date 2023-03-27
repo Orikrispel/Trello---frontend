@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { eventBus } from '../services/event-bus.service'
 import { unsplashService } from '../services/unsplash.service'
 import { svgService } from '../services/svg.service'
 export default {
@@ -27,13 +28,25 @@ export default {
 
     methods: {
         setImg(imgUrls) {
+            eventBus.emit('onImgChange')
             this.selectedImgUrls = imgUrls
             this.$emit('onSetBoardImg', imgUrls)
         },
         getSvg(iconName) {
             return svgService.getSvg(iconName)
         },
+        clearSelection() {
+            this.selectedImgUrls = {}
+            document.querySelectorAll('.img-picker-item.selected').forEach((el) => {
+                el.classList.remove('selected')
+            })
+        }
 
+    },
+    created() {
+        eventBus.on('onColorChange', () => {
+            this.clearSelection()
+        });
     },
     emits: ['setColor', 'onSetBoardImg']
 }

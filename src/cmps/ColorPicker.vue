@@ -8,6 +8,7 @@
 </template>
 <!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
 <script>
+import { eventBus } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
 export default {
   props: ['quantity'],
@@ -66,7 +67,6 @@ export default {
       })
     },
   },
-  created() { },
   methods: {
     onStarBoard(board) {
       this.$emit('starBoard', board)
@@ -78,16 +78,22 @@ export default {
       return svgService.getSvg(iconName)
     },
     setColor(color) {
+      eventBus.emit('onColorChange')
       this.pickedColor = color
       this.$emit('setColor', color)
     },
-    getCurrentTime() {
-      const timestamp = Date.now();
-      const date = new Date(timestamp);
-      const dateString = date.toLocaleString();
-      return dateString
+    clearSelection() {
+      this.pickedColor = ''
+      document.querySelectorAll('.color-item.selected').forEach((el) => {
+        el.classList.remove('selected')
+      })
     }
 
+  },
+  created() {
+    eventBus.on('onImgChange', () => {
+      this.clearSelection()
+    });
   },
   emits: ['setColor'],
 }

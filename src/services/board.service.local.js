@@ -1,7 +1,7 @@
 import { storageService } from './async-storage.service.js'
 import { colorItems, utilService } from './util.service.js'
 import { userService } from './user.service.js'
-
+import { unsplashService } from './unsplash.service.js'
 const BOARD_STORAGE_KEY = 'board'
 export const boardService = {
   query,
@@ -141,6 +141,12 @@ function getRandomLabels(amount = 4) {
   return labels
 }
 
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
   return {
     id: utilService.makeId(),
@@ -148,7 +154,21 @@ function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
     color: colorItems[idx],
   }
 }
-
+function _getBoardRandomColor() {
+  const colorItems =
+    ['#7bc86c',
+      ' #ffaf3f',
+      '#ef7564',
+      '#cd8de5',
+      '#172b4d',
+      '#5ba4cf',
+      ' #505f79',
+      ' #cf513d',
+      '#5ba4cf',
+      ' #5aac44',
+    ]
+  return colorItems[getRandomIntInclusive(0, 8)]
+}
 function getDefaultEmptyLabel() {
   return {
     id: '',
@@ -222,13 +242,19 @@ function getDefaultMembers() {
   ]
 }
 
-async function _createBoards(amount = 30) {
+async function _createBoards(amount = 20) {
   let boards = []
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
 
   return boards
+}
+
+function randomStarBoard() {
+  const num = getRandomIntInclusive(1, 4)
+  if (num === 4) return true
+  return false
 }
 
 async function _createBoard(
@@ -238,14 +264,17 @@ async function _createBoard(
   let board = {
     _id: '',
     title,
-    isStarred: false,
+    isStarred: randomStarBoard(),
     archivedAt: 1589983468418,
     createdBy: {
       _id: 'u101',
       fullname: 'Yohai Korem',
       imgUrl: 'http://some-img',
     },
-    style: {},
+    style: {
+      backgroundColor: _getBoardRandomColor(),
+      imgUrls: unsplashService.getRandomImg(),
+    },
     labels,
     members: getDefaultMembers(),
     groups: [

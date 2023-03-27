@@ -8,6 +8,7 @@ const UNSPLASH_KEY = 'unsplashDB'
 
 export const unsplashService = {
     getImgs,
+    getRandomImg,
 }
 
 
@@ -28,7 +29,29 @@ async function getImgs(query = 'israel', count = 4) {
     }
 }
 
-function getRandomImg() {
 
+
+function getRandomImg() {
+    const imgs = [
+        {
+            thumb: 'https://images.unsplash.com/photo-1528164344705-47542687000d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw0fHxqYXBhbnxlbnwwfHx8fDE2Nzk5MjU5MjU&ixlib=rb-4.0.3&q=80&w=200',
+            raw: "https://images.unsplash.com/photo-1528164344705-47542687000d?ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw0fHxqYXBhbnxlbnwwfHx8fDE2Nzk5MjU5MjU&ixlib=rb-4.0.3",
+        },
+        {
+            thumb: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwyfHxqYXBhbnxlbnwwfHx8fDE2Nzk5MjU5MjU&ixlib=rb-4.0.3&q=80&w=200',
+            raw: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwyfHxqYXBhbnxlbnwwfHx8fDE2Nzk5MjU5MjU&ixlib=rb-4.0.3',
+
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+    ]
+    return imgs[utilService.getRandomIntInclusive(0, imgs.length - 1)]
 }
 
