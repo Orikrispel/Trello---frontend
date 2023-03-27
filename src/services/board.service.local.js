@@ -45,7 +45,6 @@ async function remove(boardId) {
 async function save(board, key = BOARD_STORAGE_KEY) {
   var savedBoard
   if (board._id) {
-    console.log(board)
     savedBoard = await storageService.put(key, board)
   } else {
     // Later, owner is set by the backend
@@ -125,12 +124,13 @@ function getRandomTask(
   description = utilService.getRandomTaskDesc(),
   labels = getRandomLabels()
 ) {
-  return getEmptyTask(
+  let res = getEmptyTask(
     title,
     description,
-    labels,
-    getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+    [labels],
+    [getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]]
   )
+  return res
 }
 
 function getRandomLabels(amount = 4) {
@@ -222,7 +222,7 @@ function getDefaultMembers() {
   ]
 }
 
-async function _createBoards(amount = 7) {
+async function _createBoards(amount = 30) {
   let boards = []
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
@@ -283,7 +283,7 @@ async function _createBoard(
         tasks: [
           getRandomTask(
             undefined,
-            undefined,
+            utilService.getRandomTaskDesc(),
             labels[utilService.getRandomIntInclusive(0, labels.length)]
           ),
           {
