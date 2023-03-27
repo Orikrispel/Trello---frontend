@@ -68,6 +68,7 @@ function makeLorem(size = 100) {
   return txt
 }
 
+
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -310,4 +311,6 @@ export const applyDrag = (arr, dragResult) => {
   }
 
   return result
+
+
 }
