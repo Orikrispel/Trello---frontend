@@ -1,14 +1,23 @@
 .members-list-container {
   background-color: $secondary-clr2;
-  display: flex;
-  flex-direction: column;
-  width: 16.5em;
-  right: 0.5em;
-  padding: 0.5em;
-  gap: 0.5em;
 
   input {
+    margin: 4px 0 0;
     border: none;
     box-shadow: $input-shadow;
+
+    &:focus {
+      background-color: $secondary-clr1;
+      box-shadow: inset 0 0 0 2px $primary-clr4;
+      border: none;
+      outline: none;
+    }
+  }
+
+  h4 {
+    font-size: rem(12px);
+    color: $font-clr3;
+    line-height: 16px;
+    margin-top: 16px;
   }
 }

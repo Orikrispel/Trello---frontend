@@ -1,12 +1,20 @@
 .member-preview {
   cursor: pointer;
   display: flex;
+  align-items: center;
+  padding: 4px;
+  margin-bottom: 2px;
+  gap: 1em;
 
   &:hover {
     background-color: darken($color: $secondary-clr1, $amount: 10);
   }
 
-  & > * {
+  .member-img {
     padding: 0.5em;
+    border-radius: 25em;
+    object-fit: cover;
+    height: 32px;
+    width: 32px;
   }
 }

@@ -8,8 +8,8 @@
 }
 
 html {
-  font-family: 'Segoe UI Regular';
-  line-height: 1.6;
+  font-family: 'Segoe-UI';
+  line-height: 20px;
   color: $primary-clr2;
 }
 
@@ -54,6 +54,7 @@ button {
 }
 
 input {
+  border-radius: 3px;
   padding: 8px 12px;
 }
 
@@ -65,8 +66,9 @@ i {
   font-family: trellicons;
 }
 
-textarea {
-  font-family: 'Segoe UI Regular';
+textarea,
+input {
+  font-family: 'Segoe-UI';
   width: 100%;
   border: none;
   outline: none;
