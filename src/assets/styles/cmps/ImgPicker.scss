@@ -1,11 +1,11 @@
 .img-picker-container {
   display: flex;
-  gap: 11.5px;
-  padding-bottom: 5px;
+  gap: 7.5px;
+  margin-bottom: 8px;
   .img-picker-item {
     display: flex;
     border-radius: 3px;
-    width: 60px;
+    width: 65px;
     height: 40px;
     &:hover {
       cursor: pointer;

@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="addBoard" class="board-add-form">
         <div class="add-form-header">
-            <h5>Create Board</h5>
+            <h2>Create Board</h2>
             <span class="icon btn-close icon-close" @click.stop="closeModal"></span>
         </div>
         <div class="board-display" :style="{
@@ -10,10 +10,12 @@
         }">
             <i v-html="getSvg('boardToDisplay')"></i>
         </div>
-        <label for="color-picker">Background</label>
-        <ImgPicker @onSetBoardImg="setBoardImg" />
-        <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
-        <label for="board-title">Board title</label>
+        <label for="color-picker" class="background-label">Background</label>
+        <div class="picker-cmps">
+            <ImgPicker @onSetBoardImg="setBoardImg" />
+            <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
+        </div>
+        <label for="board-title" class="board-title-label">Board title</label>
         <input name="board-title" type="text" v-model="boardToAdd.title" />
         <button type="submit">Create</button>
     </form>
