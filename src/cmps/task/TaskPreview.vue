@@ -1,10 +1,11 @@
-
 <template>
   <section v-if="task" class="task-preview">
-    <button class="clean-btn btn-menu"><span class="icon icon-edit" @click="openTaskOptions"></span></button>
+    <button class="clean-btn btn-menu">
+      <span class="icon icon-edit" @click="openTaskOptions"></span>
+    </button>
     <span class="task-title fs14">{{ task.title }}</span>
     <span class="todo-attachments">
-      <TaskAttachments :task="task" />
+      <!-- <TaskAttachments :task="task" /> -->
     </span>
   </section>
 </template>
@@ -16,11 +17,9 @@ export default {
   name: 'TaskPreview',
   props: ['task'],
   data() {
-    return {
-    }
+    return {}
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
@@ -28,6 +27,6 @@ export default {
   },
   components: {
     TaskAttachments,
-  }
+  },
 }
 </script>
