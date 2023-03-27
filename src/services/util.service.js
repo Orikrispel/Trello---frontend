@@ -11,6 +11,7 @@ export const utilService = {
   getRandomProjectNames,
   getRandomTaskDesc,
   getBoardRandomColor,
+  getCurrentDate,
 }
 
 function makeId(length = 6) {
@@ -218,6 +219,15 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
   return projNames[idx]
 }
 
+function getCurrentDate() {
+  const today = new Date();
+  const day = today.getDate().toString().padStart(2, '0');
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const year = today.getFullYear().toString();
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate
+}
+
 function getBoardRandomColor() {
   const colorItems = [
     '#7bc86c',
@@ -311,6 +321,7 @@ export const applyDrag = (arr, dragResult) => {
   }
 
   return result
+
 
 
 }

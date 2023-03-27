@@ -1,6 +1,6 @@
 <template>
-  <div class="colors-container">
-    <div @blur="handleBlur" @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
+  <div class="colors-container" ref="container">
+    <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
       :class="['color-item', `color-item-${idx + 1}`, { selected: color === pickedColor }]"
       v-html="(color === pickedColor ? getSvg('vPicked') : '')">
     </div>
@@ -81,6 +81,13 @@ export default {
       this.pickedColor = color
       this.$emit('setColor', color)
     },
+    getCurrentTime() {
+      const timestamp = Date.now();
+      const date = new Date(timestamp);
+      const dateString = date.toLocaleString();
+      return dateString
+    }
+
   },
   emits: ['setColor'],
 }
