@@ -181,13 +181,25 @@
                 </DynamicModal>
               </template>
             </VDropdown>
+            <VDropdown :distance="6">
+              <button>
+                <span
+                  class="icon icon-small time-icon"
+                  v-html="getSvg('watch')"></span
+                >Dates
+              </button>
 
-            <button>
-              <span
-                class="icon icon-small time-icon"
-                v-html="getSvg('watch')"></span
-              >Dates
-            </button>
+              <template #popper>
+                <DynamicModal>
+                  <template v-slot:title>Dates</template>
+
+                  <template v-slot scope="props">
+                    <DatePicker />
+                  </template>
+                </DynamicModal>
+              </template>
+            </VDropdown>
+
             <button>
               <span class="icon icon-small attachments-icon"></span>Attachment
             </button>
@@ -208,6 +220,7 @@ import {
   showSuccessMsg,
 } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
+import DatePicker from '../cmps/dates/DatePicker.vue'
 import MembersList from '../cmps/members/MembersList.vue'
 import MemberPreview from '../cmps/members/MemberPreview.vue'
 import LabelMenu from '../cmps/label/LabelMenu.vue'
@@ -327,6 +340,7 @@ export default {
     MembersList,
     MemberPreview,
     ChecklistList,
+    DatePicker,
     DynamicModal,
   },
 }
