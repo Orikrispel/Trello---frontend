@@ -1,8 +1,8 @@
 import { storageService } from './async-storage.service.js'
-import { utilService } from './util.service.js'
+import { colorItems, utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
-const STORAGE_KEY = 'board'
+const BOARD_STORAGE_KEY = 'board'
 export const boardService = {
   query,
   getById,
@@ -15,15 +15,13 @@ export const boardService = {
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
   getDefaultMembers,
+  colorItems,
 }
 window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
-  var boards = await storageService.query(STORAGE_KEY)
-  if (!boards || !boards.length) {
-    _createBoard()
-  }
-
+  let boards = await storageService.query(BOARD_STORAGE_KEY)
+  if (!boards || !boards.length) boards = _createBoards()
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boards.filter(
@@ -37,21 +35,22 @@ async function query(filterBy = { txt: '', price: 0 }) {
 }
 
 function getById(boardId) {
-  return storageService.get(STORAGE_KEY, boardId)
+  return storageService.get(BOARD_STORAGE_KEY, boardId)
 }
 
 async function remove(boardId) {
-  await storageService.remove(STORAGE_KEY, boardId)
+  await storageService.remove(BOARD_STORAGE_KEY, boardId)
 }
 
-async function save(board) {
+async function save(board, key = BOARD_STORAGE_KEY) {
   var savedBoard
   if (board._id) {
-    savedBoard = await storageService.put(STORAGE_KEY, board)
+    console.log(board)
+    savedBoard = await storageService.put(key, board)
   } else {
     // Later, owner is set by the backend
-    board.owner = userService.getLoggedinUser()
-    savedBoard = await storageService.post(STORAGE_KEY, board)
+    // board.owner = userService.getLoggedinUser()
+    savedBoard = await storageService.post(key, board)
   }
   return savedBoard
 }
@@ -67,7 +66,7 @@ async function addBoardMsg(boardId, txt) {
     txt,
   }
   board.msgs.push(msg)
-  await storageService.put(STORAGE_KEY, board)
+  await storageService.put(BOARD_STORAGE_KEY, board)
 
   return msg
 }
@@ -107,24 +106,46 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   }
 }
 
-function getEmptyTask(
-  title = '',
-  status = '',
-  priority = '',
-  description = ''
-) {
+function getEmptyTask(title = '', description = '', labels = [], members = []) {
   return {
     id: utilService.makeId(),
     title,
-    status,
     type: 'draggable',
     props: {
       className: 'card',
     },
-    priority,
     description,
-    labels: [],
-    members: [],
+    labels,
+    members,
+  }
+}
+
+function getRandomTask(
+  title = utilService.getRandomTaskTitles(),
+  description = utilService.getRandomTaskDesc(),
+  labels = getRandomLabels()
+) {
+  return getEmptyTask(
+    title,
+    description,
+    labels,
+    getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+  )
+}
+
+function getRandomLabels(amount = 4) {
+  let labels = []
+  for (let i = 0; i < amount; i++) {
+    labels.push(getRandomLabel(i))
+  }
+  return labels
+}
+
+function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
+  return {
+    id: utilService.makeId(),
+    title: utilService.getRandomLabelTitle(),
+    color: colorItems[idx],
   }
 }
 
@@ -201,8 +222,149 @@ function getDefaultMembers() {
   ]
 }
 
-async function _createBoard() {
+async function _createBoards(amount = 7) {
+  let boards = []
+  for (let i = 0; i < amount; i++) {
+    boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
+  }
+
+  return boards
+}
+
+async function _createBoard(
+  title = 'Robot dev proj',
+  labels = getRandomLabels(8)
+) {
   let board = {
+    _id: '',
+    title,
+    isStarred: false,
+    archivedAt: 1589983468418,
+    createdBy: {
+      _id: 'u101',
+      fullname: 'Yohai Korem',
+      imgUrl: 'http://some-img',
+    },
+    style: {},
+    labels,
+    members: getDefaultMembers(),
+    groups: [
+      {
+        id: utilService.makeId(),
+        title: 'Group 1',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
+          className: 'card-container',
+        },
+        archivedAt: 1589983468418,
+        tasks: [
+          getRandomTask(
+            undefined,
+            utilService.getRandomTaskDesc(),
+            labels[utilService.getRandomIntInclusive(0, labels.length)]
+          ),
+          getRandomTask(
+            undefined,
+            utilService.getRandomTaskDesc(),
+            labels[utilService.getRandomIntInclusive(0, labels.length)]
+          ),
+        ],
+        style: {},
+      },
+      {
+        id: utilService.makeId(),
+        title: 'Group 2',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
+          className: 'card-container',
+        },
+        tasks: [
+          getRandomTask(
+            undefined,
+            undefined,
+            labels[utilService.getRandomIntInclusive(0, labels.length)]
+          ),
+          {
+            id: utilService.makeId(),
+            title: 'Help me',
+            status: 'in-progress', // monday
+            priority: 'high',
+            description: 'description',
+            type: 'draggable',
+            props: {
+              className: 'card',
+            },
+            loading: false,
+            comments: [
+              {
+                id: 'ZdPnm',
+                txt: 'also @yaronb please CR this',
+                createdAt: 1590999817436,
+                byMember: {
+                  _id: 'u101',
+                  fullname: 'Yohai Korem',
+                  imgUrl:
+                    'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                },
+              },
+            ],
+            checklists: [
+              {
+                id: utilService.makeId(),
+                title: 'Checklist',
+                todos: [
+                  {
+                    id: utilService.makeId(),
+                    title: 'To Do 1',
+                    isDone: false,
+                  },
+                ],
+              },
+            ],
+            memberIds: ['u101'],
+            labelIds: ['l101', 'l102'],
+            dueDate: 16156215211,
+            byMember: {
+              _id: 'u101',
+              username: 'yoyo',
+              fullname: 'Yohai Korem',
+              imgUrl:
+                'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            style: {
+              bgColor: '#26de81',
+            },
+          },
+        ],
+        style: {},
+      },
+    ],
+    activities: [
+      {
+        id: 'a101',
+        txt: 'Changed Color',
+        createdAt: 154514,
+        byMember: {
+          _id: 'u101',
+          fullname: 'Yohai Korem',
+          imgUrl: 'http://some-img',
+        },
+        task: {
+          id: 'c101',
+          title: 'Replace Logo',
+        },
+      },
+    ],
+    cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
+  }
+  board = await save(board)
+  return board
+}
+
+export const demoBoards = [
+  {
     _id: '',
     title: 'Robot dev proj',
     isStarred: false,
@@ -225,23 +387,12 @@ async function _createBoard() {
     //   title: 'Progress',
     //   color: '#faf3c0',
     // },
-
     // ],
     members: [
       {
         _id: 'u101',
         fullname: 'Yohai Korem',
-        imgUrl: '',
-      },
-      {
-        _id: 'u102',
-        fullname: 'Ori Krispel',
-        imgUrl: '',
-      },
-      {
-        _id: 'u103',
-        fullname: 'Ori Teicher',
-        imgUrl: '',
+        imgUrl: 'https://www.google.com',
       },
     ],
     groups: [
@@ -251,7 +402,6 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
-          className: 'card-container',
         },
         archivedAt: 1589983468418,
         tasks: [
@@ -259,21 +409,15 @@ async function _createBoard() {
             id: 'c101',
             title: 'Replace logo',
             type: 'draggable',
-            props: {
-              className: 'card',
-            },
             loading: false,
-            checklists: [],
+            cover: {},
           },
           {
             id: 'c102',
             title: 'Add Samples',
             type: 'draggable',
-            props: {
-              className: 'card',
-            },
-            checklists: [],
             loading: false,
+            cover: {},
           },
         ],
         style: {},
@@ -284,7 +428,6 @@ async function _createBoard() {
         type: 'container',
         props: {
           orientation: 'vertical',
-          className: 'card-container',
         },
         tasks: [
           {
@@ -292,10 +435,12 @@ async function _createBoard() {
             title: 'Do that',
             archivedAt: 1589983468418,
             type: 'draggable',
-            props: {
-              className: 'card',
-            },
             loading: false,
+            cover: {},
+            labels: [
+              { id: '', txt: 'urgent', bgc: '' },
+              { txt: 'backend', bgc: '' },
+            ],
           },
           {
             id: 'c104',
@@ -304,9 +449,6 @@ async function _createBoard() {
             priority: 'high',
             description: 'description',
             type: 'draggable',
-            props: {
-              className: 'card',
-            },
             loading: false,
             comments: [
               {
@@ -339,7 +481,7 @@ async function _createBoard() {
             dueDate: 16156215211,
             byMember: {
               _id: 'u101',
-              username: 'yoyo',
+              username: 'Tal',
               fullname: 'Yohai Korem',
               imgUrl:
                 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
@@ -370,301 +512,148 @@ async function _createBoard() {
     ],
 
     cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
-  }
-  board = await save(board)
-  return board
-}
-
-export const demoBoards = [{
-  _id: '',
-  title: 'Robot dev proj',
-  isStarred: false,
-  archivedAt: 1589983468418,
-  createdBy: {
-    _id: 'u101',
-    fullname: 'Abi Abambi',
-    imgUrl: 'http://some-img',
   },
-  style: {},
-  labels: getDefaultEmptyLabels(),
-  // [
-  // {
-  //   id: 'l101',
-  //   title: 'Done',
-  //   color: '#61bd4f',
-  // },
-  // {
-  //   id: 'l102',
-  //   title: 'Progress',
-  //   color: '#faf3c0',
-  // },
-  // ],
-  members: [
-    {
-      _id: 'u101',
-      fullname: 'Yohai Korem',
-      imgUrl: 'https://www.google.com',
-    },
-  ],
-  groups: [
-    {
-      id: 'g101',
-      title: 'Group 1',
-      type: 'container',
-      props: {
-        orientation: 'vertical',
-      },
-      archivedAt: 1589983468418,
-      tasks: [
-        {
-          id: 'c101',
-          title: 'Replace logo',
-          type: 'draggable',
-          loading: false,
-          cover: {},
-        },
-        {
-          id: 'c102',
-          title: 'Add Samples',
-          type: 'draggable',
-          loading: false,
-          cover: {},
-        },
-      ],
-      style: {},
-    },
-    {
-      id: 'g102',
-      title: 'Group 2',
-      type: 'container',
-      props: {
-        orientation: 'vertical',
-      },
-      tasks: [
-        {
-          id: 'c103',
-          title: 'Do that',
-          archivedAt: 1589983468418,
-          type: 'draggable',
-          loading: false,
-          cover: {},
-          labels: [
-            { id: '', txt: 'urgent', bgc: '' },
-            { txt: 'backend', bgc: '' },
-          ],
-        },
-        {
-          id: 'c104',
-          title: 'Help me',
-          status: 'in-progress', // monday
-          priority: 'high',
-          description: 'description',
-          type: 'draggable',
-          loading: false,
-          comments: [
-            {
-              id: 'ZdPnm',
-              txt: 'also @yaronb please CR this',
-              createdAt: 1590999817436,
-              byMember: {
-                _id: 'u101',
-                fullname: 'Yohai Korem',
-                imgUrl:
-                  'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-              },
-            },
-          ],
-          checklists: [
-            {
-              id: 'YEhmF',
-              title: 'Checklist',
-              todos: [
-                {
-                  id: '212jX',
-                  title: 'To Do 1',
-                  isDone: false,
-                },
-              ],
-            },
-          ],
-          memberIds: ['u101'],
-          labelIds: ['l101', 'l102'],
-          dueDate: 16156215211,
-          byMember: {
-            _id: 'u101',
-            username: 'Tal',
-            fullname: 'Yohai Korem',
-            imgUrl:
-              'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-          },
-          style: {
-            bgColor: '#26de81',
-          },
-        },
-      ],
-      style: {},
-    },
-  ],
-  activities: [
-    {
-      id: 'a101',
-      txt: 'Changed Color',
-      createdAt: 154514,
-      byMember: {
-        _id: 'u101',
-        fullname: 'Abi Abambi',
-        imgUrl: 'http://some-img',
-      },
-      task: {
-        id: 'c101',
-        title: 'Replace Logo',
-      },
-    },
-  ],
-
-  cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
-},
-{
-  _id: '',
-  title: 'Sprint 4 - Tasks',
-  isStarred: false,
-  archivedAt: 1589983468418,
-  createdBy: {
-    _id: 'u102',
-    fullname: 'Amit Cohen',
-    imgUrl: '',
-  },
-  style: {},
-  labels: getDefaultEmptyLabels(),
-  members: [
-    {
-      _id: 'u101',
-      fullname: 'Idan Amedi',
+  {
+    _id: '',
+    title: 'Sprint 4 - Tasks',
+    isStarred: false,
+    archivedAt: 1589983468418,
+    createdBy: {
+      _id: 'u102',
+      fullname: 'Amit Cohen',
       imgUrl: '',
     },
-  ],
-  groups: [
-    {
-      id: 'g1011',
-      title: 'Group 1',
-      type: 'container',
-      props: {
-        orientation: 'vertical',
+    style: {},
+    labels: getDefaultEmptyLabels(),
+    members: [
+      {
+        _id: 'u101',
+        fullname: 'Idan Amedi',
+        imgUrl: '',
       },
-      archivedAt: 1589983468418,
-      tasks: [
-        {
-          id: 'c1011',
-          title: 'End QA',
-          type: 'draggable',
-          loading: false,
-          cover: {},
+    ],
+    groups: [
+      {
+        id: 'g1011',
+        title: 'Group 1',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
         },
-        {
-          id: 'c1021',
-          title: 'Start Backend',
-          type: 'draggable',
-          loading: false,
-          cover: {},
-        },
-      ],
-      style: {},
-    },
-    {
-      id: 'g1025',
-      title: 'Group 2',
-      type: 'container',
-      props: {
-        orientation: 'vertical',
+        archivedAt: 1589983468418,
+        tasks: [
+          {
+            id: 'c1011',
+            title: 'End QA',
+            type: 'draggable',
+            loading: false,
+            cover: {},
+          },
+          {
+            id: 'c1021',
+            title: 'Start Backend',
+            type: 'draggable',
+            loading: false,
+            cover: {},
+          },
+        ],
+        style: {},
       },
-      tasks: [
-        {
-          id: 'c1031',
-          title: 'Do that',
-          archivedAt: 1589983468418,
-          type: 'draggable',
-          loading: false,
-          cover: {},
-          labels: [
-            { id: '', txt: 'urgent', bgc: '' },
-            { txt: 'backend', bgc: '' },
-          ],
+      {
+        id: 'g1025',
+        title: 'Group 2',
+        type: 'container',
+        props: {
+          orientation: 'vertical',
         },
-        {
-          id: 'c1041',
-          title: 'Finish Checklists',
-          status: 'in-progress', // monday
-          priority: 'high',
-          description: 'description',
-          type: 'draggable',
-          loading: false,
-          comments: [
-            {
-              id: 'ZdPnmvvv',
-              txt: 'let yaron biton to cr this horrible code',
-              createdAt: 1590999817436,
-              byMember: {
-                _id: 'u101',
-                fullname: 'Yohai Korem',
-                imgUrl:
-                  'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-              },
-            },
-          ],
-          checklists: [
-            {
-              id: 'YEhmF',
-              title: 'Checklist',
-              todos: [
-                {
-                  id: '212jXddd',
-                  title: 'To Do 1',
-                  isDone: false,
+        tasks: [
+          {
+            id: 'c1031',
+            title: 'Do that',
+            archivedAt: 1589983468418,
+            type: 'draggable',
+            loading: false,
+            cover: {},
+            labels: [
+              { id: '', txt: 'urgent', bgc: '' },
+              { txt: 'backend', bgc: '' },
+            ],
+          },
+          {
+            id: 'c1041',
+            title: 'Finish Checklists',
+            status: 'in-progress', // monday
+            priority: 'high',
+            description: 'description',
+            type: 'draggable',
+            loading: false,
+            comments: [
+              {
+                id: 'ZdPnmvvv',
+                txt: 'let yaron biton to cr this horrible code',
+                createdAt: 1590999817436,
+                byMember: {
+                  _id: 'u101',
+                  fullname: 'Yohai Korem',
+                  imgUrl:
+                    'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
                 },
-              ],
+              },
+            ],
+            checklists: [
+              {
+                id: 'YEhmF',
+                title: 'Checklist',
+                todos: [
+                  {
+                    id: '212jXddd',
+                    title: 'To Do 1',
+                    isDone: false,
+                  },
+                ],
+              },
+            ],
+            memberIds: ['u1012'],
+            labelIds: ['l1012', 'l1022'],
+            dueDate: 16156215211,
+            byMember: {
+              _id: 'u1011',
+              username: 'Tal',
+              fullname: 'Ori Teicher',
+              imgUrl:
+                'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
             },
-          ],
-          memberIds: ['u1012'],
-          labelIds: ['l1012', 'l1022'],
-          dueDate: 16156215211,
-          byMember: {
-            _id: 'u1011',
-            username: 'Tal',
-            fullname: 'Ori Teicher',
-            imgUrl:
-              'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            style: {
+              bgColor: '#26de81',
+            },
           },
-          style: {
-            bgColor: '#26de81',
-          },
+        ],
+        style: {},
+      },
+    ],
+    activities: [
+      {
+        id: 'a10111',
+        txt: 'Changed Color',
+        createdAt: 154514,
+        byMember: {
+          _id: 'u101ddd',
+          fullname: 'Abi Abambi',
+          imgUrl: 'http://some-img',
         },
-      ],
-      style: {},
-    },
-  ],
-  activities: [
-    {
-      id: 'a10111',
-      txt: 'Changed Color',
-      createdAt: 154514,
-      byMember: {
-        _id: 'u101ddd',
-        fullname: 'Abi Abambi',
-        imgUrl: 'http://some-img',
+        task: {
+          id: 'c1011sss',
+          title: 'Replace Logo',
+        },
       },
-      task: {
-        id: 'c1011sss',
-        title: 'Replace Logo',
-      },
-    },
-  ],
+    ],
 
-  cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
-},
+    cmpsOrder: ['status-picker', 'member-picker', 'date-picker'],
+  },
 ]
 
 // TEST DATA
 // ;(async ()=>{
-//     await storageService.post(STORAGE_KEY, {vendor: 'Subali Karov 1', price: 180})
-//     await storageService.post(STORAGE_KEY, {vendor: 'Subali Rahok 2', price: 240})
+//     await storageService.post(BOARD_STORAGE_KEY, {vendor: 'Subali Karov 1', price: 180})
+//     await storageService.post(BOARD_STORAGE_KEY, {vendor: 'Subali Rahok 2', price: 240})
 // })()

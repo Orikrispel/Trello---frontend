@@ -6,7 +6,10 @@ export const utilService = {
   randomPastTime,
   saveToStorage,
   loadFromStorage,
-  getRandomTasks,
+  getRandomTaskTitles,
+  getRandomLabelTitle,
+  getRandomProjectNames,
+  getRandomTaskDesc,
 }
 
 function makeId(length = 6) {
@@ -98,7 +101,7 @@ function loadFromStorage(key) {
   return data ? JSON.parse(data) : undefined
 }
 
-function getRandomTasks(idx = getRandomIntInclusive(0, 9)) {
+function getRandomTaskTitles(idx = getRandomIntInclusive(0, 9)) {
   const codingTasks = [
     'Implement a function to check whether a given string is a palindrome or not.',
     'Create a program to find the largest number in an array of numbers.',
@@ -114,6 +117,96 @@ function getRandomTasks(idx = getRandomIntInclusive(0, 9)) {
 
   return codingTasks[idx]
 }
+
+function getRandomLabelTitle(idx = getRandomIntInclusive(0, 9)) {
+  const labelTitles = [
+    'Important',
+    'Urgent',
+    'Low Priority',
+    'High Priority',
+    'Feature Request',
+    'Bug Fix',
+    'Design',
+    'Documentation',
+    'Testing',
+    'Deployment',
+  ]
+  return labelTitles[idx]
+}
+
+function getRandomTaskDesc(idx = getRandomIntInclusive(0, 9)) {
+  const descs = [
+    'Implement login functionality',
+    'Fix issue with responsive layout on mobile devices',
+    'Refactor code for better performance',
+    'Add pagination to search results',
+    'Create user profile page',
+    'Write documentation for API endpoints',
+    'Test user registration flow',
+    'Design new logo for website',
+    'Deploy application to production server',
+    'Add new feature to dashboard page',
+  ]
+  return descs[idx]
+}
+
+function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
+  const projNames = [
+    'Responsive Website with Animations',
+    'Dynamic Web App for E-commerce',
+    'Full-Stack Web App with Authentication',
+    'Mobile-friendly Blogging Platform',
+    'Real-Time Chat with Firebase',
+    'Web-Based Game with Leaderboard',
+    'Single-Page App with API Integration',
+    'RESTful API with CRUD Operations',
+    'Social Media Platform with User Profiles',
+    'Interactive Data Visualization',
+  ]
+
+  return projNames[idx]
+}
+
+export const colorItems = [
+  '#7bc86c',
+  ' #f5dd29',
+  ' #ffaf3f',
+  '#ef7564',
+  '#cd8de5',
+  '#5ba4cf',
+  ' #b7ddb0',
+  ' #f5ea92',
+  '#fad29c',
+  ' #efb3ab',
+  ' #dfc0eb',
+  '#7bc86c',
+  ' #f5dd29',
+  ' #ffaf3f',
+  ' #ef7564',
+  ' #cd8de5',
+  ' #5aac44',
+  ' #e6c60d',
+  ' #e79217',
+  ' #cf513d',
+  ' #a86cc1',
+  ' #8bbdd9',
+  ' #8fdfeb',
+  ' #b3f1d0',
+  ' #f9c2e4',
+  ' #505f79',
+  ' #5ba4cf',
+  ' #29cce5',
+  ' #6deca9',
+  ' #ff8ed4',
+  ' #344563',
+  ' #026aa7',
+  ' #00aecc',
+  ' #4ed583',
+  ' #e568af',
+  ' #091e42',
+  ' #aabbcc',
+  ' #ddeeff',
+]
 
 export const newShade = (hexColor, magnitude) => {
   hexColor = hexColor.replace(`#`, ``)
