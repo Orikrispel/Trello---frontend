@@ -1,10 +1,18 @@
 <template>
   <div class="members-list-container">
-    <input v-model="filterBy" type="text" placeholder="Search members" @input="searchMembers" name="members-search" />
+    <input
+      v-model="filterBy"
+      type="text"
+      placeholder="Search members"
+      @input="searchMembers"
+      name="members-search" />
     <div class="members-container">
       <h5>Board members</h5>
       <ul class="clean-list">
-        <li @click="addMemberToTask(member._id)" v-for="member in members" :key="member._id">
+        <li
+          @click="addMemberToTask(member._id)"
+          v-for="member in members"
+          :key="member._id">
           <MemberPreview :member="member" />
         </li>
       </ul>
@@ -45,6 +53,7 @@ export default {
       taskId: this.taskId,
     })
     let { members } = this.board
+
     if (!members || !members.length)
       members = this.$store.getters.defaultMembers
     this.members = members
@@ -63,6 +72,7 @@ export default {
     async addMemberToTask(memberId) {
       let task = JSON.parse(JSON.stringify(this.task))
       let board = JSON.parse(JSON.stringify(this.board))
+      console.log(task.members)
       let { members } = board
       let member = members.find((member) => {
         return member._id === memberId
