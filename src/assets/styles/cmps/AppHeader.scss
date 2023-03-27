@@ -11,37 +11,38 @@ header.app-haeder {
     border-radius: 1em;
     align-self: flex-end;
     color: whitesmoke;
-
-    span {
-      background-color: $primary-clr2;
-      padding: 4px;
-      margin: 10px;
-      border-radius: 50%;
-    }
-
-    img {
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-    }
   }
 
   nav {
-    color: $secondary-clr1;
-  }
+    align-items: stretch;
 
-  nav a {
-    color: $secondary-clr1;
-
-    &:not(:first-child) {
-      font-size: rem(14px);
-      border-top: 1px solid $primary-clr1;
-      padding: 0 5px;
-      margin: 10px;
+    .logo {
+      object-fit: contain;
+      width: 75px;
     }
-  }
 
-  nav .active {
-    color: $primary-clr1;
+    a {
+      color: $secondary-clr1;
+
+
+      &:not(:first-child) {
+        font-size: rem(14px);
+        border-top: 1px solid $primary-clr1;
+        padding: 0 5px;
+      }
+    }
+
+    button {
+      color: $secondary-clr1;
+      background-color: $btn-clr5;
+
+      &:hover {
+        background-color: $btn-hover-clr3;
+      }
+    }
+
+    .active {
+      color: $primary-clr1;
+    }
   }
 }

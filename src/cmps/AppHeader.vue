@@ -1,10 +1,11 @@
 <template>
   <header class="app-haeder">
-    <nav>
-      <RouterLink to="/">
-        <span role="img" aria-label="logo">Jello</span>
-      </RouterLink>
+    <nav class="flex gap">
+      <img class="logo" src="../assets/imgs/header/logo white.png" alt="Jello logo">
       <RouterLink to="/board">Boards</RouterLink>
+      <button class="btn">Create</button>
+    </nav>
+    <nav class="flex gap">
       <RouterLink to="/login">Login / Signup</RouterLink>
     </nav>
     <section class="loggedin-user" v-if="loggedInUser">
