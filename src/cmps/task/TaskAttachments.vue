@@ -1,7 +1,7 @@
 <template>
   <section class="task-attachments">
-    <p>{{ getChecklistStatus }}</p>
-    <p>{{ getMembers }}</p>
+    <!-- <p>{{ getChecklistStatus }}</p>
+    <p>{{ getMembers }}</p> -->
   </section>
 </template>
 
@@ -45,8 +45,9 @@ export default {
     },
     getMembers() {
       if (!this.task.members) return
-      const members = this.task.members.map((member) => member.fullname)
-      return `${members}`
+      console.log('task members:', this.task.members)
+      // const members = this.task.members.map((member) => member.fullname)
+      // return `${members}`
     },
   },
 }
