@@ -23,7 +23,7 @@
       <ul class="board-list">
         <li class="new-board" @click="isCreateMode = true">
           <p>Create new board</p>
-          <AddBoard v-show="isCreateMode" class="modal" @addBoard="addBoard" @closeModal="closeModal" />
+          <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" />
         </li>
         <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
           'background-color': board.style?.backgroundColor || '#014a75',

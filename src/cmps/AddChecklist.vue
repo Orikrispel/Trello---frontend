@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="addChecklist" class="board-add-form add-checklist-form" v-if="isCreateMode">
+    <form @submit.prevent="addChecklist" class="board-add-form add-checklist-form">
         <div class="add-form-header add-checklist-header">
             <h5>Add checklist</h5>
             <p @click="closeModal">x</p>
@@ -43,7 +43,6 @@ export default {
             this.$emit('setCreateModeOff')
         },
         closeModal() {
-            this.isCreateMode = false
             this.$emit('setCreateModeOff')
         }
     },
