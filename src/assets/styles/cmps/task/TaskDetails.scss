@@ -1,8 +1,22 @@
+.modal-overlay {
+  cursor: auto;
+  background-color: #0000002d;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+}
+
 .task-details {
   min-height: 600px;
   z-index: 10;
   border-radius: 3px;
-  position: absolute;
   background-color: $secondary-clr3;
   display: flex;
   flex-direction: column;

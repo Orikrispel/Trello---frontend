@@ -1,17 +1,17 @@
 <template>
   <div
     :style="{
-      'background-color': label.color || '#bcd9ea',
+      'background-color': label.color + '60' || '#bcd9ea60',
     }"
     class="label-preview flex"
     @mouseover="getLabelStyle"
     @mouseout="getLabelStyle">
     <span>
-      <!-- <span
+      <span
         :style="{
-          'background-color': labelCircleClr,
+          'background-color': label.color,
         }"
-        class="label-circle"></span> -->
+        class="label-circle"></span>
       {{ label.title }}</span
     >
   </div>
