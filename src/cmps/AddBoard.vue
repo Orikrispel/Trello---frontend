@@ -1,5 +1,5 @@
 <template>
-    <form @submit.stop="addBoard" class="board-add-form">
+    <form @submit.prevent="addBoard" class="board-add-form">
         <div class="add-form-header">
             <h5>Create Board</h5>
             <span class="icon btn-close icon-close" @click.stop="closeModal"></span>
