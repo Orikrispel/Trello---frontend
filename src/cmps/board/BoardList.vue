@@ -70,7 +70,7 @@ export default {
     starBoard(board) {
       this.$emit('starBoard', board)
     },
-    closeModal(data) {
+    closeModal() {
       this.isCreateMode = false
       console.log('this.isCreateMode', this.isCreateMode)
       // this.isCreateMode = true
