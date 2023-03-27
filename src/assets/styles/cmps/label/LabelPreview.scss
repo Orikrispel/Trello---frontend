@@ -2,7 +2,7 @@
 
 .label-preview {
   display: flex;
-  position: relative;
+
   min-height: rem(32px);
   max-width: 100%;
   min-width: 48px;
@@ -11,20 +11,19 @@
   align-items: center;
 
   span {
-    position: relative;
     font-size: rem(14px);
     line-height: rem(32px);
+    position: relative;
+
     & .label-circle {
       position: absolute;
-      // top: 8px;
-      // bottom: 18px;
-      // top: 0.5em;
-      bottom: -0.5em;
-      left: 8px;
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
       border-radius: 50%;
       width: 16px;
       height: 16px;
-      display: inline-block;
+
     }
 
     // &::after {

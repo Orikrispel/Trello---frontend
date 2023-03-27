@@ -32,3 +32,15 @@
     color: $font-clr4;
   }
 }
+
+.btn-sm {
+  padding: 6px;
+  border-radius: 3px;
+  color: $font-clr3;
+  line-height: 0;
+
+  &:hover {
+    color: $font-clr1;
+    background-color: $btn-hover-clr1;
+  }
+}
