@@ -8,6 +8,7 @@
             backgroundImage: 'url(' + pickedImg + ')', background: pickedColor,
             backgroundSize: 'cover'
         }">
+            <i v-html="getSvg('boardToDisplay')"></i>
         </div>
         <label for="color-picker">Background</label>
         <ImgPicker @onSetBoardImg="setBoardImg" />
@@ -20,6 +21,7 @@
 
 <script>
 import { boardService } from '../services/board.service.local';
+import { svgService } from '../services/svg.service';
 import { eventBus } from '../services/event-bus.service';
 import ColorPicker from './ColorPicker.vue';
 import ImgPicker from './ImgPicker.vue';
@@ -45,6 +47,9 @@ export default {
             if (!this.boardToAdd.title) return
             this.$emit('addBoard', this.boardToAdd)
             this.$emit('closeModal')
+        },
+        getSvg(iconName) {
+            return svgService.getSvg(iconName)
         },
         setBoardBgColor(color) {
             this.pickedImg = {}

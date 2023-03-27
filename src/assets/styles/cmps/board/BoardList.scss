@@ -133,6 +133,9 @@
   }
 
   .board-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 30px;
     width: 220px;
     height: 120px;

@@ -7,6 +7,7 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   getRandomTasks,
+  getBoardRandomColor,
 }
 
 function makeId(length = 6) {
@@ -62,6 +63,23 @@ function makeLorem(size = 100) {
     txt += words[Math.floor(Math.random() * words.length)] + ' '
   }
   return txt
+}
+
+function getBoardRandomColor() {
+  const colorItems =
+    ['#7bc86c',
+      ' #f5dd29',
+      ' #ffaf3f',
+      '#ef7564',
+      '#cd8de5',
+      '#5ba4cf',
+      ' #b7ddb0',
+      ' #f5ea92',
+      '#fad29c',
+      ' #efb3ab',
+      ' #dfc0eb',
+    ]
+  return colorItems[getRandomIntInclusive(0, 10)]
 }
 
 function getRandomIntInclusive(min, max) {
@@ -150,4 +168,6 @@ export const applyDrag = (arr, dragResult) => {
   }
 
   return result
+
+
 }
