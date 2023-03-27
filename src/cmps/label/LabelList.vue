@@ -83,7 +83,9 @@ export default {
     async addLabelToTask(label) {
       let task = JSON.parse(JSON.stringify(this.task))
       if (!task.labels) task.labels = []
+      console.log(task.labels)
       let hasLabel = task.labels.some((l) => l.id === label.id)
+
       if (hasLabel) task = this.removeLabelFromTask(task, label)
       else task.labels.push({ ...label })
       eventBus.emit('updateTask', task)

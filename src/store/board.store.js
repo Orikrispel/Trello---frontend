@@ -217,17 +217,20 @@ export const boardStore = {
     },
     loadCurrTask({ state, commit }, { taskId }) {
       let board = state.currBoard
+      if (!board) {
+        return
+      }
       let groups = board.groups
-      let currTask = null;
+      let currTask = null
       for (const group of groups) {
-        let { tasks } = group;
-        currTask = tasks.find((task) => task.id === taskId);
+        let { tasks } = group
+        currTask = tasks.find((task) => task.id === taskId)
         if (currTask) {
-          commit({ type: 'setCurrTask', task: currTask });
-          break;
+          commit({ type: 'setCurrTask', task: currTask })
+          break
         }
       }
-      return currTask;
+      return currTask
     },
     async setCurrLabel({ state, commit }, { labelId }) {
       let currLabel
