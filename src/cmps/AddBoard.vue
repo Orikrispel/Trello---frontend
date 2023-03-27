@@ -70,7 +70,9 @@ export default {
         }
     },
     created() {
-
+        eventBus.on('setPickerOff', (task) => {
+            this.saveTask(task)
+        })
     },
 
     components: {

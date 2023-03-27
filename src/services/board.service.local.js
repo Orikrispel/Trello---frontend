@@ -272,7 +272,8 @@ async function _createBoard(
       imgUrl: 'http://some-img',
     },
     style: {
-      backgroundColor: _getBoardRandomColor()
+      backgroundColor: _getBoardRandomColor(),
+      imgUrls: _getRandomPicture(),
     },
     labels,
     members: getDefaultMembers(),

@@ -67,7 +67,6 @@ export default {
       })
     },
   },
-  created() { },
   methods: {
     onStarBoard(board) {
       this.$emit('starBoard', board)
@@ -79,10 +78,22 @@ export default {
       return svgService.getSvg(iconName)
     },
     setColor(color) {
+      eventBus.emit('onColorChange')
       this.pickedColor = color
       this.$emit('setColor', color)
     },
+    clearSelection() {
+      this.pickedColor = ''
+      document.querySelectorAll('.color-item.selected').forEach((el) => {
+        el.classList.remove('selected')
+      })
+    }
 
+  },
+  created() {
+    eventBus.on('onImgChange', () => {
+      this.clearSelection()
+    });
   },
   emits: ['setColor'],
 }
