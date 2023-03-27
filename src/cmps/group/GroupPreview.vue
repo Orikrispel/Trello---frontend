@@ -1,8 +1,15 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
-      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
+      <div
+        v-show="!isEditGroupTitle"
+        class="prevent-title-edit"
+        @click="onFocusGroupTitle"></div>
+      <h2
+        class="group-title fs14"
+        ref="groupTitle"
+        @blur="updateGroupTitle"
+        contenteditable="true">
         {{ group.title }}
       </h2>
 
@@ -34,10 +41,20 @@
     </header>
 
     <main class="tasks-wrapper">
-      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
-        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
-        <Draggable class="task-container" @click="handleTaskDetails(task.id)" v-for="task in group.tasks" :key="task.id">
+      <Container
+        class="task-list"
+        :get-child-payload="getGroupPayload(group.id)"
+        @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items"
+        :shouldAcceptDrop="(e) => e.groupName === 'col-items'"
+        drag-class="card-ghost"
+        drop-class="card-ghost-drop"
+        :drop-placeholder="dropPlaceholderOptions">
+        <Draggable
+          class="task-container"
+          @click="handleTaskDetails(task.id)"
+          v-for="task in group.tasks"
+          :key="task.id">
           <TaskPreview :task="task" />
         </Draggable>
       </Container>
@@ -46,7 +63,12 @@
         <span class="icon icon-add"></span> add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
+        <textarea
+          class="task-container"
+          ref="taskTitle"
+          name="add-task"
+          cols="30"
+          rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">
@@ -84,7 +106,7 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener("click", this.clickedOutGroupMenu);
+    document.addEventListener('click', this.clickedOutGroupMenu)
   },
   methods: {
     onTaskDrop(groupId, dropResult) {
@@ -150,7 +172,7 @@ export default {
       if (!idx) return
       let groupToAdd = JSON.parse(JSON.stringify(this.group))
       groupToAdd.id = utilService.makeId()
-      groupToAdd.tasks.forEach(task => task.id = utilService.makeId())
+      groupToAdd.tasks.forEach((task) => (task.id = utilService.makeId()))
       board.groups.splice(idx, 0, groupToAdd)
       this.$emit('updateBoard', board)
     },
@@ -196,7 +218,7 @@ export default {
     // },
   },
   beforeDestroy() {
-    document.removeEventListener("click", this.clickedOutGroupMenu);
+    document.removeEventListener('click', this.clickedOutGroupMenu)
   },
 }
 </script>

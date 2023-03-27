@@ -2,7 +2,11 @@
   <div v-if="board" class="board-container main flex column">
     <header class="board-header flex align-center justify-between gap">
       <div class="flex gap">
-        <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
+        <h1
+          class="board-title fs18"
+          ref="boardTitle"
+          @blur="updateBoardTitle"
+          contenteditable="true">
           {{ board.title }}
         </h1>
         <button class="btn btn-light btn-star" @click="starBoard">
@@ -21,12 +25,21 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          class="btn btn-light"
+          @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -34,8 +47,9 @@
           </button>
         </div>
       </article>
-      <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
-      <RouterView />
+      <GroupFilter
+        @closeFilterMenu="showFilterMenu = false"
+        v-if="showFilterMenu" />
     </main>
     <!-- <div
       v-if="taskDetailsIsOpen"
@@ -149,7 +163,10 @@ export default {
       async handler() {
         if (this.board) {
           // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId, })
+          this.board = await this.$store.dispatch({
+            type: 'loadCurrBoard',
+            boardId: this.boardId,
+          })
         }
       },
       immediate: true,
@@ -159,6 +176,5 @@ export default {
     GroupList,
     GroupFilter,
   },
-
 }
 </script>
