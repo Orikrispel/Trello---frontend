@@ -1,24 +1,14 @@
 <template>
   <div class="labels-list">
-    <hr />
-    <input
-      type="text"
-      name="label-search"
-      placeholder="Search labels..."
-      v-model="filterBy"
-      @input="searchLabels" />
+    <input type="text" name="label-search" placeholder="Search labels..." v-model="filterBy" @input="searchLabels" />
     <h4>Labels</h4>
     <ul class="clean-list">
-      <li
-        class="label-list-item"
-        v-for="(label, idx) in labels"
-        :key="label.id">
+      <li class="label-list-item" v-for="(label, idx) in labels" :key="label.id">
         <input type="checkbox" />
         <LabelPreview :label="label" @click="addLabelToTask(label)" />
-        <div
-          @click="editLabel(label.id)"
-          class="icon pencil-icon"
-          v-html="getSvg('pencil')"></div>
+        <button class="btn-sm clean-btn" @click="editLabel(label.id)">
+          <span class="icon pencil-icon" v-html="getSvg('pencil')"></span>
+        </button>
       </li>
       <button class="btn btn-label" @click="$emit('toggleLabelEdit')">
         Create a new label

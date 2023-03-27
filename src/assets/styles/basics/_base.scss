@@ -66,10 +66,13 @@ i {
   font-family: trellicons;
 }
 
+textarea {
+  width: 100%;
+}
+
 textarea,
 input {
   font-family: 'Segoe-UI';
-  width: 100%;
   border: none;
   outline: none;
 }
