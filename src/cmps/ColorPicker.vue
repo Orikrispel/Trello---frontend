@@ -8,6 +8,7 @@
 </template>
 <!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
 <script>
+import { eventBus } from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
 export default {
   props: ['quantity'],
@@ -81,12 +82,6 @@ export default {
       this.pickedColor = color
       this.$emit('setColor', color)
     },
-    getCurrentTime() {
-      const timestamp = Date.now();
-      const date = new Date(timestamp);
-      const dateString = date.toLocaleString();
-      return dateString
-    }
 
   },
   emits: ['setColor'],

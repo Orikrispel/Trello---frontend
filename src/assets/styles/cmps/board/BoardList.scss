@@ -81,7 +81,7 @@
 
 .board-add-form {
   // fix to pixel perfect
-  right: -175%;
+  right: -165%;
   z-index: 10;
   position: absolute;
   display: flex;
@@ -121,6 +121,12 @@
     outline: none;
     padding: 10px 12px;
     width: 100%;
+    &:focus {
+      background-color: $secondary-clr1;
+      box-shadow: inset 0 0 0 2px $primary-clr4;
+      border: none;
+      outline: none;
+    }
   }
 
   button {
@@ -172,4 +178,9 @@
 
 .add-form-header {
   padding-bottom: 6px;
+}
+
+.required-field {
+  color: red;
+  font-size: 1.2em;
 }
