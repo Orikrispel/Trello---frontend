@@ -21,7 +21,7 @@ window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
   let boards = await storageService.query(BOARD_STORAGE_KEY)
-  if (!boards || !boards.length) boards = _createBoard()
+  if (!boards || !boards.length) boards = _createBoards()
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boards.filter(
