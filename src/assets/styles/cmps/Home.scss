@@ -7,6 +7,7 @@
     background-blend-mode: normal, normal;
     color: $font-clr4;
 
+
     .hero-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -16,9 +17,10 @@
         display: block;
         position: absolute;
         left: 0;
-        bottom: -1px;
+        bottom: 0;
         width: 100%;
         height: auto;
+        z-index: -1;
       }
 
       @include for-normal-layout {
