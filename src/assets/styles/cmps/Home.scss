@@ -6,22 +6,22 @@
     background: url(../../imgs/homepage/white-wave.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
     background-blend-mode: normal, normal;
     color: $font-clr4;
+    position: relative;
 
+    .divider {
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      z-index: 0;
+    }
 
     .hero-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      position: relative;
 
-      .divider {
-        display: block;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: auto;
-        z-index: -1;
-      }
 
       @include for-normal-layout {
         max-width: em(720px);
