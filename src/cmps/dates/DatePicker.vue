@@ -2,33 +2,32 @@
   <section class="date-picker-container">
     <VueDatePicker
       v-model="selectedDate"
+      @change="debug(selectedDate)"
       inline
       auto-apply
       no-today
-      :range="isRangeEnabled"
-      :range-start="Date.parse(selectedDate)"
       week-start="0"
       month-name-format="long">
       <template #time-picker="{ time, updateTime }">
         <div class="custom-time-picker-component">
-          <div class="inputs-container start-date-container">
+          <!-- <div class="inputs-container start-date-container">
             <label>Start date</label>
             <input
               type="checkbox"
               class="start-date-checkbox"
-              @change="disableChooseStart = !disableChooseStart" />
+              v-model="isChooseStart" />
             <div
               :class="
-                disableChooseStart
-                  ? 'disabled txt-inputs-container'
-                  : 'txt-inputs-container'
+                isChooseStart
+                  ? ' txt-inputs-container'
+                  : 'disabled txt-inputs-container'
               ">
               <input
                 type="text"
                 :class="
-                  disableChooseStart
-                    ? 'disabled txt-input start-date-input'
-                    : 'txt-input start-date-input'
+                  isChooseStart
+                    ? ' txt-input start-date-input'
+                    : 'disabled txt-input start-date-input'
                 "
                 ref="startDateInput"
                 v-model="startDateForDisplay"
@@ -36,25 +35,25 @@
                 @blur="updateDate($event)"
                 placeholder="M/D/YYY" />
             </div>
-          </div>
+          </div> -->
           <div class="inputs-container due-date-container">
             <label>Due date</label>
             <input
               type="checkbox"
               class="due-date-checkbox"
-              @change="disableChooseDue = !disableChooseDue" />
+              v-model="isChooseDue" />
             <div
               :class="
-                disableChooseDue
-                  ? 'disabled txt-inputs-container'
-                  : 'txt-inputs-container'
+                isChooseDue
+                  ? ' txt-inputs-container'
+                  : 'disabled txt-inputs-container'
               ">
               <input
                 type="text"
                 :class="
-                  disableChooseDue
-                    ? 'disabled txt-input due-date-input'
-                    : ' txt-input due-date-input'
+                  isChooseDue
+                    ? ' txt-input due-date-input'
+                    : 'disabled txt-input due-date-input'
                 "
                 ref="dueDateInput"
                 v-model="dueDateForDisplay"
@@ -62,21 +61,21 @@
                 @blur="updateDate($event)"
                 placeholder="M/D/YYY" />
 
-              <input
+              <!-- <input
                 type="text"
                 :class="
-                  disableChooseDue
-                    ? 'disabled txt-input due-time-input'
-                    : 'txt-input due-time-input'
+                  isChooseDue
+                    ? ' txt-input due-time-input'
+                    : 'disabled txt-input due-time-input'
                 "
                 @blur="validateTime"
                 @input="updateTime(+$event)"
-                placeholder="h:mm A" />
+                placeholder="h:mm A" /> -->
             </div>
           </div>
         </div>
         <div class="btns-container">
-          <button @click="test" class="btn btn-blue btn-save">Save</button>
+          <button @click="debug" class="btn btn-blue btn-save">Save</button>
           <button class="btn btn-light btn-remove">Remove</button>
         </div>
       </template>
@@ -89,38 +88,85 @@ import { utilService } from '../../services/util.service'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { format } from 'date-fns'
+import { eventBus } from '../../services/event-bus.service'
 export default {
   components: { VueDatePicker },
   data() {
     return {
-      dateOutput: {
-        startDate: null,
-        dueDate: null,
-      },
+      task: null,
+      selectedDate: null,
+      selectedDates: [],
       dueDate: null,
       startDate: null,
-      dueDateForDisplay: null,
-      startDateForDisplay: null,
       dueTime: null,
       choosingDue: false,
       choosingStart: false,
-      selectedDate: null,
-      disableChooseStart: true,
-      disableChooseDue: true,
+      isChooseStart: false,
+      isChooseDue: true,
     }
   },
   created() {},
   computed: {
     newDate() {
+      if (this.isRangeEnabled) return
       return this.formatDate(this.selectedDate)
     },
     isRangeEnabled() {
-      return !this.disableChooseDue && !this.disableChooseStart
+      return !this.isChooseDue && !this.isChooseStart
+    },
+    dueDateForDisplay() {
+      const dueDateForDisplay = this.formatDate(this.dueDate)
+      return dueDateForDisplay
+    },
+    startDateForDisplay() {
+      const startDateForDisplay = this.formatDate(this.startDate)
+      return startDateForDisplay
+    },
+    dueDateParsed() {
+      return Date.parse(this.dueDate)
+    },
+    startDateParsed() {
+      return Date.parse(this.startDate)
+    },
+    taskId() {
+      const { taskId } = this.$route.params
+      return taskId
     },
   },
+  async mounted() {
+    // if (!this.isRangeEnabled) return
+    // const startDate = new Date()
+    // const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
+    // this.date = new Date()
+    // if (this.isRangeEnabled) this.date = [startDate, endDate]
+    // console.log(this.date)
+    this.task = await this.$store.dispatch({
+      type: 'loadCurrTask',
+      taskId: this.taskId,
+    })
+  },
   methods: {
-    test() {
-      console.log(Date.parse(this.selectedDate))
+    diff() {
+      const millisecondsPerDay = 24 * 60 * 60 * 1000
+      const diffInMilliseconds = Math.abs(
+        this.dueDateParsed - this.startDateParsed
+      )
+      return Math.floor(diffInMilliseconds / millisecondsPerDay)
+    },
+    debug(ev) {
+      // console.log(this.saveDate())
+      // console.log(this.diff())
+      console.log(this.taskId)
+    },
+    saveDate() {
+      // const startDate = this.startDateParsed
+      // var dateOutput = { startDate, dueDate }
+      const dueDate = this.dueDateParsed
+
+      let task = JSON.parse(JSON.stringify(this.task))
+      task.dueDate = dueDate
+      eventBus.emit('updateTask', task)
+      this.task = task
     },
     formatDate(date = Date.now()) {
       if (!date) return null
@@ -171,17 +217,15 @@ export default {
         this.startDate = this.selectedDate
       }
     },
-    dueDate() {
-      this.dueDateForDisplay = this.formatDate(this.dueDate)
-      this.dateOutput.dueDate = Date.parse(this.dueDate)
-    },
-    startDate() {
-      this.startDateForDisplay = this.formatDate(this.startDate)
-      this.dateOutput.startDate = Date.parse(this.startDate)
-    },
+    // dueDateParsed() {
+    //   this.dateOutput.dueDate =
+    // },
+    // startDateParsed() {
+    //   this.dateOutput.startDate =
+    // },
 
-    disableChooseDue() {
-      if (!this.disableChooseDue) {
+    isChooseDue() {
+      if (!this.isChooseDue) {
         this.$refs.dueDateInput.focus()
         this.choosingDue = true
       } else {
@@ -189,8 +233,8 @@ export default {
         this.dueDate = null
       }
     },
-    disableChooseStart() {
-      if (!this.disableChooseStart) {
+    isChooseStart() {
+      if (!this.isChooseStart) {
         this.$refs.startDateInput.focus()
         this.choosingStart = true
       } else {

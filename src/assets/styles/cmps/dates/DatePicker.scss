@@ -20,6 +20,9 @@
       text-transform: uppercase;
       color: $font-clr5;
     }
+    .dp__calendar_header_separator {
+      display: none;
+    }
     .dp__cell_inner.dp__pointer.dp__active_date {
       background-color: $primary-clr5;
       &:hover {
