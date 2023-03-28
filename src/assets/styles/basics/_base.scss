@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Segoe-UI';
 }
 
 ::selection {
@@ -7,10 +8,8 @@
   color: $primary-clr2;
 }
 
-html {}
-
 body {
-  font-family: 'Segoe-UI';
+
   color: $primary-clr2;
   line-height: 20px;
   font-size: rem(14px);
@@ -74,7 +73,6 @@ textarea {
 
 textarea,
 input {
-  font-family: 'Segoe-UI';
   border: none;
   outline: none;
 }

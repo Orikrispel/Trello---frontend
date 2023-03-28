@@ -110,6 +110,8 @@ export default {
       this.$emit('toggleLabelEdit')
     },
   },
+  watch: {
+  },
   components: {
     LabelPreview,
   },

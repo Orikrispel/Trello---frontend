@@ -184,17 +184,6 @@ export default {
       }
     },
   },
-  watch: {
-    // '$route.params': {
-    //   handler() {
-    //     let { taskId } = this.$route.params
-
-    //     if (!taskId) this.showTaskDetails = false
-    //     else this.showTaskDetails = true
-    //   },
-    //   immediate: true,
-    // },
-  },
   beforeDestroy() {
     document.removeEventListener('click', this.clickedOutGroupMenu)
   },

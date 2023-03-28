@@ -47,11 +47,22 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 
   .btn-remove-color {
     text-align: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  hr {
+    background-color: var(--ds-border, #091e4221);
+    border: 0;
+    height: 1px;
+    margin: 16px 0;
+    padding: 0;
+    width: 100%;
   }
 
   .label-btns-container {
@@ -60,8 +71,7 @@
     justify-content: space-between;
 
     .btn {
-      max-width: 3.5em;
-      color: #fff;
+      color: $secondary-clr1;
     }
   }
 }
