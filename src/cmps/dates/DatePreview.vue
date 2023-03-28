@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     dateForDisplay() {
-      return utilService.getFormattedDate(this.datedate)
+      return utilService.getFormattedDate(this.date)
     },
   },
   methods: {
