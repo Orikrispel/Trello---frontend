@@ -25,7 +25,9 @@ export default {
 
     },
     methods: {
-
+        changeCmp(data) {
+            this.$emit('changeCmp', data)
+        }
     },
     computed: {
     },

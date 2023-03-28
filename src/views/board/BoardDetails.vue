@@ -22,7 +22,7 @@
         <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" />
+      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="onSelectedColor" />
 
 
     </header>
