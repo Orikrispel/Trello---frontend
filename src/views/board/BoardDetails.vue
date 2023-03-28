@@ -1,8 +1,9 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
-    'background-color': board.style?.backgroundColor || '#333',
-    backgroundImage: getBoardBg(board) || 'none',
-    backgroundSize: 'cover',
+    'background-color': board.style?.backgroundColor || 'none',
+    'backgroundImage': 'url(' + board.style?.imgUrls.regular + ')' || 'none',
+    'backgroundSize': 'cover',
+    'background-position': 'center',
   }">
     <header class="board-header flex align-center justify-between gap">
       <div class="flex gap">
@@ -22,8 +23,7 @@
         <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="onSelectedColor" />
-
+      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
 
     </header>
     <main class="groups-wrapper flex">
@@ -92,19 +92,25 @@ export default {
     isStarred() {
       return this.board.isStarred
     },
+    getBgImg() {
+      console.log('this.board.style.imgUrls.thumb', this.board.style.imgUrls.thumb)
+      return this.board.style.imgUrls.thumb
+    }
 
   },
   methods: {
     openRightMenu() {
       eventBus.emit('openRightMenu')
     },
-    async onSelectedImg(newImgUrls) {
-      newBoard.style.imgUrls = { ...newImgUrls }
+    async setBgImg(newImgUrls) {
       const newBoard = JSON.parse(JSON.stringify(this.board))
+      newBoard.style.imgUrls = newImgUrls
+      console.log('newBoard', newBoard)
       newBoard.style.backgroundColor = ''
       await this.updateBoard(newBoard)
+      console.log('this.board.style.imgUrls.thumb', this.board.style.imgUrls.thumb)
     },
-    async onSelectedColor(newBg) {
+    async setBgColor(newBg) {
       const newBoard = JSON.parse(JSON.stringify(this.board))
       newBoard.style.backgroundColor = newBg
       newBoard.style.imgUrls = {}
@@ -120,10 +126,6 @@ export default {
       this.groupToAdd = this.$store.getEmptyGroup
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
-    },
-    getBoardBg(board) {
-      if (!board.style?.imgUrls) return null
-      else return `url(${board.style?.imgUrls.raw})`
     },
     async updateBoard(board) {
       try {

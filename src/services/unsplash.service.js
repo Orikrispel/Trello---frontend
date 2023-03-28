@@ -12,16 +12,16 @@ export const unsplashService = {
 }
 
 
-async function getImgs(query = 'israel', count = 4) {
+async function getImgs(query = 'israel', count = 4, isSearch = false) {
     const URL = `http://api.unsplash.com/search/photos?query=${query}&client_id=${API}&per_page=${count}`
     try {
         const savedImgs = utilService.loadFromStorage(UNSPLASH_KEY)
-        if (savedImgs) {
+        if (savedImgs && !isSearch) {
             return savedImgs
         }
         const imgs = await axios.get(URL)
+        console.log('imgs', imgs)
         const imgUrls = imgs.data.results.map(img => img.urls)
-        utilService.saveToStorage(UNSPLASH_KEY, imgUrls)
         return imgUrls
     }
     catch {

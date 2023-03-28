@@ -16,14 +16,26 @@ export default {
     data() {
         return {
             colorItems: [
-                ' #b7ddb0',
                 ' #f5ea92',
+                ' #b7ddb0',
                 '#fad29c',
+                '#7bc86c',
+                ' #ffaf3f',
                 ' #efb3ab',
+                '#ef7564',
                 ' #dfc0eb',
-            ],
+                '#cd8de5',
+                ' #5aac44',
+                ' #e6c60d',
+                ' #e79217',
+                ' #cf513d',
+                ' #5ba4cf',
+                ' #6deca9',
+                ' #f5dd29',
+            ]
         }
     },
+
     computed: {
         colorsForDisplay() {
 

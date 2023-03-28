@@ -16,12 +16,6 @@ import { svgService } from '../../services/svg.service';
 import { eventBus } from '../../services/event-bus.service'
 export default {
     name: 'RightMenuMain',
-    props: {
-        task: {
-            type: Object,
-            required: true,
-        },
-    },
     data() {
         return {
             currTask: null,
