@@ -15,7 +15,8 @@
 
     h1.board-title {
       font-family: "Segoe UI Bold";
-      color: $font-clr1;
+      // color: $font-clr1;
+      color: white;
       margin: 0;
       padding: 4px 8px;
       border-radius: 3px;
@@ -63,6 +64,7 @@
     height: 100%;
     overflow-x: scroll;
     overflow-y: visible;
+    margin-left: 7px;
 
     .new-group-container {
       margin: 0 4px;

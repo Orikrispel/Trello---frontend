@@ -188,6 +188,7 @@
 @media (max-width: 1000px) {
   .board-list {
     display: grid;
+    justify-content: space-between;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     padding: 0px;
     gap: 16px;
@@ -208,9 +209,10 @@
     background-color: #fff;
     box-shadow: $action-modal-shadow;
   }
-
+  // dark color function
   .board-list {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     li {
       width: 160px;
     }

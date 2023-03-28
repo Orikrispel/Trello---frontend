@@ -11,6 +11,9 @@
   transition-property: background-color, border-color, box-shadow;
   transition-duration: 85ms;
   transition-timing-function: ease;
+  .board-btn {
+    background-color: #026aa7;
+  }
 
   &.btn-dark {
     background-color: $btn-clr1;
