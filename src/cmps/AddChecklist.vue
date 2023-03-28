@@ -28,7 +28,7 @@ export default {
     computed: {
     },
     methods: {
-        async addChecklist() {
+        addChecklist() {
             this.checklistToAdd.id = 'cl' + utilService.makeId()
             let task = JSON.parse(JSON.stringify(this.actionData.task))
             if (!task.checklists) task.checklists = []
@@ -36,6 +36,7 @@ export default {
             this.checklistToAdd = checklistService.getEmptyChecklist()
             eventBus.emit('updateTask', task)
             this.$emit('setCreateModeOff')
+            console.log('checklist added')
         },
         closeModal() {
             this.$emit('setCreateModeOff')

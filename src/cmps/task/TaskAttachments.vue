@@ -1,7 +1,7 @@
 <template>
   <section class="task-attachments">
-    <p>{{ getChecklistStatus }}</p>
-    <p>{{ getMembers }}</p>
+    <p v-if="todosCount !== 0">{{ getChecklistStatus }}</p>
+    <p v-if="members">{{ getMembers }}</p>
   </section>
 </template>
 
@@ -18,6 +18,9 @@ export default {
   data() {
     return {
       currTask: null,
+      todosCount: 0,
+      todosDone: 0,
+      members: [],
     }
   },
   created() {
@@ -29,26 +32,41 @@ export default {
     getCurrTask(task) {
       this.currTask = task
     },
-  },
-  computed: {
-    getChecklistStatus() {
-      let count = 0
-      let counter = 0
+    setTodos() {
+      let countDone = 0
+      let countTodos = 0
       if (!this.task.checklists || this.task.checklists.length === 0) return
       this.task.checklists.forEach((checklist) => {
         checklist.todos.forEach((todo) => {
-          if (todo.isDone) count++
-          counter++
+          if (todo.isDone) countDone++
+          countTodos++
         })
       })
-      return `${count}/${counter}`
+      this.todosCount = countTodos
+      this.todosDone = countDone
+    },
+    setMembers() {
+      const members = this.task.members.map((member) => member.fullname)
+      this.members = members
+    }
+  },
+  computed: {
+    getChecklistStatus() {
+      return `${this.todosDone}/${this.todosCount}`
     },
     getMembers() {
-      if (!this.task.members) return
-      console.log('task members:', this.task.members)
-      // const members = this.task.members.map((member) => member.fullname)
-      // return `${members}`
+      return this.members.toString()
+    },
+  },
+  watch: {
+    task: {
+      immediate: true,
+      handler() {
+        this.setTodos()
+        this.setMembers()
+      },
     },
   },
 }
+
 </script>

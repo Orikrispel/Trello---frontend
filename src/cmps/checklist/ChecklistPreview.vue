@@ -26,7 +26,6 @@ export default {
     },
     methods: {
         onUpdateChecklist(todos) {
-            console.log('todos', todos)
             const currCheckList = JSON.parse(JSON.stringify(this.checklist))
             currCheckList.todos = [...todos]
             this.$emit('updateTask', currCheckList)

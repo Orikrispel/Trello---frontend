@@ -39,7 +39,6 @@ export default {
         onUpdateTask(checklistToAdd) {
             let task = JSON.parse(JSON.stringify(this.task))
             const idx = task.checklists.findIndex(checklist => checklist.id === checklistToAdd.id)
-            console.log('idx', idx)
             task.checklists.splice(idx, 1, checklistToAdd)
             eventBus.emit('updateTask', task)
         }

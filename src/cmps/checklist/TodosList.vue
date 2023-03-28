@@ -39,7 +39,6 @@ export default {
                 return
             }
             const newTodos = JSON.parse(JSON.stringify(this.todos))
-            console.log('newTodos', newTodos)
             const newTodo = {
                 id: 'td' + utilService.makeId(),
                 title: this.addTodoTitle,
