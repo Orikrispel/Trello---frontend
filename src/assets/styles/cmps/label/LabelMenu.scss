@@ -8,38 +8,13 @@
   overflow-x: hidden;
   overflow-y: auto;
 
-  &-header {
-    display: grid;
-    justify-self: center;
-    grid-template-columns: 1em 1fr 1em;
-    place-items: center;
-    width: 100%;
-    border-bottom: 1px solid var(--ds-border, rgba(9, 30, 66, 0.13));
-    font-weight: 400;
-    font-size: em(14px);
-    opacity: 0.5;
-
-    &>* {
-      grid-row: 1;
-    }
-
-    h3 {
-      justify-self: center;
-      grid-column: 2;
-      margin: 0;
-      font-weight: 200;
-    }
-
-    .btn-back {
-      grid-column: 1;
-      cursor: pointer;
-      scale: 1.5;
-    }
-
-    .btn-close {
-      grid-column: 3;
-      background-color: inherit;
-      cursor: pointer;
-    }
+  .btn-back {
+    cursor: pointer;
+    color: $font-clr5;
+    scale: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 12px;
   }
 }

@@ -1,324 +1,371 @@
-.colors-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.selected {
-  filter: brightness(90%);
-}
-
-.selected::before {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.color-item {
-  position: relative;
-  border-radius: 3px;
-  width: 40px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  svg {
-    color: white;
-    width: 18px;
+.label-menu {
+  .colors-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
   }
-  &:hover {
-    cursor: pointer;
+
+  .selected {
+    filter: brightness(90%);
   }
-}
 
-.color-item-1 {
-  background-color: $cover-clr1;
-
-  &:hover {
-    background-color: darken($cover-clr1, 10);
+  .selected::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
-}
 
-.color-item-2 {
-  background-color: $cover-clr2;
+  .color-item {
+    position: relative;
+    border-radius: 3px;
+    border: 2px transparent solid;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  &:hover {
-    background-color: darken($cover-clr2, 10);
+    svg {
+      color: white;
+      width: 18px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
-}
 
-.color-item-3 {
-  background-color: $cover-clr3;
+  .color-item-1 {
+    background-color: $label-clr1;
 
-  &:hover {
-    background-color: darken($cover-clr3, 10);
+    &:hover {
+      background-color: darken($label-clr1, 10);
+    }
   }
-}
 
-.color-item-4 {
-  background-color: $cover-clr4;
+  .color-item-2 {
+    background-color: $label-clr2;
 
-  &:hover {
-    background-color: darken($cover-clr4, 10);
+    &:hover {
+      background-color: darken($label-clr2, 10);
+    }
   }
-}
 
-.color-item-5 {
-  background-color: $cover-clr5;
+  .color-item-3 {
+    background-color: $label-clr3;
 
-  &:hover {
-    background-color: darken($cover-clr5, 10);
+    &:hover {
+      background-color: darken($label-clr3, 10);
+    }
   }
-}
 
-.color-item-6 {
-  background-color: $cover-clr6;
+  .color-item-4 {
+    background-color: $label-clr4;
 
-  &:hover {
-    background-color: darken($cover-clr6, 10);
+    &:hover {
+      background-color: darken($label-clr4, 10);
+    }
   }
-}
 
-.color-item-7 {
-  background-color: $label-clr9;
+  .color-item-5 {
+    background-color: $label-clr5;
 
-  &:hover {
-    background-color: darken($label-clr9, 10);
+    &:hover {
+      background-color: darken($label-clr5, 10);
+    }
   }
-}
 
-.color-item-8 {
-  background-color: $label-clr10;
+  .color-item-6 {
+    background-color: $label-clr6;
 
-  &:hover {
-    background-color: darken($label-clr10, 10);
+    &:hover {
+      background-color: darken($label-clr6, 10);
+    }
   }
-}
 
-.color-item-9 {
-  background-color: $label-clr11;
+  .color-item-7 {
+    background-color: $label-clr7;
 
-  &:hover {
-    background-color: darken($label-clr11, 10);
+    &:hover {
+      background-color: darken($label-clr7, 10);
+    }
   }
-}
 
-.color-item-10 {
-  background-color: $label-clr12;
+  .color-item-8 {
+    background-color: $label-clr8;
 
-  &:hover {
-    background-color: darken($label-clr12, 10);
+    &:hover {
+      background-color: darken($label-clr8, 10);
+    }
   }
-}
 
-.color-item-11 {
-  background-color: $label-clr13;
 
-  &:hover {
-    background-color: darken($label-clr13, 10);
+  .color-item-9 {
+    background-color: $label-clr9;
+
+    &:hover {
+      background-color: darken($label-clr9, 10);
+    }
   }
-}
 
-.color-item-12 {
-  background-color: $label-clr14;
+  .color-item-10 {
+    background-color: $label-clr10;
 
-  &:hover {
-    background-color: darken($label-clr14, 10);
+    &:hover {
+      background-color: darken($label-clr10, 10);
+    }
   }
-}
 
-.color-item-13 {
-  background-color: $label-clr15;
+  .color-item-11 {
+    background-color: $label-clr11;
 
-  &:hover {
-    background-color: darken($label-clr15, 10);
+    &:hover {
+      background-color: darken($label-clr11, 10);
+    }
   }
-}
 
-.color-item-14 {
-  background-color: $label-clr16;
+  .color-item-12 {
+    background-color: $label-clr12;
 
-  &:hover {
-    background-color: darken($label-clr16, 10);
+    &:hover {
+      background-color: darken($label-clr12, 10);
+    }
   }
-}
 
-.color-item-15 {
-  background-color: $label-clr17;
+  .color-item-13 {
+    background-color: $label-clr13;
 
-  &:hover {
-    background-color: darken($label-clr17, 10);
+    &:hover {
+      background-color: darken($label-clr13, 10);
+    }
   }
-}
 
-.color-item-16 {
-  background-color: $label-clr18;
+  .color-item-14 {
+    background-color: $label-clr14;
 
-  &:hover {
-    background-color: darken($label-clr18, 10);
+    &:hover {
+      background-color: darken($label-clr14, 10);
+    }
   }
-}
 
-.color-item-17 {
-  background-color: $label-clr19;
+  .color-item-15 {
+    background-color: $label-clr15;
 
-  &:hover {
-    background-color: darken($label-clr19, 10);
+    &:hover {
+      background-color: darken($label-clr15, 10);
+    }
   }
-}
 
-.color-item-18 {
-  background-color: $label-clr20;
+  .color-item-16 {
+    background-color: $label-clr16;
 
-  &:hover {
-    background-color: darken($label-clr20, 10);
+    &:hover {
+      background-color: darken($label-clr16, 10);
+    }
   }
-}
 
-.color-item-19 {
-  background-color: $label-clr21;
+  .color-item-17 {
+    background-color: $label-clr17;
 
-  &:hover {
-    background-color: darken($label-clr21, 10);
+    &:hover {
+      background-color: darken($label-clr17, 10);
+    }
   }
-}
 
-.color-item-20 {
-  background-color: $label-clr22;
+  .color-item-18 {
+    background-color: $label-clr18;
 
-  &:hover {
-    background-color: darken($label-clr22, 10);
+    &:hover {
+      background-color: darken($label-clr18, 10);
+    }
   }
-}
 
-.color-item-21 {
-  background-color: $label-clr23;
+  .color-item-19 {
+    background-color: $label-clr19;
 
-  &:hover {
-    background-color: darken($label-clr23, 10);
+    &:hover {
+      background-color: darken($label-clr19, 10);
+    }
   }
-}
 
-.color-item-22 {
-  background-color: $label-clr24;
+  .color-item-20 {
+    background-color: $label-clr20;
 
-  &:hover {
-    background-color: darken($label-clr24, 10);
+    &:hover {
+      background-color: darken($label-clr20, 10);
+    }
   }
-}
 
-.color-item-23 {
-  background-color: $label-clr25;
+  .color-item-21 {
+    background-color: $label-clr21;
 
-  &:hover {
-    background-color: darken($label-clr25, 10);
+    &:hover {
+      background-color: darken($label-clr21, 10);
+    }
   }
-}
 
-.color-item-24 {
-  background-color: $label-clr26;
+  .color-item-22 {
+    background-color: $label-clr22;
 
-  &:hover {
-    background-color: darken($label-clr26, 10);
+    &:hover {
+      background-color: darken($label-clr22, 10);
+    }
   }
-}
 
-.color-item-25 {
-  background-color: $label-clr27;
+  .color-item-23 {
+    background-color: $label-clr23;
 
-  &:hover {
-    background-color: darken($label-clr27, 10);
+    &:hover {
+      background-color: darken($label-clr23, 10);
+    }
   }
-}
 
-.color-item-26 {
-  background-color: $label-clr28;
+  .color-item-24 {
+    background-color: $label-clr24;
 
-  &:hover {
-    background-color: darken($label-clr28, 10);
+    &:hover {
+      background-color: darken($label-clr24, 10);
+    }
   }
-}
 
-.color-item-27 {
-  background-color: $label-clr29;
+  .color-item-25 {
+    background-color: $label-clr25;
 
-  &:hover {
-    background-color: darken($label-clr29, 10);
+    &:hover {
+      background-color: darken($label-clr25, 10);
+    }
   }
-}
 
-.color-item-28 {
-  background-color: $label-clr30;
+  .color-item-26 {
+    background-color: $label-clr26;
 
-  &:hover {
-    background-color: darken($label-clr30, 10);
+    &:hover {
+      background-color: darken($label-clr26, 10);
+    }
   }
-}
 
-.color-item-29 {
-  background-color: $label-clr31;
+  .color-item-27 {
+    background-color: $label-clr27;
 
-  &:hover {
-    background-color: darken($label-clr31, 10);
+    &:hover {
+      background-color: darken($label-clr27, 10);
+    }
   }
-}
 
-.color-item-30 {
-  background-color: $label-clr32;
 
-  &:hover {
-    background-color: darken($label-clr32, 10);
+  .color-item-28 {
+    background-color: $label-clr28;
+
+    &:hover {
+      background-color: darken($label-clr28, 10);
+    }
   }
-}
 
-.color-item-31 {
-  background-color: $label-clr33;
+  .color-item-29 {
+    background-color: $label-clr29;
 
-  &:hover {
-    background-color: darken($label-clr33, 10);
+    &:hover {
+      background-color: darken($label-clr29, 10);
+    }
+  }
+
+  .color-item-30 {
+    background-color: $label-clr30;
+
+    &:hover {
+      background-color: darken($label-clr30, 10);
+    }
   }
 }
 
-.color-item-32 {
-  background-color: $label-clr34;
-
-  &:hover {
-    background-color: darken($label-clr34, 10);
+.board-add-form {
+  .colors-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
   }
-}
 
-.color-item-33 {
-  background-color: $label-clr35;
-
-  &:hover {
-    background-color: darken($label-clr35, 10);
+  .selected {
+    filter: brightness(90%);
   }
-}
 
-.color-item-34 {
-  background-color: $label-clr36;
-
-  &:hover {
-    background-color: darken($label-clr36, 10);
+  .selected::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
-}
 
-.color-item-35 {
-  background-color: $label-clr37;
+  .color-item {
+    position: relative;
+    border-radius: 3px;
+    width: 40px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  &:hover {
-    background-color: darken($label-clr37, 10);
+    svg {
+      color: white;
+      width: 18px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
-}
 
-.color-item-36 {
-  background-color: $label-clr38;
+  .color-item-1 {
+    background-color: $cover-clr1;
 
-  &:hover {
-    background-color: darken($label-clr38, 10);
+    &:hover {
+      background-color: darken($cover-clr1, 10);
+    }
+  }
+
+  .color-item-2 {
+    background-color: $cover-clr2;
+
+    &:hover {
+      background-color: darken($cover-clr2, 10);
+    }
+  }
+
+  .color-item-3 {
+    background-color: $cover-clr3;
+
+    &:hover {
+      background-color: darken($cover-clr3, 10);
+    }
+  }
+
+  .color-item-4 {
+    background-color: $cover-clr4;
+
+    &:hover {
+      background-color: darken($cover-clr4, 10);
+    }
+  }
+
+  .color-item-5 {
+    background-color: $cover-clr5;
+
+    &:hover {
+      background-color: darken($cover-clr5, 10);
+    }
+  }
+
+  .color-item-6 {
+    background-color: $cover-clr6;
+
+    &:hover {
+      background-color: darken($cover-clr6, 10);
+    }
   }
 }
