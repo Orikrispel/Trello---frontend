@@ -1,9 +1,9 @@
 .add-checklist-form {
-  // fix to pixel perfect
   display: flex;
+  flex-direction: column;
   color: $font-clr3;
   align-items: flex-start;
-  flex-direction: column;
+  padding: 0 12px;
 
   label {
     margin: 0;
@@ -11,23 +11,38 @@
     font-weight: 700;
   }
 
-  input {
-    margin: 0;
-    border: none;
-    border-radius: 3px;
-    box-shadow: $input-shadow;
-    outline: none;
-    padding: 8px 12px;
+  h4 {
+    font-size: 0.75rem;
+    color: #5e6c84;
+    line-height: 16px;
+    margin: 4px 0;
     width: 100%;
   }
 
-  button {
+  input {
+    width: 100%;
+    border-radius: 3px;
+    border: none;
+    background-color: $secondary-clr2;
+    box-shadow: $input-shadow;
+    opacity: 0.8;
+    margin: 0 0 12px;
 
     &:hover {
-      filter: brightness(120%);
+      background-color: $secondary-clr3;
+    }
+
+    &:focus {
+      box-shadow: inset 0 0 0 2px $primary-clr4;
+    }
+  }
+
+  button {
+    padding-left: 24px;
+    padding-right: 24px;
+
+    &:hover {
       background-color: $primary-clr1;
-      color: $secondary-clr2;
-      cursor: pointer;
     }
   }
 

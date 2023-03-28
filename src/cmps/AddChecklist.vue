@@ -1,9 +1,8 @@
 <template>
     <form @submit.prevent="addChecklist" class="add-checklist-form">
-        <div>
-            <input type="text" style="margin-top: 25px;" v-model="checklistToAdd.title">
-            <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
-        </div>
+        <h4>Title</h4>
+        <input type="text" v-model="checklistToAdd.title">
+        <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
     </form>
 </template>
 

@@ -106,8 +106,22 @@
   }
 }
 
+.right-colors-container {
+  display: grid;
+  grid-template-columns: repeat(2, 150px);
+  justify-content: space-evenly;
+}
+
 .right-menu-color {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  width: 150px;
+  height: 100px;
   padding: 30px;
   display: flex;
   flex-direction: column;
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+  }
 }

@@ -36,6 +36,10 @@
   .inner-content {
     max-height: 80vh;
     overflow: auto;
+
+    input {
+      font-size: rem(14px)
+    }
   }
 }
 

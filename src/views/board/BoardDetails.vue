@@ -22,7 +22,7 @@
         <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" />
+      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="onSelectedColor" />
 
 
     </header>
@@ -80,7 +80,6 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
-    console.log('this.board', this.board.style.imgUrls)
   },
   computed: {
     loggedInUser() {
