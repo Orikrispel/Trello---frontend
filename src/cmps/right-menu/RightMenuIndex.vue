@@ -1,7 +1,7 @@
 <template>
     <section class="right-menu" :class="{ 'show': isMenuOpen }">
         <div class="add-form-header right-menu-header">
-            <!-- <span>back icon</span> -->
+            <span class="icon btn-back" v-html="getSvg('arrowLeft')"></span>
             <h5 id="right-menu-h5">Menu</h5>
             <span class="icon btn-close icon-close" @click.stop="closeMenu"></span>
         </div>
@@ -12,13 +12,14 @@
 <script>
 import ChangeBgMenu from './ChangeBgMenu.vue';
 import RightMenuMain from './RightMenuMain.vue';
+import RightMenuColors from './RightMenuColors.vue';
 import { eventBus } from '../../services/event-bus.service';
 import { svgService } from '../../services/svg.service';
 export default {
     name: 'RightMenu',
     data() {
         return {
-            currCmp: 'RightMenuMain',
+            currCmp: 'RightMenuColors',
             isMenuOpen: false,
         }
     },
@@ -26,6 +27,7 @@ export default {
     components: {
         RightMenuMain,
         ChangeBgMenu,
+        RightMenuColors,
     },
     methods: {
         closeModal() {
