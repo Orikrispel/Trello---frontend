@@ -1,14 +1,19 @@
 .date-picker-container {
+  padding-inline: 12px;
+
   .dp__menu {
     border: none;
   }
+
   .custom-time-picker-component {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
+
       .txt-inputs-container.disabled {
         cursor: not-allowed;
       }
@@ -29,6 +34,7 @@
           pointer-events: none;
         }
       }
+
       label {
         display: inline-block;
         width: 100%;
@@ -42,6 +48,7 @@
         color: $font-clr3;
       }
     }
+
     input[type='checkbox'] {
       margin-top: 0;
       overflow: hidden;
@@ -55,12 +62,14 @@
       padding: 0;
       margin-inline-end: 8px;
     }
+
     .start-date-container {
       max-width: 100%;
       margin-bottom: rem(12px);
     }
-    .due-date-container {
-    }
+
+    .due-date-container {}
+
     .txt-input {
       width: rem(90px);
       border: 1px solid black;
