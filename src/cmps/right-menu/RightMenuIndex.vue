@@ -6,7 +6,7 @@
             <h5 id="right-menu-h5">{{ getCurrTitle }}</h5>
             <span class="icon btn-close icon-close" @click.stop="closeMenu"></span>
         </div>
-        <component :is="currCmp" @changeCmp="changeCmp" @setBgColor="setBgColor" />
+        <component :is="currCmp" @changeCmp="changeCmp" @setBgColor="setBgColor" @setBgImg="setBgImg" />
     </section>
 </template>
 
@@ -14,6 +14,7 @@
 import ChangeBgMenu from './ChangeBgMenu.vue';
 import RightMenuMain from './RightMenuMain.vue';
 import RightMenuColors from './RightMenuColors.vue';
+import RightMenuImgs from './RightMenuImgs.vue';
 import { eventBus } from '../../services/event-bus.service';
 import { svgService } from '../../services/svg.service';
 export default {
@@ -31,7 +32,7 @@ export default {
                     return 'Colors'
                 case 'RightMenuMain':
                     return 'Menu'
-                case 'RightMenuPhotos':
+                case 'RightMenuImgs':
                     return 'Photos'
                 case 'ChangeBgMenu':
                     return 'Change Background'
@@ -42,6 +43,7 @@ export default {
         RightMenuMain,
         ChangeBgMenu,
         RightMenuColors,
+        RightMenuImgs,
     },
     methods: {
         closeModal() {
@@ -63,13 +65,17 @@ export default {
         setBgColor(color) {
             this.$emit('setBgColor', color)
         },
+        setBgImg(imgUrls) {
+            console.log('imgUrls', imgUrls)
+            this.$emit('setBgImg', imgUrls)
+        },
         setCmp() {
-            debugger
+
             switch (this.currCmp) {
                 case 'RightMenuColors':
                     this.currCmp = 'ChangeBgMenu'
                     break
-                case 'RightMenuPhotos':
+                case 'RightMenuImgs':
                     this.currCmp = 'ChangeBgMenu'
                     break
                 case 'ChangeBgMenu':
