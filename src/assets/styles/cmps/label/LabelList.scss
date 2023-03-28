@@ -50,12 +50,15 @@
       border-radius: 3px;
     }
 
-    .label-preview {
-      color: $font-clr1;
+    .label-checkbox {
       width: 100%;
-      cursor: pointer;
-      border-radius: 3px;
-      margin-left: 12px;
+
+      .label-preview {
+        color: $font-clr1;
+        cursor: pointer;
+        border-radius: 3px;
+        margin-left: 12px;
+      }
     }
 
     .pencil-icon {
