@@ -217,7 +217,7 @@ export default {
   name: 'TaskDetails',
   data() {
     return {
-      task: {},
+      task: this.$store.getters.emptyTask,
       board: {},
       group: {},
       userIsEditing: false,
@@ -231,16 +231,18 @@ export default {
     eventBus.on('updateTask', (task) => {
       this.saveTask(task)
     })
-    const { taskId } = this.$route.params
-    let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-    console.log(task)
-    if (!task) task = this.$store.getters.emptyTask
-    this.task = { ...task }
+    eventBus.on('removeTaskLabel', (labelId) => {
+      this.removeTaskLabel(labelId)
+    })
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
+    const { taskId } = this.$route.params
+    let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
 
+    if (!task) task = this.$store.getters.emptyTask
+    this.task = { ...task }
     let groups = this.board.groups
     for (const group of groups) {
       let { tasks } = group
@@ -265,12 +267,14 @@ export default {
       console.log(this.task)
     },
     async saveTask(task) {
+      console.log('before update task', this.task)
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
         console.log('group', group)
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
+      console.log('after update task', task)
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
@@ -298,13 +302,21 @@ export default {
         showErrorMsg(errMsg)
       }
     },
+    removeTaskLabel(labelId) {
+      let board = JSON.parse(JSON.stringify(this.board))
+
+      const labelIdx = this.task.labels.findIndex((l) => l.id === labelId)
+      console.log('labelIdx:', labelIdx)
+      this.task.labels.splice(labelIdx, 1)
+
+      const labelIdxFromBoard = board.labels.findIndex((l) => l.id === labelId)
+      board.labels.splice(labelIdxFromBoard, 1)
+      this.board = board
+
+      this.saveTask(this.task)
+    }
   },
   computed: {
-    // currTask() {
-    //   let task = this.$store.getters.currTask
-    //   if (!task) task = this.$store.getters.emptyTask
-    //   this.task = this.currTask
-    // },
     boardId() {
       const { boardId } = this.$route.params
       return boardId
@@ -319,6 +331,18 @@ export default {
         const { taskId, boardId } = this.$route.params
         let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
         this.task = task
+      },
+      immediate: true,
+    },
+    board: {
+      async handler() {
+        if (this.board) {
+          // await this.$store.dispatch({ type: 'loadBoards' })
+          this.board = await this.$store.dispatch({
+            type: 'loadCurrBoard',
+            boardId: this.boardId,
+          })
+        }
       },
       immediate: true,
     },

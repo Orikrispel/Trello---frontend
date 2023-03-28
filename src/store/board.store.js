@@ -215,11 +215,10 @@ export const boardStore = {
         console.log('could not save task at the moment')
       }
     },
-    loadCurrTask({ state, commit }, { taskId }) {
+    async loadCurrTask({ state, commit }, { taskId }) {
       let board = state.currBoard
-      if (!board) {
-        return
-      }
+      if (!board) return
+
       let groups = board.groups
       let currTask = null
       for (const group of groups) {

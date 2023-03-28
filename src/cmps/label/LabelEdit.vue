@@ -22,6 +22,7 @@
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
+import { eventBus } from '../../services/event-bus.service';
 import LabelPreview from './LabelPreview.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import { getActionUpdateBoard } from '../../store/board.store'
@@ -47,10 +48,7 @@ export default {
       this.creatingNewLabel = true
     }
     this.label = { ...label }
-    this.board = await this.$store.dispatch({
-      type: 'loadCurrBoard',
-      boardId: this.boardId,
-    })
+    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
   },
   methods: {
     setColor(color) {
@@ -75,16 +73,9 @@ export default {
       this.$emit('toggleLabelEdit')
     },
     async removeLabel() {
-      let label = { ...this.label }
-      let board = JSON.parse(JSON.stringify(this.board))
-      const labelIdx = board.labels.findIndex((l) => l.id === label.id)
-      board.labels.splice(labelIdx, 1)
-      try {
-        await this.updateBoard(board, 'Label removed', 'Failed to remove label')
-      } catch (err) {
-        console.log(err, "couldn't remove label")
-      }
+      eventBus.emit('removeTaskLabel', this.label.id)
       this.$emit('toggleLabelEdit')
+      console.log('hi')
     },
     async updateBoard(board, successMsg, errMsg) {
       try {
@@ -95,6 +86,20 @@ export default {
         console.log(err)
         showErrorMsg(errMsg)
       }
+    },
+  },
+  watch: {
+    board: {
+      async handler() {
+        if (this.board) {
+          // await this.$store.dispatch({ type: 'loadBoards' })
+          this.board = await this.$store.dispatch({
+            type: 'loadCurrBoard',
+            boardId: this.boardId,
+          })
+        }
+      },
+      immediate: true,
     },
   },
   components: {

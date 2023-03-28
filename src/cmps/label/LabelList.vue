@@ -41,6 +41,7 @@ export default {
   },
   computed: {
     currLabels() {
+      console.log('calculate current labels')
       return this.$store.getters.currLabels
     },
     taskId() {
@@ -112,6 +113,18 @@ export default {
     },
   },
   watch: {
+    board: {
+      async handler() {
+        if (this.board) {
+          // await this.$store.dispatch({ type: 'loadBoards' })
+          this.board = await this.$store.dispatch({
+            type: 'loadCurrBoard',
+            boardId: this.boardId,
+          })
+        }
+      },
+      immediate: true,
+    },
   },
   components: {
     LabelPreview,
