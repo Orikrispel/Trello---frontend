@@ -202,6 +202,7 @@ import {
   showErrorMsg,
   showSuccessMsg,
 } from '../services/event-bus.service'
+import { mapGetters } from 'vuex'
 import { svgService } from '../services/svg.service'
 import DatePicker from '../cmps/dates/DatePicker.vue'
 import MembersList from '../cmps/members/MembersList.vue'
@@ -230,6 +231,9 @@ export default {
   async created() {
     eventBus.on('updateTask', (task) => {
       this.saveTask(task)
+    })
+    eventBus.on('updateBoard', (board) => {
+      this.updateBoard(board)
     })
     eventBus.on('removeLabel', (labelId) => {
       this.removeLabel(labelId)
@@ -264,23 +268,16 @@ export default {
       console.log(this.task)
     },
     async saveTask(task) {
-      console.log('before update task', this.task)
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
-      console.log('after update task', task)
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
       this.task = updatedTask
-      try {
-        await this.updateBoard(board, 'Task updated', 'Failed to updated task')
-      } catch (err) {
-        console.log('failed to updated task')
-        throw err
-      }
+      this.updateBoard(board, 'Task updated', 'Failed to updated task')
     },
     closeTaskDetails() {
       this.$router.push(`/board/${this.board._id}`)
@@ -288,7 +285,7 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    async updateBoard(board, successMsg, errMsg) {
+    async updateBoard(board, successMsg = 'board saved', errMsg = 'couldn\'t save board') {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
@@ -313,6 +310,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currBoard']),
     boardId() {
       const { boardId } = this.$route.params
       return boardId
@@ -330,11 +328,10 @@ export default {
       },
       immediate: true,
     },
-    board: {
-      handler() {
-        if (this.board) {
-          this.board = this.$store.getters.currBoard
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },

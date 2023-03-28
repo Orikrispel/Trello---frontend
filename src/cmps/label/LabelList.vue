@@ -24,6 +24,8 @@
 import { eventBus } from '../../services/event-bus.service'
 import LabelPreview from './LabelPreview.vue'
 import { svgService } from '../../services/svg.service'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'LabelList',
   props: {
@@ -46,6 +48,7 @@ export default {
     })
   },
   computed: {
+    ...mapGetters(['currBoard']),
     taskId() {
       const { taskId } = this.$route.params
       return taskId
@@ -100,11 +103,10 @@ export default {
     },
   },
   watch: {
-    board: {
-      handler() {
-        if (this.board) {
-          this.board = this.$store.getters.currBoard
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },

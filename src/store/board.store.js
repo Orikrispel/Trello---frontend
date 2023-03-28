@@ -123,7 +123,6 @@ export const boardStore = {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
     setCurrBoard(state, { board }) {
-      console.log('currBoard updated:', board)
       state.currBoard = board
     },
     setCurrTask(state, { task }) {
@@ -230,7 +229,7 @@ export const boardStore = {
       }
       return currTask
     },
-    async setCurrLabel({ state, commit }, { labelId }) {
+    setCurrLabel({ state, commit }, { labelId }) {
       let currLabel
       if (labelId) {
         let board = state.currBoard

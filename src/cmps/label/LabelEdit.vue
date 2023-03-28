@@ -26,6 +26,8 @@ import { eventBus } from '../../services/event-bus.service';
 import LabelPreview from './LabelPreview.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
 import { getActionUpdateBoard } from '../../store/board.store'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'LabelEdit',
   data() {
@@ -36,6 +38,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currBoard']),
     boardId() {
       const { boardId } = this.$route.params
       return boardId
@@ -63,12 +66,7 @@ export default {
         const labelIdx = board.labels.findIndex((l) => l.id === label.id)
         board.labels.splice(labelIdx, 1, label)
       }
-      try {
-        await this.updateBoard(board, 'Label Saved', 'Failed to save label')
-      } catch (err) {
-        console.log('failed to save label')
-        throw err
-      }
+      eventBus.emit('updateBoard', board)
       this.$emit('toggleLabelEdit')
     },
     removeLabel() {
@@ -76,23 +74,12 @@ export default {
       this.$emit('toggleLabelEdit')
 
     },
-    async updateBoard(board, successMsg, errMsg) {
-      try {
-        this.board = board
-        await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg(successMsg)
-      } catch (err) {
-        console.log(err)
-        showErrorMsg(errMsg)
-      }
-    },
   },
   watch: {
-    board: {
-      handler() {
-        if (this.board) {
-          this.board = this.$store.getters.currBoard
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },

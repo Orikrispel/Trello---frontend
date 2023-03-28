@@ -58,6 +58,8 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
+import { mapGetters } from 'vuex'
+
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -82,6 +84,7 @@ export default {
     })
   },
   computed: {
+    ...mapGetters(['currBoard']),
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -177,11 +180,10 @@ export default {
     },
   },
   watch: {
-    board: {
-      handler() {
-        if (this.board) {
-          this.board = this.$store.getters.currBoard
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },
