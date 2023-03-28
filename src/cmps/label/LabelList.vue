@@ -4,8 +4,10 @@
     <h4>Labels</h4>
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="label.id">
-        <input type="checkbox" />
-        <LabelPreview :label="label" @click="addLabelToTask(label)" />
+        <input type="checkbox" :id="[`label-checkbox${idx}`]" @input="addLabelToTask(label)" />
+        <label class="label-checkbox" :for="[`label-checkbox${idx}`]">
+          <LabelPreview :label="label" />
+        </label>
         <button class="btn-sm clean-btn" @click="editLabel(label.id)">
           <span class="icon pencil-icon" v-html="getSvg('pencil')"></span>
         </button>
