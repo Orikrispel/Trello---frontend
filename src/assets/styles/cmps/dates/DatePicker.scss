@@ -3,6 +3,17 @@
 
   .dp__menu {
     border: none;
+    .dp__month_year_wrap {
+      pointer-events: none;
+      justify-content: center;
+    }
+    .dp__month_year_select {
+      margin-inline-end: rem(10px);
+      width: rem(30px);
+      font-size: em(14px);
+      color: $font-clr1;
+      font-weight: 600;
+    }
   }
 
   .custom-time-picker-component {
@@ -68,7 +79,8 @@
       margin-bottom: rem(12px);
     }
 
-    .due-date-container {}
+    .due-date-container {
+    }
 
     .txt-input {
       width: rem(90px);
