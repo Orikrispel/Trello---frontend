@@ -202,6 +202,7 @@ import {
   showErrorMsg,
   showSuccessMsg,
 } from '../services/event-bus.service'
+import { mapGetters } from 'vuex'
 import { svgService } from '../services/svg.service'
 import DatePicker from '../cmps/dates/DatePicker.vue'
 import MembersList from '../cmps/members/MembersList.vue'
@@ -231,8 +232,11 @@ export default {
     eventBus.on('updateTask', (task) => {
       this.saveTask(task)
     })
-    eventBus.on('removeTaskLabel', (labelId) => {
-      this.removeTaskLabel(labelId)
+    eventBus.on('updateBoard', (board) => {
+      this.updateBoard(board)
+    })
+    eventBus.on('removeLabel', (labelId) => {
+      this.removeLabel(labelId)
     })
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
@@ -240,7 +244,6 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
     let groups = this.board.groups
@@ -274,12 +277,7 @@ export default {
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
       this.task = updatedTask
-      try {
-        await this.updateBoard(board, 'Task updated', 'Failed to updated task')
-      } catch (err) {
-        console.log('failed to updated task')
-        throw err
-      }
+      this.updateBoard(board, 'Task updated', 'Failed to updated task')
     },
     closeTaskDetails() {
       this.$router.push(`/board/${this.board._id}`)
@@ -287,7 +285,7 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    async updateBoard(board, successMsg, errMsg) {
+    async updateBoard(board, successMsg = 'board saved', errMsg = 'couldn\'t save board') {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
@@ -297,7 +295,7 @@ export default {
         showErrorMsg(errMsg)
       }
     },
-    removeTaskLabel(labelId) {
+    removeLabel(labelId) {
       let board = JSON.parse(JSON.stringify(this.board))
 
       const labelIdx = this.task.labels.findIndex((l) => l.id === labelId)
@@ -312,6 +310,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currBoard']),
     boardId() {
       const { boardId } = this.$route.params
       return boardId
@@ -329,15 +328,10 @@ export default {
       },
       immediate: true,
     },
-    board: {
-      async handler() {
-        if (this.board) {
-          // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({
-            type: 'loadCurrBoard',
-            boardId: this.boardId,
-          })
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },

@@ -1,9 +1,9 @@
 <template>
-  <div class="labels-list">
-    <input type="text" name="label-search" placeholder="Search labels..." v-model="filterBy" @input="searchLabels" />
+  <div v-if="board" class="labels-list">
+    <input type="text" name="label-search" placeholder="Search labels..." v-model="filterBy" />
     <h4>Labels</h4>
-    <ul class="clean-list">
-      <li class="label-list-item" v-for="(label, idx) in labels" :key="label.id">
+    <ul v-if="labels" class="clean-list">
+      <li class="label-list-item" v-for="(label) in labels" :key="label.id">
         <input type="checkbox" :checked="isChecked(label.id)" :id="[`label-checkbox-${label.id}`]"
           @input="addLabelToTask(label)" />
         <label class="label-checkbox" :for="[`label-checkbox-${label.id}`]">
@@ -24,6 +24,8 @@
 import { eventBus } from '../../services/event-bus.service'
 import LabelPreview from './LabelPreview.vue'
 import { svgService } from '../../services/svg.service'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'LabelList',
   props: {
@@ -33,17 +35,20 @@ export default {
   },
   data() {
     return {
-      labels: [],
       board: null,
       task: null,
       filterBy: '',
     }
   },
+  async created() {
+    this.board = this.$store.getters.currBoard
+    this.task = await this.$store.dispatch({
+      type: 'loadCurrTask',
+      taskId: this.taskId,
+    })
+  },
   computed: {
-    currLabels() {
-      console.log('calculate current labels')
-      return this.$store.getters.currLabels
-    },
+    ...mapGetters(['currBoard']),
     taskId() {
       const { taskId } = this.$route.params
       return taskId
@@ -52,32 +57,17 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
-  },
-  async mounted() {
-    this.board = await this.$store.dispatch({
-      type: 'loadCurrBoard',
-      boardId: this.boardId,
-    })
-    this.task = await this.$store.dispatch({
-      type: 'loadCurrTask',
-      taskId: this.taskId,
-    })
-    let { labels } = this.board
-    if (!labels || !labels.length)
-      labels = this.$store.getters.defaultEmptyLabels
-    this.labels = labels
-  },
-  methods: {
-    searchLabels() {
-      let labels
+    labels() {
+      let labels = this.board.labels
+      console.log('updated labels:', labels)
       if (this.filterBy) {
         const regex = new RegExp(this.filterBy, 'i')
         labels = this.labels.filter((label) => regex.test(label.title))
-      } else {
-        labels = this.board.labels
       }
-      this.labels = labels
+      return labels
     },
+  },
+  methods: {
     isChecked(labelId) {
       if (!this.taskLabels) return
       return this.taskLabels.find(l => l.id === labelId)
@@ -113,15 +103,10 @@ export default {
     },
   },
   watch: {
-    board: {
-      async handler() {
-        if (this.board) {
-          // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({
-            type: 'loadCurrBoard',
-            boardId: this.boardId,
-          })
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        console.log('currBoard changed:', newBoard);
+        this.board = newBoard
       },
       immediate: true,
     },

@@ -68,9 +68,6 @@ export const boardStore = {
     currBoard({ currBoard }) {
       return currBoard
     },
-    currLabels({ currBoard }) {
-      return currBoard.labels
-    },
     currLabel({ currLabel }) {
       return currLabel
     },
@@ -150,6 +147,7 @@ export const boardStore = {
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
+        context.commit({ type: 'setCurrBoard', board })
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
@@ -231,7 +229,7 @@ export const boardStore = {
       }
       return currTask
     },
-    async setCurrLabel({ state, commit }, { labelId }) {
+    setCurrLabel({ state, commit }, { labelId }) {
       let currLabel
       if (labelId) {
         let board = state.currBoard

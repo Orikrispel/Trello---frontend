@@ -29,7 +29,7 @@ export default {
     },
     async backFromEdit() {
       this.userIsEditing = false
-      await this.$store.dispatch({ type: 'setCurrLabel', labelId: null })
+      // await this.$store.dispatch({ type: 'setCurrLabel', labelId: null })
     },
   },
   watch: {
