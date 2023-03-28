@@ -7,22 +7,14 @@
         </RouterLink>
       </header>
 
-      <RouterLink
-        v-if="!task.cover"
-        :to="`/board/${boardId}`"
-        class="btn-close">
+      <RouterLink v-if="!task.cover" :to="`/board/${boardId}`" class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
       <div class="task-container">
         <div class="task-container-heading flex column">
           <div class="task-title-wrapper">
-            <h2
-              class="task-title fs20"
-              contenteditable="true"
-              @blur="updateTitle">
-              <span
-                contenteditable="false"
-                class="icon header-icon icon-lg"></span>
+            <h2 class="task-title fs20" contenteditable="true" @blur="updateTitle">
+              <span contenteditable="false" class="icon header-icon icon-lg"></span>
               {{ task.title ? task.title : 'new title' }}
             </h2>
           </div>
@@ -36,15 +28,12 @@
             <div class="member-container">
               <h3 class="fs12 inner-title">Members</h3>
               <ul class="task-heading-member-list flex clean-list">
-                <li
-                  v-for="member in task.members"
-                  :key="member._id"
-                  class="member">
+                <li v-for="member in task.members" :key="member._id" class="member">
                   <div class="member-img">
                     {{
                       member.imgUrl
-                        ? member.imgUrl
-                        : member.fullname.charAt(0).toUpperCase()
+                      ? member.imgUrl
+                      : member.fullname.charAt(0).toUpperCase()
                     }}
                   </div>
                 </li>
@@ -69,23 +58,16 @@
             <ChecklistList :task="task" />
 
             <!-- description -->
-            <form
-              class="description-editor editor"
-              @submit.prevent="handleDesc">
+            <form class="description-editor editor" @submit.prevent="handleDesc">
               <h3>
                 <span class="icon description-icon icon-lg"></span>Description
               </h3>
-              <button
-                class="btn btn-light"
-                v-if="!userIsEditing && task.description"
+              <button class="btn btn-light" v-if="!userIsEditing && task.description"
                 @click="userIsEditing = !userIsEditing">
                 Edit
               </button>
 
-              <p
-                class="btn btn-desc"
-                v-if="!userIsEditing && !task.description"
-                @click="userIsEditing = !userIsEditing">
+              <p class="btn btn-desc" v-if="!userIsEditing && !task.description" @click="userIsEditing = !userIsEditing">
                 Add a more detailed description...
                 <br />
                 <br />
@@ -93,15 +75,9 @@
               <p v-if="!userIsEditing" @click="handleDesc">
                 {{ task.description }}
               </p>
-              <textarea
-                v-if="userIsEditing"
-                v-model="task.description"
-                @blur="userIsEditing = false"
+              <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = false"
                 autofocus></textarea>
-              <button
-                class="btn btn-blue"
-                v-if="userIsEditing"
-                @click="saveTask(task)">
+              <button class="btn btn-blue" v-if="userIsEditing" @click="saveTask(task)">
                 Save
               </button>
               <button class="btn btn-cancel-submit" v-if="userIsEditing">
@@ -119,25 +95,19 @@
                   <div class="member-img icon icon-lg">
                     {{
                       loggedInUser.imgUrl
-                        ? loggedInUser.imgUrl
-                        : loggedInUser.fullname.charAt(0).toUpperCase()
+                      ? loggedInUser.imgUrl
+                      : loggedInUser.fullname.charAt(0).toUpperCase()
                     }}
                   </div>
-                  <textarea
-                    name="comment"
-                    placeholder="Write a comment..."></textarea>
+                  <textarea name="comment" placeholder="Write a comment..."></textarea>
                 </div>
               </form>
-              <ul
-                v-if="task.comments && task.comments.length"
-                class="clean-list">
+              <ul v-if="task.comments && task.comments.length" class="clean-list">
                 <li v-for="(comment, idx) in task.comments" :key="idx">
                   {{ comment }}
                 </li>
               </ul>
-              <ul
-                v-if="task.activities && task.activities.length"
-                class="clean-list">
+              <ul v-if="task.activities && task.activities.length" class="clean-list">
                 <li v-for="(activity, idx) in task.activities" :key="idx">
                   {{ activity }}
                 </li>
@@ -192,19 +162,14 @@
                   <template v-slot:title>Add checklist</template>
 
                   <template v-slot scope="props">
-                    <AddChecklist
-                      :actionData="{ task: task }"
-                      @setCreateModeOff="checklistMenuOpen = false" />
+                    <AddChecklist :actionData="{ task: task }" @setCreateModeOff="checklistMenuOpen = false" />
                   </template>
                 </DynamicModal>
               </template>
             </VDropdown>
             <VDropdown :distance="6" :placement="'left'">
               <button>
-                <span
-                  class="icon icon-small time-icon"
-                  v-html="getSvg('watch')"></span
-                >Dates
+                <span class="icon icon-small time-icon" v-html="getSvg('watch')"></span>Dates
               </button>
 
               <template #popper>
@@ -252,7 +217,7 @@ export default {
   name: 'TaskDetails',
   data() {
     return {
-      task: {},
+      task: this.$store.getters.emptyTask,
       board: {},
       group: {},
       userIsEditing: false,
@@ -266,16 +231,18 @@ export default {
     eventBus.on('updateTask', (task) => {
       this.saveTask(task)
     })
+    eventBus.on('removeTaskLabel', (labelId) => {
+      this.removeTaskLabel(labelId)
+    })
+    this.board = await this.$store.dispatch({
+      type: 'loadCurrBoard',
+      boardId: this.boardId,
+    })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
     console.log(task)
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
-    this.board = await this.$store.dispatch({
-      type: 'loadCurrBoard',
-      boardId: this.boardId,
-    })
-
     let groups = this.board.groups
     for (const group of groups) {
       let { tasks } = group
@@ -330,6 +297,19 @@ export default {
         showErrorMsg(errMsg)
       }
     },
+    removeTaskLabel(labelId) {
+      let board = JSON.parse(JSON.stringify(this.board))
+
+      const labelIdx = this.task.labels.findIndex((l) => l.id === labelId)
+      console.log('labelIdx:', labelIdx)
+      this.task.labels.splice(labelIdx, 1)
+
+      const labelIdxFromBoard = board.labels.findIndex((l) => l.id === labelId)
+      board.labels.splice(labelIdxFromBoard, 1)
+      this.board = board
+
+      this.saveTask(this.task)
+    }
   },
   computed: {
     // currTask() {
@@ -351,6 +331,18 @@ export default {
         const { taskId, boardId } = this.$route.params
         let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
         this.task = task
+      },
+      immediate: true,
+    },
+    board: {
+      async handler() {
+        if (this.board) {
+          // await this.$store.dispatch({ type: 'loadBoards' })
+          this.board = await this.$store.dispatch({
+            type: 'loadCurrBoard',
+            boardId: this.boardId,
+          })
+        }
       },
       immediate: true,
     },

@@ -105,10 +105,11 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   }
 }
 
-function getEmptyTask(title = '', description = '', labels = [], members = []) {
+function getEmptyTask(title = '', description = '', labels = [], members = [], cover = null) {
   return {
     id: utilService.makeId(),
     title,
+    cover,
     type: 'draggable',
     props: {
       className: 'card',

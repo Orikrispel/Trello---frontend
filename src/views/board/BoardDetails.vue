@@ -80,7 +80,6 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
-    console.log('this.board', this.board.style.imgUrls)
   },
   computed: {
     loggedInUser() {
