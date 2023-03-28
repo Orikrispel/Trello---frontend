@@ -15,14 +15,14 @@
       </div>
 
       <div class="flex board-right-actions" :class="{ 'move-right-actions': isRightMenuOpen }">
+        <!-- <div class="right-menu-open" v-if="isRightMenuOpen"></div> -->
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <div class="right-menu-open" v-if="isRightMenuOpen"></div>
-        <button @click="isRightMenuOpen = !isRightMenuOpen" class="btn btn-light" v-if="!isRightMenuOpen"
+        <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <BoardRightMenu v-if="isRightMenuOpen" @closeRightMenu="isRightMenuOpen = false" />
+      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" />
 
 
     </header>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import BoardRightMenu from '../../cmps/BoardRightMenu.vue'
+import RightMenuIndex from '../../cmps/right-menu/RightMenuIndex.vue'
 import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
@@ -96,6 +96,9 @@ export default {
 
   },
   methods: {
+    openRightMenu() {
+      eventBus.emit('openRightMenu')
+    },
     async onSelectedImg(newImgUrls) {
       newBoard.style.imgUrls = { ...newImgUrls }
       const newBoard = JSON.parse(JSON.stringify(this.board))
@@ -190,7 +193,7 @@ export default {
     GroupList,
     GroupFilter,
     DynamicModal,
-    BoardRightMenu,
+    RightMenuIndex,
   },
 }
 </script>
