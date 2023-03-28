@@ -14,6 +14,19 @@
       color: $font-clr1;
       font-weight: 600;
     }
+    .dp__calendar_header_item {
+      font-size: rem(11px);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: $font-clr5;
+    }
+    .dp__cell_inner.dp__pointer.dp__active_date {
+      background-color: $primary-clr5;
+      &:hover {
+        background-color: $secondary-clr7;
+        color: $font-clr6;
+      }
+    }
   }
 
   .custom-time-picker-component {
@@ -79,9 +92,6 @@
       margin-bottom: rem(12px);
     }
 
-    .due-date-container {
-    }
-
     .txt-input {
       width: rem(90px);
       border: 1px solid black;
@@ -95,6 +105,17 @@
       transition-duration: 85ms;
       transition-timing-function: ease;
       border-radius: 3px;
+    }
+  }
+
+  .btns-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: rem(8px);
+    justify-content: space-between;
+
+    .btn-blue {
+      margin-bottom: rem(8px);
     }
   }
 }
