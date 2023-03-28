@@ -9,15 +9,25 @@
               type="checkbox"
               class="start-date-checkbox"
               @change="disableChooseStart = !disableChooseStart" />
-            <input
-              :disabled="disableChooseStart"
-              type="text"
+            <div
               :class="
                 disableChooseStart
-                  ? 'disabled txt-input start-date-input'
-                  : 'txt-input start-date-input'
-              "
-              v-model="startDateForDisplay" />
+                  ? 'disabled txt-inputs-container'
+                  : 'txt-inputs-container'
+              ">
+              <input
+                type="text"
+                :class="
+                  disableChooseStart
+                    ? 'disabled txt-input start-date-input'
+                    : 'txt-input start-date-input'
+                "
+                ref="startDateInput"
+                v-model="startDateForDisplay"
+                @focus="choosingStart = true"
+                @blur="updateDate($event)"
+                placeholder="M/D/YYY" />
+            </div>
           </div>
           <div class="inputs-container due-date-container">
             <label>Due date</label>
@@ -25,30 +35,39 @@
               type="checkbox"
               class="due-date-checkbox"
               @change="disableChooseDue = !disableChooseDue" />
-            <input
-              :disabled="disableChooseDue"
-              type="text"
+            <div
               :class="
                 disableChooseDue
-                  ? 'disabled txt-input due-date-input'
-                  : ' txt-input due-date-input'
-              "
-              v-model="dueDateForDisplay"
-              @change="updateDate($event)" />
+                  ? 'disabled txt-inputs-container'
+                  : 'txt-inputs-container'
+              ">
+              <input
+                type="text"
+                :class="
+                  disableChooseDue
+                    ? 'disabled txt-input due-date-input'
+                    : ' txt-input due-date-input'
+                "
+                ref="dueDateInput"
+                v-model="dueDateForDisplay"
+                @focus="choosingDue = true"
+                @blur="updateDate($event)"
+                placeholder="M/D/YYY" />
 
-            <input
-              :disabled="disableChooseDue"
-              type="text"
-              :class="
-                disableChooseDue
-                  ? 'disabled txt-input due-time-input'
-                  : 'txt-input due-time-input'
-              "
-              v-model="timeInput"
-              @blur="validateTime"
-              @input="updateTime(+$event)" />
+              <input
+                type="text"
+                :class="
+                  disableChooseDue
+                    ? 'disabled txt-input due-time-input'
+                    : 'txt-input due-time-input'
+                "
+                @blur="validateTime"
+                @input="updateTime(+$event)"
+                placeholder="h:mm A" />
+            </div>
           </div>
         </div>
+        <button @click="test">test</button>
       </template>
     </VueDatePicker>
   </section>
@@ -63,7 +82,10 @@ export default {
   components: { VueDatePicker },
   data() {
     return {
-      date: Date.now(),
+      dateOutput: {
+        startDate: null,
+        dueDate: null,
+      },
       dueDate: null,
       startDate: null,
       dueDateForDisplay: null,
@@ -76,16 +98,19 @@ export default {
       disableChooseDue: true,
     }
   },
+  created() {},
   computed: {
     newDate() {
-      return this.formatDate(this.dueDate)
+      return this.formatDate(this.selectedDate)
     },
   },
   methods: {
     test() {
-      console.log(this.dueDate)
+      console.log(this.dateOutput)
+      console.log(Date.now())
     },
     formatDate(date = Date.now()) {
+      if (!date) return null
       return utilService.getFormattedDate(date)
     },
     updateDate(event) {
@@ -102,7 +127,7 @@ export default {
         parsedDate.getFullYear() === year
 
       if (isValidDate) {
-        this.dueDate = parsedDate
+        this.selectedDate = parsedDate
       }
     },
     validateTime() {
@@ -120,14 +145,55 @@ export default {
       //     timeInMs
       // )
     },
+    timeInput(ev) {
+      console.log(ev)
+    },
   },
 
   watch: {
+    selectedDate() {
+      if (this.choosingDue) {
+        this.dueDate = this.selectedDate
+      } else if (this.choosingStart) {
+        this.startDate = this.selectedDate
+      }
+    },
     dueDate() {
-      this.dateForDisplay = this.formatDate(this.dueDate)
+      this.dueDateForDisplay = this.formatDate(this.dueDate)
+      this.dateOutput.dueDate = Date.parse(this.dueDate)
     },
     startDate() {
       this.startDateForDisplay = this.formatDate(this.startDate)
+      this.dateOutput.startDate = Date.parse(this.startDate)
+    },
+
+    disableChooseDue() {
+      if (!this.disableChooseDue) {
+        this.$refs.dueDateInput.focus()
+        this.choosingDue = true
+      } else {
+        this.choosingDue = false
+        this.dueDate = null
+      }
+    },
+    disableChooseStart() {
+      if (!this.disableChooseStart) {
+        this.$refs.startDateInput.focus()
+        this.choosingStart = true
+      } else {
+        this.choosingStart = false
+        this.startDate = null
+      }
+    },
+    choosingDue() {
+      this.choosingDue
+        ? (this.choosingStart = false)
+        : (this.choosingStart = true)
+    },
+    choosingStart() {
+      this.choosingStart
+        ? (this.choosingDue = false)
+        : (this.choosingDue = true)
     },
   },
 }
