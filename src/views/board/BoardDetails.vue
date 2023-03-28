@@ -18,9 +18,28 @@
         <button class="btn btn-light btn-filter">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
+        <button @click="showBoardMenu" class="btn btn-light">
+          ...
+        </button>
       </div>
-    </header>
+      <!--           <DynamicModal>
 
+            <template v-slot:title>
+              List actions
+            </template>
+
+            <template v-slot scope="props">
+              <section ref="groupMenu" class="group-menu flex column">
+                <div class="group-menu-content" scope="props">
+                  <button class="btn btn-list clean-btn" @click="toggleAddTask">Add card...</button>
+                  <button class="btn btn-list clean-btn" @click="duplicateGroup">Copy list...</button>
+                  <hr />
+                  <button class="btn btn-list clean-btn" @click="removeGroup">Archive this list</button>
+                </div>
+              </section>
+            </template>
+          </DynamicModal> -->
+    </header>
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
 
@@ -45,6 +64,7 @@
 </template>
 
 <script>
+import DynamicModal from '../../cmps/DynamicModal.vue'
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
@@ -167,6 +187,7 @@ export default {
   components: {
     GroupList,
     GroupFilter,
+    DynamicModal,
   },
 }
 </script>

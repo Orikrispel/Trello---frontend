@@ -43,7 +43,7 @@
       </Container>
 
       <button v-show="!isAddTask" class="btn clean-btn" @click="toggleAddTask">
-        <span class="icon icon-add"></span> add a card
+        <span class="icon icon-add"></span> Add a card
       </button>
       <div v-show="isAddTask" class="new-task-container flex">
         <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"

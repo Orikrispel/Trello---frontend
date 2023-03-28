@@ -55,9 +55,10 @@
       overflow-y: auto;
     }
 
-    &>button:first-of-type {
+    & > button:first-of-type {
       color: $font-clr3;
-      margin: 2px 0 8px 8px;
+      font-size: 0.875rem;
+      margin: 2px 0 8px -2px;
     }
 
     .task-container {
