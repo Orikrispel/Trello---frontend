@@ -1,6 +1,14 @@
 <template>
   <section class="date-picker-container">
-    <VueDatePicker v-model="selectedDate" inline auto-apply>
+    <VueDatePicker
+      v-model="selectedDate"
+      inline
+      auto-apply
+      no-today
+      :range="isRangeEnabled"
+      :range-start="Date.parse(selectedDate)"
+      week-start="0"
+      month-name-format="long">
       <template #time-picker="{ time, updateTime }">
         <div class="custom-time-picker-component">
           <div class="inputs-container start-date-container">
@@ -67,7 +75,10 @@
             </div>
           </div>
         </div>
-        <button @click="test">test</button>
+        <div class="btns-container">
+          <button @click="test" class="btn btn-blue btn-save">Save</button>
+          <button class="btn btn-light btn-remove">Remove</button>
+        </div>
       </template>
     </VueDatePicker>
   </section>
@@ -103,11 +114,13 @@ export default {
     newDate() {
       return this.formatDate(this.selectedDate)
     },
+    isRangeEnabled() {
+      return !this.disableChooseDue && !this.disableChooseStart
+    },
   },
   methods: {
     test() {
-      console.log(this.dateOutput)
-      console.log(Date.now())
+      console.log(Date.parse(this.selectedDate))
     },
     formatDate(date = Date.now()) {
       if (!date) return null
