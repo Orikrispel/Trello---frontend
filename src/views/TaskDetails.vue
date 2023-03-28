@@ -18,24 +18,31 @@
               {{ task.title ? task.title : 'new title' }}
             </h2>
           </div>
-          <p class="list-related">in list {{ task.list }}</p>
+          <p v-if="group" class="group-related">in list <span>{{ group.title }}</span></p>
         </div>
 
         <div class="task-main-container">
           <main class="task-main">
-            <div class="label-container">
-              <h3 class="fs12">Labels</h3>
-              <ul class="task-heading-label-list flex clean-list">
+            <div class="member-container">
+              <h3 class="fs12 inner-title">Members</h3>
+              <ul class="task-heading-member-list flex clean-list">
                 <li v-for="member in task.members" :key="member._id" class="member">
-                  <MemberPreview :member="member" />
+                  <div class="member-img">
+                    {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
+                  </div>
                 </li>
               </ul>
+            </div>
+
+            <div class="label-container">
+              <h3 class="fs12 inner-title">Labels</h3>
               <ul class="task-heading-label-list flex clean-list">
                 <li class="label" v-for="label in task.labels" :key="label.id">
                   <LabelPreview :label="label" />
                 </li>
               </ul>
             </div>
+
             <!-- checklist list -->
             <ChecklistList :task="task" />
 
@@ -128,7 +135,7 @@
                   }}</template>
 
                   <template v-slot scope="props">
-                    <LabelMenu />
+                    <LabelMenu :taskLabels="task.labels" />
                   </template>
                 </DynamicModal>
               </template>
@@ -200,6 +207,7 @@ export default {
     return {
       task: {},
       board: {},
+      group: {},
       userIsEditing: false,
       loggedInUser: {
         imgUrl: null,
@@ -213,14 +221,19 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-    if (!task) {
-      task = this.$store.getters.emptyTask
-    }
+    if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
-    this.board = await this.$store.dispatch({
-      type: 'loadCurrBoard',
-      boardId: this.boardId,
-    })
+    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId, })
+
+    let groups = this.board.groups
+    for (const group of groups) {
+      let { tasks } = group
+      let currTask = tasks.find((t) => t.id === this.task.id)
+      if (currTask) {
+        this.group = group
+        break
+      }
+    }
   },
   methods: {
     updateTitle(ev) {
