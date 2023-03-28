@@ -1,11 +1,14 @@
 <template>
     <section class="change-bg-menu">
-        <div class="change-bg-item">
-            <p>photos</p>
-        </div>
-        <div class="change-bg-item">
+
+        <section class="bg-option">
+            <img src="../../assets/imgs/photos-right-menu.png" class="change-bg-item" @click="changeCmp('RightMenuImgs')">
+            <p>Photos</p>
+        </section>
+        <section class="bg-option">
+            <img src="../../assets/imgs/colors-right-menu.png" class="change-bg-item" @click="changeCmp('RightMenuColors')">
             <p>Colors</p>
-        </div>
+        </section>
     </section>
 </template>
 
