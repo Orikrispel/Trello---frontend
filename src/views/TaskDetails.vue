@@ -23,6 +23,7 @@
 
         <div class="task-main-container">
           <main class="task-main">
+
             <div class="member-container">
               <h3 class="fs12 inner-title">Members</h3>
               <ul class="task-heading-member-list flex clean-list">
@@ -38,6 +39,15 @@
               <h3 class="fs12 inner-title">Labels</h3>
               <ul class="task-heading-label-list flex clean-list">
                 <li class="label" v-for="label in task.labels" :key="label.id">
+                  <LabelPreview :label="label" />
+                </li>
+              </ul>
+            </div>
+
+            <div class="date-container">
+              <h3 class="fs12 inner-title">Due date</h3>
+              <ul class="task-heading-label-list flex clean-list">
+                <li class="date" v-for="label in task.labels" :key="label.id">
                   <LabelPreview :label="label" />
                 </li>
               </ul>

@@ -78,6 +78,7 @@ export default {
       this.labels = labels
     },
     isChecked(labelId) {
+      if (!this.taskLabels) return
       return this.taskLabels.find(l => l.id === labelId)
     },
     async addLabelToTask(label) {

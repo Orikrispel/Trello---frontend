@@ -67,7 +67,7 @@ export default {
         board.labels.splice(labelIdx, 1, label)
       }
       try {
-        this.updateBoard(board, 'Label Saved', 'Failed to save label')
+        await this.updateBoard(board, 'Label Saved', 'Failed to save label')
       } catch (err) {
         console.log('failed to save label')
         throw err
