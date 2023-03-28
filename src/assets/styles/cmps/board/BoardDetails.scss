@@ -73,7 +73,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      & > button {
+      &>button {
         width: 100%;
         padding: 12px;
         justify-content: start;
@@ -86,7 +86,6 @@
         padding: 4px;
 
         input {
-          font-family: "Segoe UI Regular";
           width: 100%;
           border: none;
           outline: none;
@@ -139,6 +138,7 @@
 .move-right-actions {
   margin-inline-end: 100px;
 }
+
 // right-menu
 
 .right-menu {
@@ -151,6 +151,7 @@
   height: 100%;
   width: 20rem;
   background-color: $secondary-clr3;
+
   button {
     display: flex;
     align-items: center;
@@ -166,6 +167,7 @@
     margin-bottom: 8px;
     padding-left: 12px;
     text-align: start;
+
     &:hover {
       filter: brightness(97%);
     }
@@ -176,10 +178,12 @@
   transition: transform 0.3s ease-in-out;
   transform: translateX(0em);
 }
+
 .right-menu-open {
   margin-right: 24em;
   transition: margin 0.3s ease-in-out;
 }
+
 .right-menu-header {
   display: flex;
   text-align: center;
@@ -207,17 +211,19 @@
 
 .right-menu-header {
   padding: 12px 5px;
+
   span {
     padding-right: 5px;
     font-size: 19px;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   width: 95%;
   margin: auto;
   margin-bottom: 15px;
 }
 
-#right-board-header {
-}
+#right-board-header {}
