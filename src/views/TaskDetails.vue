@@ -268,7 +268,7 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-    console.log(task)
+
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
     this.board = await this.$store.dispatch({
@@ -298,11 +298,13 @@ export default {
       console.log(this.task)
     },
     async saveTask(task) {
+      console.log('before update task', this.task)
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
+      console.log('after update task', task)
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
@@ -332,11 +334,6 @@ export default {
     },
   },
   computed: {
-    // currTask() {
-    //   let task = this.$store.getters.currTask
-    //   if (!task) task = this.$store.getters.emptyTask
-    //   this.task = this.currTask
-    // },
     boardId() {
       const { boardId } = this.$route.params
       return boardId
