@@ -219,6 +219,7 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
 }
 
 function getFormattedDate(date = new Date()) {
+  console.log('in utils', date)
   const day = date.getDate().toString().padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear().toString()

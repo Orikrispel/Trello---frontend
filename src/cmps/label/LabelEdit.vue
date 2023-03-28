@@ -7,15 +7,13 @@
     <input type="text" name="label-title" v-model="label.title" />
     <h4>Select a color</h4>
     <ColorPicker :quantity="30" @setColor="setColor" />
-    <button class="btn btn-light btn-remove-color" @click="setColor('#e2e4e9')">
-      X Remove color
+    <button class="btn btn-remove-color" @click="setColor('#e2e4e9')">
+      <span class="icon btn-close icon-close" v-close-popper></span> Remove color
     </button>
+    <hr>
     <div class="label-btns-container">
-      <button class="btn btn-blue btn-label" @click="saveLabel">Save</button>
-      <button
-        class="btn btn-red btn-label"
-        v-if="!creatingNewLabel"
-        @click="removeLabel">
+      <button class="btn btn-blue btn-label" @click="saveLabel">{{ creatingNewLabel ? 'Create' : 'Save' }}</button>
+      <button class="btn btn-red btn-label" v-if="!creatingNewLabel" @click="removeLabel">
         Delete
       </button>
     </div>
@@ -69,22 +67,12 @@ export default {
         board.labels.splice(labelIdx, 1, label)
       }
       try {
-        this.updateBoard(board, 'Label Saved', 'Failed to save label')
+        await this.updateBoard(board, 'Label Saved', 'Failed to save label')
       } catch (err) {
         console.log('failed to save label')
         throw err
       }
       this.$emit('toggleLabelEdit')
-    },
-    async updateBoard(board, successMsg, errMsg) {
-      try {
-        this.board = board
-        await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg(successMsg)
-      } catch (err) {
-        console.log(err)
-        showErrorMsg(errMsg)
-      }
     },
     async removeLabel() {
       let label = { ...this.label }
@@ -97,6 +85,16 @@ export default {
         console.log(err, "couldn't remove label")
       }
       this.$emit('toggleLabelEdit')
+    },
+    async updateBoard(board, successMsg, errMsg) {
+      try {
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
+        showSuccessMsg(successMsg)
+      } catch (err) {
+        console.log(err)
+        showErrorMsg(errMsg)
+      }
     },
   },
   components: {

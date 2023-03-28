@@ -29,7 +29,6 @@ export default {
         '#ef7564',
         '#cd8de5',
 
-
         ' #5aac44',
         ' #e6c60d',
         ' #e79217',
@@ -69,12 +68,6 @@ export default {
     },
   },
   methods: {
-    onStarBoard(board) {
-      this.$emit('starBoard', board)
-    },
-    onRemoveBoard(boardId) {
-      this.$emit('onRemoveBoard', boardId)
-    },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
