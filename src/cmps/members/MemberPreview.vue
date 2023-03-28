@@ -1,9 +1,7 @@
 <template>
   <div class="member-preview">
     <div class="member-img">
-      {{
-        member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase()
-      }}
+      {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
     </div>
     <div>{{ member.fullname }}</div>
     <div>{{ member.isActive }}</div>

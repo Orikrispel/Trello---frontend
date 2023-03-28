@@ -57,7 +57,6 @@
   </section>
 </template>
 
-
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'

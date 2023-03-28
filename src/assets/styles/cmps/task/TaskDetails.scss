@@ -35,7 +35,7 @@
     }
 
     & * :not(.member-img) {
-      color: $font-clr2;
+      color: $font-clr1;
     }
 
     &.icon-lg {
@@ -100,6 +100,7 @@
             border-radius: 3px;
             margin: -4px -8px;
             padding: 4px 8px;
+            line-height: rem(24px);
 
             &:focus {
               outline: none;
@@ -114,9 +115,13 @@
           top: rem(20px);
         }
 
-        .list-related {
+        .group-related {
           color: $font-clr3;
           margin-bottom: 8px;
+
+          span {
+            text-decoration: underline;
+          }
         }
       }
 
@@ -149,16 +154,25 @@
         .task-main {
           padding: 0 8px 8px 16px;
 
-          .label-container {
+          .label-container,
+          .member-container {
             margin: 8px 8px 8px 40px;
 
-            h3 {
+            h3.inner-title {
+              color: $font-clr3;
               margin: 0 8px 4px 0;
             }
 
+            .member-img {
+              margin: 0 4px 4px 0;
+            }
+
             .task-heading-label-list {
-              .label {
-                padding: 0 0.5em;
+              flex-wrap: wrap;
+              gap: 4px;
+
+              .label-preview {
+                border-radius: 3px;
               }
             }
           }

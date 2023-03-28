@@ -14,31 +14,15 @@
         </button>
       </div>
 
-      <div @click="showFilterMenu = !showFilterMenu" class="flex">
-        <button class="btn btn-light btn-filter">
+      <div class="flex board-right-actions">
+        <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="showBoardMenu" class="btn btn-light">
-          ...
-        </button>
+        <button @click="showBoardRightMenu = !showBoardRightMenu" class="btn btn-light">...</button>
+        <BoardRightMenu v-if="showBoardRightMenu" @closeRightMenu="showBoardRightMenu = false" />
       </div>
-      <!--           <DynamicModal>
 
-            <template v-slot:title>
-              List actions
-            </template>
 
-            <template v-slot scope="props">
-              <section ref="groupMenu" class="group-menu flex column">
-                <div class="group-menu-content" scope="props">
-                  <button class="btn btn-list clean-btn" @click="toggleAddTask">Add card...</button>
-                  <button class="btn btn-list clean-btn" @click="duplicateGroup">Copy list...</button>
-                  <hr />
-                  <button class="btn btn-list clean-btn" @click="removeGroup">Archive this list</button>
-                </div>
-              </section>
-            </template>
-          </DynamicModal> -->
     </header>
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
@@ -58,12 +42,15 @@
         </div>
       </article>
       <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
+
     </main>
   </div>
   <RouterView />
 </template>
 
 <script>
+import BoardRightMenu from '../../cmps/BoardRightMenu.vue'
+import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
@@ -82,6 +69,7 @@ export default {
       groupToAdd: this.$store.getters.emptyGroup,
       isAddGroup: false,
       showFilterMenu: false,
+      showBoardRightMenu: false,
     }
   },
   async created() {
@@ -106,6 +94,18 @@ export default {
 
   },
   methods: {
+    async onSelectedImg(newImgUrls) {
+      newBoard.style.imgUrls = { ...newImgUrls }
+      const newBoard = JSON.parse(JSON.stringify(this.board))
+      newBoard.style.backgroundColor = ''
+      await this.updateBoard(newBoard)
+    },
+    async onSelectedColor(newBg) {
+      const newBoard = JSON.parse(JSON.stringify(this.board))
+      newBoard.style.backgroundColor = newBg
+      newBoard.style.imgUrls = {}
+      await this.updateBoard(newBoard)
+    },
     onAddGroup() {
       let board = JSON.parse(JSON.stringify(this.board))
 
@@ -188,6 +188,7 @@ export default {
     GroupList,
     GroupFilter,
     DynamicModal,
+    BoardRightMenu,
   },
 }
 </script>
