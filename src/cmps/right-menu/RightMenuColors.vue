@@ -1,5 +1,5 @@
 <template>
-    <div class="colors-container" ref="container">
+    <div class="right-colors-container" ref="container">
         <div class="right-menu-color" @click="setColor(color)" v-for="(color, idx) in colorItems" :key="idx"
             :style="{ backgroundColor: color }">
         </div>
@@ -15,7 +15,6 @@ export default {
     },
     data() {
         return {
-            pickedColor: null,
             colorItems: [
                 ' #b7ddb0',
                 ' #f5ea92',
@@ -38,8 +37,7 @@ export default {
             return svgService.getSvg(iconName)
         },
         setColor(color) {
-            this.pickedColor = color
-            console.log('hello')
+            this.$emit('setBgColor', color)
         }
     },
     computed: {

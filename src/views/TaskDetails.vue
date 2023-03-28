@@ -247,8 +247,10 @@ export default {
     for (const group of groups) {
       let { tasks } = group
       let currTask = tasks.find((t) => t.id === this.task.id)
+      console.log('currTask', currTask)
       if (currTask) {
         this.group = group
+        console.log('this.group', this.group)
         break
       }
     }
@@ -268,6 +270,7 @@ export default {
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
+        console.log('group', group)
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
