@@ -12,6 +12,7 @@ export const utilService = {
   getRandomTaskDesc,
   getBoardRandomColor,
   getFormattedDate,
+  formatDateString,
 }
 
 function makeId(length = 6) {
@@ -218,8 +219,47 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
   return projNames[idx]
 }
 
+function formatDateString(timestamp) {
+  // Create a new Date object from the timestamp
+  var date = new Date(timestamp * 1000)
+  // Create an array with the month names
+  var months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  // Get the month, day, hour, and minute from the date object
+  var month = months[date.getMonth()]
+  var day = date.getDate()
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  // Convert the hour to a 12-hour format and keep track of the AM/PM suffix
+  var suffix = 'AM'
+  if (hour >= 12) {
+    suffix = 'PM'
+    hour = hour - 12 + ''
+  }
+  if (hour == 0) {
+    hour = 12 + ''
+  }
+  // Create the formatted date string
+  var formattedDate =
+    day + ' ' + month + ' at ' + hour + ':' + minute + ' ' + suffix
+  // Return the formatted date string
+  return formattedDate
+}
+
 function getFormattedDate(date = new Date()) {
-  console.log(date)
+  date = new Date(date)
   const day = date.getDate().toString().padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear().toString()
