@@ -33,6 +33,7 @@ export default {
       this.currTask = task
     },
     setTodos() {
+      if (!this.currTask) return
       let countDone = 0
       let countTodos = 0
       if (!this.task.checklists || this.task.checklists.length === 0) return
@@ -46,6 +47,7 @@ export default {
       this.todosDone = countDone
     },
     setMembers() {
+      if (!this.currTask) return
       const members = this.task.members.map((member) => member.fullname)
       this.members = members
     }

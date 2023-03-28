@@ -5,7 +5,7 @@
     </button>
     <span class="task-title fs14">{{ task.title }}</span>
     <span class="todo-attachments">
-      <TaskAttachments :task="task" />
+      <!-- <TaskAttachments :task="task" /> -->
     </span>
   </section>
 </template>
