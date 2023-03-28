@@ -233,6 +233,7 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
+    console.log(task)
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
     this.board = await this.$store.dispatch({

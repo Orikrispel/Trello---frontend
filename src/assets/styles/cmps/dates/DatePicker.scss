@@ -1,12 +1,18 @@
 .date-picker-container {
   padding-inline: 12px;
 
+  .dp__flex_display {
+    display: block;
+  }
+
   .dp__menu {
     border: none;
+
     .dp__month_year_wrap {
       pointer-events: none;
       justify-content: center;
     }
+
     .dp__month_year_select {
       margin-inline-end: rem(10px);
       width: rem(30px);
@@ -14,17 +20,21 @@
       color: $font-clr1;
       font-weight: 600;
     }
+
     .dp__calendar_header_item {
       font-size: rem(11px);
       font-weight: 700;
       text-transform: uppercase;
       color: $font-clr5;
     }
+
     .dp__calendar_header_separator {
       display: none;
     }
+
     .dp__cell_inner.dp__pointer.dp__active_date {
       background-color: $primary-clr5;
+
       &:hover {
         background-color: $secondary-clr7;
         color: $font-clr6;
@@ -40,6 +50,7 @@
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
 
       .txt-inputs-container.disabled {
         cursor: not-allowed;
