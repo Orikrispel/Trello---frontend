@@ -127,7 +127,7 @@ export default {
     },
     async updateBoard(board) {
       try {
-        await this.$store.dispatch(getActionUpdateBoard(board))
+        this.board = await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
       } catch (err) {
         console.log(err)
@@ -176,13 +176,9 @@ export default {
   },
   watch: {
     board: {
-      async handler() {
+      handler() {
         if (this.board) {
-          // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({
-            type: 'loadCurrBoard',
-            boardId: this.boardId,
-          })
+          this.board = this.$store.getters.currBoard
         }
       },
       immediate: true,

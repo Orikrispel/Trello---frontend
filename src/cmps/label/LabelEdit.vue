@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       label: {},
-      board: null,
+      board: this.$store.getters.currBoard,
       creatingNewLabel: false,
     }
   },
@@ -42,13 +42,12 @@ export default {
     },
   },
   async created() {
-    let label = await this.$store.getters.currLabel
+    let label = this.$store.getters.currLabel
     if (!label) {
       label = this.$store.getters.defaultEmptyLabel
       this.creatingNewLabel = true
     }
     this.label = { ...label }
-    this.board = await this.$store.dispatch({ type: 'loadCurrBoard', boardId: this.boardId })
   },
   methods: {
     setColor(color) {
@@ -72,10 +71,10 @@ export default {
       }
       this.$emit('toggleLabelEdit')
     },
-    async removeLabel() {
-      eventBus.emit('removeTaskLabel', this.label.id)
+    removeLabel() {
+      eventBus.emit('removeLabel', this.label.id)
       this.$emit('toggleLabelEdit')
-      console.log('hi')
+
     },
     async updateBoard(board, successMsg, errMsg) {
       try {
@@ -90,13 +89,9 @@ export default {
   },
   watch: {
     board: {
-      async handler() {
+      handler() {
         if (this.board) {
-          // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({
-            type: 'loadCurrBoard',
-            boardId: this.boardId,
-          })
+          this.board = this.$store.getters.currBoard
         }
       },
       immediate: true,

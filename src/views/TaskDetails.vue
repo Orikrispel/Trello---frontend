@@ -231,8 +231,8 @@ export default {
     eventBus.on('updateTask', (task) => {
       this.saveTask(task)
     })
-    eventBus.on('removeTaskLabel', (labelId) => {
-      this.removeTaskLabel(labelId)
+    eventBus.on('removeLabel', (labelId) => {
+      this.removeLabel(labelId)
     })
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
@@ -240,17 +240,14 @@ export default {
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-    console.log(task)
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
     let groups = this.board.groups
     for (const group of groups) {
       let { tasks } = group
       let currTask = tasks.find((t) => t.id === this.task.id)
-      console.log('currTask', currTask)
       if (currTask) {
         this.group = group
-        console.log('this.group', this.group)
         break
       }
     }
@@ -270,7 +267,6 @@ export default {
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
-        console.log('group', group)
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
@@ -300,7 +296,7 @@ export default {
         showErrorMsg(errMsg)
       }
     },
-    removeTaskLabel(labelId) {
+    removeLabel(labelId) {
       let board = JSON.parse(JSON.stringify(this.board))
 
       const labelIdx = this.task.labels.findIndex((l) => l.id === labelId)
@@ -338,13 +334,9 @@ export default {
       immediate: true,
     },
     board: {
-      async handler() {
+      handler() {
         if (this.board) {
-          // await this.$store.dispatch({ type: 'loadBoards' })
-          this.board = await this.$store.dispatch({
-            type: 'loadCurrBoard',
-            boardId: this.boardId,
-          })
+          this.board = this.$store.getters.currBoard
         }
       },
       immediate: true,
