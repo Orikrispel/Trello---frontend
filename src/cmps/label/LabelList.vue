@@ -4,8 +4,10 @@
     <h4>Labels</h4>
     <ul class="clean-list">
       <li class="label-list-item" v-for="(label, idx) in labels" :key="label.id">
-        <input type="checkbox" />
-        <LabelPreview :label="label" @click="addLabelToTask(label)" />
+        <input type="checkbox" :id="[`label-checkbox-${label.id}`]" @input="addLabelToTask(label)" />
+        <label class="label-checkbox" :for="[`label-checkbox-${label.id}`]">
+          <LabelPreview :label="label" />
+        </label>
         <button class="btn-sm clean-btn" @click="editLabel(label.id)">
           <span class="icon pencil-icon" v-html="getSvg('pencil')"></span>
         </button>
@@ -23,6 +25,11 @@ import LabelPreview from './LabelPreview.vue'
 import { svgService } from '../../services/svg.service'
 export default {
   name: 'LabelList',
+  props: {
+    taskLabels: {
+      required: true,
+    }
+  },
   data() {
     return {
       labels: [],
@@ -45,7 +52,7 @@ export default {
       return boardId
     },
   },
-  async created() {
+  async mounted() {
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
       boardId: this.boardId,
@@ -58,6 +65,13 @@ export default {
     if (!labels || !labels.length)
       labels = this.$store.getters.defaultEmptyLabels
     this.labels = labels
+    console.log('this.taskLabels:', this.taskLabels)
+    this.taskLabels.forEach(label => {
+      const checkboxId = `label-checkbox-${label.id}`
+      const checkbox = document.querySelector(`#${checkboxId}`)
+      console.log('checkbox:', checkbox)
+      if (checkbox) checkbox.checked = true
+    })
   },
   methods: {
     searchLabels() {
@@ -70,10 +84,12 @@ export default {
       }
       this.labels = labels
     },
+    checkLabels() {
+
+    },
     async addLabelToTask(label) {
       let task = JSON.parse(JSON.stringify(this.task))
       if (!task.labels) task.labels = []
-      console.log(task.labels)
       let hasLabel = task.labels.some((l) => l.id === label.id)
 
       if (hasLabel) task = this.removeLabelFromTask(task, label)

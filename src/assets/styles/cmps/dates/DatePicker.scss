@@ -1,14 +1,34 @@
 .date-picker-container {
+  padding-inline: 12px;
+
   .dp__menu {
     border: none;
+    .dp__month_year_wrap {
+      pointer-events: none;
+      justify-content: center;
+    }
+    .dp__month_year_select {
+      margin-inline-end: rem(10px);
+      width: rem(30px);
+      font-size: em(14px);
+      color: $font-clr1;
+      font-weight: 600;
+    }
   }
+
   .custom-time-picker-component {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
+
+      .txt-inputs-container.disabled {
+        cursor: not-allowed;
+      }
+
       input[type='text'] {
         margin-right: 8px;
 
@@ -22,9 +42,10 @@
           background-color: #ebecf0;
           box-shadow: none;
           color: #a5adba;
-          cursor: not-allowed;
+          pointer-events: none;
         }
       }
+
       label {
         display: inline-block;
         width: 100%;
@@ -33,8 +54,12 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         // max-width: 100%;
+        font-weight: 700;
+        font-size: rem(12px);
+        color: $font-clr3;
       }
     }
+
     input[type='checkbox'] {
       margin-top: 0;
       overflow: hidden;
@@ -48,12 +73,15 @@
       padding: 0;
       margin-inline-end: 8px;
     }
+
     .start-date-container {
       max-width: 100%;
       margin-bottom: rem(12px);
     }
+
     .due-date-container {
     }
+
     .txt-input {
       width: rem(90px);
       border: 1px solid black;

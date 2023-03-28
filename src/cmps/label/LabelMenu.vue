@@ -2,7 +2,7 @@
   <section class="label-menu">
     <span v-if="userIsEditing" @click="backFromEdit" class="icon btn-back" v-html="getSvg('arrowLeft')"></span>
     <LabelEdit @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="userIsEditing" />
-    <LabelList @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="!userIsEditing" />
+    <LabelList :taskLabels="taskLabels" @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="!userIsEditing" />
   </section>
 </template>
 
@@ -13,6 +13,12 @@ import { svgService } from '../../services/svg.service'
 
 export default {
   name: 'LabelMenu',
+  props: {
+    taskLabels: {
+      type: Object,
+      required: true,
+    }
+  },
   data() {
     return {
       userIsEditing: false,

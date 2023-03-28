@@ -53,10 +53,7 @@ button {
   cursor: pointer;
 }
 
-input {
-  border-radius: 3px;
-  padding: 8px 12px;
-}
+
 
 i {
   line-height: 0;
@@ -64,6 +61,11 @@ i {
 
 .icon:not(.member-img) {
   font-family: trellicons;
+}
+
+input {
+  border-radius: 3px;
+  padding: 8px 12px;
 }
 
 textarea {
@@ -75,4 +77,85 @@ input {
   font-family: 'Segoe-UI';
   border: none;
   outline: none;
+}
+
+// SCROLL BAR: 
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-track:vertical {
+  background-color: #dddae0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background-color: #c8c3cd;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-vertical {
+  width: 2.5em;
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background-color: #c8c3cd;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #dddae0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  line-height: 0;
+  -webkit-appearance: none;
+}
+
+input[type="checkbox"]:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px #dfe1e6;
+  border-radius: 2px;
+}
+
+input[type="checkbox"]:checked:before {
+  background-color: #0079BF;
+  box-shadow: none;
+
+}
+
+input[type="checkbox"]:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 10px;
+  margin-left: 5px;
+  margin-top: 1px;
+
+  border: solid white;
+  border-width: 0 2px 2px 0;
+
+  scale: 0.8;
+  transform: rotate(45deg);
+  transition: .2s ease-in-out;
+  opacity: 0;
+}
+
+input[type="checkbox"]:checked:after {
+  opacity: 1;
 }
