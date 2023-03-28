@@ -132,14 +132,18 @@
 
 .board-right-actions {
   gap: 12px;
-  .right-board-modal {
-    margin-right: 110px;
-  }
+  transition: margin 0.6s;
+  margin-inline-end: 0px;
 }
 
+.move-right-actions {
+  margin-inline-end: 100px;
+}
 // right-menu
 
 .right-menu {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(10em);
   z-index: 100;
   top: rem(44px);
   position: fixed;
@@ -168,6 +172,14 @@
   }
 }
 
+.open {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0em);
+}
+.right-menu-open {
+  margin-right: 24em;
+  transition: margin 0.3s ease-in-out;
+}
 .right-menu-header {
   display: flex;
   text-align: center;
@@ -208,8 +220,4 @@
 }
 
 #right-board-header {
-}
-
-.right-menu-open {
-  margin: 0px 100px;
 }

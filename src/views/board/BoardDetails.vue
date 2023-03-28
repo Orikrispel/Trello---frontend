@@ -14,15 +14,15 @@
         </button>
       </div>
 
-      <div class="flex board-right-actions">
+      <div class="flex board-right-actions" :class="{ 'move-right-actions': isRightMenuOpen }">
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="showBoardRightMenu = !showBoardRightMenu" class="btn btn-light" v-if="!showBoardRightMenu"
+        <div class="right-menu-open" v-if="isRightMenuOpen"></div>
+        <button @click="isRightMenuOpen = !isRightMenuOpen" class="btn btn-light" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
-        <BoardRightMenu v-if="showBoardRightMenu" @closeRightMenu="showBoardRightMenu = false" />
-        <div class="right-menu-open" v-if="showBoardRightMenu"></div>
       </div>
+      <BoardRightMenu v-if="isRightMenuOpen" @closeRightMenu="isRightMenuOpen = false" />
 
 
     </header>
@@ -71,7 +71,7 @@ export default {
       groupToAdd: this.$store.getters.emptyGroup,
       isAddGroup: false,
       showFilterMenu: false,
-      showBoardRightMenu: false,
+      isRightMenuOpen: false,
     }
   },
   async created() {
