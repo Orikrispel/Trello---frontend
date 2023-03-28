@@ -1,28 +1,49 @@
 <template>
   <section class="date-picker-container">
-    <VueDatePicker v-model="dueDate" inline auto-apply>
+    <VueDatePicker v-model="selectedDate" inline auto-apply>
       <template #time-picker="{ time, updateTime }">
         <div class="custom-time-picker-component">
-          <div class="start-date start-date-container">
+          <div class="inputs-container start-date-container">
             <label>Start date</label>
-            <input type="checkbox" class="start-date start-date-checkbox" />
             <input
+              type="checkbox"
+              class="start-date-checkbox"
+              @change="disableChooseStart = !disableChooseStart" />
+            <input
+              :disabled="disableChooseStart"
               type="text"
-              class="txt-input start-date start-date-input"
+              :class="
+                disableChooseStart
+                  ? 'disabled txt-input start-date-input'
+                  : 'txt-input start-date-input'
+              "
               v-model="startDateForDisplay" />
           </div>
-          <div class="due-date due-date-container">
+          <div class="inputs-container due-date-container">
             <label>Due date</label>
-            <input type="checkbox" class="due-date due-date-checkbox" />
             <input
+              type="checkbox"
+              class="due-date-checkbox"
+              @change="disableChooseDue = !disableChooseDue" />
+            <input
+              :disabled="disableChooseDue"
               type="text"
-              class="txt-input due-date due-date-input"
+              :class="
+                disableChooseDue
+                  ? 'disabled txt-input due-date-input'
+                  : ' txt-input due-date-input'
+              "
               v-model="dueDateForDisplay"
               @change="updateDate($event)" />
 
             <input
+              :disabled="disableChooseDue"
               type="text"
-              class="txt-input due-time"
+              :class="
+                disableChooseDue
+                  ? 'disabled txt-input due-time-input'
+                  : 'txt-input due-time-input'
+              "
               v-model="timeInput"
               @blur="validateTime"
               @input="updateTime(+$event)" />
@@ -44,9 +65,15 @@ export default {
     return {
       date: Date.now(),
       dueDate: null,
+      startDate: null,
       dueDateForDisplay: null,
       startDateForDisplay: null,
       dueTime: null,
+      choosingDue: false,
+      choosingStart: false,
+      selectedDate: null,
+      disableChooseStart: true,
+      disableChooseDue: true,
     }
   },
   computed: {
@@ -98,6 +125,9 @@ export default {
   watch: {
     dueDate() {
       this.dateForDisplay = this.formatDate(this.dueDate)
+    },
+    startDate() {
+      this.startDateForDisplay = this.formatDate(this.startDate)
     },
   },
 }
