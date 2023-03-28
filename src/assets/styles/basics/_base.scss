@@ -7,13 +7,12 @@
   color: $primary-clr2;
 }
 
-html {
-  font-family: 'Segoe-UI';
-  line-height: 20px;
-  color: $primary-clr2;
-}
+html {}
 
 body {
+  font-family: 'Segoe-UI';
+  color: $primary-clr2;
+  line-height: 20px;
   font-size: rem(14px);
   margin: 0;
 }
@@ -51,6 +50,7 @@ a:hover {
 
 button {
   cursor: pointer;
+  line-height: 20px;
 }
 
 

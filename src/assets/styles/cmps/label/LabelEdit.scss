@@ -1,7 +1,13 @@
 .label-edit {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+
+  h4 {
+    font-size: 0.75rem;
+    color: #5e6c84;
+    line-height: 16px;
+    margin-top: 16px;
+  }
 
   .label-preview-container {
     display: flex;
@@ -9,33 +15,50 @@
     justify-content: center;
     background-color: $secondary-clr3;
     min-height: 6em;
+    margin: 0 -12px;
 
     .label-preview {
+      border-radius: 3px;
       width: 80%;
     }
   }
 
   input {
-    box-shadow: $input-shadow;
+    width: 100%;
+    border-radius: 3px;
     border: none;
-    min-height: 2.2em;
+    background-color: $secondary-clr2;
+    box-shadow: $input-shadow;
+    opacity: 0.8;
+
+    &:hover {
+      background-color: $secondary-clr3;
+    }
+
+    &:focus {
+      box-shadow: inset 0 0 0 2px $primary-clr4;
+      border: none;
+      outline: none;
+    }
   }
 
   .colors-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 7px;
+    gap: 8px;
     width: 100%;
     margin-bottom: 5px;
   }
+
   .btn-remove-color {
     text-align: center;
   }
+
   .label-btns-container {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
     .btn {
       max-width: 3.5em;
       color: #fff;

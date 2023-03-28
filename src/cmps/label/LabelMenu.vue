@@ -5,7 +5,6 @@
     <LabelList :taskLabels="taskLabels" @toggleLabelEdit="userIsEditing = !userIsEditing" v-if="!userIsEditing" />
   </section>
 </template>
-
 <script>
 import LabelEdit from './LabelEdit.vue'
 import LabelList from './LabelList.vue'

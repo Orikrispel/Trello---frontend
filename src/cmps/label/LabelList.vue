@@ -13,10 +13,10 @@
           <span class="icon pencil-icon" v-html="getSvg('pencil')"></span>
         </button>
       </li>
-      <button class="btn btn-label" @click="$emit('toggleLabelEdit')">
-        Create a new label
-      </button>
     </ul>
+    <button class="btn btn-label" @click="$emit('toggleLabelEdit')">
+      Create a new label
+    </button>
   </div>
 </template>
 
