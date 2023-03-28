@@ -2,7 +2,7 @@
     <section class="right-menu">
         <div class="add-form-header right-menu-header">
             <h5 id="right-menu-h5">Menu</h5>
-            <span class="icon btn-close icon-close" @click.stop="closeModal"></span>
+            <span class="icon btn-close icon-close" @click.stop="this.$emit('closeRightMenu')"></span>
         </div>
         <section class="right-menu-actions">
             <button>

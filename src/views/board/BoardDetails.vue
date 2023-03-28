@@ -18,8 +18,10 @@
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="showBoardRightMenu = !showBoardRightMenu" class="btn btn-light">...</button>
+        <button @click="showBoardRightMenu = !showBoardRightMenu" class="btn btn-light" v-if="!showBoardRightMenu"
+          v-html="getSvg('threeDots')"></button>
         <BoardRightMenu v-if="showBoardRightMenu" @closeRightMenu="showBoardRightMenu = false" />
+        <div class="right-menu-open" v-if="showBoardRightMenu"></div>
       </div>
 
 

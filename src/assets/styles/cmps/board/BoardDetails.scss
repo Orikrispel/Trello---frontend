@@ -198,8 +198,18 @@
   span {
     padding-right: 5px;
     font-size: 19px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   width: 95%;
   margin: auto;
   margin-bottom: 15px;
+}
+
+#right-board-header {
+}
+
+.right-menu-open {
+  margin: 0px 100px;
 }
