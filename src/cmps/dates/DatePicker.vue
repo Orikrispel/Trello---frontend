@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="btns-container">
-          <button @click="debug" class="btn btn-blue btn-save">Save</button>
+          <button @click="saveDate" class="btn btn-blue btn-save">Save</button>
           <button class="btn btn-light btn-remove">Remove</button>
         </div>
       </template>
@@ -90,6 +90,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import { format } from 'date-fns'
 import { eventBus } from '../../services/event-bus.service'
 export default {
+  name: 'DatePIcker',
   components: { VueDatePicker },
   data() {
     return {
@@ -164,7 +165,7 @@ export default {
       const dueDate = this.dueDateParsed
 
       let task = JSON.parse(JSON.stringify(this.task))
-      task.dueDate = dueDate
+      task.date = { dueDate, isCompleted: false }
       eventBus.emit('updateTask', task)
       this.task = task
     },
