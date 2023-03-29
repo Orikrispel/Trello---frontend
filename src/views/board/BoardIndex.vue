@@ -1,12 +1,15 @@
 <template>
   <div class="index-container container home">
-    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
+    <BoardList
+      @removeBoard="removeBoard"
+      @starBoard="starBoard"
+      @addBoard="addBoard" />
   </div>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
-import { boardService } from '../../services/board.service.local'
+import { boardService } from '../../services/board.service'
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -42,7 +45,7 @@ export default {
       try {
         console.log('ADDED board', board)
         await this.$store.dispatch({ type: 'addBoard', board })
-          ; showSuccessMsg('Board added')
+        showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
@@ -62,7 +65,6 @@ export default {
         const newBoard = JSON.parse(JSON.stringify(board))
         console.log('newBoard', newBoard)
         await this.$store.dispatch(getActionStarBoard(newBoard))
-
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot star board')
@@ -87,7 +89,7 @@ export default {
     },
     setAction(actionType) {
       this.action.type = actionType
-    }
+    },
   },
   components: {
     BoardList,

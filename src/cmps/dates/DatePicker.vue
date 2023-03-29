@@ -2,7 +2,7 @@
   <section class="date-picker-container">
     <VueDatePicker
       v-model="selectedDate"
-      @change="debug(selectedDate)"
+      @update:model-value="debug(selectedDate)"
       inline
       auto-apply
       no-today
@@ -68,8 +68,9 @@
                     ? ' txt-input due-time-input'
                     : 'disabled txt-input due-time-input'
                 "
+                v-model="dueTime"
                 @blur="validateTime"
-                @input="updateTime(+$event)"
+                @input="timeInput($event)"
                 placeholder="h:mm A" />
             </div>
           </div>
@@ -200,7 +201,7 @@ export default {
       }
     },
     updateTime(hours, minutes) {
-      console.log(hours, minutes)
+      console.log('time', hours, minutes)
       // const timeInMs = (hours * 60 + minutes) * 60 * 1000
       // this.dueDate = new Date(
       //   this.dueDate.getTime() -
@@ -209,7 +210,7 @@ export default {
       // )
     },
     timeInput(ev) {
-      console.log(ev)
+      let userTimeInput = ev.target.value
     },
   },
 
@@ -229,32 +230,33 @@ export default {
     // },
 
     isChooseDue() {
-      if (!this.isChooseDue) {
+      if (this.isChooseDue) {
         this.$refs.dueDateInput.focus()
         this.choosingDue = true
       } else {
-        this.choosingDue = false
-        this.dueDate = null
+        // this.$refs.dueDateInput.focus()
+        // this.choosingDue = false
+        // this.dueDate = null
       }
-    },
-    isChooseStart() {
-      if (!this.isChooseStart) {
-        this.$refs.startDateInput.focus()
-        this.choosingStart = true
-      } else {
-        this.choosingStart = false
-        this.startDate = null
-      }
-    },
-    choosingDue() {
-      this.choosingDue
-        ? (this.choosingStart = false)
-        : (this.choosingStart = true)
-    },
-    choosingStart() {
-      this.choosingStart
-        ? (this.choosingDue = false)
-        : (this.choosingDue = true)
+      // },
+      // isChooseStart() {
+      //   if (!this.isChooseStart) {
+      //     this.$refs.startDateInput.focus()
+      //     this.choosingStart = true
+      //   } else {
+      //     this.choosingStart = false
+      //     this.startDate = null
+      //   }
+      // },
+      // choosingDue() {
+      //   this.choosingDue
+      //     ? (this.choosingStart = false)
+      //     : (this.choosingStart = true)
+      // },
+      // choosingStart() {
+      //   this.choosingStart
+      //     ? (this.choosingDue = false)
+      //     : (this.choosingDue = true)
     },
   },
 }

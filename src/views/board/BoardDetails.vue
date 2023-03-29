@@ -1,11 +1,14 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
     'background-color': board.style?.backgroundColor || 'none',
-    'backgroundImage': 'url(' + board.style?.imgUrls.regular + ')' || 'none',
-    'backgroundSize': 'cover',
+    backgroundImage: 'url(' + board.style?.imgUrls?.regular + ')' || 'none',
+    backgroundSize: 'cover',
     'background-position': 'center',
   }">
-    <header :class="['board-header flex align-center justify-between', { dark: isDark }]">
+    <header :class="[
+      'board-header flex align-center justify-between',
+      { dark: isDark },
+    ]">
       <div class="flex">
         <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
           {{ board.title }}
@@ -20,12 +23,12 @@
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
+        <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"></button>
         <span class="board-header-btn-divider"></span>
         <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
       <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
-
     </header>
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
@@ -45,7 +48,6 @@
         </div>
       </article>
       <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
-
     </main>
   </div>
   <RouterView />
@@ -175,19 +177,20 @@ export default {
       const fac = new FastAverageColor()
       if (this.board.style.backgroundColor) {
         const hexColor = this.board.style.backgroundColor
-        let red = parseInt(hexColor.substring(1, 3), 16);
-        let green = parseInt(hexColor.substring(3, 5), 16);
-        let blue = parseInt(hexColor.substring(5, 7), 16);
+        let red = parseInt(hexColor.substring(1, 3), 16)
+        let green = parseInt(hexColor.substring(3, 5), 16)
+        let blue = parseInt(hexColor.substring(5, 7), 16)
 
         // Calculate perceived brightness
-        let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue;
+        let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue
 
         // Check if color is light or dark
-        this.isDark = (perceivedBrightness >= 128)
-
+        this.isDark = perceivedBrightness >= 128
       } else {
         try {
-          const color = await fac.getColorAsync(this.board.style.imgUrls.regular)
+          const color = await fac.getColorAsync(
+            this.board.style.imgUrls.regular
+          )
           this.isDark = color.isDark
         } catch (err) {
           console.log(err)

@@ -28,10 +28,8 @@ export default {
       const diff = this.diff(this.date.dueDate)
 
       if (!this.date.isCompleted) {
-        if (diff === 0) return 'due-soon'
-        else if (diff === -1) return 'due-soon'
-        else if (diff === 1) return 'overdue'
-        else if (diff >= 0) return 'overdue'
+        if (diff === 0 || diff === -1) return 'due-soon'
+        else if (diff === 1 || diff >= 0) return 'overdue'
         else return ''
       }
       return 'complete'
