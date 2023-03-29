@@ -76,7 +76,9 @@
         </div>
         <div class="btns-container">
           <button @click="saveDate" class="btn btn-blue btn-save">Save</button>
-          <button class="btn btn-light btn-remove">Remove</button>
+          <button @click="debug" class="btn btn-light btn-remove">
+            Remove
+          </button>
         </div>
       </template>
     </VueDatePicker>
@@ -157,7 +159,8 @@ export default {
     debug(ev) {
       // console.log(this.saveDate())
       // console.log(this.diff())
-      console.log(this.taskId)
+      console.log(new Date(this.dueDateParsed))
+      console.log(this.dueDateParsed)
     },
     saveDate() {
       // const startDate = this.startDateParsed
