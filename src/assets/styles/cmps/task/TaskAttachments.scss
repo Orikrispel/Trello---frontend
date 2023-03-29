@@ -1,10 +1,43 @@
 .task-attachments {
-  display: flex;
+  align-items: center;
   justify-content: space-between;
-  p {
-    padding: 0;
-    margin: 0;
-    color: gray;
-    font-size: 12px;
+
+  .icon {
+    color: $font-clr3;
+    font-size: rem(16px);
+    align-self: center;
+
+    &.description-icon {
+      margin: 0 4px 4px 0;
+    }
+  }
+
+  p.checklist {
+    color: $font-clr3;
+    align-items: center;
+    max-width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    padding: 2px;
+    margin: 0 4px 4px 0;
+    position: relative;
+    text-overflow: ellipsis;
+  }
+
+  .member-preview {
+    padding: 2px;
+
+    .member-img {
+      height: 28px;
+      width: 28px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
