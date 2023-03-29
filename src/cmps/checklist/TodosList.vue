@@ -7,8 +7,8 @@
             </li>
             <input type="text" v-model="addTodoTitle" class="add-todo-input" v-if="isEditorOn === true">
             <div class="add-todo-btns">
-                <button class="btn btn-blue add-item-btn" @click="addTodo">Add Item</button>
-                <button class="btn add-item-btn" @click="isEditorOn = false">Cancel</button>
+                <button class="btn" @click="addTodo" :class="{ 'btn-blue': isEditorOn }">Add Item</button>
+                <button class="btn cancel-todo-btn" @click="isEditorOn = false" v-if="isEditorOn">Cancel</button>
             </div>
         </ul>
     </section>

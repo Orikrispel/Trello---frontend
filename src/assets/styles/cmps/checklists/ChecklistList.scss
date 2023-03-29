@@ -10,6 +10,11 @@
   }
 }
 
+.checklist.li button {
+  &:hover {
+    filter: brightness(90%);
+  }
+}
 .checklist-preview {
   margin-bottom: 15px;
 }
@@ -31,6 +36,13 @@
   .add-todo-input {
     box-shadow: $input-shadow;
     background-color: white;
+    &:focus {
+      background-color: $secondary-clr1;
+      box-shadow: inset 0 0 0 2px $primary-clr4;
+      border: none;
+      outline: none;
+    }
+    margin-top: 5px;
   }
 
   .add-item-btn {
@@ -39,6 +51,23 @@
 }
 
 .add-todo-btns {
+  margin-top: 7px;
   display: flex;
   gap: 5px;
+  button {
+    &:hover {
+      filter: brightness(90%);
+    }
+  }
+}
+
+.cancel-todo-btn {
+  background-color: $secondary-clr3;
+}
+
+#delete-cl-btn {
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+  }
 }

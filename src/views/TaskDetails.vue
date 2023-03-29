@@ -63,7 +63,7 @@
               <h3>
                 <span class="icon description-icon icon-lg"></span>Description
               </h3>
-              <button class="btn btn-light" v-if="!userIsEditing && task.description"
+              <button class="btn" id="edit-desc-btn" v-if="!userIsEditing && task.description"
                 @click="userIsEditing = !userIsEditing">
                 Edit
               </button>
