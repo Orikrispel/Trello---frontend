@@ -1,6 +1,8 @@
 .date-picker-container {
   padding-inline: 12px;
-
+  .dp__outer_menu_wrap {
+    max-height: min-content;
+  }
   .dp__flex_display {
     display: block;
   }
@@ -46,7 +48,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
@@ -132,4 +133,7 @@
       margin-bottom: rem(8px);
     }
   }
+}
+.custom-date-picker-component {
+  position: absolute;
 }

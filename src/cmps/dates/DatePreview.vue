@@ -3,9 +3,7 @@
     <input type="checkbox" />
     <button @click="test" class="btn btn-light flex">
       {{ dateForDisplay }}
-      <span v-if="isOverdue" class="span-overdue">overdue </span>
-      <br />
-      <span v-if="isDueSoon" class="span-due-soon">due soon</span>
+      <span :class="class">{{ this.class }}</span>
       <span class="icon icon-arrow-down" v-html="getSvg('arrowDown')"></span>
     </button>
   </div>
@@ -21,39 +19,56 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      class: '',
+    }
+  },
   computed: {
     dateForDisplay() {
       const diff = this.diff(this.date.dueDate)
       if (diff === 0) {
-        return 'Today'
+        this.class = 'due-soon'
+        return `Today ${utilService.formatDateString(this.date.dueDate)}`
       } else if (diff === 1) {
-        return 'Tomorrow'
+        this.class = 'due-soon'
+        return `Tomorrow ${utilService.formatDateString(this.date.dueDate)}`
       } else if (diff === -1) {
-        return 'Yesterday'
-      } else {
+        this.class = 'overdue'
+
+        return `Yesterday ${utilService.formatDateString(this.date.dueDate)}`
+      } else if (diff <= 0) {
+        this.class = 'overdue'
+
         return utilService.formatDateString(this.date.dueDate)
-      }
+      } else this.class = ''
+      return utilService.formatDateString(this.date.dueDate)
     },
-    isOverdue() {
-      if (this.diff(this.date.dueDate) <= 0) return true
-      return false
-    },
-    isDueSoon() {
+
+    dueTime() {
       const diff = this.diff(this.date.dueDate)
-      if (diff >= -2 && diff <= 2 && diff >= 0) return true
-      return false
+      if (diff >= -2 && diff <= 2 && diff >= 0) return 'due-soon'
+      else if (this.diff(this.date.dueDate) <= 0) return 'overdue'
+      else return ''
     },
   },
 
   methods: {
     test() {
-      console.log(this.diff(this.date.dueDate))
+      let res = utilService.formatDateString(this.date.dueDate)
+      console.log(res)
     },
     diff(date) {
       const millisecondsPerDay = 24 * 60 * 60 * 1000
-      const diffInMilliseconds = Math.abs(date - Date.now())
+      const diffInMilliseconds = date - Date.now()
       return Math.floor(diffInMilliseconds / millisecondsPerDay)
     },
+    hourDiff(start, end) {
+      const diff = Math.abs(end - start)
+      const diffInHours = diff / (1000 * 60 * 60)
+      return diffInHours
+    },
+
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
