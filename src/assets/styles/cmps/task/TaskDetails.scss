@@ -293,3 +293,26 @@
     filter: brightness(90%);
   }
 }
+
+.add-attachment-menu {
+  padding: 0px 0;
+  display: flex;
+  justify-content: center;
+  button.btn {
+    margin: auto;
+    width: 100%;
+    justify-content: left;
+    cursor: pointer;
+    color: $font-clr1;
+    margin: 2px 0;
+
+    &:hover {
+      background-color: #091e420a;
+    }
+  }
+
+  .hr-add-attachments {
+    width: 95%;
+    background-color: white;
+  }
+}
