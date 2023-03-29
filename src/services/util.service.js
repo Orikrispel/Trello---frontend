@@ -222,6 +222,8 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
 function formatDateString(timestamp) {
   // Create a new Date object from the timestamp
   var date = new Date(timestamp * 1000)
+  console.log(timestamp)
+  console.log(date)
   // Create an array with the month names
   var months = [
     'Jan',
@@ -251,9 +253,10 @@ function formatDateString(timestamp) {
   if (hour == 0) {
     hour = 12 + ''
   }
+  if (hour <= 9) hour = `0${hour}`
+  if (minute <= 9) minute = `0${minute}`
   // Create the formatted date string
-  var formattedDate =
-    day + ' ' + month + ' at ' + hour + ':' + minute + ' ' + suffix
+  var formattedDate = ` ${day} ${month} at ${hour}:${minute} ${suffix}  `
   // Return the formatted date string
   return formattedDate
 }
