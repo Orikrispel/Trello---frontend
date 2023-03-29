@@ -2,6 +2,7 @@ import { storageService } from './async-storage.service.js'
 import { colorItems, utilService } from './util.service.js'
 import { userService } from './user.service.js'
 import { unsplashService } from './unsplash.service.js'
+// import { fchown } from 'fs'
 const BOARD_STORAGE_KEY = 'board'
 export const boardService = {
   query,
@@ -15,6 +16,7 @@ export const boardService = {
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
   getDefaultMembers,
+  getEmptyComment,
   colorItems,
 }
 window.cs = boardService
@@ -111,7 +113,9 @@ function getEmptyTask(
   labels = [],
   members = [],
   cover = null,
-  files = []
+  files = [],
+  comments = [],
+  activities = []
 ) {
   return {
     id: utilService.makeId(),
@@ -125,6 +129,8 @@ function getEmptyTask(
     labels,
     files,
     members,
+    comments,
+    activities,
   }
 }
 
@@ -275,6 +281,15 @@ function randomStarBoard() {
   const num = getRandomIntInclusive(1, 4)
   if (num === 4) return true
   return false
+}
+
+function getEmptyComment() {
+  return {
+    id: '',
+    txt: '',
+    createdAt: null,
+    byMember: null,
+  }
 }
 
 async function _createBoard(

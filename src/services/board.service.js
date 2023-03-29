@@ -18,6 +18,7 @@ export const boardService = {
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
   getDefaultMembers,
+  getEmptyComment,
   colorItems,
 }
 window.cs = boardService
@@ -261,6 +262,15 @@ function randomStarBoard() {
   const num = utilService.getRandomIntInclusive(1, 4)
   if (num === 4) return true
   return false
+}
+
+function getEmptyComment() {
+  return {
+    id: '',
+    txt: '',
+    createdAt: null,
+    byMember: null,
+  }
 }
 
 async function _createBoard(
