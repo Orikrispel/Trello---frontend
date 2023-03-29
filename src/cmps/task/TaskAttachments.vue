@@ -2,7 +2,7 @@
   <section class="task-attachments flex">
 
     <div class="flex align-center">
-      <span class="icon description-icon"></span>
+      <span v-if="task.description" class="icon description-icon"></span>
       <p :class="['fs12 checklist flex ', { complete: isComplete }]" v-if="todosCount !== 0"><span
           class="icon checklist-icon"></span>{{
             checklistStatus

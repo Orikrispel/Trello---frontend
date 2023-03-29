@@ -5,8 +5,8 @@
     'backgroundSize': 'cover',
     'background-position': 'center',
   }">
-    <header class="board-header flex align-center justify-between gap">
-      <div class="flex gap">
+    <header :class="['board-header flex align-center justify-between', { dark: isDark }]">
+      <div class="flex">
         <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
           {{ board.title }}
         </h1>
@@ -20,7 +20,8 @@
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"
+        <span class="board-header-btn-divider"></span>
+        <button @click="openRightMenu" class="btn btn-ligh btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
       <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
@@ -30,7 +31,7 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" class="btn btn-light" @click="toggleAddGroup">
+        <button v-show="!isAddGroup" :class="['btn btn-light btn-add-group', { dark: isDark }]" @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
@@ -58,8 +59,6 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
-import { mapGetters } from 'vuex'
-
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -74,6 +73,7 @@ export default {
       isAddGroup: false,
       showFilterMenu: false,
       isRightMenuOpen: false,
+      isDark: false,
     }
   },
   async created() {
@@ -82,9 +82,9 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
+    this.checkIsDark()
   },
   computed: {
-    ...mapGetters(['currBoard']),
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -98,8 +98,7 @@ export default {
     getBgImg() {
       console.log('this.board.style.imgUrls.thumb', this.board.style.imgUrls.thumb)
       return this.board.style.imgUrls.thumb
-    }
-
+    },
   },
   methods: {
     openRightMenu() {
@@ -175,14 +174,31 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    mounted() {
-      this.taskDetailsIsOpen = false
+    async checkIsDark() {
+      const fac = new FastAverageColor()
+      let isDark = false
+      if (this.board.style.imgUrls) {
+        try {
+          const color = await fac.getColorAsync(this.board.style.imgUrls.regular)
+          this.isDark = color.isDark
+          // console.log('Average color', color)
+          // console.log('isDark:', this.isDark)
+        } catch (error) {
+          console.log(error)
+        }
+      }
     },
   },
+  mounted() {
+    this.taskDetailsIsOpen = false
+  },
   watch: {
-    currBoard: {
-      handler(newBoard, oldBoard) {
-        this.board = newBoard
+    board: {
+      handler() {
+        if (this.board) {
+          this.board = this.$store.getters.currBoard
+          this.checkIsDark()
+        }
       },
       immediate: true,
     },
