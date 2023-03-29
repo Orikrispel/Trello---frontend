@@ -105,7 +105,7 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   }
 }
 
-function getEmptyTask(title = '', description = '', labels = [], members = [], cover = null) {
+function getEmptyTask(title = '', description = '', labels = [], members = [], cover = null, files = []) {
   return {
     id: utilService.makeId(),
     title,
@@ -116,6 +116,7 @@ function getEmptyTask(title = '', description = '', labels = [], members = [], c
     },
     description,
     labels,
+    files,
     members,
   }
 }

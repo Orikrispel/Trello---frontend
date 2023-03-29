@@ -118,7 +118,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      &>button {
+      & > button {
         width: 100%;
         padding: 12px;
         margin: 0 4px 0 0;
@@ -279,4 +279,10 @@
   margin-bottom: 15px;
 }
 
-#right-board-header {}
+.attach-btn {
+  &:hover {
+  }
+}
+
+#right-board-header {
+}
