@@ -3,7 +3,7 @@
     <input type="checkbox" v-model="date.isCompleted" />
     <button @click="test" class="btn btn-light flex">
       {{ dateForDisplay }}
-      <span :class="class">{{ this.class }}</span>
+      <span :class="spanClass">{{ spanClass }}</span>
       <span class="icon icon-arrow-down" v-html="getSvg('arrowDown')"></span>
     </button>
   </div>
@@ -19,47 +19,40 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      class: '',
-    }
-  },
+  data() {},
   computed: {
     dateForDisplay() {
-      const diff = this.diff(this.date.dueDate)
-      if (diff === 0) {
-        this.class = 'due-soon'
-        return `Today ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff === -1) {
-        this.class = 'due-soon'
-        return `Tomorrow ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff === 1) {
-        this.class = 'overdue'
-
-        return `Yesterday ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff >= 0) {
-        this.class = 'overdue'
-
-        return utilService.formatDateString(this.date.dueDate)
-      } else if (this.date.isCompleted) {
-        this.class = 'completed'
-        return utilService.formatDateString(this.date.dueDate)
-      } else this.class = ''
-      return utilService.formatDateString(this.date.dueDate)
+      return `${this.getDay} ${utilService.formatDateString(this.date.dueDate)}`
     },
+    spanClass() {
+      const diff = this.diff(this.date.dueDate)
 
-    // dueTime() {
-    //   const diff = this.diff(this.date.dueDate)
-    //   if (diff >= -2 && diff <= 2 && diff >= 0) return 'due-soon'
-    //   else if (this.diff(this.date.dueDate) <= 0) return 'overdue'
-    //   else return ''
-    // },
+      if (!this.date.isCompleted) {
+        if (diff === 0) return 'due-soon'
+        else if (diff === -1) return 'due-soon'
+        else if (diff === 1) return 'overdue'
+        else if (diff >= 0) return 'overdue'
+        else return ''
+      }
+      return 'complete'
+    },
+    getDay() {
+      const diff = this.diff(this.date.dueDate)
+
+      if (diff === 0) {
+        return `today`
+      } else if (diff === -1) {
+        return `tomorrow`
+      } else if (diff === 1) {
+        return `yesterday`
+      } else return ''
+    },
   },
 
   methods: {
     test() {
       let res = utilService.formatDateString(this.date.dueDate)
-      console.log(res)
+      console.log(this.date)
     },
     diff(date) {
       const millisecondsPerDay = 24 * 60 * 60 * 1000
