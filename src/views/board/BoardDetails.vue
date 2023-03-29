@@ -38,9 +38,12 @@
         <button
           @click="openRightMenu"
           class="btn btn-light"
-          v-if="!isRightMenuOpen"
+          v-if="!isRightMenuOpen"></button>
         <span class="board-header-btn-divider"></span>
-        <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
+        <button
+          @click="openRightMenu"
+          class="btn btn-light btn-sm btn-menu"
+          v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
       <RightMenuIndex
@@ -52,7 +55,10 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" :class="['btn btn-light btn-add-group', { dark: isDark }]" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          :class="['btn btn-light btn-add-group', { dark: isDark }]"
+          @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
