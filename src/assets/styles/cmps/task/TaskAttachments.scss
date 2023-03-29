@@ -18,10 +18,20 @@
     max-width: 100%;
     min-height: 20px;
     overflow: hidden;
-    padding: 2px;
+    padding: 0 4px 0 2px;
     margin: 0 4px 4px 0;
     position: relative;
     text-overflow: ellipsis;
+
+    &.complete {
+      background-color: #61bd4f;
+      border-radius: 3px;
+      color: #fff;
+
+      .icon {
+        color: #fff;
+      }
+    }
   }
 
   .member-preview {

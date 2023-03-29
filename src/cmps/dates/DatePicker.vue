@@ -61,7 +61,7 @@
                 @blur="updateDate($event)"
                 placeholder="M/D/YYY" />
 
-              <!-- <input
+              <input
                 type="text"
                 :class="
                   isChooseDue
@@ -70,7 +70,7 @@
                 "
                 @blur="validateTime"
                 @input="updateTime(+$event)"
-                placeholder="h:mm A" /> -->
+                placeholder="h:mm A" />
             </div>
           </div>
         </div>

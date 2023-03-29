@@ -3,8 +3,10 @@
 
     <div class="flex align-center">
       <span class="icon description-icon"></span>
-      <p class="fs12 checklist flex" v-if="todosCount !== 0"><span class="icon checklist-icon"></span>{{ checklistStatus
-      }}
+      <p :class="['fs12 checklist flex ', { complete: isComplete }]" v-if="todosCount !== 0"><span
+          class="icon checklist-icon"></span>{{
+            checklistStatus
+          }}
       </p>
 
     </div>
@@ -33,6 +35,7 @@ export default {
       todosCount: 0,
       todosDone: 0,
       members: [],
+      isComplete: false,
     }
   },
   created() {
@@ -51,6 +54,7 @@ export default {
       })
       this.todosCount = countTodos
       this.todosDone = countDone
+      this.isComplete = (countDone === countTodos) ? true : false
     },
     setMembers() {
       if (!this.Task) return

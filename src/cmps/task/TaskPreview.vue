@@ -1,5 +1,5 @@
 <template>
-  <section v-if="task" class="task-preview">
+  <section v-if="task" class="task-preview flex column">
     <TaskAttachmentsLabels :task="task" />
     <button class="clean-btn btn-menu">
       <span class="icon icon-edit" @click="openTaskOptions"></span>
