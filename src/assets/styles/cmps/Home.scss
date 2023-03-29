@@ -11,19 +11,20 @@
     .hero-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      width: 90vw;
+      max-width: 1200px;
 
+      // @include for-normal-layout {
+      //   max-width: em(720px);
+      // }
 
-      @include for-normal-layout {
-        max-width: em(720px);
-      }
+      // @include for-wide-layout {
+      //   max-width: em(960px);
+      // }
 
-      @include for-wide-layout {
-        max-width: em(960px);
-      }
-
-      @include for-super-wide-layout {
-        max-width: em(1200px);
-      }
+      // @include for-super-wide-layout {
+      //   max-width: em(1200px);
+      // }
 
       &>* {
         padding: 8rem 1rem;

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="addBoard" class="board-add-form">
+    <form @submit.prevent="addBoard" class="board-add-form " @click.stop>
         <div class="add-form-header">
             <h2>Create Board</h2>
             <span class="icon btn-close icon-close" @click.stop="closeModal"></span>
@@ -15,8 +15,7 @@
             <ImgPicker @onSetBoardImg="setBoardImg" />
             <ColorPicker :quantity="6" @setColor="setBoardBgColor" />
         </div>
-        <label for="board-title" class="board-title-label">Board title<span v-if="!boardToAdd.title"
-                class="required-field">*</span></label>
+        <label for="board-title" class="board-title-label">Board title<span class="required-field">*</span></label>
         <input name="board-title" type="text" v-model="boardToAdd.title" />
         <button type="submit">Create</button>
     </form>

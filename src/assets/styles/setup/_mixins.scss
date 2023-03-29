@@ -1,10 +1,13 @@
 /* Breakpoint mixins */
 
+// $mobile-breakpoint: 460px;
 @mixin for-mobile-layout {
   @media (max-width: calc($mobile-breakpoint + 40px)) {
     @content;
   }
 }
+
+// $narrow-breakpoint: 720px;
 
 @mixin for-narrow-layout {
   @media (min-width: calc($mobile-breakpoint + 40px)) {
@@ -12,12 +15,14 @@
   }
 }
 
+// $normal-breakpoint: 960px;
 @mixin for-normal-layout {
   @media (min-width: calc($narrow-breakpoint + 40px)) {
     @content;
   }
 }
 
+// $wide-breakpoint: 1200px;
 @mixin for-wide-layout {
   @media (min-width: calc($normal-breakpoint + 40px)) {
     @content;
@@ -42,7 +47,7 @@
     padding-top: calc(($height / $width) * 100%);
   }
 
-  > * {
+  >* {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,7 +55,7 @@
     bottom: 0;
   }
 
-  > img {
+  >img {
     height: 100%;
     object-fit: cover;
   }
@@ -72,14 +77,17 @@
   $g: green($bg-color);
   $b: blue($bg-color);
 
-  $luminance: 0.2126 * $r + 0.7152 * $g + 0.0722 * $b; // calculate the luminance of the background color
+  $luminance: 0.2126 * $r +0.7152 * $g +0.0722 * $b; // calculate the luminance of the background color
 
   @if ($luminance > $threshold) {
     background-color: #000000; // if the background is light, use black text
-  } @else {
+  }
+
+  @else {
     background-color: #ffffff; // if the background is dark, use white text
   }
 }
+
 // @mixin contrast-bg-color($bg-color) {
 //   $threshold: 0.5;
 

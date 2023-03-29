@@ -1,22 +1,31 @@
 <template>
   <header class="app-header">
     <nav class="flex gap">
-      <img class="logo" src="../assets/imgs/header/logo white.png" alt="Jello logo">
-      <button class="btn board-btn" @click="this.$router.push('/board')">Boards</button>
-      <!-- <button hidden class="btn" @click="isCreateMode = !isCreateMode">Create</button> -->
-      <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" />
+      <RouterLink class="flex" to="/"><img class="logo" src="../assets/logo white.png" alt="Jello logo"></RouterLink>
+      <RouterLink to="/board">Boards</RouterLink>
+      <button class="btn add-board" @click="isCreateMode = !isCreateMode">Create
+        <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" style="top: 40px;" />
+      </button>
+    </nav>
 
-    </nav>
     <nav class="flex gap">
-      <RouterLink to="/login">Login / Signup</RouterLink>
+      <section class="loggedin-user" v-if="loggedInUser">
+        <RouterLink :to="`/user/${loggedInUser._id}`">
+          <div class="member-img">
+            {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
+          </div>
+        </RouterLink>
+      </section>
+
+      <section class="log-in" v-else>
+        <RouterLink :to="`/login`">
+          <div class="member-img">
+            <span class="fs12">login icon</span>
+          </div>
+        </RouterLink>
+      </section>
     </nav>
-    <section class="loggedin-user" v-if="loggedInUser">
-      <RouterLink :to="`/user/${loggedInUser._id}`">
-        {{ loggedInUser.fullname }}
-      </RouterLink>
-      <span>{{ loggedInUser.score.toLocaleString() }}</span>
-      <img :src="loggedInUser.imgUrl" />
-    </section>
+
   </header>
 </template>
 <script>

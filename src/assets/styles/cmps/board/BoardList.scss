@@ -1,44 +1,74 @@
 .board-lists-container {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  margin: 40px 16px;
+  max-width: 1200px;
+  margin: 40px auto;
   display: flex;
   flex-direction: column;
   gap: 45px;
+  min-width: 320px;
+
   h3 {
+    font-family: "Segoe UI bold";
     padding: 6px;
     font-size: 16px;
-    color: $font-clr0;
-    margin-bottom: 5px;
+    color: $font-clr1;
+    margin: 0 0 0 6px;
   }
 
   .boards-header {
-    margin: 0px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
+
+    span.icon {
+      color: $primary-clr5;
+      line-height: 0;
+      margin: 0 0 0 8px;
+    }
   }
 }
 
 .board-list {
   list-style: none;
-  justify-items: center;
   display: flex;
   flex-wrap: wrap;
   padding: 0px;
-  gap: 16px;
+  // gap: 16px;
   margin: 0px;
 
   li {
+    position: relative;
     color: $secondary-clr2;
     padding: 7px;
-    width: 190px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    min-width: 138px;
     gap: 20px;
     height: 96px;
     border-radius: 3px;
     overflow: hidden;
-    &:hover:not(.new-board) {
-      cursor: pointer;
-      filter: brightness(90%);
+    width: calc(50% - 8px);
+
+    @include for-narrow-layout {
+      width: calc(33% - 8px);
     }
+
+    @include for-normal-layout {
+      width: calc(25% - 8px);
+    }
+
+    @include for-wide-layout {
+      width: calc(20% - 8px);
+    }
+
+    @include for-super-wide-layout {
+      width: calc(16.6% - 8px);
+    }
+
+    &:hover .board-overlay {
+      cursor: pointer;
+      background-color: #00000040;
+    }
+
     &:hover .star {
       transform: translateX(0px);
     }
@@ -66,13 +96,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+
   p {
     margin: 0;
-    color: $font-clr0;
+    color: $font-clr2;
     font-size: 0.9rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
   }
+
   &:hover {
     cursor: pointer;
     background-color: #091e4214;
@@ -92,15 +125,17 @@
   background-color: #fff;
   box-shadow: $action-modal-shadow;
   padding: 10px;
-  .background-label {
+
+  .background-label,
+  .board-title-label {
+    font-family: 'Segoe UI Bold';
     margin-top: 15px;
   }
+
   span {
     font-size: 14px;
   }
-  .board-title-label {
-    margin-top: 15px;
-  }
+
   label {
     margin: 0;
     font-size: em(14px);
@@ -121,6 +156,7 @@
     outline: none;
     padding: 10px 12px;
     width: 100%;
+
     &:focus {
       background-color: $secondary-clr1;
       box-shadow: inset 0 0 0 2px $primary-clr4;
@@ -186,17 +222,18 @@
 }
 
 @media (max-width: 1000px) {
-  .board-list {
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    padding: 0px;
-    gap: 16px;
-    margin: 0px;
-    li {
-      gap: 5px;
-    }
-  }
+  // .board-list {
+  //   display: grid;
+  //   justify-content: space-between;
+  //   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  //   padding: 0px;
+  //   gap: 16px;
+  //   margin: 0px;
+
+  //   li {
+  //     gap: 5px;
+  //   }
+  // }
 }
 
 @media (max-width: 850px) {
@@ -209,12 +246,14 @@
     background-color: #fff;
     box-shadow: $action-modal-shadow;
   }
+
   // dark color function
   .board-list {
     display: flex;
     flex-wrap: wrap;
-    li {
-      width: 160px;
-    }
+
+    // li {
+    //   width: 160px;
+    // }
   }
 }
