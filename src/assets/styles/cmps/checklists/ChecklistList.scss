@@ -3,6 +3,8 @@
 }
 
 .checklist-list {
+
+
   .checklist-btn {
     &:hover {
       cursor: pointer;
@@ -15,8 +17,15 @@
     filter: brightness(90%);
   }
 }
+
 .checklist-preview {
-  margin-bottom: 15px;
+  position: relative;
+  padding: 8px 0;
+  margin: 0 0 4px 0px;
+
+  .icon {
+    margin-top: -8px;
+  }
 }
 
 .todos-list {
@@ -26,22 +35,27 @@
   flex-direction: column;
   padding: 0;
   margin: 0;
+
   button {
     width: fit-content;
   }
+
   input {
     border: none;
     background-color: $secondary-clr3;
   }
+
   .add-todo-input {
     box-shadow: $input-shadow;
     background-color: white;
+
     &:focus {
       background-color: $secondary-clr1;
       box-shadow: inset 0 0 0 2px $primary-clr4;
       border: none;
       outline: none;
     }
+
     margin-top: 5px;
   }
 
@@ -54,6 +68,7 @@
   margin-top: 7px;
   display: flex;
   gap: 5px;
+
   button {
     &:hover {
       filter: brightness(90%);

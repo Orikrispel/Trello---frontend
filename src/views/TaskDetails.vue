@@ -76,7 +76,7 @@
               <p v-if="!userIsEditing" @click="handleDesc">
                 {{ task.description }}
               </p>
-              <textarea v-if="userIsEditing" v-model="task.description" @blur="userIsEditing = false"
+              <textarea v-if="userIsEditing" ref="taskDesc" v-model="task.description" @blur="userIsEditing = false"
                 autofocus></textarea>
               <button class="btn btn-blue" v-if="userIsEditing" @click="saveTask(task)">
                 Save
@@ -263,7 +263,7 @@ export default {
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
-      // this.$refs.taskDesc.focus()
+      this.$refs.taskDesc.focus()
     },
     handleComment() {
       console.log(this.task)

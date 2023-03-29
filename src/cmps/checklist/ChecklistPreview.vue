@@ -1,6 +1,6 @@
 <template>
     <section class="checklist-preview">
-        <h1>{{ checklist.title }}</h1>
+        <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
         <TodosList :todos="checklist.todos" @updateChecklist="onUpdateChecklist" />
     </section>
 </template>
