@@ -1,5 +1,5 @@
 // import { boardService } from '../services/board.service.local'
-import { boardService, demoBoards } from '../services/board.service.local'
+import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service'
 export function getActionRemoveBoard(boardId) {
   return {

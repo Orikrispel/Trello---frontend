@@ -105,7 +105,13 @@ function getEmptyGroup(title = '', archivedAt = null, tasks = [], style = {}) {
   }
 }
 
-function getEmptyTask(title = '', description = '', labels = [], members = [], cover = null) {
+function getEmptyTask(
+  title = '',
+  description = '',
+  labels = [],
+  members = [],
+  cover = null
+) {
   return {
     id: utilService.makeId(),
     title,
@@ -143,9 +149,9 @@ function getRandomLabels(amount = 4) {
 }
 
 function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
@@ -157,28 +163,27 @@ function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
 }
 
 function _getBoardRandomColor() {
-  const colorItems =
-    [
-      '#fad29c',
-      '#efb3ab',
-      '#5ba4cf',
-      '#f5dd29',
-      '#5aac44',
-      'gray',
-    ]
+  const colorItems = [
+    '#fad29c',
+    '#efb3ab',
+    '#5ba4cf',
+    '#f5dd29',
+    '#5aac44',
+    'gray',
+  ]
   return colorItems[getRandomIntInclusive(0, 5)]
 }
 
 function _getBoardRandomGradient() {
-  const colorItems =
-    ['linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)',
-      'linear-gradient(to right,#824de4,#080c3e)',
-      'linear-gradient(143deg, #a2bc12, #53b8e1)',
-      'linear-gradient(331deg, #ad8739, #e35493)',
-      'linear-gradient(230deg, #859d0d, #87d9ab)',
-      'linear-gradient(187deg, #b36738, #d51d90)',
-      'linear-gradient(124deg, #919781, #c67733)',
-    ]
+  const colorItems = [
+    'linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)',
+    'linear-gradient(to right,#824de4,#080c3e)',
+    'linear-gradient(143deg, #a2bc12, #53b8e1)',
+    'linear-gradient(331deg, #ad8739, #e35493)',
+    'linear-gradient(230deg, #859d0d, #87d9ab)',
+    'linear-gradient(187deg, #b36738, #d51d90)',
+    'linear-gradient(124deg, #919781, #c67733)',
+  ]
   return colorItems[getRandomIntInclusive(0, 6)]
 }
 

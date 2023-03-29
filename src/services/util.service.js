@@ -253,7 +253,7 @@ function formatDateString(timestamp) {
   if (hour == 0) {
     hour = 12 + ''
   }
-  if (hour <= 9) hour = `0${hour}`
+  if (hour <= 9) hour = `${hour}`
   if (minute <= 9) minute = `0${minute}`
   // Create the formatted date string
   var formattedDate = ` ${day} ${month} at ${hour}:${minute} ${suffix}  `
