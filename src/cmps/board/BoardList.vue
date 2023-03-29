@@ -2,8 +2,8 @@
   <div class="board-lists-container">
     <section class="star-boards">
       <div class="boards-header" v-if="starredBoards.length">
-        <h3> <span class="icon star"></span></h3>
-        <h3>Starred Boards</h3>
+        <span class="icon fs24 star"></span>
+        <h3>Starred boards</h3>
       </div>
       <ul class="board-list">
         <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
@@ -17,20 +17,21 @@
     </section>
     <section class="user-boards">
       <div class="boards-header">
-        <h3 v-html="getSvg('addMember')"></h3>
+        <span class="icon" v-html="getSvg('addMember')"></span>
         <h3>Your boards</h3>
       </div>
       <ul class="board-list">
-        <li class="new-board" @click="isCreateMode = true">
-          <p>Create new board</p>
-          <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" />
-        </li>
+
         <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
           'background-color': board.style?.backgroundColor || '#014a75',
           backgroundImage: getBoardBg(board) || 'none',
           backgroundSize: 'cover',
         }">
           <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+        </li>
+        <li class="new-board" @click="isCreateMode = true">
+          <p>Create new board</p>
+          <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" />
         </li>
       </ul>
     </section>

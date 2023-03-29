@@ -8,8 +8,12 @@
       backgroundSize: 'cover',
       'background-position': 'center',
     }">
-    <header class="board-header flex align-center justify-between gap">
-      <div class="flex gap">
+    <header
+      :class="[
+        'board-header flex align-center justify-between',
+        { dark: isDark },
+      ]">
+      <div class="flex">
         <h1
           class="board-title fs18"
           ref="boardTitle"
@@ -35,6 +39,8 @@
           @click="openRightMenu"
           class="btn btn-light"
           v-if="!isRightMenuOpen"
+        <span class="board-header-btn-divider"></span>
+        <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
       <RightMenuIndex
@@ -46,10 +52,7 @@
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button
-          v-show="!isAddGroup"
-          class="btn btn-light"
-          @click="toggleAddGroup">
+        <button v-show="!isAddGroup" :class="['btn btn-light btn-add-group', { dark: isDark }]" @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
@@ -84,8 +87,6 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
-import { mapGetters } from 'vuex'
-
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -100,6 +101,7 @@ export default {
       isAddGroup: false,
       showFilterMenu: false,
       isRightMenuOpen: false,
+      isDark: false,
     }
   },
   async created() {
@@ -108,9 +110,9 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
+    this.checkIsDark()
   },
   computed: {
-    ...mapGetters(['currBoard']),
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -206,14 +208,44 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    mounted() {
-      this.taskDetailsIsOpen = false
+    async checkIsDark() {
+      const fac = new FastAverageColor()
+      if (this.board.style.backgroundColor) {
+        const hexColor = this.board.style.backgroundColor
+        let red = parseInt(hexColor.substring(1, 3), 16)
+        let green = parseInt(hexColor.substring(3, 5), 16)
+        let blue = parseInt(hexColor.substring(5, 7), 16)
+
+        // Calculate perceived brightness
+        let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue
+
+        // Check if color is light or dark
+        this.isDark = perceivedBrightness >= 128
+      } else {
+        console.log('there is img url!')
+        try {
+          const color = await fac.getColorAsync(
+            this.board.style.imgUrls.regular
+          )
+          this.isDark = color.isDark
+          // console.log('Average color', color)
+          // console.log('isDark:', this.isDark)
+        } catch (error) {
+          console.log(error)
+        }
+      }
     },
   },
+  mounted() {
+    this.taskDetailsIsOpen = false
+  },
   watch: {
-    currBoard: {
-      handler(newBoard, oldBoard) {
-        this.board = newBoard
+    board: {
+      handler() {
+        if (this.board) {
+          this.board = this.$store.getters.currBoard
+          this.checkIsDark()
+        }
       },
       immediate: true,
     },

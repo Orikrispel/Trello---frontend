@@ -10,14 +10,15 @@
 
   header.board-header {
     height: auto;
-    padding: 8px 4px 4px 12px;
+    padding: 8px 4px 8px 12px;
     position: relative;
 
     h1.board-title {
       font-family: "Segoe UI Bold";
       color: $font-clr1;
       margin: 0;
-      padding: 4px 8px;
+      padding: 6px 12px;
+      margin-inline-end: 4px;
       border-radius: 3px;
 
       &:focus {
@@ -26,6 +27,11 @@
         border: none;
         outline: none;
       }
+    }
+
+    button {
+      min-width: 36px;
+      min-height: 36px;
     }
 
     .btn-star {
@@ -50,11 +56,50 @@
     }
 
     .btn-filter {
+      fill: $font-clr1;
       line-height: 20px;
       gap: 8px;
 
       &:hover {
         background-color: $btn-hover-clr2;
+      }
+    }
+
+    .btn-menu {
+      margin: 0 4px 0 0;
+      background-color: $btn-clr3;
+
+      svg {
+        fill: $font-clr1;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .board-header-btn-divider {
+      border-left: 1px solid #ffffff29;
+      float: left;
+      height: 16px;
+      margin: 8px 8px 12px 8px;
+    }
+
+    &.dark {
+      h1.board-title {
+        color: $font-clr4;
+
+        &:focus {
+          background-color: $btn-clr3;
+        }
+      }
+
+      button:is(.btn-filter, .btn-star, .btn-menu) {
+        color: $font-clr4;
+        fill: $font-clr4;
+        background-color: $btn-hover-clr3;
+
+        &:hover {
+          background-color: $btn-hover-clr4;
+        }
       }
     }
   }
@@ -73,10 +118,21 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      &>button {
+      & > button {
         width: 100%;
         padding: 12px;
+        margin: 0 4px 0 0;
         justify-content: start;
+
+        &.dark {
+          color: $font-clr4;
+          fill: $font-clr4;
+          background-color: $btn-hover-clr3;
+
+          &:hover {
+            background-color: $btn-hover-clr4;
+          }
+        }
       }
 
       .new-group-wrapper {
@@ -130,7 +186,6 @@
 }
 
 .board-right-actions {
-  gap: 12px;
   transition: margin 0.6s;
   margin-inline-end: 0px;
 }
@@ -139,12 +194,10 @@
   margin-inline-end: 100px;
 }
 
-// right-menu
-
 .right-menu {
   transition: transform 0.3s ease-in-out;
   transform: translateX(10em);
-  z-index: 100;
+  z-index: 8;
   top: rem(44px);
   position: fixed;
   right: 0;
@@ -226,4 +279,10 @@
   margin-bottom: 15px;
 }
 
-#right-board-header {}
+.attach-btn {
+  &:hover {
+  }
+}
+
+#right-board-header {
+}

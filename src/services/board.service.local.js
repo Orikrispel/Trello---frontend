@@ -110,7 +110,8 @@ function getEmptyTask(
   description = '',
   labels = [],
   members = [],
-  cover = null
+  cover = null,
+  files = []
 ) {
   return {
     id: utilService.makeId(),
@@ -122,6 +123,7 @@ function getEmptyTask(
     },
     description,
     labels,
+    files,
     members,
   }
 }

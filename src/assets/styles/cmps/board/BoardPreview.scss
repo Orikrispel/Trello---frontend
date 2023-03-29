@@ -6,6 +6,22 @@
   padding-inline: 5px;
   padding-block-start: 5px;
 
+  .board-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: #00000026;
+  }
+
+  &>*:not(.board-overlay) {
+    font-family: "Segoe UI bold";
+    cursor: pointer;
+    z-index: 1;
+  }
+
   .board-preview-actions {
     display: flex;
     align-items: center;
@@ -16,14 +32,17 @@
     font-size: 1rem;
     word-wrap: break-word;
   }
+
   .star {
     &:hover {
       color: $star-yellow;
     }
   }
+
   .solid-star {
     color: $star-yellow;
     transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
     &:hover {
       transform: scale(1.2);
     }
@@ -31,6 +50,7 @@
 
   .icon.star {
     transform: translateX(25px);
+
     &:hover {
       transform: scale(1.2);
     }
@@ -39,6 +59,7 @@
 
 .board-star {
   transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
   &:hover {
     transform: scale(1.2);
   }

@@ -55,6 +55,7 @@
               <DatePreview :date="task.date" />
             </div>
 
+            <AttachmentList :task="task" @onUpdateTask="onUpdateTask" />
             <!-- checklist list -->
             <ChecklistList :task="task" />
 
@@ -184,9 +185,17 @@
               </template>
             </VDropdown>
 
-            <button>
-              <span class="icon icon-small attachments-icon"></span>Attachment
-            </button>
+
+            <VDropdown :distance="6" :placement="'left-start'">
+              <button>
+                <span class="icon icon-small attachments-icon"></span>Attachment
+              </button>
+
+              <template #popper>
+                <AddAttachment :task="task" @onUpdateTask="onUpdateTask" />
+              </template>
+            </VDropdown>
+
             <button v-if="!task.cover">
               <span class="icon icon-small card-cover-icon"></span>Cover
             </button>
@@ -212,6 +221,8 @@ import LabelMenu from '../cmps/label/LabelMenu.vue'
 import LabelPreview from '../cmps/label/LabelPreview.vue'
 import AddChecklist from '../cmps/AddChecklist.vue'
 import ChecklistList from '../cmps/checklist/ChecklistList.vue'
+import AddAttachment from '../cmps/attachment/AddAttachment.vue'
+import AttachmentList from '../cmps/attachment/AttachmentList.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 import DatePreview from '../cmps/dates/DatePreview.vue'
 import DynamicModal from '../cmps/DynamicModal.vue'
@@ -308,6 +319,10 @@ export default {
       this.board = board
 
       this.saveTask(this.task)
+    },
+    onUpdateTask(newTask) {
+      console.log('newTask.files', newTask.files)
+      eventBus.emit('updateTask', newTask)
     }
   },
   computed: {
@@ -346,6 +361,8 @@ export default {
     DatePicker,
     DynamicModal,
     DatePreview,
+    AddAttachment,
+    AttachmentList,
   },
 }
 </script>
