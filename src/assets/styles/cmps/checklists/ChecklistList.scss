@@ -3,6 +3,8 @@
 }
 
 .checklist-list {
+
+
   .checklist-btn {
     &:hover {
       cursor: pointer;
@@ -11,7 +13,13 @@
 }
 
 .checklist-preview {
-  margin-bottom: 15px;
+  position: relative;
+  padding: 8px 0;
+  margin: 0 0 4px 0px;
+
+  .icon {
+    margin-top: -8px;
+  }
 }
 
 .todos-list {
@@ -21,13 +29,16 @@
   flex-direction: column;
   padding: 0;
   margin: 0;
+
   button {
     width: fit-content;
   }
+
   input {
     border: none;
     background-color: $secondary-clr3;
   }
+
   .add-todo-input {
     box-shadow: $input-shadow;
     background-color: white;

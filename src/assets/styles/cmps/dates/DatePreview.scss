@@ -1,7 +1,18 @@
 .due-date-preview-container {
+
+  .due-soon,
+  .overdue {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0 4px;
+    border-radius: 2px;
+    margin: auto 0 auto 8px;
+  }
+
   .overdue {
     background-color: #eb5a46;
   }
+
   .due-soon {
     background-color: #f2d600;
   }
