@@ -1,6 +1,6 @@
 <template>
   <div class="due-date-preview-container">
-    <input type="checkbox" />
+    <input type="checkbox" v-model="date.isCompleted" />
     <button @click="test" class="btn btn-light flex">
       {{ dateForDisplay }}
       <span :class="class">{{ this.class }}</span>
@@ -40,6 +40,9 @@ export default {
       } else if (diff >= 0) {
         this.class = 'overdue'
 
+        return utilService.formatDateString(this.date.dueDate)
+      } else if (this.date.isCompleted) {
+        this.class = 'completed'
         return utilService.formatDateString(this.date.dueDate)
       } else this.class = ''
       return utilService.formatDateString(this.date.dueDate)

@@ -1,8 +1,16 @@
 .due-date-preview-container {
-  .overdue {
-    background-color: #eb5a46;
-  }
-  .due-soon {
-    background-color: #f2d600;
+  .btn {
+    .overdue {
+      background-color: #eb5a46;
+      color: $font-clr4;
+    }
+    .due-soon {
+      background-color: #f2d600;
+      color: $font-clr4;
+    }
+    .completed {
+      background-color: #61bd4f;
+      color: $font-clr4;
+    }
   }
 }
