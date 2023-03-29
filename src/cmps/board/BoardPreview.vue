@@ -6,6 +6,7 @@
         :class="[(isStarred && !isHoveringStar) ? 'solid-star' : 'star', 'icon']" @mouseenter="isHoveringStar = true"
         @mouseleave="isHoveringStar = false"></span>
     </div>
+    <div class="board-overlay"></div>
   </div>
 </template>
 

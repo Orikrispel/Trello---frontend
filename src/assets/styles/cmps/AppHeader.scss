@@ -18,21 +18,31 @@ header.app-header {
     align-items: stretch;
     display: flex;
     align-items: center;
+
     .logo {
       object-fit: contain;
       width: 75px;
     }
 
     a {
+      height: 32px;
+      border-radius: 3px;
       color: $secondary-clr1;
-      &:not(:first-child) {
+
+      &:hover {
+        text-decoration: none;
+        background-color: $btn-hover-clr2;
+      }
+
+      &:not(:first-of-type) {
         font-size: rem(14px);
         border-top: 1px solid $primary-clr1;
-        padding: 0 5px;
+        padding: 6px 12px;
       }
     }
 
-    button {
+    button.add-board {
+      position: relative;
       color: $secondary-clr1;
       background-color: $btn-clr5;
 
@@ -43,6 +53,11 @@ header.app-header {
 
     .active {
       color: $primary-clr1;
+    }
+
+    .member-img {
+      height: 24px;
+      width: 24px;
     }
   }
 }
