@@ -63,7 +63,6 @@ export default {
     async addMemberToTask(memberId) {
       let task = JSON.parse(JSON.stringify(this.task))
       let board = JSON.parse(JSON.stringify(this.board))
-      console.log(task.members)
       let { members } = board
       let member = members.find((member) => {
         return member._id === memberId

@@ -330,7 +330,6 @@ export default {
     },
     currBoard: {
       handler(newBoard, oldBoard) {
-        console.log('currBoard changed:', newBoard);
         this.board = newBoard
       },
       immediate: true,
