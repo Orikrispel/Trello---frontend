@@ -21,7 +21,7 @@
           <i v-html="getSvg('filter')"></i>Filter
         </button>
         <span class="board-header-btn-divider"></span>
-        <button @click="openRightMenu" class="btn btn-ligh btn-sm btn-menu" v-if="!isRightMenuOpen"
+        <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
       <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
@@ -176,8 +176,20 @@ export default {
     },
     async checkIsDark() {
       const fac = new FastAverageColor()
-      let isDark = false
-      if (this.board.style.imgUrls) {
+      if (this.board.style.backgroundColor) {
+        const hexColor = this.board.style.backgroundColor
+        let red = parseInt(hexColor.substring(1, 3), 16);
+        let green = parseInt(hexColor.substring(3, 5), 16);
+        let blue = parseInt(hexColor.substring(5, 7), 16);
+
+        // Calculate perceived brightness
+        let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue;
+
+        // Check if color is light or dark
+        this.isDark = (perceivedBrightness >= 128)
+
+      } else {
+        console.log('there is img url!')
         try {
           const color = await fac.getColorAsync(this.board.style.imgUrls.regular)
           this.isDark = color.isDark
