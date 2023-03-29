@@ -155,21 +155,33 @@ function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
     color: colorItems[idx],
   }
 }
+
 function _getBoardRandomColor() {
   const colorItems =
-    ['#7bc86c',
-      ' #ffaf3f',
-      '#ef7564',
-      '#cd8de5',
-      '#172b4d',
+    [
+      '#fad29c',
+      '#efb3ab',
       '#5ba4cf',
-      ' #505f79',
-      ' #cf513d',
-      '#5ba4cf',
-      ' #5aac44',
+      '#f5dd29',
+      '#5aac44',
+      'gray',
     ]
-  return colorItems[getRandomIntInclusive(0, 8)]
+  return colorItems[getRandomIntInclusive(0, 5)]
 }
+
+function _getBoardRandomGradient() {
+  const colorItems =
+    ['linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)',
+      'linear-gradient(to right,#824de4,#080c3e)',
+      'linear-gradient(143deg, #a2bc12, #53b8e1)',
+      'linear-gradient(331deg, #ad8739, #e35493)',
+      'linear-gradient(230deg, #859d0d, #87d9ab)',
+      'linear-gradient(187deg, #b36738, #d51d90)',
+      'linear-gradient(124deg, #919781, #c67733)',
+    ]
+  return colorItems[getRandomIntInclusive(0, 6)]
+}
+
 function getDefaultEmptyLabel() {
   return {
     id: '',
@@ -275,6 +287,7 @@ async function _createBoard(
     style: {
       backgroundColor: _getBoardRandomColor(),
       imgUrls: unsplashService.getRandomImg(),
+      gradient: _getBoardRandomGradient(),
     },
     labels,
     members: getDefaultMembers(),

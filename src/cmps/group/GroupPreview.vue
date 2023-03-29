@@ -38,7 +38,7 @@
         group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
         drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
         <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
-          <TaskPreview :task="task" @click="openTaskDetails(task.id)" />
+          <TaskPreview :task="task" @click.stop="openTaskDetails(task.id)" />
         </Draggable>
       </Container>
 
@@ -172,6 +172,7 @@ export default {
       this.isEditGroupTitle = !this.isEditGroupTitle
     },
     openTaskDetails(taskId) {
+      console.log('hi')
       this.$router.push(`/board/${this.board._id}/task/${taskId}`)
     },
     toggleGroupMenu() {
