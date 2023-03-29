@@ -30,14 +30,14 @@ export default {
       if (diff === 0) {
         this.class = 'due-soon'
         return `Today ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff === 1) {
+      } else if (diff === -1) {
         this.class = 'due-soon'
         return `Tomorrow ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff === -1) {
+      } else if (diff === 1) {
         this.class = 'overdue'
 
         return `Yesterday ${utilService.formatDateString(this.date.dueDate)}`
-      } else if (diff <= 0) {
+      } else if (diff >= 0) {
         this.class = 'overdue'
 
         return utilService.formatDateString(this.date.dueDate)
@@ -45,12 +45,12 @@ export default {
       return utilService.formatDateString(this.date.dueDate)
     },
 
-    dueTime() {
-      const diff = this.diff(this.date.dueDate)
-      if (diff >= -2 && diff <= 2 && diff >= 0) return 'due-soon'
-      else if (this.diff(this.date.dueDate) <= 0) return 'overdue'
-      else return ''
-    },
+    // dueTime() {
+    //   const diff = this.diff(this.date.dueDate)
+    //   if (diff >= -2 && diff <= 2 && diff >= 0) return 'due-soon'
+    //   else if (this.diff(this.date.dueDate) <= 0) return 'overdue'
+    //   else return ''
+    // },
   },
 
   methods: {
@@ -60,7 +60,7 @@ export default {
     },
     diff(date) {
       const millisecondsPerDay = 24 * 60 * 60 * 1000
-      const diffInMilliseconds = date - Date.now()
+      const diffInMilliseconds = Date.now() - date
       return Math.floor(diffInMilliseconds / millisecondsPerDay)
     },
     hourDiff(start, end) {
