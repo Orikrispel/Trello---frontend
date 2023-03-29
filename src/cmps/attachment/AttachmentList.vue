@@ -3,35 +3,36 @@
         <li class="attachment-preview" v-for="file in task.files" :key="file.url">
             <h1>Attachment</h1>
             <img class="attachment-img" :src="file.url">
+            {{ file.id }}
             <p style="float: right;" @click="removeAttachment(file.id)">x</p>
-            <p style="float:right; margin:15px;" @click="editAttachment(file.id)">Edit</p>
+            <VDropdown :distance="1">
+                <!-- This will be the popover reference (for the events and position) -->
+                <p style="float:right; margin: 0px 5px;">Edit</p>
 
+                <!-- This will be the content of the popover -->
+                <template #popper>
+                    <DynamicModal>
+
+                        <template v-slot:title>
+                            Edit attachment
+                        </template>
+
+                        <template v-slot scope="props">
+                            <section class="group-menu flex column">
+                                <form class="add-checklist-form" @submit.prevent="updateFileName($event)">
+                                    <h4>Link name</h4>
+                                    <input type="text" v-model="updatedFile">
+                                    <button class="btn btn-blue" type="submit" id="add-btn"
+                                        style="color:white">Update</button>
+                                </form>
+                            </section>
+                        </template>
+
+                    </DynamicModal>
+                </template>
+            </VDropdown>
         </li>
-        <VDropdown :distance="6" v-if="isEditMode">
-            <!-- This will be the popover reference (for the events and position) -->
-            <button class="clean-btn btn-menu"><span class="icon icon-overflow-menu-horizontal"></span></button>
 
-            <!-- This will be the content of the popover -->
-            <template #popper>
-                <DynamicModal>
-
-                    <template v-slot:title>
-                        List actions
-                    </template>
-
-                    <template v-slot scope="props">
-                        <section ref="groupMenu" class="group-menu flex column">
-                            <div class="group-menu-content" scope="props">
-                                <button class="btn btn-list clean-btn" @click="toggleAddTask">Add card...</button>
-                                <button class="btn btn-list clean-btn" @click="duplicateGroup">Copy list...</button>
-                                <hr />
-                                <button class="btn btn-list clean-btn" @click="removeGroup">Archive this list</button>
-                            </div>
-                        </section>
-                    </template>
-                </DynamicModal>
-            </template>
-        </VDropdown>
     </ul>
 </template>
 
@@ -50,22 +51,34 @@ export default ({
     },
     data() {
         return {
-            editUrl: '',
             files: [],
+            editName: '',
             isEditMode: false,
+            currFile: null,
         }
     },
-
+    computed: {
+        // setCurrFile() {
+        //     this.currFile = JSON.parse(JSON.stringify(this.file))
+        // }
+    },
     methods: {
         removeAttachment(fileId) {
             const newTask = JSON.parse(JSON.stringify(this.task))
-            const idx = this.files.findIndex(file => fileId === file.id)
+            const idx = newTask.files.findIndex(file => fileId === file.id)
             newTask.files.splice(idx, 1)
             this.$emit('onUpdateTask', newTask)
         },
-        editAttachment(fileId) {
-            const newTask = JSON.parse(JSON.stringify(this.task))
-            const idx = this.files.findIndex(file => fileId === file.id)
+        updateFileName(ev) {
+            const newName = ev
+            console.log('newName', newName)
+            // console.log('fileId', fileId)
+            // const newTask = JSON.parse(JSON.stringify(this.task))
+            // console.log('newTask', newTask)
+            // const idx = newTask.files.findIndex(file => fileId === file.id)
+            // console.log('this.$refs.linkNameInput', this.$refs.linkNameInput.value)
+
+            // this.$emit('onUpdateTask', newTask)
         }
     },
     components: {
