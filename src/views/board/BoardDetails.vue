@@ -96,7 +96,6 @@ export default {
       return this.board.isStarred
     },
     getBgImg() {
-      console.log('this.board.style.imgUrls.thumb', this.board.style.imgUrls.thumb)
       return this.board.style.imgUrls.thumb
     },
   },
@@ -107,10 +106,8 @@ export default {
     async setBgImg(newImgUrls) {
       const newBoard = JSON.parse(JSON.stringify(this.board))
       newBoard.style.imgUrls = newImgUrls
-      console.log('newBoard', newBoard)
       newBoard.style.backgroundColor = ''
       await this.updateBoard(newBoard)
-      console.log('this.board.style.imgUrls.thumb', this.board.style.imgUrls.thumb)
     },
     async setBgColor(newBg) {
       const newBoard = JSON.parse(JSON.stringify(this.board))
@@ -189,14 +186,11 @@ export default {
         this.isDark = (perceivedBrightness >= 128)
 
       } else {
-        console.log('there is img url!')
         try {
           const color = await fac.getColorAsync(this.board.style.imgUrls.regular)
           this.isDark = color.isDark
-          // console.log('Average color', color)
-          // console.log('isDark:', this.isDark)
-        } catch (error) {
-          console.log(error)
+        } catch (err) {
+          console.log(err)
         }
       }
     },

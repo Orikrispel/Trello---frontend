@@ -68,9 +68,9 @@
     .btn-menu {
       margin: 0 4px 0 0;
       background-color: $btn-clr3;
+      fill: $font-clr1;
 
       svg {
-        fill: $font-clr1;
         width: 20px;
         height: 20px;
       }
@@ -118,7 +118,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      & > button {
+      &>button {
         width: 100%;
         padding: 12px;
         margin: 0 4px 0 0;
@@ -280,9 +280,7 @@
 }
 
 .attach-btn {
-  &:hover {
-  }
+  &:hover {}
 }
 
-#right-board-header {
-}
+#right-board-header {}

@@ -5,6 +5,7 @@
   margin: 0 4px;
   width: 272px;
   height: max-content;
+  max-height: calc(100% - 20px);
 
   header.group-header {
     padding: 6px 6px;
@@ -47,15 +48,15 @@
   main.tasks-wrapper {
     margin: 0 4px;
     padding: 1px 4px 0;
-    max-height: 100%;
 
     .task-list {
       flex: 1 1 auto;
+      height: 100%;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: scroll;
     }
 
-    & > button:first-of-type {
+    &>button:first-of-type {
       color: $font-clr3;
       font-size: 0.875rem;
       margin: 2px 0 8px -2px;
