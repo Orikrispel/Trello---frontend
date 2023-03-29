@@ -221,7 +221,7 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
 
 function formatDateString(timestamp) {
   // Create a new Date object from the timestamp
-  var date = new Date(timestamp * 1000)
+  var date = new Date(timestamp)
   console.log(timestamp)
   console.log(date)
   // Create an array with the month names

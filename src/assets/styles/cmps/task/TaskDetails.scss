@@ -16,7 +16,6 @@
   margin: 0;
   padding: 0;
 
-
   .task-details {
     position: relative;
     height: max-content;
@@ -34,7 +33,7 @@
       width: rem(768px);
     }
 
-    & * :not(.member-img) {
+    & * :not(.member-img, button) {
       color: $font-clr1;
     }
 
@@ -68,7 +67,6 @@
     }
 
     button {
-      background-color: $secondary-clr5;
       border: 0;
       padding: 5px 10px;
     }
@@ -237,6 +235,12 @@
         textarea {
           padding: 8px 12px;
           resize: none;
+          &:focus {
+            background-color: $secondary-clr1;
+            box-shadow: inset 0 0 0 2px $primary-clr4;
+            border: none;
+            outline: none;
+          }
         }
       }
 
@@ -281,5 +285,11 @@
         }
       }
     }
+  }
+}
+
+#edit-desc-btn {
+  &:hover {
+    filter: brightness(90%);
   }
 }
