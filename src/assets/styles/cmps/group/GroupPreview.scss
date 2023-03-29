@@ -55,7 +55,7 @@
       overflow-y: auto;
     }
 
-    & > button:first-of-type {
+    &>button:first-of-type {
       color: $font-clr3;
       font-size: 0.875rem;
       margin: 2px 0 8px -2px;
@@ -72,6 +72,10 @@
       min-height: 20px;
       padding: 6px 8px;
       position: relative;
+
+      &:hover {
+        background-color: $secondary-clr3;
+      }
     }
 
     .new-task-container {

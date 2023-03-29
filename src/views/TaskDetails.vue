@@ -25,7 +25,8 @@
 
         <div class="task-main-container">
           <main class="task-main">
-            <div class="member-container">
+
+            <div v-show="task.members" class="member-container">
               <h3 class="fs12 inner-title">Members</h3>
               <ul class="task-heading-member-list flex clean-list">
                 <li v-for="member in task.members" :key="member._id" class="member">
@@ -40,7 +41,7 @@
               </ul>
             </div>
 
-            <div class="label-container">
+            <div v-show="task.labels" class="label-container">
               <h3 class="fs12 inner-title">Labels</h3>
               <ul class="task-heading-label-list flex clean-list">
                 <li class="label" v-for="label in task.labels" :key="label.id">
@@ -104,7 +105,7 @@
               </form>
               <ul v-if="task.comments && task.comments.length" class="clean-list">
                 <li v-for="(comment, idx) in task.comments" :key="idx">
-                  {{ comment }}
+                  <!-- {{ comment }} -->
                 </li>
               </ul>
               <ul v-if="task.activities && task.activities.length" class="clean-list">

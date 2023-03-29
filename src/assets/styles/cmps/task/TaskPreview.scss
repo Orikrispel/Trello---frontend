@@ -1,4 +1,7 @@
 .task-preview {
+  .task-title {
+    margin: 0 0 4px;
+  }
 
   .icon-edit {
     border-radius: 3px;
@@ -11,6 +14,7 @@
   }
 
   &:hover .icon-edit {
+    background-color: #f4f5f7;
     opacity: .6;
   }
 
