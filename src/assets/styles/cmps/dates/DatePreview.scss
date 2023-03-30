@@ -1,4 +1,5 @@
 .due-date-preview-container {
+
   .due-soon,
   .complete,
   .overdue {
@@ -9,18 +10,28 @@
     margin: auto 0 auto 8px;
   }
 
-  .btn {
+  .btn-date {
+    line-height: 1;
+
     .overdue {
       background-color: #eb5a46;
       color: $font-clr4;
     }
+
     .due-soon {
       background-color: #f2d600;
       color: $font-clr4;
     }
+
     .complete {
       background-color: #61bd4f;
       color: $font-clr4;
+    }
+
+    svg {
+      margin-left: 4px;
+      width: 16px;
+      height: 16px;
     }
   }
 }

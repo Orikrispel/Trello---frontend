@@ -7,19 +7,46 @@
     margin-bottom: 4px;
 
     .label-wrapper {
-      margin-top: 4px;
-      margin-bottom: 4px;
+      gap: 4px;
       padding-right: 0;
       padding-left: 0;
       min-width: 40px;
       max-width: 40px;
       height: 8px;
-      border-radius: 10px;
-      background-color: var(--foreground-color, var(--ds-text, #172b4d));
-      color: transparent;
+      border-radius: 4px;
+      transition: .2s ease-in;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        filter: brightness(90%);
+      }
+
+      &.with-title {
+        max-width: 300px;
+        height: 16px;
+        padding: 0 8px;
+      }
 
       p {
+        color: $font-clr2;
+        opacity: 0;
         margin: 0;
+        font-size: 0;
+        line-height: 1;
+        transition: .5s ease-in;
+
+        &.show {
+          font-size: 12px;
+          opacity: 1;
+        }
+      }
+
+      .sm-label-circle {
+        border-radius: 50%;
+        width: 8px;
+        height: 8px;
       }
     }
   }

@@ -1,16 +1,32 @@
 <template>
-  <div class="due-date-preview-container">
+  <div class="due-date-preview-container flex align-center">
     <input type="checkbox" v-model="date.isCompleted" />
-    <button @click="test" class="btn btn-light flex">
-      {{ dateForDisplay }}
-      <span :class="spanClass">{{ spanClass }}</span>
-      <span class="icon icon-arrow-down" v-html="getSvg('arrowDown')"></span>
-    </button>
+    <VDropdown :distance="6" :placement="'right'
+    ">
+      <button class="btn-date btn-task light flex align-center">
+        {{ dateForDisplay }}
+        <span :class="spanClass">{{ spanClass }}</span>
+        <span class="icon-arrow-down" v-html="getSvg('arrowDown')"></span>
+      </button>
+
+      <template #popper>
+        <DynamicModal>
+          <template v-slot:title>Dates</template>
+
+          <template v-slot scope="props">
+            <DatePicker />
+          </template>
+        </DynamicModal>
+      </template>
+    </VDropdown>
+
   </div>
 </template>
 <script>
 import { utilService } from '../../services/util.service'
 import { svgService } from '../../services/svg.service'
+import DynamicModal from '../../cmps/DynamicModal.vue'
+import DatePicker from '../../cmps/dates/DatePicker.vue'
 export default {
   name: 'DatePreview',
   props: {
@@ -19,7 +35,7 @@ export default {
       required: true,
     },
   },
-  data() {},
+  data() { },
   computed: {
     dateForDisplay() {
       return `${this.getDay} ${utilService.formatDateString(this.date.dueDate)}`
@@ -67,5 +83,9 @@ export default {
       return svgService.getSvg(iconName)
     },
   },
+  components: {
+    DynamicModal,
+    DatePicker
+  }
 }
 </script>

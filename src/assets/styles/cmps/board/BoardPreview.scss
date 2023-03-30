@@ -23,6 +23,9 @@
   }
 
   .board-preview-actions {
+    position: absolute;
+    right: 12px;
+    bottom: 7px;
     display: flex;
     align-items: center;
     justify-content: flex-end;

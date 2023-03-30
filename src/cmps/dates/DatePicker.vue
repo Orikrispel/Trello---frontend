@@ -115,10 +115,11 @@ export default {
     },
   },
   async mounted() {
-    console.log('hi:')
-
-    this.$nextTick(() => this.$refs.dueDateInput.focus())
-    this.$nextTick(() => console.log('this.$refs.dueDateInput:', this.$refs.dueDateInput))
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.dueDateInput.focus()
+      }, 100)
+    })
     // if (!this.isRangeEnabled) return
     // const startDate = new Date()
     // const endDate = new Date(new Date().setDate(startDate.getDate() + 7))

@@ -78,9 +78,9 @@
 
             <!-- description -->
             <form class="description-editor editor" @submit.prevent="handleDesc">
-              <h3>
-                <span class="icon description-icon icon-lg"></span>Description
-              </h3>
+
+              <span class="icon description-icon icon-lg"></span>
+              <h3 class="fs16">Description</h3>
               <button class="btn-task light" id="edit-desc-btn" v-if="!userIsEditing && task.description"
                 @click="userIsEditing = !userIsEditing">
                 Edit

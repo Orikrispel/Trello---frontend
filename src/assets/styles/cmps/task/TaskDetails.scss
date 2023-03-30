@@ -168,7 +168,6 @@
               cursor: pointer;
               border-radius: 555px;
               padding: 8px;
-              display: inherit;
               margin: 0 4px 4px 0;
 
               .icon {
@@ -205,6 +204,7 @@
           }
 
           .icon:not(.icon-close) {
+            font-weight: 400;
             position: absolute;
             top: 8px;
             left: -40px;
@@ -260,6 +260,10 @@
 
       .description-editor {
         word-wrap: break-word;
+
+        h3 {
+          margin-bottom: 20px;
+        }
 
         .btn-submit-desc {
           background-color: $primary-clr4;
