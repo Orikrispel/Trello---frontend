@@ -1,0 +1,88 @@
+.cover-color-item-1 {
+  background-color: #7bc86c;
+  &:hover {
+    background-color: darken(#7bc86c, 10);
+  }
+}
+.cover-color-item-2 {
+  background-color: #f5dd29;
+  &:hover {
+    background-color: darken(#f5dd29, 10);
+  }
+}
+.cover-color-item-3 {
+  background-color: #ffaf3f;
+  &:hover {
+    background-color: darken(#ffaf3f, 10);
+  }
+}
+.cover-color-item-4 {
+  background-color: #ef7564;
+  &:hover {
+    background-color: darken(#ef7564, 10);
+  }
+}
+.cover-color-item-5 {
+  background-color: #cd8de5;
+  &:hover {
+    background-color: darken(#cd8de5, 10);
+  }
+}
+.cover-color-item-6 {
+  background-color: #8bbdd9;
+  &:hover {
+    background-color: darken(#8bbdd9, 10);
+  }
+}
+.cover-color-item-7 {
+  background-color: #8fdfeb;
+  &:hover {
+    background-color: darken(#8fdfeb, 10);
+  }
+}
+.cover-color-item-8 {
+  background-color: #b3f1d0;
+  &:hover {
+    background-color: darken(#b3f1d0, 10);
+  }
+}
+.cover-color-item-9 {
+  background-color: #f9c2e4;
+  &:hover {
+    background-color: darken(#f9c2e4, 10);
+  }
+}
+.cover-color-item-10 {
+  background-color: #505f79;
+  &:hover {
+    background-color: darken(#505f79, 10);
+  }
+}
+
+.covers-container {
+  width: 100%;
+  gap: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  .cover-display {
+    width: 134.5px;
+    height: 64px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+  }
+  .cover-display.picked {
+    border: 5px rgb(0, 0, 0) solid;
+  }
+  .selected {
+    &:hover {
+      cursor: pointer;
+      filter: brightness(80%);
+    }
+  }
+}
+#remove-cover-btn {
+  width: 100%;
+  &:hover {
+  }
+  margin-bottom: 16px;
+}

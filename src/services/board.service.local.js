@@ -307,7 +307,7 @@ async function _createBoard(
     },
     style: {
       backgroundColor: _getBoardRandomGradient(),
-      imgUrls: unsplashService.getRandomImg(),
+      imgUrls: [], //unsplashService.getRandomImg(this.backgroundColor),
     },
     labels,
     members: getDefaultMembers(),
