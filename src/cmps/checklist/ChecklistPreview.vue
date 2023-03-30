@@ -2,7 +2,7 @@
     <section class="checklist-preview">
         <div class="checklist-header">
             <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
-            <button @click="this.$emit('removeChecklist')">Delete</button>
+            <button class="btn-task light" @click="this.$emit('removeChecklist')">Delete</button>
         </div>
         <TodosList :todos="checklist.todos" @updateChecklist="onUpdateChecklist" />
     </section>

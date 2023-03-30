@@ -11,8 +11,9 @@
   transition-property: background-color, border-color, box-shadow;
   transition-duration: 85ms;
   transition-timing-function: ease;
+
   .board-btn {
-    background-color: #026aa7;
+    background-color: $btn-clr7;
   }
 
   &.btn-dark {
@@ -32,6 +33,23 @@
 
   &.btn-red {
     background-color: $btn-clr4;
+    color: $font-clr4;
+  }
+}
+
+.btn-task {
+  border: none;
+  border-radius: 3px;
+  font-size: rem(14px);
+  padding: 6px 12px;
+
+  &.light {
+    background-color: $btn-clr8;
+    color: $font-clr1;
+  }
+
+  &.blue {
+    background-color: $btn-clr7;
     color: $font-clr4;
   }
 }
