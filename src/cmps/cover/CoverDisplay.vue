@@ -3,28 +3,28 @@
         <div @click="setCover('semi')" class="cover-display cover-semi-container"
             :class="[{ selected: pickedColor }, { picked: pickedCover === 'semi' }]"
             :style="{ backgroundColor: getBgColor }">
-            <h1>semi</h1>
+            <SemiCoverDisplay />
         </div>
 
         <div @click="setCover('full')" class="cover-display cover-full-container"
             :class="[{ selected: pickedColor }, { picked: pickedCover === 'full' }]"
             :style="{ backgroundColor: getBgColor }">
-            <h1>full</h1>
         </div>
-
+        <!-- <FullCoverDisplay /> -->
     </section>
-    <button class="btn-task remove-cover-btn" @click="removeCover">
+    <button class="btn-task light" @click="removeCover">
         Remove cover
     </button>
 </template>
 <!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
 <script>
 import { eventBus } from '../../services/event-bus.service'
+import SemiCoverDisplay from './SemiCoverDisplay.vue'
 export default {
     name: 'ColorPicker',
     data() {
         return {
-            pickedColor: '',
+            pickedColor: 'rgba(9, 30, 66, 0.25)',
             pickedCover: ''
         }
     },
@@ -36,6 +36,8 @@ export default {
     methods: {
         setColor(color) {
             this.pickedColor = color
+            this.pickedCover = 'semi'
+            this.$emit('setCover', 'semi', this.pickedColor)
         },
         setCover(coverType) {
             eventBus.emit('onCoverPick', coverType)
@@ -56,5 +58,9 @@ export default {
             this.setColor(color)
         });
     },
+    components: {
+        SemiCoverDisplay,
+
+    }
 }
 </script>

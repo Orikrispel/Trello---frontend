@@ -6,9 +6,9 @@
     margin-bottom: 8px;
   }
 
-  .selected {
-    filter: brightness(90%);
-  }
+  // .selected {
+  //   filter: brightness(90%);
+  // }
 
   .selected::before {
     display: flex;
@@ -366,6 +366,10 @@
     //   background: darken($cover-clr6, 10);
     // }
   }
+}
+
+.cover-color-item {
+  width: 48px;
 }
 
 .cover-color-item-1 {

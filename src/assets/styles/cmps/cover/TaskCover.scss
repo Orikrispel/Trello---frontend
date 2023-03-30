@@ -61,12 +61,16 @@
 
 .covers-container {
   width: 100%;
-  gap: 9px;
   display: flex;
-  justify-content: space-evenly;
+  gap: 8px;
+  justify-content: center;
   .cover-display {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    flex-direction: column;
     width: 134.5px;
-    height: 64px;
+    height: 58px;
     border-radius: 3px;
     margin-bottom: 10px;
     border: 1px solid rgba(9, 30, 66, 0.08);
@@ -77,21 +81,25 @@
   .selected {
     &:hover {
       cursor: pointer;
-      filter: brightness(80%);
+      filter: brightness(90%);
     }
   }
 }
-#remove-cover-btn {
+.remove-cover-btn {
   width: 100%;
-  &:hover {
-  }
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
-
 .cover-h5 {
   color: #5e6c84;
   font-size: 12px;
   font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.semi-cover-display {
+  display: flex;
+  background-color: #fff;
+  width: 100%;
+  padding: 14.5px;
 }
