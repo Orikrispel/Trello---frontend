@@ -4,6 +4,7 @@
             <h1>Attachment</h1>
             <img class="attachment-img" :src="file.url">
             {{ file.id }}
+            {{ file.name }}
             <p style="float: right;" @click="removeAttachment(file.id)">x</p>
             <VDropdown :distance="1">
                 <!-- This will be the popover reference (for the events and position) -->
@@ -19,9 +20,9 @@
 
                         <template v-slot scope="props">
                             <section class="group-menu flex column">
-                                <form class="add-checklist-form" @submit.prevent="updateFileName($event)">
+                                <form class="add-checklist-form" @submit.prevent="updateFileName">
                                     <h4>Link name</h4>
-                                    <input type="text" v-model="updatedFile">
+                                    <input type="text" :value="file.name" ref="linkNameInput">
                                     <button class="btn btn-blue" type="submit" id="add-btn"
                                         style="color:white">Update</button>
                                 </form>
@@ -69,8 +70,8 @@ export default ({
             newTask.files.splice(idx, 1)
             this.$emit('onUpdateTask', newTask)
         },
-        updateFileName(ev) {
-            const newName = ev
+        updateFileName() {
+            const newName = this.$refs.linkNameInput.value
             console.log('newName', newName)
             // console.log('fileId', fileId)
             // const newTask = JSON.parse(JSON.stringify(this.task))

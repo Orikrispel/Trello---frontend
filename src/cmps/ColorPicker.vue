@@ -17,13 +17,13 @@ export default {
         return {
             pickedColor: 'white',
             colorItems: [
-                ' linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165,61) 100%)',
-                ' linear-gradient(lightseagreen,#333)',
-                '#fad29c',
-                ' #efb3ab',
-                ' #dfc0eb',
+                'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(55, 180, 195) 100%)',
+                'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(9, 50, 108) 100%)',
+                'linear-gradient(55.41deg, rgb(9, 50, 108) 2%, rgb(205, 81, 157) 100%)',
+                'linear-gradient(55.41deg, rgb(110, 93, 198) 2%, rgb(231, 116, 187) 100%)',
+                'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
+                'linear-gradient(55.41deg, rgb(250, 165, 61) 2%, rgb(89, 201, 2) 100%)',
 
-                '#7bc86c',
                 ' #f5dd29',
                 ' #ffaf3f',
                 '#ef7564',

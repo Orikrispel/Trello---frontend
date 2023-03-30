@@ -1,7 +1,7 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
-    'background-color': board.style?.backgroundColor || 'none',
-    backgroundImage: 'url(' + board.style?.imgUrls.regular + ')' || 'none',
+    background: board.style?.backgroundColor || '#014a75',
+    backgroundImage: getBoardBg() || board.style?.backgroundColor,
     backgroundSize: 'cover',
     'background-position': 'center',
   }">
@@ -97,7 +97,6 @@ export default {
       return this.board.isStarred
     },
     getBgImg() {
-      console.log('this.board.style.imgUrls', this.board.style.regular)
       return this.board.style.imgUrls.thumb
     },
   },
@@ -173,19 +172,29 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
+    getBoardBg() {
+      if (!this.board.style.imgUrls.regular) {
+        console.log('!this.board.style.imgUrls.regular', this.board.style.imgUrls.regular)
+        return null
+      }
+      else return `url(${this.board.style?.imgUrls.regular})`
+    },
     async checkIsDark() {
       const fac = new FastAverageColor()
       if (this.board.style.backgroundColor) {
         const hexColor = this.board.style.backgroundColor
+        console.log('hexColor:', hexColor)
         let red = parseInt(hexColor.substring(1, 3), 16)
         let green = parseInt(hexColor.substring(3, 5), 16)
         let blue = parseInt(hexColor.substring(5, 7), 16)
 
         // Calculate perceived brightness
         let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue
+        console.log('perceivedBrightness:', perceivedBrightness)
 
         // Check if color is light or dark
         this.isDark = perceivedBrightness >= 128
+        console.log('is dark?:', this.isDark)
       } else {
         try {
           const color = await fac.getColorAsync(
