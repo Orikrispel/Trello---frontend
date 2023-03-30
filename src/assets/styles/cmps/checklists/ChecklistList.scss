@@ -3,8 +3,6 @@
 }
 
 .checklist-list {
-
-
   .checklist-btn {
     &:hover {
       cursor: pointer;
@@ -80,9 +78,13 @@
   background-color: $secondary-clr3;
 }
 
-#delete-cl-btn {
-  &:hover {
-    cursor: pointer;
-    filter: brightness(90%);
+.checklist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  button {
+    &:hover {
+      filter: brightness(90%);
+    }
   }
 }
