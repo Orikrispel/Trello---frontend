@@ -6,7 +6,8 @@ export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
 export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
 export const SOCKET_EMIT_USER_WATCH = 'user-watch'
 export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
-
+export const SOCKET_EVENT_TASK_UPDATED = 'task-updated'
+export const SOCKET_EVENT_BOARD_UPDATED = 'board-updated'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
@@ -65,8 +66,8 @@ function createDummySocketService() {
     terminate() {
       this.setup()
     },
-    login() { },
-    logout() { },
+    login() {},
+    logout() {},
     on(eventName, cb) {
       listenersMap[eventName] = [...(listenersMap[eventName] || []), cb]
     },
