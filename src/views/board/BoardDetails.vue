@@ -23,7 +23,6 @@
         <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"></button>
         <span class="board-header-btn-divider"></span>
         <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
