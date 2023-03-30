@@ -1,13 +1,12 @@
 .container {
   max-width: 1500px;
-  padding: 10px;
 }
 
 .main-container {
   display: grid;
   grid-template-columns: 20px 1fr 20px;
 
-  > * {
+  >* {
     grid-column: 2;
 
     &.full {
@@ -17,21 +16,17 @@
 
   @include for-narrow-layout {
     grid-template-columns:
-      minmax(20px, 1fr)
-      minmax(auto, $mobile-breakpoint)
-      minmax(20px, 1fr);
+      minmax(20px, 1fr) minmax(auto, $mobile-breakpoint) minmax(20px, 1fr);
   }
+
   @include for-normal-layout {
     grid-template-columns:
-      minmax(20px, 1fr)
-      minmax(auto, $narrow-breakpoint)
-      minmax(20px, 1fr);
+      minmax(20px, 1fr) minmax(auto, $narrow-breakpoint) minmax(20px, 1fr);
   }
+
   @include for-wide-layout {
     grid-template-columns:
-      minmax(20px, 1fr)
-      minmax(auto, $normal-breakpoint)
-      minmax(20px, 1fr);
+      minmax(20px, 1fr) minmax(auto, $normal-breakpoint) minmax(20px, 1fr);
   }
 }
 

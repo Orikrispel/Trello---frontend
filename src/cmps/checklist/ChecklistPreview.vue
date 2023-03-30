@@ -3,7 +3,7 @@
         <div class="checklist-header">
             <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
             <button class="btn-task light" @click="this.$emit('removeChecklist')">Delete</button>
-            <div class="container flex align-center gap justify-center">
+            <div class="progress-container flex align-center gap justify-center">
                 <span>{{ progress }}%</span>
                 <div class="progress2 progress-moved">
                     <div class="progress-bar"
@@ -44,11 +44,12 @@ export default {
     },
     computed: {
         progress() {
-            if (!this.checklist) return null
+            if (!this.checklist) return 0
 
             const todosCount = this.checklist.todos.length
             const doneTodos = this.checklist.todos.filter(todo => todo.isDone)
             const doneTodosCount = doneTodos.length
+            if (!doneTodosCount) return 0
             return ((doneTodosCount / todosCount) * 100).toFixed(0)
         }
     },

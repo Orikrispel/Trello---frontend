@@ -141,15 +141,19 @@
         }
 
         @include for-normal-layout {
-          grid-template-columns: 552px 1fr;
+          grid-template-columns: 568px 1fr;
         }
 
         .task-main {
           padding: 0 8px 8px 16px;
 
-          .label-container,
-          .member-container {
-            margin: 8px 8px 8px 40px;
+          .task-detail-data {
+            flex-wrap: wrap;
+            margin: 0 8px 8px 40px;
+
+            .container {
+              margin: 0 8px 8px 0;
+            }
 
             h3.inner-title {
               color: $font-clr3;
@@ -158,6 +162,22 @@
 
             .member-img {
               margin: 0 4px 4px 0;
+            }
+
+            .btn-add-member {
+              cursor: pointer;
+              border-radius: 555px;
+              padding: 8px;
+              display: inherit;
+              margin: 0 4px 4px 0;
+
+              .icon {
+                font-size: 16px;
+                height: 16px;
+                line-height: 1;
+                width: 16px;
+                position: inherit;
+              }
             }
 
             .task-heading-label-list {
@@ -184,7 +204,7 @@
             }
           }
 
-          .icon {
+          .icon:not(.icon-close) {
             position: absolute;
             top: 8px;
             left: -40px;
@@ -197,12 +217,10 @@
           padding: 0 1em 0.5em 0.5em;
           gap: 8px;
 
-          h4 {
+          h3 {
+            color: $font-clr3;
             font-size: rem(12px);
-            font-weight: 600;
-            padding: 0 1em 0.5em 0.5em;
             margin-bottom: rem(-4px);
-            // line-height: em(20px);
           }
 
           button:not(.btn-label, .btn-remove-color) {
