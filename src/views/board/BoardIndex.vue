@@ -1,16 +1,13 @@
 <template>
   <div class="index-container container home">
-    <BoardList
-      @removeBoard="removeBoard"
-      @starBoard="starBoard"
-      @addBoard="addBoard" />
+    <BoardList @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
   </div>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 // import { boardService } from '../../services/board.service'
-import { boardService } from '../../services/board.service'
+import { boardService } from '../../services/board.service.local'
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
