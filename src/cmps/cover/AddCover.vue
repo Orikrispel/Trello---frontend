@@ -7,11 +7,11 @@
         <template v-slot scope="props">
             <section ref="groupMenu" class="group-menu flex column label-menu label-edit">
                 <form class="add-checklist-form">
-                    <h4>Size</h4>
+                    <h5 class="cover-h5">Size</h5>
                 </form>
                 <form class="add-checklist-form">
                     <CoverDisplay @setCover="setCover" @removeCover="removeCover" />
-                    <h4>Colors</h4>
+                    <h5 class="cover-h5">Colors</h5>
                     <CoverColor :quantity="10" />
                 </form>
             </section>

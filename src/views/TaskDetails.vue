@@ -27,7 +27,7 @@
           <main class="task-main">
 
             <div class="flex task-detail-data">
-              <div v-show="task.members.length" class="member-container container">
+              <div v-show="task.members?.length" class="member-container container">
                 <h3 class="fs12 inner-title">Members</h3>
                 <ul class="task-heading-member-list flex clean-list">
                   <li v-for="member in task.members" :key="member._id" class="member">
@@ -56,7 +56,7 @@
                 </ul>
               </div>
 
-              <div v-show="task.labels.length" class="label-container container">
+              <div v-show="task.labels?.length" class="label-container container">
                 <h3 class="fs12 inner-title">Labels</h3>
                 <ul class="task-heading-label-list flex clean-list">
                   <li class="label" v-for="label in task.labels" :key="label.id">
@@ -280,9 +280,7 @@ export default {
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
-    console.log('this.task', this.task)
     let groups = this.board.groups
-    console.log('groups', groups)
     for (const group of groups) {
       let { tasks } = group
       let currTask = tasks.find((t) => t.id === this.task.id)

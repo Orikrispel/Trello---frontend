@@ -54,7 +54,6 @@
       flex: 1 1 auto;
       height: 100%;
       overflow-x: hidden;
-
     }
 
     .new-task-container {
@@ -69,13 +68,13 @@
     .task-container {
       background-color: $secondary-clr1;
       border-radius: 3px;
+      overflow: hidden;
       box-shadow: 0 1px 0 $shadow-clr1;
       color: $font-clr1;
       cursor: pointer;
       margin-bottom: 8px;
       max-width: 300px;
       min-height: 20px;
-      padding: 6px 8px;
       position: relative;
 
       &:hover {
@@ -95,7 +94,6 @@
       background-color: #091e4214;
     }
   }
-
 }
 
 .group-menu-content {
@@ -121,4 +119,8 @@
     padding: 0 12px;
     width: 95%;
   }
+}
+.semi-cover-container {
+  width: 256px;
+  height: 32px;
 }
