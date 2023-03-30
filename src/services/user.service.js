@@ -1,5 +1,6 @@
 // import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
+import { utilService } from './util.service'
 import { store } from '../store/store'
 import {
   socketService,
@@ -20,6 +21,8 @@ export const userService = {
   getById,
   remove,
   update,
+  getRandomDefaultMember,
+  getDefaultMembers,
   // changeScore,
 }
 
@@ -110,6 +113,30 @@ function saveLocalUser(user) {
 
 function getLoggedinUser() {
   return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+}
+
+function getRandomDefaultMember() {
+  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+}
+
+function getDefaultMembers() {
+  return [
+    {
+      _id: '64251c27a476517cf20661ef',
+      fullname: 'Yohai Korem',
+      imgUrl: '',
+    },
+    {
+      _id: '64253e39a476517cf20661f0',
+      fullname: 'Ori Krispel',
+      imgUrl: '',
+    },
+    {
+      _id: '64259a5c5e24b789998fc9a6',
+      fullname: 'Ori Teicher',
+      imgUrl: '',
+    },
+  ]
 }
 
 // ;(async ()=>{
