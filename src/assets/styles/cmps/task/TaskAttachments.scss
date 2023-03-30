@@ -12,7 +12,7 @@
     }
   }
 
-  p.checklist {
+  p:is(.checklist, .files) {
     color: $font-clr3;
     align-items: center;
     max-width: 100%;
@@ -48,6 +48,21 @@
 
     &:hover {
       background-color: transparent;
+    }
+  }
+}
+
+.files-display {
+  margin: 0;
+  padding: 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li img {
+      height: 260px;
+      background-size: contain;
     }
   }
 }

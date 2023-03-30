@@ -77,7 +77,7 @@
                 <span class="icon description-icon icon-lg"></span>Description
               </h3>
               <button
-                class="btn"
+                class="btn-task light"
                 id="edit-desc-btn"
                 v-if="!userIsEditing && task.description"
                 @click="userIsEditing = !userIsEditing">
@@ -102,12 +102,12 @@
                 @blur="userIsEditing = false"
                 autofocus></textarea>
               <button
-                class="btn btn-blue"
+                class="btn-task blue"
                 v-if="userIsEditing"
                 @click="saveTask(task)">
                 Save
               </button>
-              <button class="btn btn-cancel-submit" v-if="userIsEditing">
+              <button class="btn-task light" v-if="userIsEditing">
                 Cancel
               </button>
             </form>
@@ -150,7 +150,7 @@
             <h4>Add to card</h4>
 
             <VDropdown :distance="6">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small member-icon"></span> Members
               </button>
 
@@ -166,7 +166,7 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small label-icon"></span>Labels
               </button>
 
@@ -184,7 +184,7 @@
             </VDropdown>
 
             <VDropdown :distance="6">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small checklist-icon"></span>Checklist
               </button>
 
@@ -201,7 +201,7 @@
               </template>
             </VDropdown>
             <VDropdown :distance="6" :placement="'left'">
-              <button>
+              <button class="btn-task light">
                 <span
                   class="icon icon-small time-icon"
                   v-html="getSvg('watch')"></span
@@ -220,7 +220,7 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small attachments-icon"></span>Attachment
               </button>
 
@@ -229,9 +229,14 @@
               </template>
             </VDropdown>
 
-            <button v-if="!task.cover">
-              <span class="icon icon-small card-cover-icon"></span>Cover
-            </button>
+            <VDropdown :distance="6" :placement="'left-start'">
+              <button v-if="!task.cover" class="btn-task light">
+                <span class="icon icon-small card-cover-icon"></span>Cover
+              </button>
+              <template #popper>
+                <AddCover :task="task" @onUpdateTask="onUpdateTask" />
+              </template>
+            </VDropdown>
           </aside>
         </div>
       </div>
@@ -257,6 +262,7 @@ import ChecklistList from '../cmps/checklist/ChecklistList.vue'
 import AddAttachment from '../cmps/attachment/AddAttachment.vue'
 import AttachmentList from '../cmps/attachment/AttachmentList.vue'
 import Chat from '../views/Chat.vue'
+import AddCover from '../cmps/cover/AddCover.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 import DatePreview from '../cmps/dates/DatePreview.vue'
 import DynamicModal from '../cmps/DynamicModal.vue'
@@ -400,6 +406,7 @@ export default {
     AddAttachment,
     AttachmentList,
     Chat,
+    AddCover,
   },
 }
 </script>

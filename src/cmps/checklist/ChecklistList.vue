@@ -2,9 +2,8 @@
     <section class="checklist-list list-style-none">
         <ul class="list-style-none">
             <li v-for="checklist in task.checklists" :key="checklist.id" class="checklist-li">
-                <button class="btn" id="delete-cl-btn" @click="removeChecklist(checklist.id)"
-                    style="float:right;">Delete</button>
-                <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask" />
+                <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask"
+                    @removeChecklist="removeChecklist(checklist.id)" />
             </li>
         </ul>
     </section>
@@ -12,8 +11,8 @@
 
 <script>
 import ChecklistPreview from './ChecklistPreview.vue'
-import { utilService } from '../../services/util.service'
 import { eventBus } from '../../services/event-bus.service'
+import { de } from 'date-fns/locale'
 export default {
     name: 'ChecklistList',
     props: {
@@ -30,6 +29,9 @@ export default {
             currTask: null
         }
     },
+    created() {
+        this.currTask = this.task
+    },
     methods: {
         removeChecklist(checklistId) {
             let task = JSON.parse(JSON.stringify(this.task))
@@ -44,12 +46,6 @@ export default {
             eventBus.emit('updateTask', task)
         }
     },
-    created() {
-        this.currTask = this.task
-    },
-    mounted() {
-    },
-    watch: {
-    },
+
 }
 </script>

@@ -48,18 +48,22 @@
   main.tasks-wrapper {
     margin: 0 4px;
     padding: 1px 4px 0;
+    overflow-y: auto;
 
     .task-list {
       flex: 1 1 auto;
       height: 100%;
       overflow-x: hidden;
-      overflow-y: scroll;
+
     }
 
-    &>button:first-of-type {
-      color: $font-clr3;
-      font-size: 0.875rem;
-      margin: 2px 0 8px -2px;
+    .new-task-container {
+      flex-wrap: wrap;
+      padding-bottom: 8px;
+
+      .icon-add {
+        margin-inline-end: 4px;
+      }
     }
 
     .task-container {
@@ -78,16 +82,20 @@
         background-color: $secondary-clr3;
       }
     }
+  }
 
-    .new-task-container {
-      flex-wrap: wrap;
-      padding-bottom: 8px;
+  button.btn-add-task {
+    color: $font-clr3;
+    font-size: 0.875rem;
+    margin: 2px 8px 8px 8px;
+    padding: 4px 8px;
+    justify-content: start;
 
-      .icon-add {
-        margin-inline-end: 4px;
-      }
+    &:hover {
+      background-color: #091e4214;
     }
   }
+
 }
 
 .group-menu-content {

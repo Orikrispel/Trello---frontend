@@ -1,15 +1,9 @@
 <template>
   <div class="colors-container" ref="container">
-    <div
-      @click="setColor(color)"
-      v-for="(color, idx) in colorsForDisplay"
-      :key="idx"
-      :class="[
-        'color-item',
-        `color-item-${idx + 1}`,
-        { selected: color === pickedColor },
-      ]"
-      v-html="color === pickedColor ? getSvg('vPicked') : ''"></div>
+    <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
+      :class="['color-item', `color-item-${idx + 1}`, { selected: color === pickedColor }]"
+      v-html="(color === pickedColor ? getSvg('vPicked') : '')">
+    </div>
   </div>
 </template>
 <!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
@@ -23,13 +17,13 @@ export default {
     return {
       pickedColor: 'white',
       colorItems: [
-        'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(55, 180, 195) 100%)',
-        'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(9, 50, 108) 100%)',
-        'linear-gradient(55.41deg, rgb(9, 50, 108) 2%, rgb(205, 81, 157) 100%)',
-        'linear-gradient(55.41deg, rgb(110, 93, 198) 2%, rgb(231, 116, 187) 100%)',
-        'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
-        'linear-gradient(55.41deg, rgb(250, 165, 61) 2%, rgb(89, 201, 2) 100%)',
+        ' #b7ddb0',
+        ' #f5ea92',
+        '#fad29c',
+        ' #efb3ab',
+        ' #dfc0eb',
 
+        '#7bc86c',
         ' #f5dd29',
         ' #ffaf3f',
         '#ef7564',
@@ -65,7 +59,7 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {},
+    loggedInUser() { },
     colorsForDisplay() {
       let { quantity } = this.$props
       return this.colorItems.filter((item, idx) => {
@@ -87,12 +81,13 @@ export default {
       document.querySelectorAll('.color-item.selected').forEach((el) => {
         el.classList.remove('selected')
       })
-    },
+    }
+
   },
   created() {
     eventBus.on('onImgChange', () => {
       this.clearSelection()
-    })
+    });
   },
   emits: ['setColor'],
 }

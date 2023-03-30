@@ -2,13 +2,14 @@
     <section class="todos-list">
         <ul class="todos-list list-style-none">
             <li v-for="todo in todos" :key="todo.id">
-                <button @click="removeTodo(todo.id)" style="float:right;">...</button>
+                <button class="clean-btn btn-sm btn-task light" @click="removeTodo(todo.id)" style="float:right;"><span
+                        class="icon icon-overflow-menu-horizontal"></span></button>
                 <TodosPreview :todo="todo" @updateTodos="onUpdateTodos" />
             </li>
             <input type="text" v-model="addTodoTitle" class="add-todo-input" v-if="isEditorOn === true">
             <div class="add-todo-btns">
-                <button class="btn" @click="addTodo" :class="{ 'btn-blue': isEditorOn }">Add Item</button>
-                <button class="btn cancel-todo-btn" @click="isEditorOn = false" v-if="isEditorOn">Cancel</button>
+                <button class="btn-task light" @click="addTodo" :class="{ 'btn-blue': isEditorOn }">Add an item</button>
+                <button class="btn-task blue" @click="isEditorOn = false" v-if="isEditorOn">Cancel</button>
             </div>
         </ul>
     </section>
@@ -63,7 +64,6 @@ export default {
     },
     mounted() {
     },
-    watch: {},
     components: { TodosPreview }
 }
 </script>

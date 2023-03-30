@@ -102,7 +102,6 @@
     }
   }
 
-
   .color-item-9 {
     background-color: $label-clr9;
 
@@ -255,7 +254,6 @@
     }
   }
 
-
   .color-item-28 {
     background-color: $label-clr28;
 
@@ -322,50 +320,130 @@
   }
 
   .color-item-1 {
-    background-color: $cover-clr1;
+    background: $cover-clr1;
 
-    &:hover {
-      background-color: darken($cover-clr1, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr1, 10);
+    // }
   }
 
   .color-item-2 {
-    background-color: $cover-clr2;
+    background: $cover-clr2;
 
-    &:hover {
-      background-color: darken($cover-clr2, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr2, 10);
+    // }
   }
 
   .color-item-3 {
-    background-color: $cover-clr3;
+    background: $cover-clr3;
 
-    &:hover {
-      background-color: darken($cover-clr3, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr3, 10);
+    // }
   }
 
   .color-item-4 {
-    background-color: $cover-clr4;
+    background: $cover-clr4;
 
-    &:hover {
-      background-color: darken($cover-clr4, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr4, 10);
+    // }
   }
 
   .color-item-5 {
-    background-color: $cover-clr5;
+    background: $cover-clr5;
 
-    &:hover {
-      background-color: darken($cover-clr5, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr5, 10);
+    // }
   }
 
   .color-item-6 {
-    background-color: $cover-clr6;
+    background: $cover-clr6;
 
-    &:hover {
-      background-color: darken($cover-clr6, 10);
-    }
+    // &:hover {
+    //   background: darken($cover-clr6, 10);
+    // }
+  }
+}
+
+.cover-color-item-1 {
+  background-color: $label-clr1;
+
+  &:hover {
+    background-color: darken($label-clr1, 10);
+  }
+}
+
+.cover-color-item-2 {
+  background-color: $label-clr2;
+
+  &:hover {
+    background-color: darken($label-clr2, 10);
+  }
+}
+
+.cover-color-item-3 {
+  background-color: $label-clr3;
+
+  &:hover {
+    background-color: darken($label-clr3, 10);
+  }
+}
+
+.cover-color-item-4 {
+  background-color: $label-clr4;
+
+  &:hover {
+    background-color: darken($label-clr4, 10);
+  }
+}
+
+.cover-color-item-5 {
+  background-color: $label-clr5;
+
+  &:hover {
+    background-color: darken($label-clr5, 10);
+  }
+}
+
+.cover-color-item-6 {
+  background-color: $label-clr6;
+
+  &:hover {
+    background-color: darken($label-clr6, 10);
+  }
+}
+
+.cover-color-item-7 {
+  background-color: $label-clr7;
+
+  &:hover {
+    background-color: darken($label-clr7, 10);
+  }
+}
+
+.cover-color-item-8 {
+  background-color: $label-clr8;
+
+  &:hover {
+    background-color: darken($label-clr8, 10);
+  }
+}
+
+.cover-color-item-9 {
+  background-color: $label-clr9;
+
+  &:hover {
+    background-color: darken($label-clr9, 10);
+  }
+}
+
+.cover-color-item-10 {
+  background-color: $label-clr10;
+
+  &:hover {
+    background-color: darken($label-clr10, 10);
   }
 }

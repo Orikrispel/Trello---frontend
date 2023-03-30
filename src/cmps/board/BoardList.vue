@@ -11,8 +11,8 @@
           :key="board._id"
           @click="showBoardDetails(board._id)"
           :style="{
-            'background-color': board.style?.backgroundColor || '#014a75',
-            backgroundImage: getBoardBg(board) || 'none',
+            background: board.style?.backgroundColor || '#014a75',
+            backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
             backgroundSize: 'cover',
           }">
           <BoardPreview
@@ -33,8 +33,8 @@
           :key="board._id"
           @click="showBoardDetails(board._id)"
           :style="{
-            'background-color': board.style?.backgroundColor || '#014a75',
-            backgroundImage: getBoardBg(board) || 'none',
+            background: board.style?.backgroundColor || '#014a75',
+            backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
             backgroundSize: 'cover',
           }">
           <BoardPreview
@@ -100,7 +100,7 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg(board) {
-      if (!board.style?.imgUrls) return null
+      if (!board.style.imgUrls.thumb) return null
       else return `url(${board.style?.imgUrls.thumb})`
     },
     addBoard(board) {

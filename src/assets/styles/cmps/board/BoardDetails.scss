@@ -1,20 +1,18 @@
 .board-container {
-  // background-image: linear-gradient(43deg,
-  //     #4158d0 0%,
-  //     #c850c0 46%,
-  //     #ffcc70 100%);
-
-  // overflow-x: auto;
-  // white-space: nowrap;
   padding-bottom: 5px;
 
   header.board-header {
     height: auto;
     padding: 8px 4px 8px 12px;
     position: relative;
+    flex-wrap: wrap;
 
     h1.board-title {
       font-family: "Segoe UI Bold";
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
       color: $font-clr1;
       margin: 0;
       padding: 6px 12px;
@@ -278,9 +276,3 @@
   margin: auto;
   margin-bottom: 15px;
 }
-
-.attach-btn {
-  &:hover {}
-}
-
-#right-board-header {}

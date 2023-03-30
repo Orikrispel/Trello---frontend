@@ -35,16 +35,11 @@
 
     <main class="tasks-wrapper">
       <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'" drag-class="card-ghost"
-        drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
+        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'">
         <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
           <TaskPreview :task="task" @click.stop="openTaskDetails(task.id)" />
         </Draggable>
       </Container>
-
-      <button v-show="!isAddTask" class="btn clean-btn" @click="toggleAddTask">
-        <span class="icon icon-add"></span> Add a card
-      </button>
       <div v-show="isAddTask" class="new-task-container flex">
         <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
           placeholder="Enter a title for this card..."></textarea>
@@ -54,6 +49,12 @@
         </button>
       </div>
     </main>
+
+    <button v-show="!isAddTask" class="btn clean-btn btn-add-task" @click="toggleAddTask">
+      <span class="icon icon-add"></span> Add a card
+    </button>
+
+
   </section>
 </template>
 
@@ -74,7 +75,6 @@ export default {
     return {
       isAddTask: false,
       isEditGroupTitle: false,
-      // showTaskDetails: false,
       dropPlaceholderOptions: {
         className: 'drop-preview',
         animationDuration: '150',

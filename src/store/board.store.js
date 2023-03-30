@@ -1,5 +1,5 @@
-// import { boardService } from '../services/board.service.local'
-import { boardService } from '../services/board.service'
+import { boardService } from '../services/board.service.local'
+// import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service'
 export function getActionRemoveBoard(boardId) {
   return {
@@ -185,7 +185,6 @@ export const boardStore = {
       try {
         context.commit(getActionStarBoard(board))
         board = await boardService.save(board)
-        console.log('board To save', board)
         return board
       } catch (err) {
         console.log('boardStore: Error in starBoard', err)

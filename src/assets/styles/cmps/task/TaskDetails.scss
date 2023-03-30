@@ -66,11 +66,6 @@
       }
     }
 
-    button {
-      border: 0;
-      padding: 5px 10px;
-    }
-
     .task-cover {
       background-color: $cover-clr2;
       min-height: 6em;
@@ -235,6 +230,7 @@
         textarea {
           padding: 8px 12px;
           resize: none;
+
           &:focus {
             background-color: $secondary-clr1;
             box-shadow: inset 0 0 0 2px $primary-clr4;
@@ -298,6 +294,7 @@
   padding: 0px 0;
   display: flex;
   justify-content: center;
+
   button.btn {
     margin: auto;
     width: 100%;

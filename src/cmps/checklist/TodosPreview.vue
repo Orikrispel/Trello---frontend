@@ -28,9 +28,6 @@ export default {
     },
     mounted() {
     },
-    watch: {
-
-    },
     created() {
         this.currTodo = JSON.parse(JSON.stringify(this.todo))
     }
