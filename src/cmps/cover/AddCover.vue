@@ -11,6 +11,7 @@
                     <!-- <CoverDisplay /> -->
                 </form>
                 <form class="add-checklist-form">
+                    <CoverDisplay />
                     <h4>Colors</h4>
                     <CoverColor :quantity="10" />
                 </form>
@@ -22,6 +23,7 @@
 <script>
 
 import CoverColor from './CoverColor.vue'
+import CoverDisplay from './CoverDisplay.vue'
 import DynamicModal from '../DynamicModal.vue'
 import LabelColorPicker from '../LabelColorPicker.vue'
 
@@ -45,6 +47,7 @@ export default ({
         DynamicModal,
         CoverColor,
         LabelColorPicker,
+        CoverDisplay,
     },
 
 })
