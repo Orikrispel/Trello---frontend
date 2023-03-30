@@ -42,6 +42,7 @@ export default ({
     },
     methods: {
         onImgUpload(event) {
+            event.preventByDefault()
             const newTask = JSON.parse(JSON.stringify(this.task))
             if (!newTask.files) newTask.files = []
             const file = event.target.files[0]

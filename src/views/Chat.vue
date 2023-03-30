@@ -1,31 +1,17 @@
 <template>
-  <div class="chat-container">
-    <h1>About Us</h1>
-    <p>We like You</p>
-    <h2>Lets Chat About {{ topic }}</h2>
-    <label>
-      <input
-        type="radio"
-        value="Politics"
-        v-model="topic"
-        @change="changeTopic" />
-      Politics
-    </label>
-    <label>
-      <input type="radio" value="Love" v-model="topic" @change="changeTopic" />
-      Love
-    </label>
-    <ul>
-      <li v-for="(msg, idx) in msgs" :key="idx">
-        <span>{{ msg.from }}:</span>{{ msg.txt }}
+  <div v-if="task" class="comments-container">
+    <ul class="clean-list">
+      <li v-for="comment in task?.comments" :key="comment.id">
+        <span>{{ comment.byMember.fullname }}:</span>{{ comment.txt }}
       </li>
     </ul>
     <hr />
-    <form @submit.prevent="sendMsg">
-      <input type="text" v-model="msg.txt" placeholder="Write a comment.." />
+    <form @submit.prevent="sendComment">
+      <input type="text" v-model="comment.txt" placeholder="Your comment" />
       <button>Send</button>
     </form>
   </div>
+  <button @click="test">test</button>
 </template>
 
 <script>
@@ -35,37 +21,62 @@ import {
   SOCKET_EVENT_ADD_MSG,
   SOCKET_EMIT_SET_TOPIC,
 } from '../services/socket.service'
-
+import { boardService } from '../services/board.service'
+import { eventBus } from '../services/event-bus.service'
 export default {
+  name: 'Chat',
+  props: {
+    task: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
-      msg: { from: 'Guest', txt: '' },
-      msgs: [],
-      topic: 'Love',
+      comment: boardService.getEmptyComment(),
+      comments: [],
     }
   },
-  created() {
-    socketService.emit(SOCKET_EMIT_SET_TOPIC, this.topic)
-    socketService.on(SOCKET_EVENT_ADD_MSG, this.addMsg)
+  async created() {
+    if (this.task.comments) this.comments = this.task.comments
+    socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
+    socketService.on(SOCKET_EVENT_ADD_MSG, this.addCommentToTask)
   },
-  destroyed() {
-    socketService.off(SOCKET_EVENT_ADD_MSG, this.addMsg)
+
+  unmounted() {
+    socketService.off(SOCKET_EVENT_ADD_MSG, this.addCommentToTask)
+  },
+  computed: {
+    loggedinUser() {
+      let user = { ...this.$store.getters.loggedinUser }
+      return user
+    },
+    taskId() {
+      let { taskId } = this.$route.params
+      return taskId
+    },
   },
   methods: {
-    addMsg(msg) {
-      this.msgs.push(msg)
+    test() {
+      console.log(this.task.comments)
     },
-    sendMsg() {
-      console.log('Sending', { ...this.msg })
-      // setTimeout(()=>this.addMsg({from: 'Dummy', txt: 'Yey'}), 2000)
-      const user = userService.getLoggedinUser()
-      const from = (user && user.fullname) || 'Guest'
-      this.msg.from = from
-      socketService.emit(SOCKET_EMIT_SEND_MSG, this.msg)
-      this.msg = { from, txt: '' }
+    async addCommentToTask(comment) {
+      this.comments.push(comment)
+      let updatedTask = { ...this.task }
+      updatedTask.comments = updatedTask.comments.concat(comment)
+      eventBus.emit('updateTask', updatedTask)
+    },
+
+    async sendComment() {
+      let comment = { ...this.comment }
+      const user = this.loggedinUser
+      const byMember = user || 'Guest'
+      comment.byMember = byMember
+      socketService.emit(SOCKET_EMIT_SEND_MSG, comment)
+      this.comment = boardService.getEmptyComment()
     },
     changeTopic() {
-      socketService.emit(SOCKET_EMIT_SET_TOPIC, this.topic)
+      socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
     },
   },
 }

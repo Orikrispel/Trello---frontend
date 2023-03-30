@@ -31,11 +31,12 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
   },
   created() {
+    console.log('this.loggedinUser', this.$store.getters.loggedinUser)
     this.$store.dispatch({ type: 'loadBoards' })
   },
   methods: {

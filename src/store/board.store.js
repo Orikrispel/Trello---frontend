@@ -204,15 +204,7 @@ export const boardStore = {
     },
 
     //TASKS
-    async saveTask({ commit }, { task }) {
-      try {
-        let savedTask = await boardService.save(task)
-        commit(getActionAddTask(savedTask))
-      } catch (err) {
-        console.log('could not save task at the moment')
-      }
-    },
-    async loadCurrTask({ state, commit }, { taskId }) {
+    loadCurrTask({ state, commit }, { taskId }) {
       let board = state.currBoard
       if (!board) return
 

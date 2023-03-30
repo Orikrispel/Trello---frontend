@@ -23,20 +23,12 @@ export const boardService = {
 }
 window.cs = boardService
 
-async function query(filterBy = { txt: '' }) {
-  let boards = await httpService.get(BASE_URL, filterBy)
+async function query() {
+  let user = userService.getLoggedinUser()
+  let userId = user._id
+  let boards = await httpService.get(BASE_URL, { userId })
   if (!boards || !boards.length) boards = _createBoards()
   return boards
-
-  // var boards = await storageService.query(STORAGE_KEY)
-  // if (filterBy.txt) {
-  //     const regex = new RegExp(filterBy.txt, 'i')
-  //     boards = boards.filter(board => regex.test(board.vendor) || regex.test(board.description))
-  // }
-  // if (filterBy.price) {
-  //     boards = boards.filter(board => board.price <= filterBy.price)
-  // }
-  // return boards
 }
 function getById(boardId) {
   // return storageService.get(STORAGE_KEY, boardId)
@@ -48,7 +40,6 @@ async function remove(boardId) {
   return httpService.delete(`board/${boardId}`)
 }
 async function save(board) {
-  console.log('remote board service', board)
   var savedBoard
   if (board._id) {
     // savedBoard = await storageService.put(STORAGE_KEY, board)
@@ -177,17 +168,17 @@ function getDefaultEmptyLabel() {
 function getDefaultMembers() {
   return [
     {
-      _id: 'u101',
+      _id: '64251c27a476517cf20661ef',
       fullname: 'Yohai Korem',
       imgUrl: '',
     },
     {
-      _id: 'u102',
+      _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
       imgUrl: '',
     },
     {
-      _id: 'u103',
+      _id: '64259a5c5e24b789998fc9a6',
       fullname: 'Ori Teicher',
       imgUrl: '',
     },
@@ -233,7 +224,9 @@ function _getBoardRandomColor() {
   return colorItems[utilService.getRandomIntInclusive(0, 5)]
 }
 
-function getRandomLabel(idx = utilService.getRandomIntInclusive()) {
+function getRandomLabel(
+  idx = utilService.getRandomIntInclusive(0, colorItems.length - 1)
+) {
   return {
     id: utilService.makeId(),
     title: utilService.getRandomLabelTitle(),
@@ -258,6 +251,10 @@ async function _createBoards(amount = 20) {
   return boards
 }
 
+function getRandomDefaultMember() {
+  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+}
+
 function randomStarBoard() {
   const num = utilService.getRandomIntInclusive(1, 4)
   if (num === 4) return true
@@ -266,9 +263,9 @@ function randomStarBoard() {
 
 function getEmptyComment() {
   return {
-    id: '',
+    id: utilService.makeId(),
     txt: '',
-    createdAt: null,
+    createdAt: Date.now(),
     byMember: null,
   }
 }
@@ -281,11 +278,7 @@ async function _createBoard(
     title,
     isStarred: randomStarBoard(),
     archivedAt: 1589983468418,
-    createdBy: {
-      _id: 'u101',
-      fullname: 'Yohai Korem',
-      imgUrl: 'http://some-img',
-    },
+    createdBy: getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)],
     style: {
       backgroundColor: _getBoardRandomColor(),
       imgUrls: unsplashService.getRandomImg(),
@@ -347,12 +340,7 @@ async function _createBoard(
                 id: 'ZdPnm',
                 txt: 'also @yaronb please CR this',
                 createdAt: 1590999817436,
-                byMember: {
-                  _id: 'u101',
-                  fullname: 'Yohai Korem',
-                  imgUrl:
-                    'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-                },
+                byMember: getRandomDefaultMember(),
               },
             ],
             checklists: [
@@ -368,16 +356,10 @@ async function _createBoard(
                 ],
               },
             ],
-            memberIds: ['u101'],
-            labelIds: ['l101', 'l102'],
+            memberIds: [getRandomDefaultMember().id],
+            labelIds: [getRandomLabel().id, getRandomLabel().id],
             dueDate: 16156215211,
-            byMember: {
-              _id: 'u101',
-              username: 'yoyo',
-              fullname: 'Yohai Korem',
-              imgUrl:
-                'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-            },
+            byMember: getRandomDefaultMember(),
             style: {
               bgColor: '#26de81',
             },
@@ -391,11 +373,7 @@ async function _createBoard(
         id: 'a101',
         txt: 'Changed Color',
         createdAt: 154514,
-        byMember: {
-          _id: 'u101',
-          fullname: 'Yohai Korem',
-          imgUrl: 'http://some-img',
-        },
+        byMember: getRandomDefaultMember(),
         task: {
           id: 'c101',
           title: 'Replace Logo',

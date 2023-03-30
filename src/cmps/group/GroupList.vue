@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { boardService } from '../../services/board.service'
-// import { boardService } from '../../services/board.service.local'
+// import { boardService } from '../../services/board.service'
+import { boardService } from '../../services/board.service.local'
 import GroupPreview from './GroupPreview.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'

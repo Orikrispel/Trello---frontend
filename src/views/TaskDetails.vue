@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay flex" @click="closeTaskDetails">
     <section class="task-details" @click.stop>
-      <header v-if="task.cover" class="task-cover">
+      <header v-if="task.cover?.color" class="task-cover" :style="{ 'backgroundColor': task.cover?.color }">
         <RouterLink :to="`/board/${boardId}`" class="btn-close">
           <div class="icon" v-html="getSvg('close')"></div>
         </RouterLink>
@@ -109,23 +109,25 @@
                 <span class="icon activity-icon icon-lg"></span>
                 <h3 class="activity-title">Activity</h3>
               </div>
-              <form class="comment-form" @submit.prevent="handleComment">
-                <div class="comment-box-input">
-                  <div class="member-img icon icon-lg">
-                    {{
-                      loggedInUser.imgUrl
-                      ? loggedInUser.imgUrl
-                      : loggedInUser.fullname.charAt(0).toUpperCase()
-                    }}
-                  </div>
-                  <textarea name="comment" placeholder="Write a comment..."></textarea>
+              <!-- <form class="comment-form" @submit.prevent="handleComment"> -->
+              <div class="comment-box-input">
+                <div class="member-img icon icon-lg">
+                  <!-- {{
+                    loggedinUser.imgUrl
+                    ? loggedinUser.imgUrl
+                    : loggedinUser.fullname.charAt(0).toUpperCase()
+                  }} -->
                 </div>
-              </form>
-              <ul v-if="task.comments && task.comments.length" class="clean-list">
+                <Chat :task="task" />
+              </div>
+              <!-- </form> -->
+              <!-- <ul
+                v-if="task.comments && task.comments.length"
+                class="clean-list">
                 <li v-for="(comment, idx) in task.comments" :key="idx">
-                  <!-- {{ comment }} -->
+                  {{ comment }}
                 </li>
-              </ul>
+              </ul> -->
               <ul v-if="task.activities && task.activities.length" class="clean-list">
                 <li v-for="(activity, idx) in task.activities" :key="idx">
                   {{ activity }}
@@ -202,7 +204,6 @@
               </template>
             </VDropdown>
 
-
             <VDropdown :distance="6" :placement="'left-start'">
               <button class="btn-task light">
                 <span class="icon icon-small attachments-icon"></span>Attachment
@@ -214,14 +215,13 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button v-if="!task.cover" class="btn-task light">
+              <button class="btn-task light">
                 <span class="icon icon-small card-cover-icon"></span>Cover
               </button>
               <template #popper>
-                <AddCover :task="task" @onUpdateTask="onUpdateTask" />
+                <AddCover :task="task" @onUpdateTask="onUpdateTask" @setCover="setCover" @removeCover="removeCover" />
               </template>
             </VDropdown>
-
           </aside>
         </div>
       </div>
@@ -246,6 +246,7 @@ import AddChecklist from '../cmps/AddChecklist.vue'
 import ChecklistList from '../cmps/checklist/ChecklistList.vue'
 import AddAttachment from '../cmps/attachment/AddAttachment.vue'
 import AttachmentList from '../cmps/attachment/AttachmentList.vue'
+import Chat from '../views/Chat.vue'
 import AddCover from '../cmps/cover/AddCover.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 import DatePreview from '../cmps/dates/DatePreview.vue'
@@ -258,10 +259,7 @@ export default {
       board: {},
       group: {},
       userIsEditing: false,
-      loggedInUser: {
-        imgUrl: null,
-        fullname: 'Yohai Korem',
-      },
+      loggedinUser: this.$store.getters.loggedinUser,
     }
   },
   async created() {
@@ -282,7 +280,9 @@ export default {
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
+    console.log('this.task', this.task)
     let groups = this.board.groups
+    console.log('groups', groups)
     for (const group of groups) {
       let { tasks } = group
       let currTask = tasks.find((t) => t.id === this.task.id)
@@ -295,6 +295,7 @@ export default {
   methods: {
     updateTitle(ev) {
       this.task.title = ev.target.innerText
+      this.saveTask(this.task.title)
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
@@ -304,11 +305,13 @@ export default {
       console.log(this.task)
     },
     async saveTask(task) {
+      console.log('task', task)
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = { ...task }
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
+      console.log('group', group)
       const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
@@ -321,7 +324,11 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    async updateBoard(board, successMsg = 'board saved', errMsg = 'couldn\'t save board') {
+    async updateBoard(
+      board,
+      successMsg = 'board saved',
+      errMsg = "couldn't save board"
+    ) {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
@@ -347,6 +354,20 @@ export default {
     onUpdateTask(newTask) {
       console.log('newTask.files', newTask.files)
       eventBus.emit('updateTask', newTask)
+    },
+    setCover(type, color) {
+      const newTask = JSON.parse(JSON.stringify(this.task))
+      newTask.cover = { type, color }
+      eventBus.emit('updateTask', newTask)
+      console.log('newTask.cover', newTask.cover)
+    },
+    removeCover() {
+      console.log('removed')
+      const newTask = JSON.parse(JSON.stringify(this.task))
+      newTask.cover = {}
+      eventBus.emit('updateTask', newTask)
+      console.log('newTask.cover', newTask.cover)
+      console.log('this.task', this.task)
     }
   },
   computed: {
@@ -355,19 +376,14 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
+    coverBg() {
+      return this.task.cover.color
+    }
   },
   unmounted() {
     this.saveTask(this.task)
   },
   watch: {
-    '$route.params': {
-      async handler() {
-        const { taskId, boardId } = this.$route.params
-        let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
-        this.task = task
-      },
-      immediate: true,
-    },
     currBoard: {
       handler(newBoard, oldBoard) {
         this.board = newBoard
@@ -375,6 +391,7 @@ export default {
       immediate: true,
     },
   },
+  emits: ['setCover', 'removeCover'],
   components: {
     LabelMenu,
     LabelPreview,
@@ -387,6 +404,7 @@ export default {
     DatePreview,
     AddAttachment,
     AttachmentList,
+    Chat,
     AddCover,
   },
 }

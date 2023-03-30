@@ -1,10 +1,10 @@
 <template>
   <section class="login-signup">
-    <h2 v-if="loggedInUser" class="btn-rounded" @click="logout">Logout</h2>
-    <h2 v-if="!loggedInUser" @click="loginClicked = true" class="btn-rounded">
+    <h2 v-if="loggedinUser" class="btn-rounded" @click="logout">Logout</h2>
+    <h2 v-if="!loggedinUser" @click="loginClicked = true" class="btn-rounded">
       Login
     </h2>
-    <form v-if="!loggedInUser && loginClicked" @submit.prevent="login">
+    <form v-if="!loggedinUser && loginClicked" @submit.prevent="login">
       <input
         type="text"
         v-model="credentials.username"
@@ -15,10 +15,10 @@
         placeholder="Password" />
       <button>Login</button>
     </form>
-    <h2 v-if="!loggedInUser" @click="signupClicked = true" class="btn-rounded">
+    <h2 v-if="!loggedinUser" @click="signupClicked = true" class="btn-rounded">
       Signup
     </h2>
-    <form v-if="!loggedInUser && signupClicked" @submit.prevent="signup">
+    <form v-if="!loggedinUser && signupClicked" @submit.prevent="signup">
       <input
         type="text"
         v-model="signupInfo.fullname"
@@ -56,7 +56,7 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
   },
