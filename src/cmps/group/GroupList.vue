@@ -1,16 +1,9 @@
 <template>
   <section class="flex">
-    <Container
-      v-if="boardCopy"
-      class="flex"
-      @drop="onDrop"
-      orientation="horizontal"
+    <Container v-if="boardCopy" class="flex" @drop="onDrop" orientation="horizontal"
       :drop-placeholder="upperDropPlaceholderOptions">
       <Draggable v-for="group in boardCopy.groups" :key="group.id">
-        <GroupPreview
-          :board="boardCopy"
-          :group="group"
-          @updateBoard="updateBoard" />
+        <GroupPreview :board="boardCopy" :group="group" @updateBoard="updateBoard" />
       </Draggable>
     </Container>
   </section>
@@ -18,6 +11,7 @@
 
 <script>
 import { boardService } from '../../services/board.service'
+// import { boardService } from '../../services/board.service.local'
 import GroupPreview from './GroupPreview.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../../services/util.service'

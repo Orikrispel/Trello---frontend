@@ -43,7 +43,11 @@ $label-clr7: #bdecf3;
 $label-clr8: #dfe1e6;
 
 // COVER COLORS
-$cover-clr1: #7bc86c;
+$cover-clr1: linear-gradient(
+  55.41deg,
+  rgb(227, 73, 53) 2%,
+  rgb(250, 165, 61) 100%
+);
 $cover-clr2: #f5dd29;
 $cover-clr3: #ffaf3f;
 $cover-clr4: #ef7564;

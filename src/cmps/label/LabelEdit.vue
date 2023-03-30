@@ -6,7 +6,7 @@
     <h4>Title</h4>
     <input type="text" name="label-title" v-model="label.title" />
     <h4>Select a color</h4>
-    <ColorPicker :quantity="30" @setColor="setColor" />
+    <LabelColorPicker :quantity="30" @setColor="setColor" />
     <button class="btn btn-remove-color" @click="setColor('#e2e4e9')">
       <span class="icon btn-close icon-close" v-close-popper></span> Remove color
     </button>
@@ -24,7 +24,7 @@
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import { eventBus } from '../../services/event-bus.service';
 import LabelPreview from './LabelPreview.vue'
-import ColorPicker from '../../cmps/ColorPicker.vue'
+import LabelColorPicker from '../../cmps/LabelColorPicker.vue'
 import { getActionUpdateBoard } from '../../store/board.store'
 import { mapGetters } from 'vuex'
 
@@ -84,7 +84,7 @@ export default {
     },
   },
   components: {
-    ColorPicker,
+    LabelColorPicker,
     LabelPreview,
   },
 }
