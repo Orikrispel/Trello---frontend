@@ -1,7 +1,7 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
-    'background-color': board.style?.backgroundColor || 'none',
-    backgroundImage: 'url(' + board.style?.imgUrls.regular + ')' || 'none',
+    background: board.style?.backgroundColor || '#014a75',
+    backgroundImage: getBoardBg || board.style?.backgroundColor,
     backgroundSize: 'cover',
     'background-position': 'center',
   }">
@@ -97,7 +97,6 @@ export default {
       return this.board.isStarred
     },
     getBgImg() {
-      console.log('this.board.style.imgUrls', this.board.style.regular)
       return this.board.style.imgUrls.thumb
     },
   },
@@ -172,6 +171,10 @@ export default {
     },
     getSvg(iconName) {
       return svgService.getSvg(iconName)
+    },
+    getBoardBg() {
+      if (!this.board.style.imgUrls.regular) return null
+      else return `url(${this.board.style?.imgUrls.regular})`
     },
     async checkIsDark() {
       const fac = new FastAverageColor()
