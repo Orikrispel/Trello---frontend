@@ -1,7 +1,7 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
     'background-color': board.style?.backgroundColor || 'none',
-    backgroundImage: 'url(' + board.style?.imgUrls?.regular + ')' || 'none',
+    backgroundImage: 'url(' + board.style?.imgUrls.regular + ')' || 'none',
     backgroundSize: 'cover',
     'background-position': 'center',
   }">
@@ -97,6 +97,7 @@ export default {
       return this.board.isStarred
     },
     getBgImg() {
+      console.log('this.board.style.imgUrls', this.board.style.regular)
       return this.board.style.imgUrls.thumb
     },
   },
