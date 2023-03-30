@@ -184,13 +184,12 @@ function _getBoardRandomColor() {
 
 function _getBoardRandomGradient() {
   const colorItems = [
-    'linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)',
-    'linear-gradient(to right,#824de4,#080c3e)',
-    'linear-gradient(143deg, #a2bc12, #53b8e1)',
-    'linear-gradient(331deg, #ad8739, #e35493)',
-    'linear-gradient(230deg, #859d0d, #87d9ab)',
-    'linear-gradient(187deg, #b36738, #d51d90)',
-    'linear-gradient(124deg, #919781, #c67733)',
+    'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(55, 180, 195) 100%)',
+    'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(9, 50, 108) 100%)',
+    'linear-gradient(55.41deg, rgb(9, 50, 108) 2%, rgb(205, 81, 157) 100%)',
+    'linear-gradient(55.41deg, rgb(110, 93, 198) 2%, rgb(231, 116, 187) 100%)',
+    'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
+    'linear-gradient(55.41deg, rgb(250, 165, 61) 2%, rgb(89, 201, 2) 100%)',
   ]
   return colorItems[getRandomIntInclusive(0, 6)]
 }
@@ -307,9 +306,8 @@ async function _createBoard(
       imgUrl: 'http://some-img',
     },
     style: {
-      backgroundColor: _getBoardRandomColor(),
+      backgroundColor: _getBoardRandomGradient(),
       imgUrls: unsplashService.getRandomImg(),
-      gradient: _getBoardRandomGradient(),
     },
     labels,
     members: getDefaultMembers(),
