@@ -60,6 +60,7 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
+import { mapGetters } from 'vuex'
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -86,6 +87,7 @@ export default {
     this.checkIsDark()
   },
   computed: {
+    ...mapGetters(['currBoard']),
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
@@ -180,18 +182,15 @@ export default {
       const fac = new FastAverageColor()
       if (this.board.style.backgroundColor) {
         const hexColor = this.board.style.backgroundColor
-        console.log('hexColor:', hexColor)
         let red = parseInt(hexColor.substring(1, 3), 16)
         let green = parseInt(hexColor.substring(3, 5), 16)
         let blue = parseInt(hexColor.substring(5, 7), 16)
 
         // Calculate perceived brightness
         let perceivedBrightness = 0.299 * red + 0.587 * green + 0.114 * blue
-        console.log('perceivedBrightness:', perceivedBrightness)
 
         // Check if color is light or dark
         this.isDark = perceivedBrightness >= 128
-        console.log('is dark?:', this.isDark)
       } else {
         try {
           const color = await fac.getColorAsync(
@@ -208,12 +207,9 @@ export default {
     this.taskDetailsIsOpen = false
   },
   watch: {
-    board: {
-      handler() {
-        if (this.board) {
-          this.board = this.$store.getters.currBoard
-          this.checkIsDark()
-        }
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        this.board = newBoard
       },
       immediate: true,
     },

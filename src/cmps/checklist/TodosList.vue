@@ -63,7 +63,6 @@ export default {
     },
     mounted() {
     },
-    watch: {},
     components: { TodosPreview }
 }
 </script>

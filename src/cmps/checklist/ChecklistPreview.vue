@@ -33,8 +33,5 @@ export default {
     },
     mounted() {
     },
-    watch: {
-
-    },
 }
 </script>
