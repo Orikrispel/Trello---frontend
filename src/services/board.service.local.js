@@ -112,7 +112,7 @@ function getEmptyTask(
   description = '',
   labels = [],
   members = [],
-  cover = null,
+  cover = {},
   files = [],
   comments = [],
   activities = []

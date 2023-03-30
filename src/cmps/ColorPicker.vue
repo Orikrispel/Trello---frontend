@@ -65,7 +65,7 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {},
+    loggedinUser() {},
     colorsForDisplay() {
       let { quantity } = this.$props
       return this.colorItems.filter((item, idx) => {

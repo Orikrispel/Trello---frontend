@@ -5,13 +5,9 @@
         <div class="hero-intro">
           <h1>Jello brings all your tasks, teammates, and tools together</h1>
           <p>Keep everything in the same place—even if your team isn’t.</p>
-          <Router-Link @click="setDemoUser" to="/board" class="btn btn-blue"
-            >Start demo</Router-Link
-          >
+          <Router-Link @click="setDemoUser" to="/board" class="btn btn-blue">Start demo</Router-Link>
         </div>
-        <img
-          class="intro-img"
-          src="../../src/assets/imgs/homepage/homepage-2.png" />
+        <img class="intro-img" src="../../src/assets/imgs/homepage/homepage-2.png" />
       </div>
     </section>
   </main>
@@ -30,7 +26,7 @@ export default {
     }
   },
   computed: {},
-  created() {},
+  created() { },
   methods: {
     async setDemoUser() {
       try {
@@ -41,7 +37,7 @@ export default {
         this.loginClicked = false
       } catch (err) {
         console.log('Cannot login', err)
-        showErrorMsg(`Cannot login`)
+        // showErrorMsg(`Cannot login`)
       }
     },
     getSvg(iconName) {

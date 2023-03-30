@@ -39,6 +39,7 @@ export default {
     },
   },
   created() {
+    console.log('this.loggedinUser', this.$store.getters.loggedinUser)
     this.$store.dispatch({ type: 'loadBoards' })
   },
   methods: {

@@ -8,10 +8,9 @@
             <section ref="groupMenu" class="group-menu flex column label-menu label-edit">
                 <form class="add-checklist-form">
                     <h4>Size</h4>
-                    <!-- <CoverDisplay /> -->
                 </form>
                 <form class="add-checklist-form">
-                    <CoverDisplay />
+                    <CoverDisplay @setCover="setCover" @removeCover="removeCover" />
                     <h4>Colors</h4>
                     <CoverColor :quantity="10" />
                 </form>
@@ -41,8 +40,15 @@ export default ({
         }
     },
     methods: {
-
+        setCover(type, color) {
+            this.$emit('setCover', type, color)
+        },
+        removeCover() {
+            this.$emit('removeCover')
+        }
     },
+    emits: ['setCover', 'removeCover'],
+
     components: {
         DynamicModal,
         CoverColor,
