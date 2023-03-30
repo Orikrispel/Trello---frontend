@@ -1,15 +1,20 @@
 <template>
-  <section class="task-attachments flex">
+  <section v-if="task" class="task-attachments flex">
 
     <div class="flex align-center">
-      <span v-if="task.description" class="icon description-icon"></span>
-      <p :class="['fs12 checklist flex ', { complete: isComplete }]" v-if="todosCount !== 0"><span
-          class="icon checklist-icon"></span>{{
-            checklistStatus
-          }}
+      <span v-show="task.description" class="icon description-icon"></span>
+
+      <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
+          class="icon checklist-icon"></span>
+        {{ checklistStatus }}
       </p>
 
+      <p v-show="filesCount !== 0" class="files fs12">
+        <span class="icon attachments-icon"></span>
+        {{ filesCount }}
+      </p>
     </div>
+
     <ul class="clean-list flex">
       <li class="member-preview" v-for="member in task.members" :key="member._id">
         <div class="member-img">
@@ -19,17 +24,9 @@
     </ul>
 
   </section>
-  <section class="files-display" v-if="task.files">
-    <ul class="group-files-list" v-if="task.files">
-      <li class="group-file-li" v-for="file in task.files" :key="file.id">
-        <img :src="file.url">
-      </li>
-    </ul>
-  </section>
 </template>
-
 <script>
-import { eventBus } from '../../services/event-bus.service'
+
 export default {
   name: 'TaskAttachments',
   props: {
@@ -43,10 +40,9 @@ export default {
       todosCount: 0,
       todosDone: 0,
       members: [],
+      filesCount: 0,
       isComplete: false,
     }
-  },
-  created() {
   },
   methods: {
     setTodos() {
@@ -65,8 +61,12 @@ export default {
       this.isComplete = (countDone === countTodos) ? true : false
     },
     setMembers() {
-      if (!this.Task) return
+      if (!this.task.members) return
       this.members = this.task.members
+    },
+    setMembers() {
+      if (!this.task.files) return
+      this.filesCount = this.task.files.length
     }
   },
   computed: {
