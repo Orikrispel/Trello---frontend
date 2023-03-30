@@ -1,4 +1,5 @@
 .task-preview {
+  padding: 6px 8px;
   .task-title {
     margin: 0 0 4px;
   }
@@ -15,7 +16,7 @@
 
   &:hover .icon-edit {
     background-color: #f4f5f7;
-    opacity: .6;
+    opacity: 0.6;
   }
 
   a {
@@ -23,4 +24,8 @@
     text-decoration: none;
     color: $font-clr1;
   }
+}
+
+.semi-color-container {
+  padding: 10px;
 }

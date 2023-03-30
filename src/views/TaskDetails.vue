@@ -36,36 +36,60 @@
 
         <div class="task-main-container">
           <main class="task-main">
-            <div v-show="task.members" class="member-container">
-              <h3 class="fs12 inner-title">Members</h3>
-              <ul class="task-heading-member-list flex clean-list">
-                <li
-                  v-for="member in task.members"
-                  :key="member._id"
-                  class="member">
-                  <div class="member-img">
-                    {{
-                      member.imgUrl
-                        ? member.imgUrl
-                        : member.fullname.charAt(0).toUpperCase()
-                    }}
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <div class="flex task-detail-data">
+              <div
+                v-show="task.members?.length"
+                class="member-container container">
+                <h3 class="fs12 inner-title">Members</h3>
+                <ul class="task-heading-member-list flex clean-list">
+                  <li
+                    v-for="member in task.members"
+                    :key="member._id"
+                    class="member">
+                    <div class="member-img">
+                      {{
+                        member.imgUrl
+                          ? member.imgUrl
+                          : member.fullname.charAt(0).toUpperCase()
+                      }}
+                    </div>
+                  </li>
+                  <VDropdown :distance="6" :placement="'right-start'">
+                    <botton class="btn-task light btn-add-member flex"
+                      ><span class="icon icon-add"></span
+                    ></botton>
 
-            <div v-show="task.labels" class="label-container">
-              <h3 class="fs12 inner-title">Labels</h3>
-              <ul class="task-heading-label-list flex clean-list">
-                <li class="label" v-for="label in task.labels" :key="label.id">
-                  <LabelPreview :label="label" />
-                </li>
-              </ul>
-            </div>
+                    <template #popper>
+                      <DynamicModal>
+                        <template v-slot:title>Members</template>
 
-            <div class="date-container" v-if="task.date">
-              <h3 class="fs12 inner-title">Due date</h3>
-              <DatePreview :date="task.date" />
+                        <template v-slot scope="props">
+                          <MembersList />
+                        </template>
+                      </DynamicModal>
+                    </template>
+                  </VDropdown>
+                </ul>
+              </div>
+
+              <div
+                v-show="task.labels?.length"
+                class="label-container container">
+                <h3 class="fs12 inner-title">Labels</h3>
+                <ul class="task-heading-label-list flex clean-list">
+                  <li
+                    class="label"
+                    v-for="label in task.labels"
+                    :key="label.id">
+                    <LabelPreview :label="label" />
+                  </li>
+                </ul>
+              </div>
+
+              <div class="date-container container" v-if="task.date">
+                <h3 class="fs12 inner-title">Due date</h3>
+                <DatePreview :date="task.date" />
+              </div>
             </div>
 
             <AttachmentList :task="task" @onUpdateTask="onUpdateTask" />
@@ -76,9 +100,8 @@
             <form
               class="description-editor editor"
               @submit.prevent="handleDesc">
-              <h3>
-                <span class="icon description-icon icon-lg"></span>Description
-              </h3>
+              <span class="icon description-icon icon-lg"></span>
+              <h3 class="fs16">Description</h3>
               <button
                 class="btn-task light"
                 id="edit-desc-btn"
@@ -153,7 +176,7 @@
           </main>
 
           <aside class="btns-container side-bar flex">
-            <h4>Add to card</h4>
+            <h3>Add to card</h3>
 
             <VDropdown :distance="6">
               <button class="btn-task light">
@@ -306,9 +329,7 @@ export default {
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
     if (!task) task = this.$store.getters.emptyTask
     this.task = { ...task }
-
     let groups = this.board.groups
-
     for (const group of groups) {
       let { tasks } = group
       let currTask = tasks.find((t) => t.id === this.task.id)

@@ -8,7 +8,7 @@
             <section ref="groupMenu" class="group-menu flex column">
                 <label class="add-attachment-menu" scope="props">
                     <button class="btn btn-list clean-btn" @click="onImgUpload">Computer</button>
-                    <input class="upload-img-input" type="file" @change="onImgUpload">
+                    <input class="upload-img-input" type="file" @change.prevent="onImgUpload">
                 </label>
                 <form class="add-checklist-form">
                     <h4>Attach a link</h4>
@@ -42,7 +42,6 @@ export default ({
     },
     methods: {
         onImgUpload(event) {
-            event.preventByDefault()
             const newTask = JSON.parse(JSON.stringify(this.task))
             if (!newTask.files) newTask.files = []
             const file = event.target.files[0]
@@ -54,23 +53,14 @@ export default ({
                     id: 'att' + utilService.makeId(),
                     url: this.fileUrl,
                     name: file.name,
-                    createdAt: 'Added' + utilService.formatDateString(Date.now())
+                    createdAt: 'Added on' + utilService.formatDateString(Date.now())
                 }
                 newTask.files.push(newFile)
                 this.$emit('onUpdateTask', newTask)
                 eventBus.emit('addAttachment', newFile)
             }
         },
-        // addChecklist() {
-        //     this.checklistToAdd.id = 'cl' + utilService.makeId()
-        //     let task = JSON.parse(JSON.stringify(this.actionData.task))
-        //     if (!task.checklists) task.checklists = []
-        //     task.checklists.push(this.checklistToAdd)
-        //     this.checklistToAdd = checklistService.getEmptyChecklist()
-        //     eventBus.emit('updateTask', task)
-        //     this.$emit('setCreateModeOff')
-        //     console.log('checklist added')
-        // },
+
     },
     components: {
         DynamicModal,

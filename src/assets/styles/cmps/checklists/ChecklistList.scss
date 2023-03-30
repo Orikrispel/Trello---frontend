@@ -1,7 +1,3 @@
-.mark-todo {
-  text-decoration: line-through;
-}
-
 .checklist-list {
 
   .checklist-btn {
@@ -37,6 +33,13 @@
 
   button {
     width: fit-content;
+  }
+
+  button.btn-delete-todo {
+    .icon {
+      position: static;
+      margin-block: 8px;
+    }
   }
 
   .todos-preview {
@@ -96,8 +99,20 @@
     }
   }
 
-  .container {
+  .progress-container {
     width: 100%;
+    margin: 12px 0 6px 0;
+
+
+    span {
+      color: $font-clr3;
+      font-size: 11px;
+      left: -40px;
+      line-height: 10px;
+      position: absolute;
+      text-align: center;
+      width: 32px;
+    }
 
     .progress2 {
       flex-grow: 1;
@@ -117,4 +132,7 @@
     }
   }
 
+  .mark-todo {
+    text-decoration: line-through;
+  }
 }

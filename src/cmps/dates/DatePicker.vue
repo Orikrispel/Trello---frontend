@@ -1,13 +1,7 @@
 <template>
   <section class="date-picker-container">
-    <VueDatePicker
-      v-model="selectedDate"
-      @update:model-value="debug(selectedDate)"
-      inline
-      auto-apply
-      no-today
-      week-start="0"
-      month-name-format="long">
+    <VueDatePicker v-model="selectedDate" @update:model-value="debug(selectedDate)" inline auto-apply no-today
+      week-start="0" month-name-format="long">
       <template #time-picker="{ time, updateTime }">
         <div class="custom-time-picker-component">
           <!-- <div class="inputs-container start-date-container">
@@ -38,40 +32,24 @@
           </div> -->
           <div class="inputs-container due-date-container">
             <label>Due date</label>
-            <input
-              type="checkbox"
-              class="due-date-checkbox"
-              v-model="isChooseDue" />
-            <div
-              :class="
+            <input type="checkbox" class="due-date-checkbox" v-model="isChooseDue" />
+            <div :class="
+              isChooseDue
+                ? ' txt-inputs-container'
+                : 'disabled txt-inputs-container'
+            ">
+              <input type="text" :class="
                 isChooseDue
-                  ? ' txt-inputs-container'
-                  : 'disabled txt-inputs-container'
-              ">
-              <input
-                type="text"
-                :class="
-                  isChooseDue
-                    ? ' txt-input due-date-input'
-                    : 'disabled txt-input due-date-input'
-                "
-                ref="dueDateInput"
-                v-model="dueDateForDisplay"
-                @focus="choosingDue = true"
-                @blur="updateDate($event)"
-                placeholder="M/D/YYY" />
+                  ? ' txt-input due-date-input'
+                  : 'disabled txt-input due-date-input'
+              " ref="dueDateInput" v-model="dueDateForDisplay" @focus="choosingDue = true" @blur="updateDate($event)"
+                placeholder="M/D/YYYY" />
 
-              <input
-                type="text"
-                :class="
-                  isChooseDue
-                    ? ' txt-input due-time-input'
-                    : 'disabled txt-input due-time-input'
-                "
-                v-model="dueTime"
-                @blur="validateTime"
-                @input="timeInput($event)"
-                placeholder="h:mm A" />
+              <input type="text" :class="
+                isChooseDue
+                  ? ' txt-input due-time-input'
+                  : 'disabled txt-input due-time-input'
+              " v-model="dueTime" @blur="validateTime" @input="timeInput($event)" placeholder="h:mm A" />
             </div>
           </div>
         </div>
@@ -109,7 +87,6 @@ export default {
       isChooseDue: true,
     }
   },
-  created() {},
   computed: {
     newDate() {
       if (this.isRangeEnabled) return
@@ -138,6 +115,11 @@ export default {
     },
   },
   async mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.dueDateInput.focus()
+      }, 100)
+    })
     // if (!this.isRangeEnabled) return
     // const startDate = new Date()
     // const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
@@ -231,7 +213,6 @@ export default {
 
     isChooseDue() {
       if (this.isChooseDue) {
-        this.$refs.dueDateInput.focus()
         this.choosingDue = true
       } else {
         // this.$refs.dueDateInput.focus()
