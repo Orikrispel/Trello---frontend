@@ -18,7 +18,7 @@
 
 .checklist-preview {
   position: relative;
-  padding: 8px 0;
+  padding: 4px 0;
   margin: 0 0 4px 0px;
 
   .icon {
@@ -38,6 +38,15 @@
     width: fit-content;
   }
 
+  .todos-preview {
+    display: flex;
+    align-items: center;
+    button {
+      &:hover {
+        filter: brightness(90%);
+      }
+    }
+  }
   input {
     border: none;
     background-color: $secondary-clr3;

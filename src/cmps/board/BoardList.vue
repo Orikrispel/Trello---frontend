@@ -7,7 +7,7 @@
       </div>
       <ul class="board-list">
         <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          'background': board.style?.backgroundColor || '#014a75',
+          'background-color': board.style?.backgroundColor || '#014a75',
           backgroundImage: getBoardBg(board) || 'none',
           backgroundSize: 'cover',
         }">
@@ -23,7 +23,7 @@
       <ul class="board-list">
 
         <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          'background': board.style?.backgroundColor || '#014a75',
+          'background-color': board.style?.backgroundColor || '#014a75',
           backgroundImage: getBoardBg(board) || 'none',
           backgroundSize: 'cover',
         }">
