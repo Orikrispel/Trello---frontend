@@ -36,7 +36,8 @@
     <main class="tasks-wrapper">
       <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
         group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'">
-        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id">
+        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id"
+          :style="{ backgroundColor: (task.cover?.type === 'full') ? task.cover?.color : '' }">
           <TaskPreview :task="task" @click.stop="openTaskDetails(task.id)" />
         </Draggable>
       </Container>

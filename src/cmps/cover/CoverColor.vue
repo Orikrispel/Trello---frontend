@@ -14,17 +14,18 @@ export default {
     data() {
         return {
             pickedColor: '',
+            pickedCover: '',
             colorItems: [
                 '#7bc86c',
-                ' #f5dd29',
-                ' #ffaf3f',
+                '#f5dd29',
+                '#ffaf3f',
                 '#ef7564',
                 '#cd8de5',
-                ' #8bbdd9',
-                ' #8fdfeb',
-                ' #b3f1d0',
-                ' #f9c2e4',
-                ' #505f79',
+                '#8bbdd9',
+                '#8fdfeb',
+                '#b3f1d0',
+                '#f9c2e4',
+                '#505f79',
             ],
         }
     },
@@ -41,17 +42,23 @@ export default {
         setColor(color) {
             this.pickedColor = color
             eventBus.emit('onCoverColorPick', color)
+            this.$emit('setColor', this.pickedColor)
         },
         clearSelection() {
             this.pickedColor = ''
             document.querySelectorAll('.color-item.selected').forEach((el) => {
                 el.classList.remove('selected')
             })
+        },
+        setCoverType(data) {
+            this.pickedCover = data
         }
 
     },
     created() {
-
+        eventBus.on('onCoverPick', data => {
+            this.setCoverType(data)
+        })
     },
     emits: ['setColor'],
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay flex" @click="closeTaskDetails">
     <section class="task-details" @click.stop>
-      <header v-if="task.cover" class="task-cover">
+      <header v-if="task.cover?.color" class="task-cover" :style="{ 'backgroundColor': task.cover?.color }">
         <RouterLink :to="`/board/${boardId}`" class="btn-close">
           <div class="icon" v-html="getSvg('close')"></div>
         </RouterLink>
@@ -197,11 +197,11 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button v-if="!task.cover" class="btn-task light">
+              <button class="btn-task light">
                 <span class="icon icon-small card-cover-icon"></span>Cover
               </button>
               <template #popper>
-                <AddCover :task="task" @onUpdateTask="onUpdateTask" />
+                <AddCover :task="task" @onUpdateTask="onUpdateTask" @setCover="setCover" @removeCover="removeCover" />
               </template>
             </VDropdown>
 
@@ -240,6 +240,7 @@ export default {
       task: this.$store.getters.emptyTask,
       board: {},
       group: {},
+      currCoverBg: '',
       userIsEditing: false,
       loggedInUser: {
         imgUrl: null,
@@ -330,6 +331,21 @@ export default {
     onUpdateTask(newTask) {
       console.log('newTask.files', newTask.files)
       eventBus.emit('updateTask', newTask)
+    },
+    setCover(type, color) {
+      const newTask = JSON.parse(JSON.stringify(this.task))
+      newTask.cover = { type, color }
+      this.currCoverBg = color
+      eventBus.emit('updateTask', newTask)
+      console.log('newTask.cover', newTask.cover)
+    },
+    removeCover() {
+      console.log('removed')
+      const newTask = JSON.parse(JSON.stringify(this.task))
+      newTask.cover = {}
+      eventBus.emit('updateTask', newTask)
+      console.log('newTask.cover', newTask.cover)
+      console.log('this.task', this.task)
     }
   },
   computed: {
@@ -338,6 +354,9 @@ export default {
       const { boardId } = this.$route.params
       return boardId
     },
+    coverBg() {
+      return this.task.cover.color
+    }
   },
   unmounted() {
     this.saveTask(this.task)
@@ -358,6 +377,7 @@ export default {
       immediate: true,
     },
   },
+  emits: ['setCover', 'removeCover'],
   components: {
     LabelMenu,
     LabelPreview,

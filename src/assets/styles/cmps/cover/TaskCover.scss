@@ -61,17 +61,18 @@
 
 .covers-container {
   width: 100%;
-  gap: 5px;
+  gap: 9px;
   display: flex;
   justify-content: space-evenly;
   .cover-display {
     width: 134.5px;
     height: 64px;
     border-radius: 3px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(9, 30, 66, 0.08);
   }
   .cover-display.picked {
-    border: 5px rgb(0, 0, 0) solid;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0079bf;
   }
   .selected {
     &:hover {

@@ -3,15 +3,17 @@
         <div @click="setCover('semi')" class="cover-display cover-semi-container"
             :class="[{ selected: pickedColor }, { picked: pickedCover === 'semi' }]"
             :style="{ backgroundColor: getBgColor }">
+            <h1>semi</h1>
         </div>
 
         <div @click="setCover('full')" class="cover-display cover-full-container"
             :class="[{ selected: pickedColor }, { picked: pickedCover === 'full' }]"
             :style="{ backgroundColor: getBgColor }">
+            <h1>full</h1>
         </div>
 
     </section>
-    <button class="btn-task remove-cover-btn" @click="removeCover('')">
+    <button class="btn-task remove-cover-btn" @click="removeCover">
         Remove cover
     </button>
 </template>
@@ -22,7 +24,7 @@ export default {
     name: 'ColorPicker',
     data() {
         return {
-            pickedColor: 'rgba(9, 30, 66, 0.25)',
+            pickedColor: '',
             pickedCover: ''
         }
     },
@@ -36,14 +38,19 @@ export default {
             this.pickedColor = color
         },
         setCover(coverType) {
+            eventBus.emit('onCoverPick', coverType)
+            if (!this.pickedColor) return
             this.pickedCover = coverType
+            this.$emit('setCover', coverType, this.pickedColor)
         },
         removeCover() {
-            this.pickedColor = 'rgba(9, 30, 66, 0.25)'
+            this.pickedColor = ''
             this.pickedCover = ''
+            this.$emit('removeCover')
         }
 
     },
+    emits: ['setCover', 'removeCover'],
     created() {
         eventBus.on('onCoverColorPick', (color) => {
             this.setColor(color)
