@@ -1,10 +1,17 @@
 <template>
   <header class="app-header">
     <nav class="flex gap">
-      <RouterLink class="flex" to="/"><img class="logo" src="../assets/logo white.png" alt="Jello logo"></RouterLink>
+      <RouterLink class="flex" to="/"
+        ><img class="logo" src="../assets/logo white.png" alt="Jello logo"
+      /></RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
-      <button class="btn add-board" @click="isCreateMode = !isCreateMode">Create
-        <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" style="top: 40px;" />
+      <button class="btn add-board" @click="isCreateMode = !isCreateMode">
+        Create
+        <AddBoard
+          v-show="isCreateMode"
+          @addBoard="addBoard"
+          @closeModal="isCreateMode = false"
+          style="top: 40px" />
       </button>
     </nav>
 
@@ -12,7 +19,11 @@
       <section class="loggedin-user" v-if="loggedInUser">
         <RouterLink :to="`/user/${loggedInUser._id}`">
           <div class="member-img">
-            {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
+            {{
+              loggedInUser.imgUrl
+                ? loggedInUser.imgUrl
+                : loggedInUser.fullname.charAt(0).toUpperCase()
+            }}
           </div>
         </RouterLink>
       </section>
@@ -25,7 +36,6 @@
         </RouterLink>
       </section>
     </nav>
-
   </header>
 </template>
 <script>
@@ -41,6 +51,9 @@ export default {
       isCreateMode: false,
     }
   },
+  created() {
+    console.log(this.loggedInUser)
+  },
   computed: {
     loggedInUser() {
       return this.$store.getters.loggedinUser
@@ -51,7 +64,7 @@ export default {
       try {
         console.log('ADDED board', board)
         await this.$store.dispatch({ type: 'addBoard', board })
-          ; showSuccessMsg('Board added')
+        showSuccessMsg('Board added')
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
@@ -61,6 +74,6 @@ export default {
   },
   components: {
     AddBoard,
-  }
+  },
 }
 </script>
