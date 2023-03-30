@@ -176,7 +176,6 @@ export default {
     },
     getBoardBg() {
       if (!this.board.style.imgUrls.regular) {
-        console.log('!this.board.style.imgUrls.regular', this.board.style.imgUrls.regular)
         return null
       }
       else return `url(${this.board.style?.imgUrls.regular})`

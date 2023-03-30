@@ -148,7 +148,6 @@ export const boardStore = {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
         context.commit({ type: 'setCurrBoard', board })
-        console.log('curr board updated')
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
@@ -186,7 +185,6 @@ export const boardStore = {
       try {
         context.commit(getActionStarBoard(board))
         board = await boardService.save(board)
-        console.log('board To save', board)
         return board
       } catch (err) {
         console.log('boardStore: Error in starBoard', err)
@@ -198,8 +196,6 @@ export const boardStore = {
       try {
         const board = await boardService.getById(boardId)
         context.commit({ type: 'setCurrBoard', board })
-
-        console.log('curr board updated')
         return board
       } catch (err) {
         console.log('boardStore: Error in finding current board', err)
