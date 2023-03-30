@@ -1,6 +1,9 @@
 <template>
     <section class="checklist-preview">
-        <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
+        <div class="checklist-header">
+            <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
+            <button @click="this.$emit('removeChecklist')">Delete</button>
+        </div>
         <TodosList :todos="checklist.todos" @updateChecklist="onUpdateChecklist" />
     </section>
 </template>

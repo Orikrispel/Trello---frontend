@@ -1,7 +1,7 @@
 <template>
   <div v-if="board" class="board-container main flex column" :style="{
     background: board.style?.backgroundColor || '#014a75',
-    backgroundImage: getBoardBg || board.style?.backgroundColor,
+    backgroundImage: getBoardBg() || board.style?.backgroundColor,
     backgroundSize: 'cover',
     'background-position': 'center',
   }">
@@ -175,7 +175,10 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg() {
-      if (!this.board.style.imgUrls.regular) return null
+      if (!this.board.style.imgUrls.regular) {
+        console.log('!this.board.style.imgUrls.regular', this.board.style.imgUrls.regular)
+        return null
+      }
       else return `url(${this.board.style?.imgUrls.regular})`
     },
     async checkIsDark() {
