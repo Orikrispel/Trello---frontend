@@ -378,14 +378,6 @@ export default {
     this.saveTask(this.task)
   },
   watch: {
-    '$route.params': {
-      handler() {
-        const { taskId, boardId } = this.$route.params
-        let task = this.$store.dispatch({ type: 'loadCurrTask', taskId })
-        this.task = task
-      },
-      immediate: true,
-    },
     currBoard: {
       handler(newBoard, oldBoard) {
         this.board = newBoard

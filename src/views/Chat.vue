@@ -63,8 +63,16 @@ export default {
     async addCommentToTask(comment) {
       this.comments.push(comment)
       let updatedTask = { ...this.task }
+      if (!updatedTask.comments) updatedTask.comments = []
       updatedTask.comments = updatedTask.comments.concat(comment)
       eventBus.emit('updateTask', updatedTask)
+      const activity = {
+        id: this.$store.getters.makeId,
+        txt: 'commented',
+        createdAt: Date.now(),
+        byMember: this.loggedinUser,
+        task: updatedTask.id,
+      }
     },
 
     async sendComment() {
