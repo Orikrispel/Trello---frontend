@@ -19,13 +19,6 @@
     </ul>
 
   </section>
-  <section class="files-display" v-if="task.files">
-    <ul class="group-files-list" v-if="task.files">
-      <li class="group-file-li" v-for="file in task.files" :key="file.id">
-        <img :src="file.url">
-      </li>
-    </ul>
-  </section>
 </template>
 
 <script>

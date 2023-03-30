@@ -49,11 +49,15 @@ export default ({
             reader.readAsDataURL(file)
             reader.onload = () => {
                 this.fileUrl = reader.result
-                const newFile = { id: 'att' + utilService.makeId(), url: this.fileUrl, name: file.name }
+                const newFile = {
+                    id: 'att' + utilService.makeId(),
+                    url: this.fileUrl,
+                    name: file.name,
+                    createdAt: 'Added' + utilService.formatDateString(Date.now())
+                }
                 newTask.files.push(newFile)
                 this.$emit('onUpdateTask', newTask)
                 eventBus.emit('addAttachment', newFile)
-                console.log('file added', newFile)
             }
         },
         // addChecklist() {
