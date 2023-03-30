@@ -14,7 +14,7 @@
         </button>
       </li>
     </ul>
-    <button class="btn btn-label" @click="$emit('toggleLabelEdit')">
+    <button class="btn-task light btn-label" @click="$emit('toggleLabelEdit')">
       Create a new label
     </button>
   </div>

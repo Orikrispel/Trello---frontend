@@ -3,6 +3,14 @@
         <div class="checklist-header">
             <h3 class="checklist-heading"><span class="icon checklist-icon"></span>{{ checklist.title }}</h3>
             <button class="btn-task light" @click="this.$emit('removeChecklist')">Delete</button>
+            <div class="container flex align-center gap justify-center">
+                <span>{{ progress }}%</span>
+                <div class="progress2 progress-moved">
+                    <div class="progress-bar"
+                        :style="'width:' + progress + '%; background: ' + ((progress !== '100') ? '#5ba4cf' : '#61bd4f')">
+                    </div>
+                </div>
+            </div>
         </div>
         <TodosList :todos="checklist.todos" @updateChecklist="onUpdateChecklist" />
     </section>
@@ -33,6 +41,16 @@ export default {
             currCheckList.todos = [...todos]
             this.$emit('updateTask', currCheckList)
         },
+    },
+    computed: {
+        progress() {
+            if (!this.checklist) return null
+
+            const todosCount = this.checklist.todos.length
+            const doneTodos = this.checklist.todos.filter(todo => todo.isDone)
+            const doneTodosCount = doneTodos.length
+            return ((doneTodosCount / todosCount) * 100).toFixed(0)
+        }
     },
     mounted() {
     },

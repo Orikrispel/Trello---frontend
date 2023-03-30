@@ -78,12 +78,6 @@
   margin-top: 7px;
   display: flex;
   gap: 5px;
-
-  button {
-    &:hover {
-      filter: brightness(90%);
-    }
-  }
 }
 
 .cancel-todo-btn {
@@ -92,31 +86,35 @@
 
 .checklist-header {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   button {
     &:hover {
       filter: brightness(90%);
     }
   }
-}
 
+  .container {
+    width: 100%;
 
-.progress2 {
-  flex-grow: 1;
-  overflow: hidden;
-  border-radius: 4px;
-  background: $btn-clr6;
-}
+    .progress2 {
+      flex-grow: 1;
+      overflow: hidden;
+      border-radius: 4px;
+      background: $btn-clr6;
+    }
 
-.progress-bar {
-  border-radius: 4px 0 0 4px;
-  height: 8px;
-  transition: .2s ease-in;
-}
+    .progress-bar {
+      height: 8px;
+      transition: .2s ease-in;
+    }
 
-.progress-moved .progress-bar {
-  overflow: hidden;
-  background-color: $primary-clr6
+    .progress-moved .progress-bar {
+      overflow: hidden;
+      // background-color: $primary-clr6;
+    }
+  }
+
 }

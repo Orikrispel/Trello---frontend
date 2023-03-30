@@ -46,11 +46,20 @@
   &.light {
     background-color: $btn-clr8;
     color: $font-clr1;
+
+    &:hover {
+      background-color: $btn-clr6;
+    }
   }
 
   &.blue {
-    background-color: $btn-clr7;
+    background-color: $btn-clr2;
     color: $font-clr4;
+
+    &:hover {
+      background-color: $btn-clr7;
+    }
+
   }
 }
 

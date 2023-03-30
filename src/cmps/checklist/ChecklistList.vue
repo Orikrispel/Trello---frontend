@@ -1,11 +1,5 @@
 <template>
     <section class="checklist-list list-style-none">
-        <div class="container flex align-center gap justify-center">
-            <span>{{ progress }}%</span>
-            <div class="progress2 progress-moved">
-                <div class="progress-bar" :style="'width:' + progress + '%'"></div>
-            </div>
-        </div>
         <ul class="list-style-none">
             <li v-for="checklist in task.checklists" :key="checklist.id" class="checklist-li">
                 <ChecklistPreview :checklist="checklist" @updateTask="onUpdateTask"
@@ -52,20 +46,6 @@ export default {
             eventBus.emit('updateTask', task)
         }
     },
-    computed: {
-        progress() {
-            if (!this.currTask) return null
-            let countDone = 0
-            let countTodos = 0
-            if (!this.task.checklists || this.task.checklists.length === 0) return null
-            this.task.checklists.forEach((checklist) => {
-                checklist.todos.forEach((todo) => {
-                    if (todo.isDone) countDone++
-                    countTodos++
-                })
-            })
-            return ((countDone / countTodos) * 100).toFixed(0)
-        }
-    },
+
 }
 </script>

@@ -64,7 +64,7 @@
               <h3>
                 <span class="icon description-icon icon-lg"></span>Description
               </h3>
-              <button class="btn" id="edit-desc-btn" v-if="!userIsEditing && task.description"
+              <button class="btn-task light" id="edit-desc-btn" v-if="!userIsEditing && task.description"
                 @click="userIsEditing = !userIsEditing">
                 Edit
               </button>
@@ -79,10 +79,10 @@
               </p>
               <textarea v-if="userIsEditing" ref="taskDesc" v-model="task.description" @blur="userIsEditing = false"
                 autofocus></textarea>
-              <button class="btn btn-blue" v-if="userIsEditing" @click="saveTask(task)">
+              <button class="btn-task blue" v-if="userIsEditing" @click="saveTask(task)">
                 Save
               </button>
-              <button class="btn btn-cancel-submit" v-if="userIsEditing">
+              <button class="btn-task light" v-if="userIsEditing">
                 Cancel
               </button>
             </form>
@@ -121,7 +121,7 @@
             <h4>Add to card</h4>
 
             <VDropdown :distance="6">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small member-icon"></span> Members
               </button>
 
@@ -137,7 +137,7 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small label-icon"></span>Labels
               </button>
 
@@ -155,7 +155,7 @@
             </VDropdown>
 
             <VDropdown :distance="6">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small checklist-icon"></span>Checklist
               </button>
 
@@ -170,7 +170,7 @@
               </template>
             </VDropdown>
             <VDropdown :distance="6" :placement="'left'">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small time-icon" v-html="getSvg('watch')"></span>Dates
               </button>
 
@@ -187,7 +187,7 @@
 
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button>
+              <button class="btn-task light">
                 <span class="icon icon-small attachments-icon"></span>Attachment
               </button>
 
@@ -197,7 +197,7 @@
             </VDropdown>
 
             <VDropdown :distance="6" :placement="'left-start'">
-              <button v-if="!task.cover">
+              <button v-if="!task.cover" class="btn-task light">
                 <span class="icon icon-small card-cover-icon"></span>Cover
               </button>
               <template #popper>
