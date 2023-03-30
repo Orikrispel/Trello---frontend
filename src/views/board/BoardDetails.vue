@@ -1,16 +1,24 @@
 <template>
-  <div v-if="board" class="board-container main flex column" :style="{
-    'background-color': board.style?.backgroundColor || 'none',
-    backgroundImage: 'url(' + board.style?.imgUrls?.regular + ')' || 'none',
-    backgroundSize: 'cover',
-    'background-position': 'center',
-  }">
-    <header :class="[
-      'board-header flex align-center justify-between',
-      { dark: isDark },
-    ]">
+  <div
+    v-if="board"
+    class="board-container main flex column"
+    :style="{
+      'background-color': board.style?.backgroundColor || 'none',
+      backgroundImage: 'url(' + board.style?.imgUrls?.regular + ')' || 'none',
+      backgroundSize: 'cover',
+      'background-position': 'center',
+    }">
+    <header
+      :class="[
+        'board-header flex align-center justify-between',
+        { dark: isDark },
+      ]">
       <div class="flex">
-        <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
+        <h1
+          class="board-title fs18"
+          ref="boardTitle"
+          @blur="updateBoardTitle"
+          contenteditable="true">
           {{ board.title }}
         </h1>
         <button class="btn btn-light btn-star" @click="starBoard">
@@ -18,28 +26,50 @@
         </button>
       </div>
 
-      <div class="flex board-right-actions" :class="{ 'move-right-actions': isRightMenuOpen }">
+      <div
+        class="flex board-right-actions"
+        :class="{ 'move-right-actions': isRightMenuOpen }">
         <!-- <div class="right-menu-open" v-if="isRightMenuOpen"></div> -->
-        <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
+        <button
+          class="btn btn-light btn-filter"
+          @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
-        <button @click="openRightMenu" class="btn btn-light" v-if="!isRightMenuOpen"></button>
+        <button
+          @click="openRightMenu"
+          class="btn btn-light"
+          v-if="!isRightMenuOpen"></button>
         <span class="board-header-btn-divider"></span>
-        <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
+        <button
+          @click="openRightMenu"
+          class="btn btn-light btn-sm btn-menu"
+          v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
+      <RightMenuIndex
+        @closeRightMenu="isRightMenuOpen = false"
+        @setBgColor="setBgColor"
+        @setBgImg="setBgImg" />
     </header>
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" :class="['btn btn-light btn-add-group', { dark: isDark }]" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          :class="['btn btn-light btn-add-group', { dark: isDark }]"
+          @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -47,7 +77,9 @@
           </button>
         </div>
       </article>
-      <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
+      <GroupFilter
+        @closeFilterMenu="showFilterMenu = false"
+        v-if="showFilterMenu" />
     </main>
   </div>
   <RouterView />
@@ -87,7 +119,7 @@ export default {
     this.checkIsDark()
   },
   computed: {
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
     boardId() {

@@ -33,7 +33,7 @@ export default {
     }
   },
   computed: {
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
   },

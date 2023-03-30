@@ -428,6 +428,28 @@ async function _createBoard(
   return board
 }
 
+function getDemoGroups() {
+  getEmptyGroup('Backlog Server', null)
+  getEmptyGroup('Backlog Client', null)
+  getEmptyGroup('In Dev', null)
+  getEmptyGroup('QA', null)
+  getEmptyGroup('DONE', null)
+  getEmptyGroup('Ready for Production', null)
+}
+
+const demoBoardWorkFlow = {
+  _id: '',
+  title: 'Workflow',
+  isStarred: true,
+  archivedAt: null,
+  createdBy: {
+    _id: '64251c27a476517cf20661ef',
+    fullname: 'yohai korem',
+    imgUrl: null,
+  },
+  style: {},
+}
+
 export const demoBoards = [
   {
     _id: '',

@@ -1,9 +1,15 @@
 <template>
   <div class="colors-container" ref="container">
-    <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
-      :class="['color-item', `color-item-${idx + 1}`, { selected: color === pickedColor }]"
-      v-html="(color === pickedColor ? getSvg('vPicked') : '')">
-    </div>
+    <div
+      @click="setColor(color)"
+      v-for="(color, idx) in colorsForDisplay"
+      :key="idx"
+      :class="[
+        'color-item',
+        `color-item-${idx + 1}`,
+        { selected: color === pickedColor },
+      ]"
+      v-html="color === pickedColor ? getSvg('vPicked') : ''"></div>
   </div>
 </template>
 <!-- v-html="(color === pickedColor ? getSvg('vBoard') : '')" -->
@@ -59,7 +65,7 @@ export default {
     }
   },
   computed: {
-    loggedInUser() { },
+    loggedinUser() {},
     colorsForDisplay() {
       let { quantity } = this.$props
       return this.colorItems.filter((item, idx) => {
@@ -81,13 +87,12 @@ export default {
       document.querySelectorAll('.color-item.selected').forEach((el) => {
         el.classList.remove('selected')
       })
-    }
-
+    },
   },
   created() {
     eventBus.on('onImgChange', () => {
       this.clearSelection()
-    });
+    })
   },
   emits: ['setColor'],
 }
