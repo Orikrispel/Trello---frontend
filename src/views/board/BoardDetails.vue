@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters(['currBoard']),
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
     boardId() {
@@ -177,8 +177,7 @@ export default {
     getBoardBg() {
       if (!this.board.style.imgUrls.regular) {
         return null
-      }
-      else return `url(${this.board.style?.imgUrls.regular})`
+      } else return `url(${this.board.style?.imgUrls.regular})`
     },
     async checkIsDark() {
       const fac = new FastAverageColor()

@@ -10,13 +10,13 @@
     </nav>
 
     <nav class="flex gap">
-      <section class="loggedin-user" v-if="loggedInUser">
-        <RouterLink :to="`/user/${loggedInUser._id}`">
+      <section class="loggedin-user" v-if="loggedinUser">
+        <RouterLink :to="`/user/${loggedinUser._id}`">
           <div class="member-img">
             {{
-              loggedInUser.imgUrl
-              ? loggedInUser.imgUrl
-              : loggedInUser.fullname.charAt(0).toUpperCase()
+              loggedinUser.imgUrl
+              ? loggedinUser.imgUrl
+              : loggedinUser.fullname.charAt(0).toUpperCase()
             }}
           </div>
         </RouterLink>
@@ -35,6 +35,7 @@
 <script>
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import AddBoard from '../cmps/AddBoard.vue'
 export default {
   data() {
@@ -46,11 +47,9 @@ export default {
       isCreateMode: false,
     }
   },
-  created() {
-    console.log(this.loggedInUser)
-  },
+  created() { },
   computed: {
-    loggedInUser() {
+    loggedinUser() {
       return this.$store.getters.loggedinUser
     },
   },

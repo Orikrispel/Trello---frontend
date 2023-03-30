@@ -6,12 +6,19 @@
         <h3>Starred boards</h3>
       </div>
       <ul class="board-list">
-        <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          background: board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
-          backgroundSize: 'cover',
-        }">
-          <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+        <li
+          v-for="board in starredBoards"
+          :key="board._id"
+          @click="showBoardDetails(board._id)"
+          :style="{
+            background: board.style?.backgroundColor || '#014a75',
+            backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
+            backgroundSize: 'cover',
+          }">
+          <BoardPreview
+            :board="board"
+            @onRemoveBoard="removeBoard"
+            @starBoard="starBoard" />
         </li>
       </ul>
     </section>
@@ -21,17 +28,26 @@
         <h3>Your boards</h3>
       </div>
       <ul class="board-list">
-
-        <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          background: board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
-          backgroundSize: 'cover',
-        }">
-          <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
+        <li
+          v-for="board in boards"
+          :key="board._id"
+          @click="showBoardDetails(board._id)"
+          :style="{
+            background: board.style?.backgroundColor || '#014a75',
+            backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
+            backgroundSize: 'cover',
+          }">
+          <BoardPreview
+            :board="board"
+            @onRemoveBoard="removeBoard"
+            @starBoard="starBoard" />
         </li>
         <li class="new-board" @click="isCreateMode = true">
           <p>Create new board</p>
-          <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" />
+          <AddBoard
+            v-show="isCreateMode"
+            @addBoard="addBoard"
+            @closeModal="isCreateMode = false" />
         </li>
       </ul>
     </section>
@@ -50,9 +66,9 @@ export default {
       isCreateMode: false,
     }
   },
-  created() { },
+  created() {},
   computed: {
-    loggedInUser() { },
+    loggedinUser() {},
     starredBoards() {
       const boards = this.$store.getters.boards
       return boards.filter((board) => board.isStarred)
@@ -62,7 +78,7 @@ export default {
     },
     getCreateMode() {
       return this.isCreateMode
-    }
+    },
   },
   methods: {
     removeBoard(boardId) {
@@ -89,7 +105,7 @@ export default {
     },
     addBoard(board) {
       this.$emit('addBoard', board)
-    }
+    },
   },
 
   components: {

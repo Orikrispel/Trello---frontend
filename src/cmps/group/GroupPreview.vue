@@ -173,7 +173,6 @@ export default {
       this.isEditGroupTitle = !this.isEditGroupTitle
     },
     openTaskDetails(taskId) {
-      console.log('hi')
       this.$router.push(`/board/${this.board._id}/task/${taskId}`)
     },
     toggleGroupMenu() {
