@@ -196,9 +196,15 @@
               </template>
             </VDropdown>
 
-            <button v-if="!task.cover">
-              <span class="icon icon-small card-cover-icon"></span>Cover
-            </button>
+            <VDropdown :distance="6" :placement="'left-start'">
+              <button v-if="!task.cover">
+                <span class="icon icon-small card-cover-icon"></span>Cover
+              </button>
+              <template #popper>
+                <AddCover :task="task" @onUpdateTask="onUpdateTask" />
+              </template>
+            </VDropdown>
+
           </aside>
         </div>
       </div>
@@ -223,6 +229,7 @@ import AddChecklist from '../cmps/AddChecklist.vue'
 import ChecklistList from '../cmps/checklist/ChecklistList.vue'
 import AddAttachment from '../cmps/attachment/AddAttachment.vue'
 import AttachmentList from '../cmps/attachment/AttachmentList.vue'
+import AddCover from '../cmps/cover/AddCover.vue'
 import { getActionUpdateBoard } from '../store/board.store'
 import DatePreview from '../cmps/dates/DatePreview.vue'
 import DynamicModal from '../cmps/DynamicModal.vue'
@@ -363,6 +370,7 @@ export default {
     DatePreview,
     AddAttachment,
     AttachmentList,
+    AddCover,
   },
 }
 </script>
