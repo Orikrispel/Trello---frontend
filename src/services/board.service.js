@@ -17,7 +17,7 @@ export const boardService = {
   getEmptyTask,
   getDefaultEmptyLabels,
   getDefaultEmptyLabel,
-
+  getEmptyActivity,
   getEmptyComment,
   colorItems,
 }
@@ -243,6 +243,16 @@ function getEmptyComment() {
     txt: '',
     createdAt: Date.now(),
     byMember: null,
+  }
+}
+
+function getEmptyActivity() {
+  return {
+    id: '',
+    txt: '',
+    createdAt: Date.now(),
+    byMember: userService.getLoggedinUser(),
+    task: {},
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div v-if="task" class="comments-container">
     <ul class="clean-list">
-      <li v-for="comment in task?.comments" :key="comment.id">
+      <li v-for="comment in task?.comments" :key="comment.id" class="comment">
         <span>{{ comment.byMember.fullname }}:</span>{{ comment.txt }}
       </li>
     </ul>
@@ -66,13 +66,13 @@ export default {
       if (!updatedTask.comments) updatedTask.comments = []
       updatedTask.comments = updatedTask.comments.concat(comment)
       eventBus.emit('updateTask', updatedTask)
-      const activity = {
-        id: this.$store.getters.makeId,
-        txt: 'commented',
-        createdAt: Date.now(),
-        byMember: this.loggedinUser,
-        task: updatedTask.id,
-      }
+      // const activity = {
+      //   id: this.$store.getters.makeId,
+      //   txt: 'commented',
+      //   createdAt: Date.now(),
+      //   byMember: this.loggedinUser,
+      //   task: updatedTask.id,
+      // }
     },
 
     async sendComment() {
@@ -82,9 +82,6 @@ export default {
       comment.byMember = byMember
       socketService.emit(SOCKET_EMIT_SEND_MSG, comment)
       this.comment = boardService.getEmptyComment()
-    },
-    changeTopic() {
-      socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
     },
   },
 }
