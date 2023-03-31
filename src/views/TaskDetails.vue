@@ -40,7 +40,7 @@
                     </div>
                   </li>
                   <VDropdown :distance="6" :placement="'right-start'">
-                    <botton class="btn-task light btn-add-member flex"><span class="icon icon-add"></span></botton>
+                    <button class="btn-task light btn-add-member flex"><span class="icon icon-add"></span></button>
 
                     <template #popper>
                       <DynamicModal>
