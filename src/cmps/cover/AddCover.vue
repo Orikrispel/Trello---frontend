@@ -6,14 +6,10 @@
 
         <template v-slot scope="props">
             <section ref="groupMenu" class="group-menu flex column label-menu label-edit">
-                <form class="add-checklist-form">
-                    <h5 class="cover-h5">Size</h5>
-                </form>
-                <form class="add-checklist-form">
-                    <CoverDisplay @setCover="setCover" @removeCover="removeCover" />
-                    <h5 class="cover-h5">Colors</h5>
-                    <CoverColor :quantity="10" />
-                </form>
+                <h5 class="cover-h5">Size</h5>
+                <CoverDisplay @setCover="setCover" @removeCover="removeCover" />
+                <h5 class="cover-h5">Colors</h5>
+                <CoverColor :quantity="10" />
             </section>
         </template>
     </DynamicModal>

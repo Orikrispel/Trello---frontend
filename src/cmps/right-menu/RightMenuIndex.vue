@@ -1,7 +1,7 @@
 <template>
     <section class="right-menu" :class="{ 'show': isMenuOpen }">
         <div class="add-form-header right-menu-header">
-            <span class="icon btn-back" v-html="getSvg('arrowLeft')" @click=setCmp
+            <span class="icon btn-back-rightmenu" v-html="getSvg('arrowLeft')" @click=setCmp
                 v-if="currCmp !== 'RightMenuMain'"></span>
             <h5 id="right-menu-h5">{{ getCurrTitle }}</h5>
             <span class="icon btn-close icon-close" @click.stop="closeMenu"></span>
