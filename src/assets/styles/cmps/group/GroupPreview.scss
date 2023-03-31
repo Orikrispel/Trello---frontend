@@ -112,7 +112,7 @@
   }
 
   hr {
-    margin: 8px 0;
+    margin: 8px auto;
     background-color: $btn-hover-clr1;
     border: 0;
     height: 1px;
@@ -120,6 +120,7 @@
     width: 95%;
   }
 }
+
 .semi-cover-container {
   width: 256px;
   height: 32px;

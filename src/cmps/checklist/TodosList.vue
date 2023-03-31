@@ -48,6 +48,7 @@ export default {
                 title: this.addTodoTitle,
                 isDone: false
             }
+            if (!newTodo.title) return
             this.addTodoTitle = ''
             newTodos.push(newTodo)
             this.$emit('updateChecklist', newTodos)

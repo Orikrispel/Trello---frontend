@@ -5,15 +5,16 @@
         </template>
 
         <template v-slot scope="props">
-            <section ref="groupMenu" class="group-menu flex column">
+            <section class="add-attachment flex column">
                 <label class="add-attachment-menu" scope="props">
                     <button class="btn btn-list clean-btn" @click="onImgUpload">Computer</button>
                     <input class="upload-img-input" type="file" @change.prevent="onImgUpload">
                 </label>
+                <hr />
                 <form class="add-checklist-form">
                     <h4>Attach a link</h4>
                     <input type="text" placeholder="Paste any link here...">
-                    <button class="btn attach-btn">Attach</button>
+                    <button class="btn-task light attach-btn">Attach</button>
                 </form>
             </section>
         </template>

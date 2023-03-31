@@ -1,6 +1,7 @@
 <template>
   <div class="members-list-container ">
-    <input v-model="filterBy" type="text" placeholder="Search members" @input="searchMembers" name="members-search" />
+    <input v-model="filterBy" type="text" placeholder="Search members" @input="searchMembers" ref="searchMember"
+      name="members-search" />
     <h4>Board members</h4>
     <ul class="clean-list">
       <li @click="addMemberToTask(member._id)" v-for="member in members" :key="member._id">
@@ -33,7 +34,6 @@ export default {
       return boardId
     },
   },
-
   async created() {
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
@@ -48,6 +48,12 @@ export default {
     if (!members || !members.length)
       members = this.$store.getters.defaultMembers
     this.members = members
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.searchMember.focus()
+    }, 100)
+    console.log('searchMember:', this.$refs.searchMember)
   },
   methods: {
     searchMembers() {

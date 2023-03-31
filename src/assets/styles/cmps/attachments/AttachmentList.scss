@@ -1,0 +1,71 @@
+.upload-img-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.attachment-list {
+  position: relative;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    line-height: 2;
+    margin: 0;
+  }
+
+  .icon {
+    color: $primary-clr5;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.task-attachments-preview {
+  display: flex;
+  gap: 16px;
+  min-height: 80px;
+  padding: 8px 8px 8px 0;
+}
+
+button.add-attachment {
+  margin-block: 8px;
+}
+
+.right-attachments-preview {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-family: 'Segoe UI Bold';
+    margin: 0;
+    word-wrap: break-word;
+  }
+
+  .attachment-links {
+
+    p.attachment-data,
+    a {
+      color: $font-clr3;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+
+    color: $font-clr3;
+    display: flex;
+    gap: 5px;
+  }
+}
+
+.attachment-img {
+  background-color: $btn-clr8;
+  border-radius: 3px;
+  object-fit: contain;
+  height: 80px;
+  text-align: center;
+  text-decoration: none;
+  width: 112px;
+}
