@@ -1,30 +1,44 @@
 <template>
   <section class="group-wrapper flex column" v-if="group">
     <header class="group-header flex">
-      <div v-show="!isEditGroupTitle" class="prevent-title-edit" @click="onFocusGroupTitle"></div>
-      <h2 class="group-title fs14" ref="groupTitle" @blur="updateGroupTitle" contenteditable="true">
+      <div
+        v-show="!isEditGroupTitle"
+        class="prevent-title-edit"
+        @click="onFocusGroupTitle"></div>
+      <h2
+        class="group-title fs14"
+        ref="groupTitle"
+        @blur="updateGroupTitle"
+        contenteditable="true">
         {{ group.title }}
       </h2>
 
       <VDropdown :distance="6">
         <!-- This will be the popover reference (for the events and position) -->
-        <button class="clean-btn btn-menu"><span class="icon icon-overflow-menu-horizontal"></span></button>
+        <button class="clean-btn btn-menu">
+          <span class="icon icon-overflow-menu-horizontal"></span>
+        </button>
 
         <!-- This will be the content of the popover -->
         <template #popper>
           <DynamicModal>
-
-            <template v-slot:title>
-              List actions
-            </template>
+            <template v-slot:title> List actions </template>
 
             <template v-slot scope="props">
               <section ref="groupMenu" class="group-menu flex column">
                 <div class="group-menu-content" scope="props">
-                  <button class="btn btn-list clean-btn" @click="toggleAddTask">Add card...</button>
-                  <button class="btn btn-list clean-btn" @click="duplicateGroup">Copy list...</button>
+                  <button class="btn btn-list clean-btn" @click="toggleAddTask">
+                    Add card...
+                  </button>
+                  <button
+                    class="btn btn-list clean-btn"
+                    @click="duplicateGroup">
+                    Copy list...
+                  </button>
                   <hr />
-                  <button class="btn btn-list clean-btn" @click="removeGroup">Archive this list</button>
+                  <button class="btn btn-list clean-btn" @click="removeGroup">
+                    Archive this list
+                  </button>
                 </div>
               </section>
             </template>
@@ -34,20 +48,35 @@
     </header>
     <!-- v-if="task.cover?.type === 'semi'" :style="task.cover?.color" -->
     <main class="tasks-wrapper">
-      <Container class="task-list" :get-child-payload="getGroupPayload(group.id)" @drop="(e) => onTaskDrop(group.id, e)"
-        group-name="col-items" :shouldAcceptDrop="(e) => e.groupName === 'col-items'">
-        <Draggable class="task-container" v-for="task in group.tasks" :key="task.id"
-          :style="{ backgroundColor: (task.cover?.type === 'full') ? task.cover?.color : '' }">
-
-          <div v-if="task.cover?.type === 'semi'" class="semi-cover-container"
-            :style="{ backgroundColor: task.cover?.color }">
-          </div>
+      <Container
+        class="task-list"
+        :get-child-payload="getGroupPayload(group.id)"
+        @drop="(e) => onTaskDrop(group.id, e)"
+        group-name="col-items"
+        :shouldAcceptDrop="(e) => e.groupName === 'col-items'">
+        <Draggable
+          class="task-container"
+          v-for="task in group.tasks"
+          :key="task.id"
+          :style="{
+            backgroundColor:
+              task.cover?.type === 'full' ? task.cover?.color : '',
+          }">
+          <div
+            v-if="task.cover?.type === 'semi'"
+            class="semi-cover-container"
+            :style="{ backgroundColor: task.cover?.color }"></div>
 
           <TaskPreview :task="task" @click.stop="openTaskDetails(task.id)" />
         </Draggable>
       </Container>
       <div v-show="isAddTask" class="new-task-container flex">
-        <textarea class="task-container" ref="taskTitle" name="add-task" cols="30" rows="3"
+        <textarea
+          class="task-container"
+          ref="taskTitle"
+          name="add-task"
+          cols="30"
+          rows="3"
           placeholder="Enter a title for this card..."></textarea>
         <button class="btn btn-blue" @click="onAddTask">Add card</button>
         <button class="btn clean-btn" @click="toggleAddTask">
@@ -56,11 +85,12 @@
       </div>
     </main>
 
-    <button v-show="!isAddTask" class="btn clean-btn btn-add-task" @click="toggleAddTask">
+    <button
+      v-show="!isAddTask"
+      class="btn clean-btn btn-add-task"
+      @click="toggleAddTask">
       <span class="icon icon-add"></span> Add a card
     </button>
-
-
   </section>
 </template>
 
@@ -71,7 +101,10 @@ import { utilService } from '../../services/util.service'
 import { svgService } from '../../services/svg.service'
 import TaskPreview from '../task/TaskPreview.vue'
 import DynamicModal from '../DynamicModal.vue'
-
+import {
+  socketService,
+  SOCKET_EVENT_BOARD_UPDATED,
+} from '../../services/socket.service'
 export default {
   name: 'GroupPreview',
   emits: ['updateBoard'],
@@ -112,6 +145,10 @@ export default {
         newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
         board.groups.splice(groupIndex, 1, newGroup)
         this.$emit('updateBoard', board)
+        socketService.emit(
+          SOCKET_EVENT_BOARD_UPDATED,
+          'new activity in group preview'
+        )
       }
     },
     getGroupPayload(groupId) {
