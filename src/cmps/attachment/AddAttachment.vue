@@ -12,8 +12,8 @@
                 </label>
                 <form class="add-checklist-form">
                     <h4>Attach a link</h4>
-                    <input type="text" placeholder="Paste any link here...">
-                    <button class="btn attach-btn">Attach</button>
+                    <input type="text" placeholder="Paste any link here..." v-bind="fileUrl">
+                    <button class="btn attach-btn" @click.prevent="onImgUpload">Attach</button>
                 </form>
             </section>
         </template>
