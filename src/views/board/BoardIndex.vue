@@ -44,7 +44,6 @@ export default {
   },
   created() {
     this.isLoading = true
-    console.log('this.loggedinUser', this.$store.getters.loggedinUser)
     this.$store.dispatch({ type: 'loadBoards' }).finally(() => {
       this.isLoading = false
     })
