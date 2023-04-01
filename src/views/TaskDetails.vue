@@ -55,7 +55,9 @@
                     </div>
                   </li>
                   <VDropdown :distance="6" :placement="'right-start'">
-                    <button class="btn-task light btn-add-member flex"><span class="icon icon-add"></span></button>
+                    <button class="btn-task light btn-add-member flex">
+                      <span class="icon icon-add"></span>
+                    </button>
 
                     <template #popper>
                       <DynamicModal>
@@ -160,7 +162,9 @@
                   {{ comment }}
                 </li>
               </ul> -->
-              <!-- <ul v-if="task.activities && task.activities.length" class="clean-list">
+              <!-- <ul
+                v-if="task.activities && task.activities.length"
+                class="clean-list">
                 <li v-for="(activity, idx) in task.activities" :key="idx">
                   {{ activity }}
                 </li>
@@ -310,8 +314,8 @@ export default {
     }
   },
   async created() {
-    eventBus.on('updateTask', (task) => {
-      this.saveTask(task)
+    eventBus.on('updateTask', ({ task, activity }) => {
+      this.saveTask(task, activity)
     })
     eventBus.on('updateBoard', (board) => {
       this.updateBoard(board)
@@ -340,23 +344,28 @@ export default {
   methods: {
     updateTitle(ev) {
       this.task.title = ev.target.innerText
-      this.saveTask(this.task.title)
+
+      this.saveTask(this.task)
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
       this.$refs.taskDesc.focus()
     },
-    handleComment() {},
-    async saveTask(task) {
+    saveTask(task, activity) {
       let board = JSON.parse(JSON.stringify(this.board))
-      let updatedTask = { ...task }
+      let updatedTask = JSON.parse(JSON.stringify(task))
+      if (!updatedTask.activities) updatedTask.activities = []
+      updatedTask.activities.unshift(activity)
+
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
 
-      const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
+      const taskIdx = group?.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
+      if (!board.activities) board.activities = []
+      board.activities.unshift(activity)
       this.task = updatedTask
       this.updateBoard(board, 'Task updated', 'Failed to updated task')
     },

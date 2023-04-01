@@ -1,16 +1,24 @@
 <template>
-  <div v-if="board" class="board-container main flex column" :style="{
-    background: board.style?.backgroundColor || '#014a75',
-    backgroundImage: getBoardBg() || board.style?.backgroundColor,
-    backgroundSize: 'cover',
-    'background-position': 'center',
-  }">
-    <header :class="[
-      'board-header flex align-center justify-between',
-      { dark: isDark },
-    ]">
+  <div
+    v-if="board"
+    class="board-container main flex column"
+    :style="{
+      background: board.style?.backgroundColor || '#014a75',
+      backgroundImage: getBoardBg() || board.style?.backgroundColor,
+      backgroundSize: 'cover',
+      'background-position': 'center',
+    }">
+    <header
+      :class="[
+        'board-header flex align-center justify-between',
+        { dark: isDark },
+      ]">
       <div class="flex">
-        <h1 class="board-title fs18" ref="boardTitle" @blur="updateBoardTitle" contenteditable="true">
+        <h1
+          class="board-title fs18"
+          ref="boardTitle"
+          @blur="updateBoardTitle"
+          contenteditable="true">
           {{ board.title }}
         </h1>
         <button class="btn btn-light btn-star" @click="starBoard">
@@ -18,27 +26,46 @@
         </button>
       </div>
 
-      <div class="flex board-right-actions" :class="{ 'move-right-actions': isRightMenuOpen }">
+      <div
+        class="flex board-right-actions"
+        :class="{ 'move-right-actions': isRightMenuOpen }">
         <!-- <div class="right-menu-open" v-if="isRightMenuOpen"></div> -->
-        <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
+        <button
+          class="btn btn-light btn-filter"
+          @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button>
         <span class="board-header-btn-divider"></span>
-        <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
+        <button
+          @click="openRightMenu"
+          class="btn btn-light btn-sm btn-menu"
+          v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
       </div>
-      <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
+      <RightMenuIndex
+        @closeRightMenu="isRightMenuOpen = false"
+        @setBgColor="setBgColor"
+        @setBgImg="setBgImg" />
     </header>
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
 
       <article class="new-group-container flex">
-        <button v-show="!isAddGroup" :class="['btn btn-light btn-add-group', { dark: isDark }]" @click="toggleAddGroup">
+        <button
+          v-show="!isAddGroup"
+          :class="['btn btn-light btn-add-group', { dark: isDark }]"
+          @click="toggleAddGroup">
           <span class="icon icon-add"></span> Add another list
         </button>
         <div v-show="isAddGroup" class="new-group-wrapper flex">
-          <input ref="newGroup" name="add-group" placeholder="Enter list title..." />
-          <button class="btn btn-blue" @keyup.enter="onAddGroup" @click="onAddGroup">
+          <input
+            ref="newGroup"
+            name="add-group"
+            placeholder="Enter list title..." />
+          <button
+            class="btn btn-blue"
+            @keyup.enter="onAddGroup"
+            @click="onAddGroup">
             Add list
           </button>
           <button class="btn clean-btn" @click="toggleAddGroup">
@@ -46,13 +73,22 @@
           </button>
         </div>
       </article>
-      <GroupFilter @closeFilterMenu="showFilterMenu = false" v-if="showFilterMenu" />
+      <GroupFilter
+        @closeFilterMenu="showFilterMenu = false"
+        v-if="showFilterMenu" />
     </main>
   </div>
   <RouterView />
 </template>
 
 <script>
+import {
+  socketService,
+  SOCKET_EVENT_TASK_DROPPED,
+  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_BOARD_UPDATED,
+  SOCKET_EMIT_SET_TOPIC,
+} from '../../services/socket.service'
 import RightMenuIndex from '../../cmps/right-menu/RightMenuIndex.vue'
 import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
@@ -85,6 +121,10 @@ export default {
       boardId: this.boardId,
     })
     this.checkIsDark()
+
+    // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+    //   this.updateBoard(board)
+    // })
   },
   computed: {
     ...mapGetters(['currBoard']),
@@ -110,6 +150,7 @@ export default {
       const newBoard = JSON.parse(JSON.stringify(this.board))
       newBoard.style.imgUrls = newImgUrls
       newBoard.style.backgroundColor = ''
+
       await this.updateBoard(newBoard)
     },
     async setBgColor(newBg) {
@@ -129,7 +170,8 @@ export default {
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
     },
-    async updateBoard(board) {
+    async updateBoard(board, activity) {
+      // console.log(activity)
       try {
         this.board = await this.$store.dispatch(getActionUpdateBoard(board))
         showSuccessMsg('Board updated')
@@ -197,6 +239,10 @@ export default {
   },
   mounted() {
     this.taskDetailsIsOpen = false
+    socketService.emit(SOCKET_EMIT_SET_TOPIC, this.boardId)
+    socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+      this.board = board
+    })
   },
   watch: {
     currBoard: {

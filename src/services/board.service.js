@@ -3,7 +3,17 @@ import { httpService } from './http.service.js'
 import { utilService, colorItems } from './util.service.js'
 import { userService } from './user.service.js'
 import { unsplashService } from './unsplash.service.js'
-
+import { store } from '../store/store'
+import {
+  getActionRemoveBoard,
+  getActionUpdateBoard,
+  getActionStarBoard,
+} from '../store/board.store'
+import {
+  socketService,
+  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_BOARD_UPDATED,
+} from './socket.service'
 const STORAGE_KEY = 'board'
 const BASE_URL = 'board/'
 export const boardService = {
@@ -50,6 +60,8 @@ async function save(board) {
     // savedBoard = await storageService.post(STORAGE_KEY, board)
     savedBoard = await httpService.post('board', board)
   }
+  socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
+
   return savedBoard
 }
 
@@ -61,7 +73,7 @@ async function addBoardMsg(boardId, txt) {
 function getEmptyBoard(
   title = '',
   isStarred = false,
-  labels = [],
+
   createdBy = {},
   style = {},
   groups = [getEmptyGroup()]
@@ -248,11 +260,11 @@ function getEmptyComment() {
 
 function getEmptyActivity() {
   return {
-    id: '',
+    id: utilService.makeId(),
     txt: '',
     createdAt: Date.now(),
     byMember: userService.getLoggedinUser(),
-    task: {},
+    task: null,
   }
 }
 

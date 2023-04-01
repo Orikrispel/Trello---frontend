@@ -103,7 +103,9 @@ import TaskPreview from '../task/TaskPreview.vue'
 import DynamicModal from '../DynamicModal.vue'
 import {
   socketService,
-  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_TASK_DROPPED,
+  SOCKET_EVENT_TASK_DROPPED,
+  SOCKET_EMIT_SET_TOPIC,
 } from '../../services/socket.service'
 export default {
   name: 'GroupPreview',
@@ -120,14 +122,19 @@ export default {
         showOnTop: true,
       },
       showGroupMenu: false,
+      groupTitles: [],
+      to: null,
+      from: null,
     }
   },
+  async created() {},
   mounted() {
     document.addEventListener('click', this.clickedOutGroupMenu)
   },
   methods: {
     onTaskDrop(groupId, dropResult) {
       // check if element where ADDED or REMOVED in current group
+      // this.fromTo.push(groupId)
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
         const board = Object.assign({}, this.board)
         const group = board.groups.filter((g) => g.id === groupId)[0]
@@ -144,13 +151,11 @@ export default {
         }
         newGroup.tasks = applyDrag(newGroup.tasks, dropResult)
         board.groups.splice(groupIndex, 1, newGroup)
+
         this.$emit('updateBoard', board)
-        socketService.emit(
-          SOCKET_EVENT_BOARD_UPDATED,
-          'new activity in group preview'
-        )
       }
     },
+
     getGroupPayload(groupId) {
       return (index) => {
         return this.board.groups.filter((g) => g.id === groupId)[0].tasks[index]

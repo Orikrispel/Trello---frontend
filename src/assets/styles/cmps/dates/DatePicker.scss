@@ -1,61 +1,75 @@
 .date-picker-container {
-  padding-inline: 12px;
-
-  .dp__outer_menu_wrap {
-    max-height: min-content;
-  }
-
-  .dp__flex_display {
-    display: block;
-  }
-
-  .dp__menu {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .vc-container {
     border: none;
-
-    .dp__month_year_wrap {
-      pointer-events: none;
-      justify-content: center;
+  }
+  .vc-header {
+    width: 100%;
+    & > * {
+      background-color: inherit;
+      color: #a5adba;
     }
-
-    .dp__month_year_select {
-      margin-inline-end: rem(10px);
-      width: max-content;
-      font-size: em(14px);
-      color: $font-clr1;
+    .vc-title {
+      color: #172b4d;
       font-weight: 600;
     }
-
-    .dp__calendar_header_item {
-      font-size: rem(11px);
-      font-weight: 700;
-      text-transform: uppercase;
-      color: $font-clr5;
-    }
-
-    .dp__calendar_header_separator {
-      display: none;
-    }
-
-    .dp__cell_inner.dp__pointer.dp__active_date {
-      background-color: $primary-clr5;
-
-      &:hover {
-        background-color: $secondary-clr7;
-        color: $font-clr6;
-      }
-    }
   }
 
-  .custom-time-picker-component {
+  .vc-weekday {
+    text-transform: uppercase;
+  }
+
+  .vc-highlight-content-outline {
+    background-color: rgb(66 82 110);
+    color: #fff;
+  }
+
+  .highlights {
+    background-color: rgb(66 82 110);
+  }
+  .vc-day-content {
+    border-radius: 3px;
+    padding: 4px 9px;
+    font-size: em(14px);
+    border-width: 2px;
+  }
+
+  .vc-outline-content-light {
+    background-color: #deebff;
+  }
+
+  .vc-highlight-content-solid {
+    background-color: rgb(66 82 110);
+  }
+  .vc-day {
+    border-radius: rem(3px);
+  }
+
+  .date-input-container {
+  }
+  input[type='text'] {
+    margin-right: 8px;
+
+    background-color: $secondary-clr1;
+    box-shadow: inset 0 0 0 2px $primary-clr4;
+    border: 1px solid black;
+    outline: none;
+  }
+
+  .custom-date-picker-component {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    width: 100%;
+    padding: rem(16px);
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-
       .txt-inputs-container.disabled {
         cursor: not-allowed;
       }
@@ -65,7 +79,7 @@
 
         background-color: $secondary-clr1;
         box-shadow: inset 0 0 0 2px $primary-clr4;
-        border: none;
+        border: 1px solid black;
         outline: none;
 
         &.disabled {
@@ -131,13 +145,17 @@
     flex-direction: column;
     margin-top: rem(8px);
     justify-content: space-between;
+    width: 100%;
+
+    & > * {
+      margin-inline: rem(8px);
+    }
 
     .btn-blue {
       margin-bottom: rem(8px);
     }
   }
 }
-
-.custom-date-picker-component {
-  position: absolute;
+:root {
+  --vc-accent-600: red !important;
 }

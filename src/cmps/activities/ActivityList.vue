@@ -24,10 +24,10 @@ export default {
       activity: boardService.getEmptyActivity(),
     }
   },
-  async created() {
-    socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
-    socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
-  },
+  // async created() {
+  //   socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
+  //   socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
+  // },
   computed: {
     loggedinUser() {
       let user = { ...this.$store.getters.loggedinUser }
