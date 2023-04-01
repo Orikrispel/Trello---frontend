@@ -18,21 +18,19 @@ export const boardService = {
   getDefaultMembers,
   getEmptyComment,
   colorItems,
+  getDemoData,
 }
 window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
   let boards = await storageService.query(BOARD_STORAGE_KEY)
   if (!boards || !boards.length) boards = _createBoards()
-  if (filterBy.txt) {
-    const regex = new RegExp(filterBy.txt, 'i')
-    boards = boards.filter(
-      (board) => regex.test(board.vendor) || regex.test(board.description)
-    )
-  }
-  if (filterBy.price) {
-    boards = boards.filter((board) => board.price <= filterBy.price)
-  }
+  // if (filterBy.txt) {
+  //   const regex = new RegExp(filterBy.txt, 'i')
+  //   boards = boards.filter(
+  //     (board) => regex.test(board.vendor) || regex.test(board.description)
+  //   )
+  // }
   return boards
 }
 
@@ -75,9 +73,8 @@ async function addBoardMsg(boardId, txt) {
 function getEmptyBoard(
   title = '',
   isStarred = false,
-  labels = [],
   createdBy = {},
-  style = {},
+  style = { imgUrls: { raw: '', thumb: '', regular: '', }, backgroundColor: '' },
   groups = [getEmptyGroup()]
 ) {
   return {
@@ -114,6 +111,7 @@ function getEmptyTask(
   members = [],
   cover = {},
   files = [],
+  checklists = [],
   comments = [],
   activities = []
 ) {
@@ -128,6 +126,7 @@ function getEmptyTask(
     description,
     labels,
     files,
+    checklists,
     members,
     comments,
     activities,
@@ -137,7 +136,7 @@ function getEmptyTask(
 function getRandomTask(
   title = utilService.getRandomTaskTitles(),
   description = utilService.getRandomTaskDesc(),
-  labels = getRandomLabels()
+  labels = getRandomLabels(),
 ) {
   let res = getEmptyTask(
     title,
@@ -267,14 +266,127 @@ function getDefaultMembers() {
   ]
 }
 
-async function _createBoards(amount = 20) {
+function getRandomMembers() {
+  let members = [
+    {
+      _id: 'u101',
+      fullname: 'Yohai Korem',
+      imgUrl: '',
+    },
+    {
+      _id: 'u102',
+      fullname: 'Ori Krispel',
+      imgUrl: '',
+    },
+    {
+      _id: 'u103',
+      fullname: 'Ori Teicher',
+      imgUrl: '',
+    },
+  ]
+  members.splice(0, getRandomIntInclusive(0, 2))
+  return members
+}
+
+
+
+async function _createBoards(amount = 15) {
   let boards = []
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
-
+  _setRandomImgs(boards[5])
+  _setRandomImgs(boards[9])
+  _setRandomImgs(boards[12])
+  let demoBoard = await getDemoData()
+  boards.unshift(demoBoard)
   return boards
 }
+
+
+function _getRandomGroups(count = 4) {
+  const groups = []
+  for (let i = 0; i < count; i++) {
+    let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 6))
+    currGroup.title = utilService.getRandomLabelTitle()
+    if (i === 0) currGroup.title = 'In Development'
+    if (i === 1) currGroup.title = 'Backlog-Server'
+    if (i === 2) currGroup.title = 'Done'
+    if (i === 3) currGroup.title = 'QA'
+    if (i === 4) currGroup.title = 'Ready for production'
+    groups.push(currGroup)
+  }
+  console.log('groups', groups)
+  return groups
+}
+
+
+function _getRandomGroup(count = 5) {
+  const group = getEmptyGroup()
+  for (let i = 0; i < count; i++) {
+    let currTask = getRandomTask()
+    currTask.labels = getRandomLabels(getRandomIntInclusive(0, 5))
+    currTask.cover = getRandomCover()
+    let currChecklist = (i % 2 === 0) ? _getRandomChecklist(false) : _getRandomChecklist(true)
+    currTask.checklists.push(currChecklist)
+    currTask.members = (i % 3 === 0) ? getRandomMembers() : []
+    group.tasks.push(currTask)
+  }
+  return group
+}
+
+function getRandomCover() {
+  return { color: getRandomCoverColor(), type: getRandomCoverType() }
+}
+
+function getRandomCoverColor() {
+  const colorItems = [
+    '#7bc86c',
+    '#f5dd29',
+    '#ffaf3f',
+    '#cd8de5',
+    '#5ba4cf',
+  ]
+  return colorItems[getRandomIntInclusive(0, 4)]
+}
+
+function getRandomCoverType() {
+  const types = ['', 'semi', 'semi', 'full', '', '']
+  return types[getRandomIntInclusive(0, 5)]
+}
+
+async function getDemoData() {
+  let board = getEmptyBoard("Project Managment", false, userService.getRandomDefaultMember(),
+    { imgUrls: '', backgroundColor: 'linear-gradient(32deg, rgba(206,185,70,0.9), rgba(204,43,250,0.9))' }, _getRandomGroups(5))
+  board = await save(board)
+  return board
+}
+
+function _getRandomChecklist(isDone = true) {
+  const checklist = {
+    id: 'cl' + utilService.makeId(5),
+    title: 'Checklist',
+    todos: [
+      {
+        id: 'td' + utilService.makeId(5),
+        title: "Finish UI",
+        isDone,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: "Finish UX",
+        isDone,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: "Finish filters",
+        isDone,
+      }
+    ]
+  }
+  return checklist
+}
+
 
 function randomStarBoard() {
   const num = getRandomIntInclusive(1, 4)
@@ -289,6 +401,11 @@ function getEmptyComment() {
     createdAt: null,
     byMember: null,
   }
+}
+
+function _setRandomImgs(board) {
+  board.style.backgroundColor = ''
+  board.style.imgUrls = unsplashService.getRandomImg()
 }
 
 async function _createBoard(

@@ -195,6 +195,7 @@ export const boardStore = {
     async loadCurrBoard(context, { boardId }) {
       try {
         const board = await boardService.getById(boardId)
+        console.log('board LOAD', board)
         context.commit({ type: 'setCurrBoard', board })
         return board
       } catch (err) {

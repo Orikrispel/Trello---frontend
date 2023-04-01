@@ -1,5 +1,6 @@
 .board-lists-container {
   max-width: 1200px;
+  padding: 10px;
   margin: 40px auto;
   display: flex;
   flex-direction: column;
@@ -128,7 +129,7 @@
 
   .background-label,
   .board-title-label {
-    font-family: 'Segoe UI Bold';
+    font-family: "Segoe UI Bold";
     margin-top: 15px;
   }
 

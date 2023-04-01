@@ -1,5 +1,5 @@
 <template>
-  <div v-if="board" class="board-container main flex column" :style="{
+  <div v-if="board && !isLoading" class="board-container main flex column" :style="{
     background: board.style?.backgroundColor || '#014a75',
     backgroundImage: getBoardBg() || board.style?.backgroundColor,
     backgroundSize: 'cover',
@@ -85,6 +85,7 @@ export default {
       boardId: this.boardId,
     })
     this.checkIsDark()
+    console.log('this.board', this.board)
   },
   computed: {
     ...mapGetters(['currBoard']),
@@ -175,9 +176,8 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg() {
-      if (!this.board.style.imgUrls.regular) {
-        return null
-      } else return `url(${this.board.style?.imgUrls.regular})`
+      if (!this.board.style.imgUrls?.regular) return null
+      else return `url(${this.board.style.imgUrls?.regular})`
     },
     async checkIsDark() {
       const fac = new FastAverageColor()
