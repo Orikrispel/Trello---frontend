@@ -2,8 +2,15 @@
 
 <template>
   <ul class="clean-list">
-    <li v-for="activity in activities" :key="activity.id">
-      {{ activity.txt }}
+    <li
+      v-for="activity in activities"
+      :key="activity?.id"
+      class="activity-container">
+      <span class="activity-by">{{ activity?.byMember.fullname }}</span>
+      <p class="activity-txt">
+        {{ activity?.txt }}
+      </p>
+      <span>{{ activity?.createdAt }}</span>
     </li>
   </ul>
 </template>
@@ -24,10 +31,11 @@ export default {
       activity: boardService.getEmptyActivity(),
     }
   },
-  // async created() {
-  //   socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
-  //   socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
-  // },
+  async created() {
+    console.log(this.activities)
+    // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
+    // socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
+  },
   computed: {
     loggedinUser() {
       let user = { ...this.$store.getters.loggedinUser }

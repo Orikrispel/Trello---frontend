@@ -171,6 +171,9 @@
                 </div>
                 <Chat :task="task" />
               </div>
+              <ActivityList
+                v-if="task.activities && task.activities.length"
+                :activities="task.activities" />
               <!-- </form> -->
               <!-- <ul
                 v-if="task.comments && task.comments.length"

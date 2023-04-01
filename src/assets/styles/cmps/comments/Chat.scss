@@ -26,6 +26,9 @@
           bottom: em(6px);
           left: em(10px);
           cursor: not-allowed;
+          &.no-click {
+            pointer-events: none;
+          }
           & .btn.disabled {
             pointer-events: none;
             background-color: #091e420a;

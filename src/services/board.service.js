@@ -404,8 +404,9 @@ async function _createBoard(
 }
 
 function _setDemoData(board) {
-  board.title = "Project Managment"
-  board.isStarred = false;
-  board.style.backgroundColor = 'linear-gradient(324deg, rgba(251,69,94,0.4), rgba(165,171,34,0.8))'
+  board.title = 'Project Managment'
+  board.isStarred = false
+  board.style.backgroundColor =
+    'linear-gradient(324deg, rgba(251,69,94,0.4), rgba(165,171,34,0.8))'
   board.groups = _getRandomGroups(utilService.getRandomIntInclusive(2, 6))
 }

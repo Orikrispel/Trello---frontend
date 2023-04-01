@@ -1,8 +1,8 @@
 <template>
   <div class="chat-container">
     <form @submit.prevent="sendComment" class="comment-input-container">
-      <!-- @blur="isUserCommenting = false" -->
       <input
+        @blur="handleBlur"
         @focus="isUserCommenting = true"
         class="comment-input"
         type="text"
@@ -15,8 +15,10 @@
             : 'comment-editor-wrapper'
         ">
         <div v-if="isUserCommenting" class="comment-editor-container">
-          <div class="btn-wrapper">
+          <div
+            :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
             <button
+              @click.stop
               :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
               Save
             </button>
@@ -77,6 +79,11 @@ export default {
     },
   },
   methods: {
+    handleBlur() {
+      setTimeout(() => {
+        this.isUserCommenting = false
+      }, 500)
+    },
     async addCommentToTask(comment) {
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
