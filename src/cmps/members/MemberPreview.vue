@@ -5,7 +5,7 @@
     </div>
     <div>{{ member.fullname }}</div>
     <div>{{ member.isActive }}</div>
-    <div>{{ member.isSelected ? '✔' : '' }}</div>
+    <span>{{ member.isSelected ? '✔' : '' }}</span>
   </div>
 </template>
 <script>

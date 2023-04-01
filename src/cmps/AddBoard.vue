@@ -69,6 +69,7 @@ export default {
       this.pickedColor = 'null'
       this.pickedImg = imgUrls.thumb
       this.boardToAdd.style.imgUrls = imgUrls
+      console.log('this.boardToAdd.style.imgUrls', this.boardToAdd.style.imgUrls)
     },
   },
   created() {

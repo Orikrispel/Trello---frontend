@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="addChecklist" class="add-checklist-form">
         <h4>Title</h4>
-        <input type="text" v-model="checklistToAdd.title">
+        <input type="text" ref="checklistTitle" v-model="checklistToAdd.title">
         <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
     </form>
 </template>
@@ -25,7 +25,10 @@ export default {
             isCreateMode: true,
         }
     },
-    computed: {
+    mounted() {
+        setTimeout(() => {
+            this.$refs.checklistTitle.focus()
+        }, 100)
     },
     methods: {
         addChecklist() {

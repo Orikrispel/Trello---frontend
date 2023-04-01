@@ -1,7 +1,7 @@
 <template>
     <div class="colors-container" ref="container">
         <div @click="setColor(color)" v-for="(color, idx) in colorsForDisplay" :key="idx"
-            :class="['color-item', `cover-color-item-${idx + 1}`, { selected: color === pickedColor }]">
+            :class="['color-item cover-color-item', `cover-color-item-${idx + 1}`, { picked: color === pickedColor }]">
         </div>
     </div>
 </template>

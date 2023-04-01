@@ -106,16 +106,16 @@ function loadFromStorage(key) {
 
 function getRandomTaskTitles(idx = getRandomIntInclusive(0, 9)) {
   const codingTasks = [
-    'Implement a function to check whether a given string is a palindrome or not.',
-    'Create a program to find the largest number in an array of numbers.',
+    'Implement user authentication with OAuth 2.0',
+    'Refactor the codebase to use a more modular architecture',
     'Write a function that takes an array of integers and returns the sum of all the even numbers.',
-    'Implement a function that converts a string to title case (the first letter of each word is capitalized).',
-    'Create a program to sort an array of objects by a specific property.',
-    'Write a function to remove all duplicates from an array of strings.',
-    'Implement a function to check if a given string contains only unique characters.',
-    'Create a program to calculate the factorial of a given number.',
-    'Write a function that finds the second smallest element in an array of integers.',
-    'Implement a function to reverse a string without using the built-in reverse() method.',
+    'Add support for internationalization to the UI',
+    'Fix a bug where the application crashes when certain inputs are provided',
+    'Create a custom hook for handling form submission in Vue',
+    'Write unit tests for the backend API',
+    'Optimize the database queries for faster performance',
+    'Add a feature to allow users to reset their passwords',
+    'Implement a caching layer to reduce load times for frequently-accessed data.',
   ]
 
   return codingTasks[idx]

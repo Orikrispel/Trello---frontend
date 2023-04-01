@@ -59,7 +59,6 @@ export default {
     },
     labels() {
       let labels = this.board.labels
-      console.log('updated labels:', labels)
       if (this.filterBy) {
         const regex = new RegExp(this.filterBy, 'i')
         labels = this.labels.filter((label) => regex.test(label.title))

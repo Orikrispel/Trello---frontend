@@ -83,6 +83,23 @@
                     :key="label.id">
                     <LabelPreview :label="label" />
                   </li>
+                  <VDropdown :distance="6" :placement="'left-start'">
+                    <button class="btn-task light btn-add-label flex">
+                      <span class="icon icon-add"></span>
+                    </button>
+
+                    <template #popper>
+                      <DynamicModal>
+                        <template v-slot:title>{{
+                          userIsEditing ? 'Create a label' : 'Labels'
+                        }}</template>
+
+                        <template v-slot scope="props">
+                          <LabelMenu :taskLabels="task.labels" />
+                        </template>
+                      </DynamicModal>
+                    </template>
+                  </VDropdown>
                 </ul>
               </div>
 
@@ -92,51 +109,51 @@
               </div>
             </div>
 
-            <AttachmentList :task="task" @onUpdateTask="onUpdateTask" />
-            <!-- checklist list -->
-            <ChecklistList :task="task" />
-
             <!-- description -->
             <form
               class="description-editor editor"
               @submit.prevent="handleDesc">
               <span class="icon description-icon icon-lg"></span>
-              <h3 class="fs16">Description</h3>
+              <h3 class="title fs16">Description</h3>
               <button
-                class="btn-task light"
-                id="edit-desc-btn"
+                class="btn-task light btn-edit-desc"
                 v-if="!userIsEditing && task.description"
-                @click="userIsEditing = !userIsEditing">
+                @click="handleDesc">
                 Edit
               </button>
 
               <p
-                class="btn btn-desc"
+                class="btn-task light btn-desc"
                 v-if="!userIsEditing && !task.description"
-                @click="userIsEditing = !userIsEditing">
+                @click="handleDesc">
                 Add a more detailed description...
                 <br />
                 <br />
               </p>
+
               <p v-if="!userIsEditing" @click="handleDesc">
                 {{ task.description }}
               </p>
               <textarea
                 v-if="userIsEditing"
+                rows="5"
                 ref="taskDesc"
                 v-model="task.description"
-                @blur="userIsEditing = false"
-                autofocus></textarea>
+                @blur="userIsEditing = false"></textarea>
               <button
                 class="btn-task blue"
                 v-if="userIsEditing"
                 @click="saveTask(task)">
                 Save
               </button>
-              <button class="btn-task light" v-if="userIsEditing">
+              <button class="btn-task light btn-cancel" v-if="userIsEditing">
                 Cancel
               </button>
             </form>
+
+            <AttachmentList :task="task" @onUpdateTask="onUpdateTask" />
+            <!-- checklist list -->
+            <ChecklistList :task="task" />
 
             <div class="comments-activity-container editor">
               <div class="editor-header">
@@ -169,11 +186,10 @@
                   {{ activity }}
                 </li>
               </ul> -->
-              <div
-                v-if="activities && activities.length"
-                class="activities-container">
+
+              <!-- <div v-if="activities && activities.length" class="activities-container">
                 <ActivityList :activities="task.activities" />
-              </div>
+              </div> -->
             </div>
           </main>
 
@@ -349,7 +365,8 @@ export default {
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
-      this.$refs.taskDesc.focus()
+      // this.$refs.taskDesc.focus()
+      if (this.userIsEditing) this.$nextTick(() => this.$refs.taskDesc.focus())
     },
     saveTask(task, activity) {
       let board = JSON.parse(JSON.stringify(this.board))
@@ -403,7 +420,6 @@ export default {
       this.saveTask(this.task)
     },
     onUpdateTask(newTask) {
-      console.log('newTask.files', newTask.files)
       eventBus.emit('updateTask', newTask)
     },
     setCover(type, color) {

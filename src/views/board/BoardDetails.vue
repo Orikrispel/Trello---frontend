@@ -30,11 +30,9 @@
         class="flex board-right-actions"
         :class="{ 'move-right-actions': isRightMenuOpen }">
         <!-- <div class="right-menu-open" v-if="isRightMenuOpen"></div> -->
-        <button
-          class="btn btn-light btn-filter"
-          @click="showFilterMenu = !showFilterMenu">
+        <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
-        </button>
+        </button> -->
         <span class="board-header-btn-divider"></span>
         <button
           @click="openRightMenu"
@@ -217,9 +215,8 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg() {
-      if (!this.board.style.imgUrls.regular) {
-        return null
-      } else return `url(${this.board.style?.imgUrls.regular})`
+      if (!this.board.style.imgUrls?.regular) return null
+      else return `url(${this.board.style.imgUrls?.regular})`
     },
     async checkIsDark() {
       const fac = new FastAverageColor()

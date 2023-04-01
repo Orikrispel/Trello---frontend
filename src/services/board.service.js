@@ -177,6 +177,23 @@ function getDefaultEmptyLabel() {
   }
 }
 
+function _getRandomGroups(count = 4) {
+  const groups = []
+  for (let i = 0; i < count; i++) {
+    let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 6))
+    groups.push(currGroup)
+  }
+  return groups
+}
+
+function _getRandomGroup(count = 5) {
+  const group = []
+  for (let i = 0; i < count; i++) {
+    let currTask = getRandomTask()
+    group.push(currTask)
+  }
+  return group
+}
 function getRandomTask(
   title = utilService.getRandomTaskTitles(),
   description = utilService.getRandomTaskDesc(),
@@ -239,7 +256,8 @@ async function _createBoards(amount = 20) {
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
-
+  _setDemoData(boards[2])
+  console.log('boards[2]', boards[2])
   return boards
 }
 
@@ -383,4 +401,11 @@ async function _createBoard(
   }
   board = await save(board)
   return board
+}
+
+function _setDemoData(board) {
+  board.title = "Project Managment"
+  board.isStarred = false;
+  board.style.backgroundColor = 'linear-gradient(324deg, rgba(251,69,94,0.4), rgba(165,171,34,0.8))'
+  board.groups = _getRandomGroups(utilService.getRandomIntInclusive(2, 6))
 }

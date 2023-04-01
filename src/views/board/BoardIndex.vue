@@ -1,6 +1,8 @@
 <template>
   <div class="index-container container home">
+    <Loader :isLoading="isLoading" />
     <BoardList
+      v-show="!isLoading"
       @removeBoard="removeBoard"
       @starBoard="starBoard"
       @addBoard="addBoard" />
@@ -18,6 +20,7 @@ import {
   getActionStarBoard,
 } from '../../store/board.store'
 
+import Loader from '../../cmps/Loader.vue'
 import ChecklistList from '../../cmps/checklist/ChecklistList.vue'
 import BoardList from '../../cmps/board/BoardList.vue'
 import ColorPicker from '../../cmps/ColorPicker.vue'
@@ -31,6 +34,7 @@ export default {
       boardPickedColor: 'white',
       boardPickedImg: '',
       actionType: 'BoardList',
+      isLoading: false,
     }
   },
   computed: {
@@ -39,7 +43,11 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch({ type: 'loadBoards' })
+    this.isLoading = true
+    console.log('this.loggedinUser', this.$store.getters.loggedinUser)
+    this.$store.dispatch({ type: 'loadBoards' }).finally(() => {
+      this.isLoading = false
+    })
   },
   methods: {
     async addBoard(board) {
@@ -98,6 +106,7 @@ export default {
     ImgPicker,
     AddBoard,
     ChecklistList,
+    Loader,
   },
 }
 
