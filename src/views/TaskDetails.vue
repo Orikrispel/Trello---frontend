@@ -375,7 +375,9 @@ export default {
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = JSON.parse(JSON.stringify(task))
       if (!updatedTask.activities) updatedTask.activities = []
-      updatedTask.activities.unshift(activity)
+      if (activity) {
+        updatedTask.activities.unshift(activity)
+      }
 
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
@@ -428,7 +430,8 @@ export default {
     setCover(type, color) {
       const newTask = JSON.parse(JSON.stringify(this.task))
       newTask.cover = { type, color }
-      eventBus.emit('updateTask', newTask)
+      const data = { task: newTask }
+      eventBus.emit('updateTask', data)
       console.log('newTask.cover', newTask.cover)
     },
     removeCover() {
