@@ -42,7 +42,8 @@
             <button class="btn-task light add-attachment">Add an attachment</button>
 
             <template #popper>
-                <AddAttachment :task="task" @onUpdateTask="this.$emit('onUpdateTask', newTask)" />
+                <AddAttachment :task="task" @onUpdateTask="this.$emit('onUpdateTask', newTask)"
+                    @setImgCover="setImgCover" />
             </template>
         </VDropdown>
     </ul>
@@ -90,6 +91,9 @@ export default ({
             const idx = newTask.files.findIndex(file => fileId === file.id)
             newTask.files[idx].name = newName
             this.$emit('onUpdateTask', newTask)
+        },
+        setImgCover(img) {
+            console.log('img 123', img)
         }
     },
     components: {

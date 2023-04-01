@@ -1,6 +1,5 @@
 .board-lists-container {
   max-width: 1200px;
-  padding: 10px;
   margin: 40px auto;
   display: flex;
   flex-direction: column;
@@ -239,10 +238,10 @@
 
 @media (max-width: 850px) {
   .board-add-form {
-    right: 0;
-    bottom: 0;
+    right: 10;
+    top: 0;
     z-index: 10;
-    position: fixed;
+    position: absolute;
     color: $font-clr3;
     background-color: #fff;
     box-shadow: $action-modal-shadow;
@@ -252,7 +251,7 @@
   .board-list {
     display: flex;
     flex-wrap: wrap;
-
+    padding-left: 7px;
     // li {
     //   width: 160px;
     // }

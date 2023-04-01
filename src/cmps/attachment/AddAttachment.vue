@@ -13,8 +13,8 @@
                 <hr />
                 <form class="add-checklist-form">
                     <h4>Attach a link</h4>
-                    <input type="text" placeholder="Paste any link here..." v-bind="fileUrl">
-                    <button class="btn attach-btn" @click.prevent="onImgUpload">Attach</button>
+                    <input type="text" placeholder="Paste any link here...">
+                    <button class="btn attach-btn" @click.prevent="onImgUpload(event)">Attach</button>
                 </form>
             </section>
         </template>
@@ -58,7 +58,6 @@ export default ({
                 }
                 newTask.files.push(newFile)
                 this.$emit('onUpdateTask', newTask)
-                eventBus.emit('addAttachment', newFile)
             }
         },
 

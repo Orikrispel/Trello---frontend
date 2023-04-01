@@ -1,5 +1,5 @@
 <template>
-  <div v-if="board && !isLoading" class="board-container main flex column" :style="{
+  <div v-if="board" class="board-container main flex column" :style="{
     background: board.style?.backgroundColor || '#014a75',
     backgroundImage: getBoardBg() || board.style?.backgroundColor,
     backgroundSize: 'cover',
@@ -20,9 +20,9 @@
 
       <div class="flex board-right-actions" :class="{ 'move-right-actions': isRightMenuOpen }">
         <!-- <div class="right-menu-open" v-if="isRightMenuOpen"></div> -->
-        <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
+        <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
-        </button>
+        </button> -->
         <span class="board-header-btn-divider"></span>
         <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
@@ -85,7 +85,6 @@ export default {
       boardId: this.boardId,
     })
     this.checkIsDark()
-    console.log('this.board', this.board)
   },
   computed: {
     ...mapGetters(['currBoard']),

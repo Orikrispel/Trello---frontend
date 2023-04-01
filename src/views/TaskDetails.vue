@@ -364,7 +364,6 @@ export default {
       this.saveTask(this.task)
     },
     onUpdateTask(newTask) {
-      console.log('newTask.files', newTask.files)
       eventBus.emit('updateTask', newTask)
     },
     setCover(type, color) {
