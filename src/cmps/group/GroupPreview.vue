@@ -46,7 +46,7 @@
           backgroundImage: (task.cover?.type === 'full') ? `url(${task.files[0]?.url})` : '',
           backgroundSize: '100% 100%',
         }">
-          <div v-if="task.cover?.type === 'semi' || task.files[0]" @click="showTaskImg"
+          <div v-if="task.cover?.type === 'semi'" @click="showTaskImg"
             :class="{ 'semi-img-container semi-cover-container': task.files[0] && task.cover.type === 'semi' }" :style="{
               backgroundColor: (task.files[0]) ? '' : task.cover?.color,
               backgroundImage: (task.files[0] && task.cover.type !== 'full') ? `url(${task.files[0]?.url})` : 'none',
