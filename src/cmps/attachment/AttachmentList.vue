@@ -83,7 +83,10 @@ export default {
       const newTask = JSON.parse(JSON.stringify(this.task))
       if (!newTask.files) newTask.files = []
       newTask.files.push(img)
-      this.$emit('onUpdateTask', newTask)
+      const data = {
+        task: newTask,
+      }
+      this.$emit('onUpdateTask', data)
     })
   },
   methods: {
@@ -91,14 +94,20 @@ export default {
       const newTask = JSON.parse(JSON.stringify(this.task))
       const idx = newTask.files.findIndex((file) => fileId === file.id)
       newTask.files.splice(idx, 1)
-      this.$emit('onUpdateTask', newTask)
+      const data = {
+        task: newTask,
+      }
+      this.$emit('onUpdateTask', data)
     },
     updateFileName(fileId) {
       const newName = this.$refs.linkNameInput[0].value
       const newTask = JSON.parse(JSON.stringify(this.task))
       const idx = newTask.files.findIndex((file) => fileId === file.id)
       newTask.files[idx].name = newName
-      this.$emit('onUpdateTask', newTask)
+      const data = {
+        task: newTask,
+      }
+      this.$emit('onUpdateTask', data)
     },
     setImgCover(img) {
       console.log('img 123', img)
