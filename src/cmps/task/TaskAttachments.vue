@@ -3,6 +3,13 @@
 
     <div class="flex align-center">
       <span v-show="task.description" class="icon description-icon"></span>
+      <!-- 
+      <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
+          class="icon checklist-icon"></span>
+        {{ dueDate }}
+      </p> -->
+
+      <pre class="fs12"> {{ task.date }}</pre>
 
       <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
           class="icon checklist-icon"></span>
@@ -73,6 +80,15 @@ export default {
     checklistStatus() {
       return `${this.todosDone}/${this.todosCount}`
     },
+
+    dueDate() {
+      let date = this.task.date.dueDate
+      var day = date.getDay()
+      var month = date.toLocaleString('default', { month: 'short' });
+      console.log(`${month} ${day}`)
+      return `${month} ${day}`
+
+    }
   },
   watch: {
     task: {
