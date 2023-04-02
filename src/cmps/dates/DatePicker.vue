@@ -1,53 +1,86 @@
 <template>
   <section class="date-picker-container">
-    <v-date-picker v-model="range" locale="en-us" is-range :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }">
+    <v-date-picker
+      v-model="range"
+      locale="en-us"
+      is-range
+      :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }">
     </v-date-picker>
 
     <div class="custom-date-picker-component">
       <div class="inputs-container start-date-container">
         <label>Start date</label>
-        <input type="checkbox" class="start-date-checkbox" v-model="isChooseStart" />
-        <div :class="
-          isChooseStart
-            ? ' txt-inputs-container'
-            : 'disabled txt-inputs-container'
-        ">
-          <input type="text" :class="
+        <input
+          type="checkbox"
+          class="start-date-checkbox"
+          v-model="isChooseStart" />
+        <div
+          :class="
             isChooseStart
-              ? ' txt-input start-date-input'
-              : 'disabled txt-input start-date-input'
-          " ref="startDateInput" v-model="startDateForDisplay" @focus="choosingStart = true"
-            @blur="updateStartDate($event)" placeholder="M/D/YYY" />
+              ? ' txt-inputs-container'
+              : 'disabled txt-inputs-container'
+          ">
+          <input
+            type="text"
+            :class="
+              isChooseStart
+                ? ' txt-input start-date-input'
+                : 'disabled txt-input start-date-input'
+            "
+            ref="startDateInput"
+            v-model="startDateForDisplay"
+            @focus="choosingStart = true"
+            @blur="updateStartDate($event)"
+            placeholder="M/D/YYY" />
         </div>
       </div>
       <div class="inputs-container due-date-container">
         <label>Due date</label>
-        <input type="checkbox" class="due-date-checkbox" v-model="isChooseDue" />
-        <div :class="
-          isChooseDue
-            ? ' txt-inputs-container'
-            : 'disabled txt-inputs-container'
-        ">
-          <input type="text" :class="
+        <input
+          type="checkbox"
+          class="due-date-checkbox"
+          v-model="isChooseDue" />
+        <div
+          :class="
             isChooseDue
-              ? ' txt-input due-date-input'
-              : 'disabled txt-input due-date-input'
-          " ref="dueDateInput" v-model="dueDateForDisplay" @focus="choosingDue = true"
-            @change="updateEndDate($event)" placeholder="M/D/YYYY" />
-          <v-date-picker mode="time">
-            <input type="text" :class="
+              ? ' txt-inputs-container'
+              : 'disabled txt-inputs-container'
+          ">
+          <input
+            type="text"
+            :class="
               isChooseDue
-                ? ' txt-input due-time-input'
-                : 'disabled txt-input due-time-input'
-            " v-model="time" @blur="validateTime()" placeholder="h:mm A" />
+                ? ' txt-input due-date-input'
+                : 'disabled txt-input due-date-input'
+            "
+            ref="dueDateInput"
+            v-model="dueDateForDisplay"
+            @focus="choosingDue = true"
+            @change="updateEndDate($event)"
+            placeholder="M/D/YYYY" />
+          <v-date-picker mode="time">
+            <input
+              type="text"
+              :class="
+                isChooseDue
+                  ? ' txt-input due-time-input'
+                  : 'disabled txt-input due-time-input'
+              "
+              v-model="time"
+              @blur="validateTime()"
+              placeholder="h:mm A" />
           </v-date-picker>
         </div>
       </div>
     </div>
 
     <div class="btns-container">
-      <button v-close-popper @click="saveDate" class="btn btn-blue btn-save">Save</button>
-      <button @click="debug" class="btn btn-light btn-remove">Remove</button>
+      <button v-close-popper @click="saveDate" class="btn btn-blue btn-save">
+        Save
+      </button>
+      <button @click="removeDate" class="btn btn-light btn-remove">
+        Remove
+      </button>
     </div>
   </section>
 </template>
@@ -151,8 +184,9 @@ export default {
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = `set ${task.title
-        } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
+      activity.txt = `set ${
+        task.title
+      } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
       activity.task = { title: task.title, taskId: this.taskId }
       activity.type = 'date'
       activity.byMember = {
@@ -162,6 +196,25 @@ export default {
 
       eventBus.emit('updateTask', { task, activity })
       this.task = task
+    },
+    removeDate() {
+      let task = JSON.parse(JSON.stringify(this.task))
+      task.date = null
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = `removed due date from  ${task.title} `
+      activity.task = { title: task.title, taskId: this.taskId }
+      activity.type = 'date'
+      activity.byMember = {
+        fullname: user.fullname,
+        _id: user._id,
+      }
+
+      eventBus.emit('updateTask', { task, activity })
+      this.task = task
+      this.range.start = null
+      this.range.end = null
     },
     formatDate(date = Date.now()) {
       if (!date) return null
