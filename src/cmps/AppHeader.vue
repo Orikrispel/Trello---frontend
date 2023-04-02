@@ -31,7 +31,7 @@
       <section class="log-in" v-else>
         <RouterLink :to="`/login`">
           <div class="member-img">
-            <span class="fs12">login icon</span>
+            <span v-html="getSvg('login')"></span>
           </div>
         </RouterLink>
       </section>
@@ -41,6 +41,7 @@
 <script>
 import { boardService } from '../services/board.service'
 // import { boardService } from '../services/board.service'
+import { svgService } from '../services/svg.service'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import AddBoard from '../cmps/AddBoard.vue'
 export default {
@@ -70,6 +71,9 @@ export default {
         console.log(err)
         showErrorMsg('Cannot add board')
       }
+    },
+    getSvg(iconName) {
+      return svgService.getSvg(iconName)
     },
   },
   components: {
