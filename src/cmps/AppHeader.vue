@@ -8,7 +8,6 @@
         <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" style="top: 40px" />
       </button>
     </nav>
-    <button @click="showUsers">users</button>
 
     <nav class="flex gap">
       <section class="loggedin-user" v-if="loggedinUser">
