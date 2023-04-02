@@ -47,7 +47,6 @@ export default {
         this.loginClicked = false
       } catch (err) {
         console.log('Cannot login', err)
-        // showErrorMsg(`Cannot login`)
       }
     },
     getSvg(iconName) {

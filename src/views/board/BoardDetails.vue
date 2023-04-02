@@ -90,7 +90,7 @@ import {
 import RightMenuIndex from '../../cmps/right-menu/RightMenuIndex.vue'
 import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
+
 import GroupList from '../../cmps/group/GroupList.vue'
 import GroupFilter from '../../cmps/group/GroupFilter.vue'
 import { svgService } from '../../services/svg.service'
@@ -172,19 +172,15 @@ export default {
       // console.log(activity)
       try {
         this.board = await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot update board')
       }
     },
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch(getActionRemoveBoard(boardId))
-        showSuccessMsg('Board removed')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot remove board')
       }
     },
     async starBoard() {
@@ -195,7 +191,6 @@ export default {
         await this.$store.dispatch(getActionStarBoard(board))
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot star board')
       }
     },
     updateBoardTitle() {
