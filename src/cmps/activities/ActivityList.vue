@@ -8,7 +8,7 @@
       class="activity-container">
       <p class="activity-txt">
         <span class="activity-by">{{ activity?.byMember.fullname }}</span>
-        {{ activity?.txt }}
+        {{ linkCommon(activity) }}
         <span class="activity-timestamp">{{ dateForDisplay }}</span>
       </p>
     </li>
@@ -68,7 +68,32 @@ export default {
       }
     },
   },
-
+  methods: {
+    linkCommon(activity) {
+      let { txt, task } = activity
+      let { title } = task
+      let common = []
+      for (let i = 0; i < Math.min(txt.length, title.length); i++) {
+        if (txt[i] === title[i]) {
+          common.push(txt[i])
+        } else {
+          break
+        }
+      }
+      if (common.length) {
+        let res =
+          txt.slice(0, common.length) +
+          '<a href="#" class="activity-link">' +
+          common +
+          '</a>' +
+          txt.slice(common.length)
+        console.log('res', res)
+        return res
+      } else {
+        return txt
+      }
+    },
+  },
   // async addActivityToTask(activity) {
   //   this.activities.push(activity)
   //   let updatedTask = { ...this.task }

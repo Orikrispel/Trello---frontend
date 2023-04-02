@@ -167,14 +167,7 @@ export default {
       )
       return Math.floor(diffInMilliseconds / millisecondsPerDay)
     },
-    debug(ev) {
-      // console.log(this.saveDate())
-      // console.log(this.diff())
-      // console.log(this.dueDateForDisplay)
-      // console.log(this.startDateForDisplay)
 
-      console.log('time', this.time)
-    },
     saveDate() {
       let dueDate = this.dueDateParsed
       let dueTime = this.time
