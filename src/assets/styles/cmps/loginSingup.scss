@@ -14,14 +14,13 @@
     padding: 25px 40px;
     box-shadow: #0000001a 0 0 10px;
     width: 400px;
+    z-index: 1;
 
-    h1 {
-      text-align: center;
+    h2 {
+      font-family: 'Segoe UI Bold';
       color: $font-clr3;
-      letter-spacing: -0.01em;
       line-height: 28px;
-      margin-top: 10px;
-      margin-bottom: 25px;
+      margin-block: 10px 25px;
     }
 
     input {
@@ -62,6 +61,16 @@
       height: 1px;
       padding: 0 12px;
       width: 100%;
+    }
+  }
+
+  .img-comtainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    img {
+      width: 30%;
     }
   }
 }
