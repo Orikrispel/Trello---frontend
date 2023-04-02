@@ -1,6 +1,10 @@
 .activity-container {
   color: #172b4d;
   padding: em(8px) 0;
+
+  a {
+    background-color: red;
+  }
   .activity-by {
     font-weight: 700;
     font-size: rem(14px);
