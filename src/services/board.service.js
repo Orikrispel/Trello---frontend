@@ -257,7 +257,6 @@ function _getRandomGroup(count = 5) {
 }
 
 function getFile(num) {
-  debugger
   const files = [
     {
       name: 'Code screenshot',
@@ -496,10 +495,7 @@ async function _createBoard(
       gradient: _getBoardRandomGradient(),
     },
     labels,
-    members: [
-      userService.getDefaultMembers(),
-      await userService.getRandomUsers(),
-    ],
+    members: userService.getDefaultMembers(),
     groups: [
       {
         id: utilService.makeId(),

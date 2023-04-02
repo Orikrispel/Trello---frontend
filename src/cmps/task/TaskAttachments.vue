@@ -4,8 +4,8 @@
     <div class="flex align-center">
       <span v-show="task.description" class="icon description-icon"></span>
 
-      <p v-if="this.task.date" :class="['dueDate flex fs12', { complete: isComplete }]"><span
-          class="icon checklist-icon"></span>
+      <p v-if="this.task.date" :class="['date flex fs12', { complete: isComplete }]">
+        <span class="icon icon-clock"></span>
         {{ date }}
       </p>
 

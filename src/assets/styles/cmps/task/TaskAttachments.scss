@@ -12,7 +12,7 @@
     }
   }
 
-  p:is(.checklist, .files) {
+  p:is(.checklist, .files, .date) {
     color: $font-clr3;
     align-items: center;
     max-width: 100%;
