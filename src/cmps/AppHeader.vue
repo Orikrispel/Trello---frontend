@@ -14,7 +14,7 @@
           style="top: 40px" />
       </button>
     </nav>
-    <button @click="showUsers">users</button>
+    <button @click="debug">debug</button>
 
     <nav class="flex gap">
       <section class="loggedin-user" v-if="loggedinUser">
@@ -46,6 +46,7 @@ import AddBoard from '../cmps/AddBoard.vue'
 export default {
   data() {
     return {
+      board: null,
       boardToAdd: boardService.getEmptyBoard(),
       boardPickedColor: 'white',
       boardPickedImg: '',
@@ -53,16 +54,23 @@ export default {
       isCreateMode: false,
     }
   },
-  created() {},
+
   computed: {
     loggedinUser() {
       return this.$store.getters.loggedinUser
+    },
+    boardId() {
+      const { boardId } = this.$route.params
+      return boardId
+    },
+    boardMembers() {
+      const { members } = this.board
+      return members
     },
   },
   methods: {
     async addBoard(board) {
       try {
-        console.log('ADDED board', board)
         await this.$store.dispatch({ type: 'addBoard', board })
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {

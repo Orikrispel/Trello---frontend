@@ -33,6 +33,7 @@
         <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button> -->
+        <button class="btn btn-light">Share</button>
         <span class="board-header-btn-divider"></span>
         <button
           @click="openRightMenu"
@@ -45,6 +46,9 @@
         @setBgColor="setBgColor"
         @setBgImg="setBgImg" />
     </header>
+
+    <InviteModalVue @updateBoard="updateBoard" />
+
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
 
@@ -87,6 +91,7 @@ import {
   SOCKET_EMIT_BOARD_UPDATED,
   SOCKET_EMIT_SET_TOPIC,
 } from '../../services/socket.service'
+import InviteModalVue from '../../cmps/invite/InviteModal.vue'
 import RightMenuIndex from '../../cmps/right-menu/RightMenuIndex.vue'
 import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
@@ -249,6 +254,7 @@ export default {
     GroupFilter,
     DynamicModal,
     RightMenuIndex,
+    InviteModalVue,
   },
 }
 </script>
