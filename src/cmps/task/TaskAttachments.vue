@@ -9,7 +9,7 @@
         {{ dueDate }}
       </p> -->
 
-      <pre class="fs12"> {{ task.date }}</pre>
+      <!-- <pre class="fs12"> {{ task.date }}</pre> -->
 
       <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
           class="icon checklist-icon"></span>
