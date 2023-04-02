@@ -36,8 +36,25 @@ export default {
       let task = JSON.parse(JSON.stringify(this.actionData.task))
       if (!task.checklists) task.checklists = []
       task.checklists.push(this.checklistToAdd)
+
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = ` added ${this.checklistToAdd.title} to ${task.title}`
+      activity.task = { title: this.task.title, taskId: this.taskId }
+      activity.type = 'checklist'
+      activity.byMember = {
+        fullname: user.fullname,
+        _id: user._id,
+      }
+
+      const data = {
+        task,
+        activity,
+      }
       this.checklistToAdd = checklistService.getEmptyChecklist()
-      eventBus.emit('updateTask', task)
+
+      eventBus.emit('updateTask', data)
       this.$emit('setCreateModeOff')
       console.log('checklist added')
     },

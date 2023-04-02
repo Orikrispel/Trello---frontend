@@ -43,8 +43,23 @@ export default {
       const idx = task.checklists.findIndex(
         (checklist) => checklist.id === checklistId
       )
+      const checklist = task.checklists[idx]
       task.checklists.splice(idx, 1)
-      eventBus.emit('updateTask', task)
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = ` removed ${checklist.title} from ${task.title}`
+      activity.task = { title: task.title, taskId: task.id }
+      activity.type = 'checklist'
+      activity.byMember = {
+        fullname: user.fullname,
+        _id: user._id,
+      }
+      const data = {
+        task,
+        activity,
+      }
+      eventBus.emit('updateTask', data)
     },
     onUpdateTask(checklistToAdd) {
       let task = JSON.parse(JSON.stringify(this.task))
@@ -52,6 +67,7 @@ export default {
         (checklist) => checklist.id === checklistToAdd.id
       )
       task.checklists.splice(idx, 1, checklistToAdd)
+
       const data = {
         task,
       }

@@ -76,7 +76,8 @@ function getEmptyBoard(
 
   createdBy = {},
   style = {},
-  groups = [getEmptyGroup()]
+  groups = [getEmptyGroup()],
+  members = userService.getDefaultMembers()
 ) {
   return {
     title,
@@ -85,6 +86,7 @@ function getEmptyBoard(
     labels: getDefaultEmptyLabels(),
     createdBy,
     groups,
+    members,
   }
 }
 

@@ -1,14 +1,21 @@
 <template>
-  <div class="members-list-container ">
-    <input v-model="filterBy" type="text" placeholder="Search members" @input="searchMembers" ref="searchMember"
+  <div class="members-list-container">
+    <input
+      v-model="filterBy"
+      type="text"
+      placeholder="Search members"
+      @input="searchMembers"
+      ref="searchMember"
       name="members-search" />
     <h4>Board members</h4>
     <ul class="clean-list">
-      <li @click="addMemberToTask(member._id)" v-for="member in members" :key="member._id">
+      <li
+        @click="addMemberToTask(member._id)"
+        v-for="member in members"
+        :key="member._id">
         <MemberPreview :member="member" />
       </li>
     </ul>
-
   </div>
 </template>
 <script>
@@ -73,6 +80,7 @@ export default {
       let member = members.find((member) => {
         return member._id === memberId
       })
+      console.log(member)
       if (!task.members) task.members = []
       let hasMember = task.members.some((member) => {
         return member._id === memberId
@@ -83,7 +91,22 @@ export default {
         task.members.push({ ...member })
       }
 
-      eventBus.emit('updateTask', task)
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = ` added ${member.fullname} to ${task.title}`
+      activity.task = { title: task.title, taskId: this.taskId }
+      activity.type = 'checklist'
+      activity.byMember = {
+        fullname: user.fullname,
+        _id: user._id,
+      }
+      const data = {
+        task,
+        activity,
+      }
+
+      eventBus.emit('updateTask', data)
       this.task = task
     },
     removeMemberFromTask(task, member) {

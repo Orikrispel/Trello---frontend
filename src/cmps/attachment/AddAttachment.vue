@@ -65,7 +65,7 @@ export default {
         let activity = this.$store.getters.emptyActivity
         activity = { ...activity }
         let user = this.$store.getters.loggedinUser
-        activity.txt = `${user.fullname} attached ${newFile.name} to ${newTask.title}`
+        activity.txt = ` attached ${newFile.name} to ${newTask.title}`
         activity.task = { title: newTask.title, taskId: newTask.id }
         activity.type = 'attachment'
         activity.byMember = {

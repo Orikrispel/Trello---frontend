@@ -82,9 +82,7 @@ export const boardStore = {
     defaultEmptyLabel() {
       return boardService.getDefaultEmptyLabel()
     },
-    defaultMembers() {
-      return boardService.getDefaultMembers()
-    },
+
     makeId() {
       return utilService.makeId()
     },

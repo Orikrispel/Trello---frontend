@@ -181,14 +181,13 @@ export default {
       let startDate = this.startDateParsed
       if (isNaN(dueDate)) return
 
-      console.log(dueDate)
       if (dueDate === startDate) startDate = null
       let task = JSON.parse(JSON.stringify(this.task))
       task.date = { dueDate, startDate, dueTime, isCompleted: false }
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = `added due date to${task.title}`
+      activity.txt = `added due date to ${task.title}`
       activity.task = { title: task.title, taskId: this.taskId }
       activity.type = 'date'
       activity.byMember = {
