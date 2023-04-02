@@ -21,7 +21,6 @@ export default {
   },
   computed: {
     isHome() {
-      console.log('this.$route.name', this.$route.name)
       return this.$route.name === 'Home'
     }
   },

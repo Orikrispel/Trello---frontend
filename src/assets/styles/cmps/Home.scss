@@ -76,12 +76,18 @@
   }
 
   header.homepage-header {
+
     height: 60px;
     position: fixed;
     top: 0;
     width: 100%;
     background-color: $secondary-clr1;
     z-index: 1;
+    transition: background-color 0.5s ease 0s, box-shadow 0.5s ease 0s;
+
+    &:hover {
+      box-shadow: rgba(9, 30, 66, 0.15) 0px 0.5rem 1rem 0px;
+    }
 
     .logo {
       object-fit: contain;

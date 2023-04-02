@@ -83,6 +83,7 @@ export const userStore = {
       try {
         const users = await userService.getUsers()
         commit({ type: 'setUsers', users })
+        return users
       } catch (err) {
         console.log('userStore: Error in loadUsers', err)
         throw err
@@ -114,6 +115,14 @@ export const userStore = {
       } catch (err) {
         console.log('userStore: Error in updateUser', err)
         throw err
+      }
+    },
+    async getUser({ commit }, { userId }) {
+      try {
+        let user = await userService.getById(userId)
+        return user
+      } catch (err) {
+        console.log(err, `'cannot get user with _id ${userId}`)
       }
     },
     async increaseScore({ commit }) {

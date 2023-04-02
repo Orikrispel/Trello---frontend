@@ -55,9 +55,22 @@ header.app-header {
       color: $primary-clr1;
     }
 
-    .member-img {
+    .member-wrapper {
+      padding: 4px;
+      border-radius: 50%;
+    }
+
+    .login-img {
+      background-color: $btn-clr5;
       height: 24px;
       width: 24px;
+      padding: 4px;
+      border-radius: 50%;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 }

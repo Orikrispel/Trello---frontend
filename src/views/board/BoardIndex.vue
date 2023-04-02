@@ -64,7 +64,6 @@ export default {
     async starBoard(board) {
       try {
         const newBoard = JSON.parse(JSON.stringify(board))
-        console.log('newBoard', newBoard)
         await this.$store.dispatch(getActionStarBoard(newBoard))
       } catch (err) {
         console.log(err)

@@ -32,7 +32,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) {}
+function onUserUpdate(user) { }
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -61,9 +61,6 @@ async function update(user) {
 }
 
 async function login(userCred) {
-  // const users = await storageService.query('user')
-  // const user = users.find(user => user.username === userCred.username)
-  debugger
   console.log(userCred)
   const user = await httpService.post('auth/login', userCred)
   if (user) {
@@ -72,7 +69,6 @@ async function login(userCred) {
   }
 }
 async function signup(userCred) {
-  // userCred.score = 10000
 
   if (!userCred.imgUrl)
     userCred.imgUrl =

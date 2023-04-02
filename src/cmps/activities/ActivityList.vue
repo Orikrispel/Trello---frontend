@@ -4,7 +4,7 @@
   <ul class="clean-list">
     <li v-for="activity in activities" :key="activity?.id" class="activity-container">
       <p class="activity-txt">
-        <span class="activity-by">{{ activity?.byMember?.fullname || '' }}</span>
+        <span class="activity-by">{{ activity?.byMember?.fullname }}</span>
         {{ linkCommon(activity) }}
         <span class="activity-timestamp">{{ dateForDisplay }}</span>
       </p>
@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     linkCommon(activity) {
+      if (!activity.txt || !activity.task) return
       let { txt, task } = activity
       let { title } = task
       let common = []
