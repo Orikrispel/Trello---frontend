@@ -1,6 +1,6 @@
 <template>
     <div class="loader-container" v-if="isLoading">
-        <div class="loader"></div>
+        <img class="loader" src="../assets/imgs/spinner.svg" />
     </div>
 </template>
 
@@ -27,21 +27,7 @@ export default {
 }
 
 .loader {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top: 4px solid #333;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    width: 60px;
+    height: 60px;
 }
 </style>

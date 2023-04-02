@@ -3,11 +3,11 @@
 
     <div class="flex align-center">
       <span v-show="task.description" class="icon description-icon"></span>
-      <!-- 
-      <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
+
+      <p v-if="this.task.date" :class="['dueDate flex fs12', { complete: isComplete }]"><span
           class="icon checklist-icon"></span>
         {{ dueDate }}
-      </p> -->
+      </p>
 
       <!-- <pre class="fs12"> {{ task.date }}</pre> -->
 
@@ -82,8 +82,10 @@ export default {
     },
 
     dueDate() {
-      let date = this.task.date.dueDate
-      var day = date.getDay()
+      if (!this.task.date.dueDate) return
+      let date = new Date(this.task.date.dueDate);
+
+      var day = date.getDate()
       var month = date.toLocaleString('default', { month: 'short' });
       console.log(`${month} ${day}`)
       return `${month} ${day}`

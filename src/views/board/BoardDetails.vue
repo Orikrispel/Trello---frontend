@@ -192,8 +192,8 @@ export default {
       else return `url(${this.board.style.imgUrls?.regular})`
     },
     async checkIsDark() {
-      console.log('this.board.style', this.board.style)
       const fac = new FastAverageColor()
+      if (!this.board) return
       if (this.board.style.imgUrls.regular) {
         try {
           const color = await fac.getColorAsync(
