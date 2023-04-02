@@ -209,7 +209,8 @@ function _getRandomGroup(count = 5) {
       currTask.cover = getRandomCover()
       currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
     }
-    let currChecklist = i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
+    let currChecklist =
+      i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
     currTask.checklists.push(currChecklist)
     currTask.members = i % 3 === 0 ? getRandomMembers() : []
     group.tasks.push(currTask)
@@ -222,33 +223,33 @@ function getFile(num) {
     {
       name: 'Code screenshot',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680441162/Screenshot_20221216_133859_re0ltt.png',
-      createdAt: 'Added on ' + utilService.formatDateString(Date.now())
+      createdAt: 'Added on ' + utilService.formatDateString(Date.now()),
     },
     {
       name: 'Coding-gif',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680442558/coding_gif_ml4plo.gif',
-      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+      createdAt: 'Added on' + utilService.formatDateString(Date.now()),
     },
     {
       name: 'Mongo-DB',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680444655/mongo-db_yq2uoz.png',
-      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+      createdAt: 'Added on' + utilService.formatDateString(Date.now()),
     },
     {
       name: 'Work-Gif',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680442771/work_gif_ow8ysf.gif',
-      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+      createdAt: 'Added on' + utilService.formatDateString(Date.now()),
     },
     {
       name: 'Github-Gif',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680449935/github-logo-300x300_uaexvj.png',
-      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+      createdAt: 'Added on' + utilService.formatDateString(Date.now()),
     },
     {
       name: 'Vue-Logo',
       url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680450260/vuee_logo_o4xi6t.png',
-      createdAt: 'Added on' + utilService.formatDateString(Date.now())
-    }
+      createdAt: 'Added on' + utilService.formatDateString(Date.now()),
+    },
   ]
   return files[num]
 }
@@ -455,7 +456,10 @@ async function _createBoard(
       gradient: _getBoardRandomGradient(),
     },
     labels,
-    members: userService.getUsers(),
+    members: [
+      userService.getDefaultMembers(),
+      await userService.getRandomUsers(),
+    ],
     groups: [
       {
         id: utilService.makeId(),
@@ -528,7 +532,7 @@ async function _createBoard(
                 ],
               },
             ],
-            memberIds: [userService.getRandomDefaultMember().id],
+            memberIds: [userService.getRandomDefaultMember()._id],
             labelIds: [getRandomLabel().id, getRandomLabel().id],
             dueDate: 16156215211,
             byMember:

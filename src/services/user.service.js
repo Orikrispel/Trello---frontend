@@ -22,6 +22,7 @@ export const userService = {
   update,
   getRandomDefaultMember,
   getDefaultMembers,
+  getRandomUsers,
   // changeScore,
 }
 
@@ -32,7 +33,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) { }
+function onUserUpdate(user) {}
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -55,13 +56,13 @@ async function update(user) {
   // await storageService.put('user', user)
 
   user = await httpService.put(`user/${user._id}`, user)
+  console.log('userService', user)
   // Handle case in which admin updates other user's details
   if (getLoggedinUser()._id === user._id) saveLocalUser(user)
   return user
 }
 
 async function login(userCred) {
-  console.log(userCred)
   const user = await httpService.post('auth/login', userCred)
   if (user) {
     socketService.login(user._id)
@@ -69,7 +70,6 @@ async function login(userCred) {
   }
 }
 async function signup(userCred) {
-
   if (!userCred.imgUrl)
     userCred.imgUrl =
       'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
@@ -97,6 +97,8 @@ function saveLocalUser(user) {
     _id: user._id,
     fullname: user.fullname,
     imgUrl: user.imgUrl,
+    boards: user.boards,
+    tasks: user.tasks,
     // score: user.score,
   }
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
@@ -109,6 +111,14 @@ function getLoggedinUser() {
 
 function getRandomDefaultMember() {
   return getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+}
+
+async function getRandomUsers(amount = 5) {
+  let users = await getUsers()
+  let res = []
+  for (let i = 0; i < amount; i++) {
+    res.push(users[utilService.getRandomIntInclusive(0, users.length - 1)])
+  }
 }
 
 function getDefaultMembers() {
