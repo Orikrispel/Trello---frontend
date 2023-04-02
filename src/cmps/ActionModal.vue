@@ -8,8 +8,8 @@
 </template>
 
 <script>
+// import { boardService } from '../services/board.service'
 import { boardService } from '../services/board.service'
-// import { boardService } from '../services/board.service.local';
 import { eventBus } from '../services/event-bus.service'
 import ColorPicker from './ColorPicker.vue'
 import ImgPicker from './ImgPicker.vue'

@@ -1,11 +1,7 @@
 <template>
   <div class="index-container container home">
     <Loader :isLoading="isLoading" />
-    <BoardList
-      v-show="!isLoading"
-      @removeBoard="removeBoard"
-      @starBoard="starBoard"
-      @addBoard="addBoard" />
+    <BoardList v-show="!isLoading" @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
   </div>
 </template>
 

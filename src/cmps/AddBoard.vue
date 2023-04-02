@@ -23,8 +23,8 @@
 </template>
 
 <script>
-// import { boardService } from '../services/board.service.local'
 import { boardService } from '../services/board.service'
+// import { boardService } from '../services/board.service.local'
 import { svgService } from '../services/svg.service'
 import { eventBus } from '../services/event-bus.service'
 import ColorPicker from './ColorPicker.vue'
@@ -65,7 +65,10 @@ export default {
       this.pickedColor = 'null'
       this.pickedImg = imgUrls.thumb
       this.boardToAdd.style.imgUrls = imgUrls
-      console.log('this.boardToAdd.style.imgUrls', this.boardToAdd.style.imgUrls)
+      console.log(
+        'this.boardToAdd.style.imgUrls',
+        this.boardToAdd.style.imgUrls
+      )
     },
   },
   created() {
