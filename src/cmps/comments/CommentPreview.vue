@@ -5,12 +5,17 @@
       <span class="comment-date">{{ dateForDisplay }}</span>
     </h5>
 
-    <p class="comment-txt">
+    <p
+      :class="isUserEditing ? 'edit comment-txt' : 'comment-txt'"
+      :contenteditable="isUserEditing"
+      @blur="isUserEditing = false">
       {{ comment?.txt }}
     </p>
     <div class="btns-container-comment">
       <span class="icon icon-sm icon-add-reaction"></span>
-      <a class="btn-comment btn-comment-edit">Edit</a>
+      <a class="btn-comment btn-comment-edit" @click="isUserEditing = true"
+        >Edit</a
+      >
       <a class="btn-comment btn-comment-delete">Delete</a>
     </div>
   </div>
@@ -27,6 +32,12 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      isUserEditing: false,
+    }
+  },
+  methods: {},
   computed: {
     dateForDisplay() {
       const timestamp = this.comment.createdAt

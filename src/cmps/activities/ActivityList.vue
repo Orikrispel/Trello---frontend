@@ -1,8 +1,11 @@
 <!-- know if its in board or task based on route params -->
 
 <template>
-  <ul class="clean-list">
-    <li v-for="activity in activities" :key="activity?.id" class="activity-container">
+  <ul v-if="activities" class="clean-list">
+    <li
+      v-for="activity in activities"
+      :key="activity?.id"
+      class="activity-container">
       <p class="activity-txt">
         <span class="activity-by">{{ activity?.byMember?.fullname }}</span>
         {{ linkCommon(activity) }}

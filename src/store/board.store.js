@@ -237,5 +237,6 @@ export const boardStore = {
       }
       commit({ type: 'setCurrLabel', label: currLabel })
     },
+    returnActivity({ state }, { data }) {},
   },
 }
