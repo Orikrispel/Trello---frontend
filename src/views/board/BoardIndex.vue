@@ -1,11 +1,7 @@
 <template>
   <div class="index-container container home">
     <Loader :isLoading="isLoading" />
-    <BoardList
-      v-show="!isLoading"
-      @removeBoard="removeBoard"
-      @starBoard="starBoard"
-      @addBoard="addBoard" />
+    <BoardList v-show="!isLoading" @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
   </div>
 </template>
 
@@ -68,7 +64,6 @@ export default {
     async starBoard(board) {
       try {
         const newBoard = JSON.parse(JSON.stringify(board))
-        console.log('newBoard', newBoard)
         await this.$store.dispatch(getActionStarBoard(newBoard))
       } catch (err) {
         console.log(err)

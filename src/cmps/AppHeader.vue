@@ -12,19 +12,16 @@
 
     <nav class="flex gap">
       <section class="loggedin-user" v-if="loggedinUser">
-        <RouterLink :to="`/user/${loggedinUser._id}`">
-          <div class="member-img">
-            {{
-              loggedinUser.imgUrl
-              ? loggedinUser.imgUrl
-              : loggedinUser.fullname.charAt(0).toUpperCase()
-            }}
+        <RouterLink class="member-wrapper flex align-center" :to="`/login`">
+          <img class="user-img" v-if="loggedinUser.imgUrl" :src="loggedinUser.imgUrl" alt="">
+          <div v-else class="member-img">
+            <span>{{ loggedinUser.fullname.charAt(0).toUpperCase() }}</span>
           </div>
         </RouterLink>
       </section>
       <section class="log-in" v-else>
         <RouterLink :to="`/login`">
-          <div class="member-img">
+          <div class="login-img">
             <span v-html="getSvg('login')"></span>
           </div>
         </RouterLink>
@@ -34,8 +31,7 @@
 </template>
 
 <script>
-import { boardService } from '../services/board.service.local'
-// import { boardService } from '../services/board.service'
+import { boardService } from '../services/board.service'
 import { svgService } from '../services/svg.service'
 import AddBoard from '../cmps/AddBoard.vue'
 export default {

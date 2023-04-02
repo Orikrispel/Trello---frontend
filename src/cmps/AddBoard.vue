@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import { boardService } from '../services/board.service.local'
-// import { boardService } from '../services/board.service'
+import { boardService } from '../services/board.service'
 import { svgService } from '../services/svg.service'
 import { eventBus } from '../services/event-bus.service'
 import ColorPicker from './ColorPicker.vue'

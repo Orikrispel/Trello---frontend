@@ -30,8 +30,7 @@ import {
   SOCKET_EVENT_ADD_MSG,
   SOCKET_EMIT_SET_TOPIC,
 } from '../services/socket.service'
-// import { boardService } from '../services/board.service'
-import { boardService } from '../services/board.service.local'
+import { boardService } from '../services/board.service'
 import { eventBus } from '../services/event-bus.service'
 import CommentList from '../cmps/comments/CommentList.vue'
 export default {
