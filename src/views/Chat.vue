@@ -1,16 +1,25 @@
 <template>
   <div class="chat-container">
     <form @submit.prevent="sendComment" class="comment-input-container">
-      <input @blur="handleBlur" @focus="isUserCommenting = true" class="comment-input" type="text" v-model="comment.txt"
+      <input
+        @blur="handleBlur"
+        @focus="isUserCommenting = true"
+        class="comment-input"
+        type="text"
+        v-model="comment.txt"
         placeholder="Write a comment..." />
-      <div :class="
-        isUserCommenting
-          ? 'comment-editor-wrapper open'
-          : 'comment-editor-wrapper'
-      ">
+      <div
+        :class="
+          isUserCommenting
+            ? 'comment-editor-wrapper open'
+            : 'comment-editor-wrapper'
+        ">
         <div v-if="isUserCommenting" class="comment-editor-container">
-          <div :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
-            <button @click.stop :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
+          <div
+            :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
+            <button
+              @click.stop
+              :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
               Save
             </button>
           </div>
@@ -30,8 +39,8 @@ import {
   SOCKET_EVENT_ADD_MSG,
   SOCKET_EMIT_SET_TOPIC,
 } from '../services/socket.service'
-// import { boardService } from '../services/board.service'
-import { boardService } from '../services/board.service.local'
+import { boardService } from '../services/board.service'
+// import { boardService } from '../services/board.service.local'
 import { eventBus } from '../services/event-bus.service'
 import CommentList from '../cmps/comments/CommentList.vue'
 export default {
