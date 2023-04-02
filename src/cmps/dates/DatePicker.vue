@@ -187,7 +187,9 @@ export default {
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = `added due date to ${task.title}`
+      activity.txt = `set ${
+        task.title
+      } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
       activity.task = { title: task.title, taskId: this.taskId }
       activity.type = 'date'
       activity.byMember = {

@@ -173,7 +173,7 @@
               </div>
               <ActivityList
                 v-if="task.activities && task.activities.length"
-                :activities="task.activities" />
+                :activities="activitiesForActivitiesList" />
               <!-- </form> -->
               <!-- <ul
                 v-if="task.comments && task.comments.length"
@@ -387,9 +387,11 @@ export default {
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
       if (!board.activities) board.activities = []
-      board.activities.unshift(activity)
+      if (activity) {
+        board.activities.unshift(activity)
+      }
       this.task = updatedTask
-      this.updateBoard(board, 'Task updated', 'Failed to updated task')
+      this.updateBoard(board)
     },
     closeTaskDetails() {
       this.$router.push(`/board/${this.board._id}`)
@@ -450,6 +452,11 @@ export default {
     },
     coverBg() {
       return this.task.cover.color
+    },
+    activitiesForActivitiesList() {
+      return this.task.activities.filter(
+        (activity) => activity.type !== 'comment'
+      )
     },
   },
   unmounted() {
