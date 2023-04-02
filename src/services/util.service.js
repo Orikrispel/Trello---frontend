@@ -105,21 +105,40 @@ function loadFromStorage(key) {
   return data ? JSON.parse(data) : undefined
 }
 
-function getRandomTaskTitles(idx = getRandomIntInclusive(0, 9)) {
-  const codingTasks = [
-    'Implement user authentication with OAuth 2.0',
-    'Refactor the codebase to use a more modular architecture',
-    'Write a function that takes an array of integers and returns the sum of all the even numbers.',
-    'Add support for internationalization to the UI',
-    'Fix a bug where the application crashes when certain inputs are provided',
-    'Create a custom hook for handling form submission in Vue',
-    'Write unit tests for the backend API',
-    'Optimize the database queries for faster performance',
-    'Add a feature to allow users to reset their passwords',
-    'Implement a caching layer to reduce load times for frequently-accessed data.',
+function getRandomTaskTitles(idx = getRandomIntInclusive(0, 29)) {
+  const tasks = [
+    'Implement user authentication system',
+    'Create the board creation page',
+    'Build the card creation functionality',
+    'Develop the drag and drop feature for cards',
+    'Design the board layout',
+    'Implement card filtering options',
+    'Create a search bar for boards and cards',
+    'Build the list creation functionality',
+    'Develop the card editing functionality',
+    'Implement the comment feature for cards',
+    'Create a notifications system for board and card updates',
+    'Design the board and card labels feature',
+    'Implement the due date feature for cards',
+    'Create the team creation page',
+    'Build the team invite functionality',
+    'Develop the team member management system',
+    'Implement the team boards view',
+    'Create a dashboard page for the user',
+    'Design the settings page',
+    'Build the board archiving functionality',
+    'Develop the checklist creation feature',
+    'Implement the calendar view for due dates',
+    'Create the activity log for boards and cards',
+    'Build the power-up integration system',
+    'Develop the board membership system',
+    'Implement the organization creation functionality',
+    'Create the organization member management system',
+    'Design the organization dashboard',
+    'Build the organization billing system',
+    'Develop the organization analytics feature'
   ]
-
-  return codingTasks[idx]
+  return tasks[idx]
 }
 
 function getRandomLabelTitle(idx = getRandomIntInclusive(0, 9)) {
