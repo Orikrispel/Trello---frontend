@@ -50,7 +50,7 @@
             :class="{ 'semi-img-container': task.files[0] && task.cover.type === 'semi' }" :style="{
               backgroundColor: (task.files[0]) ? '' : task.cover?.color,
               backgroundImage: (task.files[0] && task.cover.type !== 'full') ? `url(${task.files[0]?.url})` : 'none',
-              backgroundSize: 'cover',
+              backgroundSize: 'contain',
             }">
           </div>
 
@@ -106,7 +106,7 @@ export default {
       from: null,
     }
   },
-  async created() {},
+  async created() { },
   mounted() {
     document.addEventListener('click', this.clickedOutGroupMenu)
   },
