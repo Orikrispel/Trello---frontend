@@ -4,15 +4,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   .vc-container {
     border: none;
   }
+
   .vc-header {
     width: 100%;
-    & > * {
+
+    &>* {
       background-color: inherit;
       color: #a5adba;
     }
+
     .vc-title {
       color: #172b4d;
       font-weight: 600;
@@ -31,6 +35,7 @@
   .highlights {
     background-color: rgb(66 82 110);
   }
+
   .vc-day-content {
     border-radius: 3px;
     padding: 4px 9px;
@@ -45,18 +50,18 @@
   .vc-highlight-content-solid {
     background-color: rgb(66 82 110);
   }
+
   .vc-day {
     border-radius: rem(3px);
   }
 
-  .date-input-container {
-  }
+  .date-input-container {}
+
   input[type='text'] {
     margin-right: 8px;
 
     background-color: $secondary-clr1;
     box-shadow: inset 0 0 0 2px $primary-clr4;
-    border: 1px solid black;
     outline: none;
   }
 
@@ -66,10 +71,12 @@
     justify-content: space-between;
     width: 100%;
     padding: rem(16px);
+
     .inputs-container {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+
       .txt-inputs-container.disabled {
         cursor: not-allowed;
       }
@@ -79,7 +86,7 @@
 
         background-color: $secondary-clr1;
         box-shadow: inset 0 0 0 2px $primary-clr4;
-        border: 1px solid black;
+
         outline: none;
 
         &.disabled {
@@ -126,8 +133,6 @@
 
     .txt-input {
       width: rem(90px);
-      border: 1px solid black;
-      width: rem(90px);
       margin: 0;
       padding: 6px;
       font-size: 14px;
@@ -147,7 +152,7 @@
     justify-content: space-between;
     width: 100%;
 
-    & > * {
+    &>* {
       margin-inline: rem(8px);
     }
 
@@ -156,6 +161,7 @@
     }
   }
 }
+
 :root {
   --vc-accent-600: red !important;
 }

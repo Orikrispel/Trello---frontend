@@ -116,7 +116,7 @@ function getDefaultMembers() {
     {
       _id: '64251c27a476517cf20661ef',
       fullname: 'Yohai Korem',
-      imgUrl: '../assets/imgs/memberImgs/memberImgYohai.jpg',
+      imgUrl: 'src/assets/imgs/memberImgs/memberImgYohai.jpg',
     },
     {
       _id: '64253e39a476517cf20661f0',

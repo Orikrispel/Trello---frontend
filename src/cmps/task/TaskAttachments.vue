@@ -6,7 +6,7 @@
 
       <p v-if="this.task.date" :class="['dueDate flex fs12', { complete: isComplete }]"><span
           class="icon checklist-icon"></span>
-        {{ dueDate }}
+        {{ date }}
       </p>
 
       <!-- <pre class="fs12"> {{ task.date }}</pre> -->
@@ -24,8 +24,9 @@
 
     <ul class="clean-list flex">
       <li class="member-preview" v-for="member in task.members" :key="member._id">
-        <div class="member-img">
-          {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
+        <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+        <div v-else class="member-img">
+          <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
         </div>
       </li>
     </ul>
@@ -81,14 +82,19 @@ export default {
       return `${this.todosDone}/${this.todosCount}`
     },
 
-    dueDate() {
-      if (!this.task.date.dueDate) return
-      let date = new Date(this.task.date.dueDate);
-
-      var day = date.getDate()
-      var month = date.toLocaleString('default', { month: 'short' });
-      console.log(`${month} ${day}`)
-      return `${month} ${day}`
+    date() {
+      if (!this.task.date) return
+      let dueDate = new Date(this.task.date.dueDate)
+      let day = dueDate.getDate()
+      let month = dueDate.toLocaleString('default', { month: 'short' })
+      let date = `${month} ${day}`
+      if (this.task.date.startDate) {
+        let startDate = new Date(this.task.date.startDate)
+        day = startDate.getDate()
+        month = startDate.toLocaleString('default', { month: 'short' })
+        date = `${month} ${day} - ${date}`
+      }
+      return date
 
     }
   },
