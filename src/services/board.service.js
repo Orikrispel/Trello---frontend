@@ -192,7 +192,13 @@ function _getRandomGroups(count = 4) {
     let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 5))
     currGroup.tasks[0].cover = { type: 'semi', color: '' }
     currGroup.tasks[0].files.push(getFile(i))
-    if (i === 0) currGroup.title = 'In Development'
+    if (i === 0) {
+      currGroup.title = 'In Development'
+      currGroup.tasks[0].title = 'Finish all HTML work for the app homepage'
+      currGroup.tasks[0].checklists.push(_getDemoChecklist())
+      currGroup.tasks[0].labels = []
+      currGroup.tasks[0].cover = { type: 'semi', color: 'orange' }
+    }
     if (i === 1) currGroup.title = 'Backlog-Server'
     if (i === 2) currGroup.title = 'Done'
     if (i === 3) currGroup.title = 'QA'
@@ -200,6 +206,37 @@ function _getRandomGroups(count = 4) {
     groups.push(currGroup)
   }
   return groups
+}
+
+function _getDemoChecklist() {
+  const checklist = {
+    id: 'cl' + utilService.makeId(5),
+    title: 'Checklist',
+    todos: [
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish basic design',
+        isDone: true,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish board components',
+        isDone: true,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish group components',
+        isDone: true,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish home filters.',
+        isDone: false,
+      },
+    ],
+
+  }
+  return checklist
 }
 
 function _getRandomGroup(count = 5) {
@@ -303,7 +340,7 @@ function _getRandomChecklist(isDone = true) {
 }
 
 function getRandomCover() {
-  return { color: getRandomCoverColor(), type: getRandomCoverType() }
+  return { color: getRandomCoverColor(), type: 'semi' }
 }
 function getRandomTask(
   title = utilService.getRandomTaskTitles(),
