@@ -1,6 +1,6 @@
 <template>
   <section>
-    <AppHeader />
+    <AppHeader v-if="!isHome" />
     <RouterView />
     <UserMsg />
   </section>
@@ -18,6 +18,12 @@ export default {
     console.log('Vue App created')
     const user = userService.getLoggedinUser()
     if (user) store.commit({ type: 'setLoggedinUser', user })
+  },
+  computed: {
+    isHome() {
+      console.log('this.$route.name', this.$route.name)
+      return this.$route.name === 'Home'
+    }
   },
   components: {
     AppHeader,
