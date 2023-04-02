@@ -1,7 +1,7 @@
 <template>
   <div class="comment-container">
     <h5>
-      <span class="comment-by">{{ comment?.byMember.fullname }} </span>
+      <span class="comment-by">{{ comment?.byMember?.fullname }} </span>
       <span class="comment-date">{{ dateForDisplay }}</span>
     </h5>
 

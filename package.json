@@ -12,6 +12,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.7",
     "axios": "^0.27.2",
+    "cloudinary": "^1.35.0",
     "fast-average-color": "^9.3.0",
     "floating-vue": "^2.0.0-beta.20",
     "sass": "^1.53.0",
@@ -19,6 +20,7 @@
     "v-calendar": "^3.0.3",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2",
+    "vue3-google-login": "^2.0.15",
     "vue3-smooth-dnd": "^0.0.2",
     "vuex": "^4.0.2"
   },

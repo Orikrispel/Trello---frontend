@@ -40,7 +40,6 @@ import {
   SOCKET_EMIT_SET_TOPIC,
 } from '../services/socket.service'
 import { boardService } from '../services/board.service'
-// import { boardService } from '../services/board.service.local'
 import { eventBus } from '../services/event-bus.service'
 import CommentList from '../cmps/comments/CommentList.vue'
 export default {
@@ -93,8 +92,8 @@ export default {
       activity.task = { title: this.task.title, taskId: this.taskId }
       activity.type = 'comment'
       activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
+        fullname: user?.fullname || 'Ori Teicher',
+        _id: user?._id || 'u12345',
       }
       this.comments.push(comment)
       let updatedTask = { ...this.task }

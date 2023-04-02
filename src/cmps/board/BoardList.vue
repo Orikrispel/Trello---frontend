@@ -8,7 +8,7 @@
       <ul class="board-list">
         <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
           background: board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || board.style?.backgroundColor,
+          backgroundImage: getBoardBg(board) || board.style?.backgroundColor || 'linear-gradient(55.41deg, rgb(250, 165, 61) 2 %, rgb(89, 201, 2) 100 %)',
           backgroundSize: 'cover',
         }">
           <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
