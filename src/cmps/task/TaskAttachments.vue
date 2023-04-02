@@ -3,11 +3,11 @@
 
     <div class="flex align-center">
       <span v-show="task.description" class="icon description-icon"></span>
-
+      <!-- 
       <p v-show="todosCount !== 0" :class="['checklist flex fs12', { complete: isComplete }]"><span
           class="icon checklist-icon"></span>
         {{ dueDate }}
-      </p>
+      </p> -->
 
       <pre class="fs12"> {{ task.date }}</pre>
 
