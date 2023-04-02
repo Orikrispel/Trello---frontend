@@ -1,28 +1,18 @@
 <template>
   <header class="app-header">
     <nav class="flex gap">
-      <RouterLink class="flex" to="/"
-        ><img class="logo" src="../assets/logo white.png" alt="Jello logo"
-      /></RouterLink>
+      <RouterLink class="flex" to="/"><img class="logo" src="../assets/logo white.png" alt="Jello logo" /></RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
       <button class="btn add-board" @click="isCreateMode = !isCreateMode">
         Create
-        <AddBoard
-          v-show="isCreateMode"
-          @addBoard="addBoard"
-          @closeModal="isCreateMode = false"
-          style="top: 40px" />
+        <AddBoard v-show="isCreateMode" @addBoard="addBoard" @closeModal="isCreateMode = false" style="top: 40px" />
       </button>
     </nav>
 
     <nav class="flex gap">
       <section class="loggedin-user" v-if="loggedinUser">
         <RouterLink class="member-wrapper flex align-center" :to="`/login`">
-          <img
-            class="user-img"
-            v-if="loggedinUser.imgUrl"
-            :src="loggedinUser.imgUrl"
-            alt="" />
+          <img class="user-img" v-if="loggedinUser.imgUrl" :src="loggedinUser.imgUrl" alt="" />
           <div v-else class="member-img">
             <span>{{ loggedinUser.fullname.charAt(0).toUpperCase() }}</span>
           </div>
@@ -54,7 +44,7 @@ export default {
       isCreateMode: false,
     }
   },
-  created() {},
+  created() { },
   computed: {
     loggedinUser() {
       return this.$store.getters.loggedinUser

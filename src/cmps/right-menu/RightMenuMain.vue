@@ -49,5 +49,7 @@ export default {
       return boardId
     },
   },
+  emits: ['changeCmp', 'setBgColor', 'setBgImg']
+
 }
 </script>
