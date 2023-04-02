@@ -299,6 +299,13 @@
 </template>
 
 <script>
+import {
+  socketService,
+  SOCKET_EMIT_TASK_UPDATED,
+  SOCKET_EMIT_SET_TOPIC,
+  SOCKET_EVENT_TASK_UPDATED,
+  SOCKET_EVENT_USER_UPDATED,
+} from '../services/socket.service'
 import { eventBus } from '../services/event-bus.service'
 import { mapGetters } from 'vuex'
 import { svgService } from '../services/svg.service'
@@ -342,6 +349,10 @@ export default {
       type: 'loadCurrBoard',
       boardId: this.boardId,
     })
+    socketService.on(SOCKET_EVENT_TASK_UPDATED, (task) => {
+      const activity = null
+      this.saveTask(task, activity, true)
+    })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
     if (!task) task = this.$store.getters.emptyTask
@@ -367,7 +378,8 @@ export default {
       // this.$refs.taskDesc.focus()
       if (this.userIsEditing) this.$nextTick(() => this.$refs.taskDesc.focus())
     },
-    saveTask(task, activity) {
+    saveTask(task, activity, skipEmit = false) {
+      if (!task) return
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = JSON.parse(JSON.stringify(task))
       if (!updatedTask.activities) updatedTask.activities = []
@@ -387,6 +399,11 @@ export default {
         board.activities.unshift(activity)
       }
       this.task = updatedTask
+
+      if (!skipEmit) {
+        console.log(updatedTask.members)
+        socketService.emit(SOCKET_EMIT_TASK_UPDATED, updatedTask)
+      }
       this.updateBoard(board)
     },
     closeTaskDetails() {

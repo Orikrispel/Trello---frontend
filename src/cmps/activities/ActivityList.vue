@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     linkCommon(activity) {
+      if (!activity.txt || !activity.task) return
       let { txt, task } = activity
       let { title } = task
       let common = []

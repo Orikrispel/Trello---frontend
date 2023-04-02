@@ -89,17 +89,17 @@ export default {
         task.members.push({ ...member })
         member.tasks.push(task.id)
       }
-      console.log(member)
 
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = ` added ${member.fullname} to ${task.title}`
+      if (!user) return
+      activity.txt = ` added ${member?.fullname} to ${task.title}`
       activity.task = { title: task.title, taskId: this.taskId }
-      activity.type = 'checklist'
+      activity.type = 'taskMember'
       activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
+        fullname: user?.fullname,
+        _id: user?._id,
       }
       const data = {
         task,
