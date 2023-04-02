@@ -89,6 +89,7 @@ export default {
         eventBus.on('openRightMenu', () => {
             this.isMenuOpen = true
         })
-    }
+    },
+    emits: ['changeCmp', 'setBgColor', 'setBgImg']
 }
 </script>
