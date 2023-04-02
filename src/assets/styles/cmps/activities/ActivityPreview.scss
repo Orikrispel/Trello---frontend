@@ -1,0 +1,15 @@
+.activity-container {
+  color: #172b4d;
+  padding: em(8px) 0;
+  .activity-by {
+    font-weight: 700;
+    font-size: rem(14px);
+  }
+  .activity-txt {
+    font-weight: 400;
+  }
+  .activity-timestamp {
+    display: block;
+    font-size: rem(12px);
+  }
+}

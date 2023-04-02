@@ -24,6 +24,9 @@ export const userStore = {
     watchedUser({ watchedUser }) {
       return watchedUser
     },
+    defaultMembers() {
+      return userService.getDefaultMembers()
+    },
   },
   mutations: {
     setLoggedinUser(state, { user }) {

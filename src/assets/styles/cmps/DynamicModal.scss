@@ -38,7 +38,7 @@
     overflow: auto;
 
     input {
-      font-size: rem(14px)
+      font-size: rem(14px);
     }
   }
 }
@@ -48,7 +48,7 @@
   display: none;
 }
 
-//SCROLLBAR 
+//SCROLLBAR
 ::-webkit-scrollbar {
   margin-inline-end: -12px;
 }

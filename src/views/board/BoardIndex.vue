@@ -1,14 +1,18 @@
 <template>
   <div class="index-container container home">
     <Loader :isLoading="isLoading" />
-    <BoardList v-show="!isLoading" @removeBoard="removeBoard" @starBoard="starBoard" @addBoard="addBoard" />
+    <BoardList
+      v-show="!isLoading"
+      @removeBoard="removeBoard"
+      @starBoard="starBoard"
+      @addBoard="addBoard" />
   </div>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 // import { boardService } from '../../services/board.service'
-import { boardService } from '../../services/board.service.local'
+import { boardService } from '../../services/board.service'
 import {
   getActionRemoveBoard,
   getActionUpdateBoard,
@@ -40,11 +44,9 @@ export default {
   },
   created() {
     this.isLoading = true
-    console.log('this.loggedinUser', this.$store.getters.loggedinUser)
-    this.$store.dispatch({ type: 'loadBoards' })
-      .finally(() => {
-        this.isLoading = false
-      })
+    this.$store.dispatch({ type: 'loadBoards' }).finally(() => {
+      this.isLoading = false
+    })
   },
   methods: {
     async addBoard(board) {

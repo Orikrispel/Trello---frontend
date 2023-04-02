@@ -1,0 +1,42 @@
+.chat-container {
+  width: 100%;
+  .comment-input-container {
+    width: 100%;
+    margin: 0 0 em(8px);
+    .comment-input {
+      width: 100%;
+      transition: 0.6s;
+    }
+    .comment-editor-wrapper {
+      position: relative;
+      display: flex;
+      background-color: $secondary-clr1;
+      transition: 0.6s;
+      align-items: end;
+      &.open {
+        padding-bottom: em(48px);
+      }
+      .comment-editor-container {
+        display: flex;
+        width: 100%;
+        min-height: 100%;
+        align-items: end;
+        // justify-content: end;
+        .btn-wrapper {
+          position: absolute;
+          bottom: em(6px);
+          left: em(10px);
+          cursor: not-allowed;
+          &.no-click {
+            pointer-events: none;
+          }
+          & .btn.disabled {
+            pointer-events: none;
+            background-color: #091e420a;
+            color: #a5adba;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,7 @@
 <template>
   <div class="due-date-preview-container flex align-center">
     <input type="checkbox" v-model="date.isCompleted" />
-    <VDropdown :distance="6" :placement="'right'
-    ">
+    <VDropdown :distance="6" :placement="'right'">
       <button class="btn-date btn-task light flex align-center">
         {{ dateForDisplay }}
         <span :class="spanClass">{{ spanClass }}</span>
@@ -19,7 +18,6 @@
         </DynamicModal>
       </template>
     </VDropdown>
-
   </div>
 </template>
 <script>
@@ -35,10 +33,22 @@ export default {
       required: true,
     },
   },
-  data() { },
+  data() {
+    return {}
+  },
   computed: {
     dateForDisplay() {
-      return `${this.getDay} ${utilService.formatDateString(this.date.dueDate)}`
+      if (!this.date.startDate) {
+        return `${this.getDueDay} ${utilService.formatDateString(
+          this.date.dueDate
+        )} at ${this.date.dueTime}`
+      } else {
+        return `${utilService.formatDateString(
+          this.date.startDate
+        )}-${utilService.formatDateString(this.date.dueDate)} at ${
+          this.date.dueTime
+        }`
+      }
     },
     spanClass() {
       const diff = this.diff(this.date.dueDate)
@@ -50,7 +60,7 @@ export default {
       }
       return 'complete'
     },
-    getDay() {
+    getDueDay() {
       const diff = this.diff(this.date.dueDate)
 
       if (diff === 0) {
@@ -85,7 +95,7 @@ export default {
   },
   components: {
     DynamicModal,
-    DatePicker
-  }
+    DatePicker,
+  },
 }
 </script>

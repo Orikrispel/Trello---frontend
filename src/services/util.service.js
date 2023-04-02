@@ -27,7 +27,6 @@ function makeId(length = 6) {
   return txt
 }
 
-
 function makeLorem(size = 100) {
   var words = [
     'The sky',
@@ -242,6 +241,7 @@ function getRandomProjectNames(idx = getRandomIntInclusive(0, 9)) {
 function formatDateString(timestamp) {
   // Create a new Date object from the timestamp
   var date = new Date(timestamp)
+
   // Create an array with the month names
   var months = [
     'Jan',
@@ -263,18 +263,18 @@ function formatDateString(timestamp) {
   var hour = date.getHours()
   var minute = date.getMinutes()
   // Convert the hour to a 12-hour format and keep track of the AM/PM suffix
-  var suffix = 'AM'
-  if (hour >= 12) {
-    suffix = 'PM'
-    hour = hour - 12 + ''
-  }
-  if (hour == 0) {
-    hour = 12 + ''
-  }
-  if (hour <= 9) hour = `${hour}`
-  if (minute <= 9) minute = `0${minute}`
+  // var suffix = 'AM'
+  // if (hour >= 12) {
+  //   suffix = 'PM'
+  //   hour = hour - 12 + ''
+  // }
+  // if (hour == 0) {
+  //   hour = 12 + ''
+  // }
+  // if (hour <= 9) hour = `${hour}`
+  // if (minute <= 9) minute = `0${minute}`
   // Create the formatted date string
-  var formattedDate = ` ${day} ${month} at ${hour}:${minute} ${suffix}  `
+  var formattedDate = ` ${day} ${month}  `
   // Return the formatted date string
   return formattedDate
 }

@@ -1,20 +1,31 @@
 <template>
   <div class="modal-overlay flex" @click="closeTaskDetails">
     <section class="task-details" @click.stop>
-      <header v-if="task.cover?.color" class="task-cover" :style="{ backgroundColor: task.cover?.color }">
+      <header
+        v-if="task.cover?.color"
+        class="task-cover"
+        :style="{ backgroundColor: task.cover?.color }">
         <RouterLink :to="`/board/${boardId}`" class="btn-close">
           <div class="icon" v-html="getSvg('close')"></div>
         </RouterLink>
       </header>
 
-      <RouterLink v-if="!task.cover" :to="`/board/${boardId}`" class="btn-close">
+      <RouterLink
+        v-if="!task.cover"
+        :to="`/board/${boardId}`"
+        class="btn-close">
         <div class="icon" v-html="getSvg('close')"></div>
       </RouterLink>
       <div class="task-container">
         <div class="task-container-heading flex column">
           <div class="task-title-wrapper">
-            <h2 class="task-title fs20" contenteditable="true" @blur="updateTitle">
-              <span contenteditable="false" class="icon header-icon icon-lg"></span>
+            <h2
+              class="task-title fs20"
+              contenteditable="true"
+              @blur="updateTitle">
+              <span
+                contenteditable="false"
+                class="icon header-icon icon-lg"></span>
               {{ task.title ? task.title : 'new title' }}
             </h2>
           </div>
@@ -26,20 +37,27 @@
         <div class="task-main-container">
           <main class="task-main">
             <div class="flex task-detail-data">
-              <div v-show="task.members?.length" class="member-container container">
+              <div
+                v-show="task.members?.length"
+                class="member-container container">
                 <h3 class="fs12 inner-title">Members</h3>
                 <ul class="task-heading-member-list flex clean-list">
-                  <li v-for="member in task.members" :key="member._id" class="member">
+                  <li
+                    v-for="member in task.members"
+                    :key="member._id"
+                    class="member">
                     <div class="member-img">
                       {{
                         member.imgUrl
-                        ? member.imgUrl
-                        : member.fullname.charAt(0).toUpperCase()
+                          ? member.imgUrl
+                          : member.fullname.charAt(0).toUpperCase()
                       }}
                     </div>
                   </li>
                   <VDropdown :distance="6" :placement="'right-start'">
-                    <button class="btn-task light btn-add-member flex"><span class="icon icon-add"></span></button>
+                    <button class="btn-task light btn-add-member flex">
+                      <span class="icon icon-add"></span>
+                    </button>
 
                     <template #popper>
                       <DynamicModal>
@@ -54,14 +72,21 @@
                 </ul>
               </div>
 
-              <div v-show="task.labels?.length" class="label-container container">
+              <div
+                v-show="task.labels?.length"
+                class="label-container container">
                 <h3 class="fs12 inner-title">Labels</h3>
                 <ul class="task-heading-label-list flex clean-list">
-                  <li class="label" v-for="label in task.labels" :key="label.id">
+                  <li
+                    class="label"
+                    v-for="label in task.labels"
+                    :key="label.id">
                     <LabelPreview :label="label" />
                   </li>
                   <VDropdown :distance="6" :placement="'left-start'">
-                    <button class="btn-task light btn-add-label flex"><span class="icon icon-add"></span></button>
+                    <button class="btn-task light btn-add-label flex">
+                      <span class="icon icon-add"></span>
+                    </button>
 
                     <template #popper>
                       <DynamicModal>
@@ -85,14 +110,22 @@
             </div>
 
             <!-- description -->
-            <form class="description-editor editor" @submit.prevent="handleDesc">
+            <form
+              class="description-editor editor"
+              @submit.prevent="handleDesc">
               <span class="icon description-icon icon-lg"></span>
               <h3 class="title fs16">Description</h3>
-              <button class="btn-task light btn-edit-desc" v-if="!userIsEditing && task.description" @click="handleDesc">
+              <button
+                class="btn-task light btn-edit-desc"
+                v-if="!userIsEditing && task.description"
+                @click="handleDesc">
                 Edit
               </button>
 
-              <p class="btn-task light btn-desc" v-if="!userIsEditing && !task.description" @click="handleDesc">
+              <p
+                class="btn-task light btn-desc"
+                v-if="!userIsEditing && !task.description"
+                @click="handleDesc">
                 Add a more detailed description...
                 <br />
                 <br />
@@ -101,9 +134,16 @@
               <p v-if="!userIsEditing" @click="handleDesc">
                 {{ task.description }}
               </p>
-              <textarea v-if="userIsEditing" rows="5" ref="taskDesc" v-model="task.description"
+              <textarea
+                v-if="userIsEditing"
+                rows="5"
+                ref="taskDesc"
+                v-model="task.description"
                 @blur="userIsEditing = false"></textarea>
-              <button class="btn-task blue" v-if="userIsEditing" @click="saveTask(task)">
+              <button
+                class="btn-task blue"
+                v-if="userIsEditing"
+                @click="saveTask(task)">
                 Save
               </button>
               <button class="btn-task light btn-cancel" v-if="userIsEditing">
@@ -131,6 +171,9 @@
                 </div>
                 <Chat :task="task" />
               </div>
+              <ActivityList
+                v-if="task.activities && task.activities.length"
+                :activities="activitiesForActivitiesList" />
               <!-- </form> -->
               <!-- <ul
                 v-if="task.comments && task.comments.length"
@@ -139,7 +182,9 @@
                   {{ comment }}
                 </li>
               </ul> -->
-              <!-- <ul v-if="task.activities && task.activities.length" class="clean-list">
+              <!-- <ul
+                v-if="task.activities && task.activities.length"
+                class="clean-list">
                 <li v-for="(activity, idx) in task.activities" :key="idx">
                   {{ activity }}
                 </li>
@@ -198,14 +243,19 @@
                   <template v-slot:title>Add checklist</template>
 
                   <template v-slot scope="props">
-                    <AddChecklist :actionData="{ task: task }" @setCreateModeOff="checklistMenuOpen = false" />
+                    <AddChecklist
+                      :actionData="{ task: task }"
+                      @setCreateModeOff="checklistMenuOpen = false" />
                   </template>
                 </DynamicModal>
               </template>
             </VDropdown>
             <VDropdown :distance="6" :placement="'left'">
               <button class="btn-task light">
-                <span class="icon icon-small time-icon" v-html="getSvg('watch')"></span>Dates
+                <span
+                  class="icon icon-small time-icon"
+                  v-html="getSvg('watch')"></span
+                >Dates
               </button>
 
               <template #popper>
@@ -234,7 +284,11 @@
                 <span class="icon icon-small card-cover-icon"></span>Cover
               </button>
               <template #popper>
-                <AddCover :task="task" @onUpdateTask="onUpdateTask" @setCover="setCover" @removeCover="removeCover" />
+                <AddCover
+                  :task="task"
+                  @onUpdateTask="onUpdateTask"
+                  @setCover="setCover"
+                  @removeCover="removeCover" />
               </template>
             </VDropdown>
           </aside>
@@ -279,8 +333,8 @@ export default {
     }
   },
   async created() {
-    eventBus.on('updateTask', (task) => {
-      this.saveTask(task)
+    eventBus.on('updateTask', ({ task, activity }) => {
+      this.saveTask(task, activity)
     })
     eventBus.on('updateBoard', (board) => {
       this.updateBoard(board)
@@ -309,26 +363,35 @@ export default {
   methods: {
     updateTitle(ev) {
       this.task.title = ev.target.innerText
-      this.saveTask(this.task.title)
+
+      this.saveTask(this.task)
     },
     handleDesc() {
       this.userIsEditing = !this.userIsEditing
       // this.$refs.taskDesc.focus()
       if (this.userIsEditing) this.$nextTick(() => this.$refs.taskDesc.focus())
     },
-    handleComment() { },
-    async saveTask(task) {
+    saveTask(task, activity) {
       let board = JSON.parse(JSON.stringify(this.board))
-      let updatedTask = { ...task }
+      let updatedTask = JSON.parse(JSON.stringify(task))
+      if (!updatedTask.activities) updatedTask.activities = []
+      if (activity) {
+        updatedTask.activities.unshift(activity)
+      }
+
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
       })
 
-      const taskIdx = group.tasks.findIndex((t) => t.id === updatedTask.id)
+      const taskIdx = group?.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
+      if (!board.activities) board.activities = []
+      if (activity) {
+        board.activities.unshift(activity)
+      }
       this.task = updatedTask
-      this.updateBoard(board, 'Task updated', 'Failed to updated task')
+      this.updateBoard(board)
     },
     closeTaskDetails() {
       this.$router.push(`/board/${this.board._id}`)
@@ -369,7 +432,8 @@ export default {
     setCover(type, color) {
       const newTask = JSON.parse(JSON.stringify(this.task))
       newTask.cover = { type, color }
-      eventBus.emit('updateTask', newTask)
+      const data = { task: newTask }
+      eventBus.emit('updateTask', data)
       console.log('newTask.cover', newTask.cover)
     },
     removeCover() {
@@ -388,6 +452,11 @@ export default {
     },
     coverBg() {
       return this.task.cover.color
+    },
+    activitiesForActivitiesList() {
+      return this.task.activities.filter(
+        (activity) => activity.type !== 'comment'
+      )
     },
   },
   unmounted() {
