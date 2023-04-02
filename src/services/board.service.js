@@ -190,7 +190,8 @@ function _getRandomGroups(count = 4) {
   const groups = []
   for (let i = 0; i < count; i++) {
     let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 5))
-    // currGroup.title = utilService.getRandomLabelTitle()
+    currGroup.tasks[0].cover = { type: 'semi', color: '' }
+    currGroup.tasks[0].files.push(getFile(i))
     if (i === 0) currGroup.title = 'In Development'
     if (i === 1) currGroup.title = 'Backlog-Server'
     if (i === 2) currGroup.title = 'Done'
@@ -205,7 +206,7 @@ function _getRandomGroup(count = 5) {
   const group = getEmptyGroup()
   for (let i = 0; i < count; i++) {
     let currTask = getRandomTask()
-    if (i % 3 === 0) {
+    if (i % 2 === 0) {
       currTask.cover = getRandomCover()
       currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
     }
@@ -218,6 +219,7 @@ function _getRandomGroup(count = 5) {
 }
 
 function getFile(num) {
+  debugger
   const files = [
     {
       name: 'Code screenshot',
@@ -329,13 +331,12 @@ function getRandomCoverType() {
 
 function _getBoardRandomGradient() {
   const colorItems = [
-    'linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)',
-    'linear-gradient(to right,#824de4,#080c3e)',
-    'linear-gradient(143deg, #a2bc12, #53b8e1)',
-    'linear-gradient(331deg, #ad8739, #e35493)',
-    'linear-gradient(230deg, #859d0d, #87d9ab)',
-    'linear-gradient(187deg, #b36738, #d51d90)',
-    'linear-gradient(124deg, #919781, #c67733)',
+    'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(55, 180, 195) 100%)',
+    'linear-gradient(55.41deg, rgb(12, 102, 228) 2%, rgb(9, 50, 108) 100%)',
+    'linear-gradient(55.41deg, rgb(9, 50, 108) 2%, rgb(205, 81, 157) 100%)',
+    'linear-gradient(55.41deg, rgb(110, 93, 198) 2%, rgb(231, 116, 187) 100%)',
+    'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
+    'linear-gradient(55.41deg, rgb(250, 165, 61) 2%, rgb(89, 201, 2) 100%)',
   ]
   return colorItems[utilService.getRandomIntInclusive(0, 6)]
 }
@@ -376,15 +377,17 @@ async function _createBoards(amount = 20) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
   let demoBoard = await getDemoData()
-  setGroupsWithFiles(demoBoard)
   boards.unshift(demoBoard)
   return boards
 }
 
-function setGroupsWithFiles(demoBoard) {
+function getGroupsWithFiles(demoBoard) {
+  let newBoard = JSON.parse(JSON.stringify(demoBoard))
   for (let i = 0; i < 4; i++) {
-    demoBoard.groups[i].tasks[0].files.push(getFile(i))
+    newBoard.groups[i].tasks[0].cover.type = 'semi'
+    newBoard.groups[i].tasks[0].files.push(getFile(i))
   }
+  return newBoard
 }
 
 async function getDemoData() {
@@ -395,7 +398,7 @@ async function getDemoData() {
     {
       imgUrls: '',
       backgroundColor:
-        'linear-gradient(32deg, rgba(206,185,70,0.9), rgba(204,43,250,0.9))',
+        'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
     },
     _getRandomGroups(6),
     userService.getDefaultMembers()
@@ -451,7 +454,7 @@ async function _createBoard(
     ],
     style: {
       backgroundColor: _getBoardRandomColor(),
-      imgUrls: unsplashService.getRandomImg(),
+      imgUrls: {},
       gradient: _getBoardRandomGradient(),
     },
     labels,

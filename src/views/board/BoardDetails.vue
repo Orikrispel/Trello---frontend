@@ -31,7 +31,7 @@
       <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
     </header>
 
-    <InviteModalVue @updateBoard="updateBoard" />
+    <!-- <InviteModalVue @updateBoard="updateBoard" /> -->
 
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
