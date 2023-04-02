@@ -8,10 +8,7 @@
           <button class="btn btn-list clean-btn" @click="onImgUpload">
             Computer
           </button>
-          <input
-            class="upload-img-input"
-            type="file"
-            @change.prevent="onImgUpload" />
+          <input class="upload-img-input" type="file" @change.prevent="onImgUpload" />
         </label>
         <hr />
         <form class="add-checklist-form">
@@ -46,8 +43,10 @@ export default {
     }
   },
   methods: {
-    onImgUpload(event) {
+    async onImgUpload(event) {
       const newTask = JSON.parse(JSON.stringify(this.task))
+      const res = await uploadService.uploadImgToCloud(event)
+      console.log('res', res)
       if (!newTask.files) newTask.files = []
       const file = event.target.files[0]
       const reader = new FileReader()
@@ -56,8 +55,8 @@ export default {
         this.fileUrl = reader.result
         const newFile = {
           id: 'att' + utilService.makeId(),
-          url: this.fileUrl,
-          name: file.name,
+          url: res.url,
+          name: res.public_id,
           createdAt: 'Added on' + utilService.formatDateString(Date.now()),
         }
         newTask.files.push(newFile)
@@ -69,17 +68,16 @@ export default {
         activity.task = { title: newTask.title, taskId: newTask.id }
         activity.type = 'attachment'
         activity.byMember = {
-          fullname: user.fullname,
-          _id: user._id,
+          fullname: user?.fullname || 'Ori Teicher',
+          _id: user?._id || 'user1234',
         }
         const data = {
           task: newTask,
           activity,
         }
-
         this.$emit('onUpdateTask', data)
       }
-    },
+    }
   },
   components: {
     DynamicModal,

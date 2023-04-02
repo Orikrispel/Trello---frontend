@@ -37,7 +37,7 @@ async function query() {
   let user = userService.getLoggedinUser()
   // let userId = user._id
   let boards = await httpService.get(BASE_URL)
-  if (!boards || !boards.length) boards = _createBoards(7)
+  if (!boards || !boards.length) boards = _createBoards()
   return boards
 }
 function getById(boardId) {
@@ -189,8 +189,8 @@ function getDefaultEmptyLabel() {
 function _getRandomGroups(count = 4) {
   const groups = []
   for (let i = 0; i < count; i++) {
-    let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 6))
-    currGroup.title = utilService.getRandomLabelTitle()
+    let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 5))
+    // currGroup.title = utilService.getRandomLabelTitle()
     if (i === 0) currGroup.title = 'In Development'
     if (i === 1) currGroup.title = 'Backlog-Server'
     if (i === 2) currGroup.title = 'Done'
@@ -205,15 +205,53 @@ function _getRandomGroup(count = 5) {
   const group = getEmptyGroup()
   for (let i = 0; i < count; i++) {
     let currTask = getRandomTask()
-    currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(0, 5))
-    currTask.cover = getRandomCover()
-    let currChecklist =
-      i % 2 === 0 ? _getRandomChecklist(false) : _getRandomChecklist(true)
+    if (i % 3 === 0) {
+      currTask.cover = getRandomCover()
+      if (currTask.cover.type === 'semi') currTask.files.push(getFile(utilService.getRandomIntInclusive(0, 5)))
+      currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
+    }
+    let currChecklist = i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
     currTask.checklists.push(currChecklist)
     currTask.members = i % 3 === 0 ? getRandomMembers() : []
     group.tasks.push(currTask)
   }
   return group
+}
+
+function getFile(num) {
+  const files = [
+    {
+      name: 'Code screenshot',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680441162/Screenshot_20221216_133859_re0ltt.png',
+      createdAt: 'Added on ' + utilService.formatDateString(Date.now())
+    },
+    {
+      name: 'Coding-gif',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680442558/coding_gif_ml4plo.gif',
+      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+    },
+    {
+      name: 'Mongo-DB',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680444655/mongo-db_yq2uoz.png',
+      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+    },
+    {
+      name: 'Work-Gif',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680442771/work_gif_ow8ysf.gif',
+      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+    },
+    {
+      name: 'Github-Gif',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680449935/github-logo-300x300_uaexvj.png',
+      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+    },
+    {
+      name: 'Vue-Logo',
+      url: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680450260/vuee_logo_o4xi6t.png',
+      createdAt: 'Added on' + utilService.formatDateString(Date.now())
+    }
+  ]
+  return files[num]
 }
 
 function getRandomMembers() {
@@ -286,8 +324,8 @@ function getRandomCoverColor() {
 }
 
 function getRandomCoverType() {
-  const types = ['', 'semi', 'semi', 'full', '', '']
-  return types[utilService.getRandomIntInclusive(0, 5)]
+  const types = ['semi', 'semi', 'full']
+  return types[utilService.getRandomIntInclusive(0, 2)]
 }
 
 function _getBoardRandomGradient() {
@@ -338,9 +376,6 @@ async function _createBoards(amount = 20) {
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
-  _setRandomImgs(boards[5])
-  _setRandomImgs(boards[9])
-  _setRandomImgs(boards[12])
   let demoBoard = await getDemoData()
   boards.unshift(demoBoard)
   return boards
@@ -360,7 +395,6 @@ async function getDemoData() {
     userService.getDefaultMembers()
   )
   board.labels = getRandomLabels(8)
-
   board = await save(board)
   console.log('hi from demo data', board)
   return board

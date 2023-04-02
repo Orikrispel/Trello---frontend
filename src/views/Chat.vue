@@ -1,16 +1,25 @@
 <template>
   <div class="chat-container">
     <form @submit.prevent="sendComment" class="comment-input-container">
-      <input @blur="handleBlur" @focus="isUserCommenting = true" class="comment-input" type="text" v-model="comment.txt"
+      <input
+        @blur="handleBlur"
+        @focus="isUserCommenting = true"
+        class="comment-input"
+        type="text"
+        v-model="comment.txt"
         placeholder="Write a comment..." />
-      <div :class="
-        isUserCommenting
-          ? 'comment-editor-wrapper open'
-          : 'comment-editor-wrapper'
-      ">
+      <div
+        :class="
+          isUserCommenting
+            ? 'comment-editor-wrapper open'
+            : 'comment-editor-wrapper'
+        ">
         <div v-if="isUserCommenting" class="comment-editor-container">
-          <div :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
-            <button @click.stop :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
+          <div
+            :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
+            <button
+              @click.stop
+              :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
               Save
             </button>
           </div>
@@ -83,8 +92,8 @@ export default {
       activity.task = { title: this.task.title, taskId: this.taskId }
       activity.type = 'comment'
       activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
+        fullname: user?.fullname || 'Ori Teicher',
+        _id: user?._id || 'u12345',
       }
       this.comments.push(comment)
       let updatedTask = { ...this.task }
