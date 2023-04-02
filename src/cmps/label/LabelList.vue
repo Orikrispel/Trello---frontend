@@ -1,10 +1,17 @@
 <template>
   <div v-if="board" class="labels-list">
-    <input type="text" name="label-search" placeholder="Search labels..." v-model="filterBy" />
+    <input
+      type="text"
+      name="label-search"
+      placeholder="Search labels..."
+      v-model="filterBy" />
     <h4>Labels</h4>
     <ul v-if="labels" class="clean-list">
-      <li class="label-list-item" v-for="(label) in labels" :key="label.id">
-        <input type="checkbox" :checked="isChecked(label.id)" :id="[`label-checkbox-${label.id}`]"
+      <li class="label-list-item" v-for="label in labels" :key="label.id">
+        <input
+          type="checkbox"
+          :checked="isChecked(label.id)"
+          :id="[`label-checkbox-${label.id}`]"
           @input="addLabelToTask(label)" />
         <label class="label-checkbox" :for="[`label-checkbox-${label.id}`]">
           <LabelPreview :label="label" />
@@ -31,7 +38,7 @@ export default {
   props: {
     taskLabels: {
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -69,7 +76,7 @@ export default {
   methods: {
     isChecked(labelId) {
       if (!this.taskLabels) return
-      return this.taskLabels.find(l => l.id === labelId)
+      return this.taskLabels.find((l) => l.id === labelId)
     },
     async addLabelToTask(label) {
       let task = JSON.parse(JSON.stringify(this.task))
@@ -78,7 +85,8 @@ export default {
 
       if (hasLabel) task = this.removeLabelFromTask(task, label)
       else task.labels.push({ ...label })
-      eventBus.emit('updateTask', task)
+      const data = { task }
+      eventBus.emit('updateTask', data)
       this.task = task
     },
     removeLabelFromTask(task, label) {

@@ -51,12 +51,12 @@ export default {
     },
   },
 
-  async addActivityToTask(activity) {
-    this.activities.push(activity)
-    let updatedTask = { ...this.task }
-    if (!updatedTask.activities) updatedTask.activities = []
-    updatedTask.activities = updatedTask.activities.concat(activity)
-    eventBus.emit('updateTask', updatedTask)
-  },
+  // async addActivityToTask(activity) {
+  //   this.activities.push(activity)
+  //   let updatedTask = { ...this.task }
+  //   if (!updatedTask.activities) updatedTask.activities = []
+  //   updatedTask.activities = updatedTask.activities.concat(activity)
+  //   eventBus.emit('updateTask', updatedTask)
+  // },
 }
 </script>
