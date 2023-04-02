@@ -30,12 +30,9 @@
                 <h3 class="fs12 inner-title">Members</h3>
                 <ul class="task-heading-member-list flex clean-list">
                   <li v-for="member in task.members" :key="member._id" class="member">
-                    <div class="member-img">
-                      {{
-                        member.imgUrl
-                        ? member.imgUrl
-                        : member.fullname.charAt(0).toUpperCase()
-                      }}
+                    <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+                    <div v-else class="member-img">
+                      <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
                     </div>
                   </li>
                   <VDropdown :distance="6" :placement="'right-start'">

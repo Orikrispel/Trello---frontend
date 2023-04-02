@@ -1,32 +1,29 @@
 <template>
-  <section class="invite-modal">
+  <section v-if="isShow" class="invite-modal">
     <header class="modal-header">
       <h2>Share board</h2>
       <button class="btn btn-blue" @click="debug">debug</button>
       <button class="btn btn-close">X</button>
     </header>
     <div class="search-share">
-      <input
-        v-model="filterBy"
-        type="text"
-        placeholder="Email address or name"
-        @input="searchMembers"
-        ref="searchMember"
+      <input v-model="filterBy" type="text" placeholder="Email address or name" @input="searchMembers" ref="searchMember"
         name="members-search" />
       <button class="btn btn-blue">Share</button>
     </div>
     <div v-if="users" class="members-list-container">
       <ul class="clean-list">
-        <li
-          @click="addUserToBoard(user._id)"
-          v-for="user in users"
-          :key="user._id"
+        <li @click="addUserToBoard(user._id)" v-for="user in users" :key="user._id"
           :class="isUserAdmin(user._id) ? 'admin-member-preview' : ''">
           <MemberPreview :member="user" />
           <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)">
-            Member</span
-          >
+            Member</span>
           <span v-if="isUserAdmin(user._id)">Admin</span>
+          <span
+            v-if="isUserMember(user._id) && !isUserAdmin(user._id)"
+            @click="removeMemberFromBoard(user._id)"
+            class="btn btn-light"
+            >Remove</span
+          >
         </li>
       </ul>
     </div>
@@ -44,6 +41,7 @@ export default {
       board: null,
       users: null,
       filterBy: '',
+      isShow: false,
     }
   },
   async created() {
@@ -62,6 +60,27 @@ export default {
   methods: {
     isUserAdmin(userId) {
       return this.board.createdBy._id === userId
+    },
+    async removeMemberFromBoard(userId) {
+      const idx = this.boardMembers.findIndex((member) => member._id === userId)
+      let board = JSON.parse(JSON.stringify(this.board))
+      let user = board.members[idx]
+      user = await this.$store.dispatch({ type: 'updateUser', user })
+
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let loggedinUser = this.$store.getters.loggedinUser
+      activity.txt = ` removed ${user.fullname} from ${board.title} workspace`
+      activity.board = { title: board.title, boardId: this.boardId }
+      activity.type = 'boardMember'
+      activity.byMember = {
+        fullname: loggedinUser.fullname,
+        _id: loggedinUser._id,
+      }
+      board.members.splice(idx, 1)
+      this.$emit('updateBoard', board)
+      console.log(user)
+      this.board = board
     },
     isUserMember(userId) {
       return this.boardMembers.find((member) => member._id === userId)
@@ -85,6 +104,9 @@ export default {
       let user = await this.$store.dispatch({ type: 'getUser', userId })
       if (!user.boards) user.boards = []
       user.boards.push(this.boardId)
+
+      user = await this.$store.dispatch({ type: 'updateUser', user })
+
       user = { _id: userId, fullname: user.fullname, imgUrl: user.imgUrl }
       board.members.push(user)
 
@@ -102,7 +124,6 @@ export default {
       board.activities.push(activity)
       this.$emit('updateBoard', board)
       this.board = board
-      console.log(this.board)
     },
   },
   computed: {
