@@ -7,13 +7,16 @@ export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
 export const SOCKET_EMIT_USER_WATCH = 'user-watch'
 export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
 export const SOCKET_EVENT_TASK_UPDATED = 'task-updated'
+export const SOCKET_EMIT_TASK_DROPPED = 'task-dropped'
+export const SOCKET_EVENT_TASK_DROPPED = 'task-dropped'
+export const SOCKET_EMIT_BOARD_UPDATED = 'board-updated'
 export const SOCKET_EVENT_BOARD_UPDATED = 'board-updated'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '' : '//localhost:3030'
-export const socketService = createDummySocketService()
-// export const socketService = createSocketService()
+// export const socketService = createDummySocketService()
+export const socketService = createSocketService()
 
 // for debugging from console
 window.socketService = socketService

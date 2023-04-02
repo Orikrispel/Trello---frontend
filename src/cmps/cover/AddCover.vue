@@ -30,6 +30,7 @@ export default ({
             require: true,
         }
     },
+
     data() {
         return {
 
@@ -41,10 +42,17 @@ export default ({
         },
         removeCover() {
             this.$emit('removeCover')
+        },
+        setImgCover(file) {
+            // this.$emit('removeCover')
+            console.log('file', file)
+            // this.$emit('setImgCover',imgUrl)
         }
     },
     emits: ['setCover', 'removeCover'],
+    created() {
 
+    },
     components: {
         DynamicModal,
         CoverColor,

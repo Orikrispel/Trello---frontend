@@ -2,13 +2,14 @@
     <section class="right-imgs-container">
         <div class="right-search-container">
             <span v-html="getSvg('search')"></span>
-            <input type="search" placeholder="Photos..." class="input" v-model="search" @blur="searchImgLater">
+            <input type="search" placeholder="Photos..." class="input" v-model="search" @input="searchImgLater">
         </div>
-        <div class="rightimg-picker-container">
+        <div class="rightimg-picker-container" v-show="!isLoad">
             <div :style="{ 'background': 'url(' + imgUrl.thumb + ')', 'background-size': 'cover' }"
                 v-for="(imgUrl, idx) in imgUrls" :key="idx" @click="setBgImg(imgUrl)" :class="['rightimg-picker-item']">
             </div>
         </div>
+        <Loader :isLoading="isLoading" />
     </section>
 </template>
 
@@ -16,6 +17,7 @@
 import { unsplashService } from '../../services/unsplash.service'
 import { svgService } from '../../services/svg.service'
 import { utilService } from '../../services/util.service'
+import Loader from '../Loader.vue'
 export default {
     name: 'RightMenuImgs',
     data() {
@@ -23,38 +25,43 @@ export default {
             imgUrls: [],
             selectedImgUrls: null,
             search: '',
+            isLoading: false,
         }
     },
     computed: {
 
     },
-    async mounted() {
-        this.imgUrls = await unsplashService.getImgs('israel', 14, true)
-        this.searchImgLater = utilService.debounce(this.searchImg, 1000)
-    },
+
 
     methods: {
-        clearSelection() {
-            this.selectedImgUrls = {}
-            document.querySelectorAll('.img-picker-item.selected').forEach((el) => {
-                el.classList.remove('selected')
-            })
-        },
         getSvg(iconName) {
             return svgService.getSvg(iconName)
         },
         async searchImg() {
+            this.isLoading = true
             this.imgUrls = await unsplashService.getImgs(this.search, 14, true)
+                .finally(() => this.isLoading = false)
         },
         setBgImg(imgUrl) {
-            this.imgUrls = imgUrl
-            console.log('this.imgUrl', this.imgUrl)
-            this.$emit('setBgImg', this.imgUrls)
+            console.log('this.imgUrl', imgUrl)
+            this.$emit('setBgImg', imgUrl)
         }
 
     },
-    created() {
+    async created() {
+        try {
+            this.isLoading = true
+            this.imgUrls = await unsplashService.getImgs('israel', 14, true)
+                .finally(this.isLoading = false)
+            this.searchImgLater = utilService.debounce(this.searchImg, 500)
+        }
+        catch {
+            console.log('error')
+        }
     },
-    emits: ['setColor', 'onSetBoardImg']
+    emits: ['setColor', 'onSetBoardImg'],
+    components: {
+        Loader,
+    }
 }
 </script>

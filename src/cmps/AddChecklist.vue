@@ -1,54 +1,70 @@
 <template>
-    <form @submit.prevent="addChecklist" class="add-checklist-form">
-        <h4>Title</h4>
-        <input type="text" ref="checklistTitle" v-model="checklistToAdd.title">
-        <button class="btn btn-blue" id="add-btn" style="color:white">Add</button>
-    </form>
+  <form @submit.prevent="addChecklist" class="add-checklist-form">
+    <h4>Title</h4>
+    <input type="text" ref="checklistTitle" v-model="checklistToAdd.title" />
+    <button class="btn btn-blue" id="add-btn" style="color: white">Add</button>
+  </form>
 </template>
 
 <script>
-import { checklistService } from '../services/checklist.service';
-import { eventBus } from '../services/event-bus.service';
-import { utilService } from '../services/util.service';
+import { checklistService } from '../services/checklist.service'
+import { eventBus } from '../services/event-bus.service'
+import { utilService } from '../services/util.service'
 export default {
-    name: 'AddChecklist',
-    props: {
-        actionData: {
-            type: Object,
-            required: true,
-        }
+  name: 'AddChecklist',
+  props: {
+    actionData: {
+      type: Object,
+      required: true,
     },
-    data() {
-        return {
-            task: null,
-            checklistToAdd: checklistService.getEmptyChecklist(),
-            isCreateMode: true,
-        }
-    },
-    mounted() {
-        setTimeout(() => {
-            this.$refs.checklistTitle.focus()
-        }, 100)
-    },
-    methods: {
-        addChecklist() {
-            this.checklistToAdd.id = 'cl' + utilService.makeId()
-            let task = JSON.parse(JSON.stringify(this.actionData.task))
-            if (!task.checklists) task.checklists = []
-            task.checklists.push(this.checklistToAdd)
-            this.checklistToAdd = checklistService.getEmptyChecklist()
-            eventBus.emit('updateTask', task)
-            this.$emit('setCreateModeOff')
-            console.log('checklist added')
-        },
-        closeModal() {
-            this.$emit('setCreateModeOff')
-        }
-    },
-    created() {
-        this.task = this.actionData.task
-    },
-    components: {
+  },
+  data() {
+    return {
+      task: null,
+      checklistToAdd: checklistService.getEmptyChecklist(),
+      isCreateMode: true,
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.checklistTitle.focus()
+    }, 100)
+  },
+  methods: {
+    addChecklist() {
+      this.checklistToAdd.id = 'cl' + utilService.makeId()
+      let task = JSON.parse(JSON.stringify(this.actionData.task))
+      if (!task.checklists) task.checklists = []
+      task.checklists.push(this.checklistToAdd)
+
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = ` added ${this.checklistToAdd.title} to ${task.title}`
+      activity.task = { title: this.task.title, taskId: this.taskId }
+      activity.type = 'checklist'
+      activity.byMember = {
+        fullname: user.fullname,
+        _id: user._id,
+      }
+
+      const data = {
+        task,
+        activity,
+      }
+      this.checklistToAdd = checklistService.getEmptyChecklist()
+
+      eventBus.emit('updateTask', data)
+      this.$emit('setCreateModeOff')
+      console.log('checklist added')
+    },
+    closeModal() {
+      this.$emit('setCreateModeOff')
+    },
+  },
+  created() {
+    this.task = this.actionData.task
+  },
+  components: {},
 }
 </script>

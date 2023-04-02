@@ -1,5 +1,10 @@
-import { boardService } from '../services/board.service.local'
-// import { boardService } from '../services/board.service'
+// import { boardService } from '../services/board.service.local'
+import { boardService } from '../services/board.service'
+import {
+  socketService,
+  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_BOARD_UPDATED,
+} from '../services/socket.service'
 import { utilService } from '../services/util.service'
 export function getActionRemoveBoard(boardId) {
   return {
@@ -77,9 +82,7 @@ export const boardStore = {
     defaultEmptyLabel() {
       return boardService.getDefaultEmptyLabel()
     },
-    defaultMembers() {
-      return boardService.getDefaultMembers()
-    },
+
     makeId() {
       return utilService.makeId()
     },
@@ -100,6 +103,9 @@ export const boardStore = {
     },
     emptyTask() {
       return boardService.getEmptyTask()
+    },
+    emptyActivity() {
+      return boardService.getEmptyActivity()
     },
   },
   mutations: {
@@ -146,8 +152,10 @@ export const boardStore = {
     async updateBoard(context, { board }) {
       try {
         board = await boardService.save(board)
+
         context.commit(getActionUpdateBoard(board))
         context.commit({ type: 'setCurrBoard', board })
+
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)

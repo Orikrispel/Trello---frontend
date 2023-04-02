@@ -3,7 +3,17 @@ import { httpService } from './http.service.js'
 import { utilService, colorItems } from './util.service.js'
 import { userService } from './user.service.js'
 import { unsplashService } from './unsplash.service.js'
-
+import { store } from '../store/store'
+import {
+  getActionRemoveBoard,
+  getActionUpdateBoard,
+  getActionStarBoard,
+} from '../store/board.store'
+import {
+  socketService,
+  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_BOARD_UPDATED,
+} from './socket.service'
 const STORAGE_KEY = 'board'
 const BASE_URL = 'board/'
 export const boardService = {
@@ -26,8 +36,8 @@ window.cs = boardService
 async function query() {
   let user = userService.getLoggedinUser()
   let userId = user._id
-  let boards = await httpService.get(BASE_URL, { userId })
-  // if (!boards || !boards.length) boards = _createBoards()
+  let boards = await httpService.get(BASE_URL)
+  if (!boards || !boards.length) boards = _createBoards(7)
   return boards
 }
 function getById(boardId) {
@@ -50,6 +60,8 @@ async function save(board) {
     // savedBoard = await storageService.post(STORAGE_KEY, board)
     savedBoard = await httpService.post('board', board)
   }
+  socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
+
   return savedBoard
 }
 
@@ -61,10 +73,11 @@ async function addBoardMsg(boardId, txt) {
 function getEmptyBoard(
   title = '',
   isStarred = false,
-  labels = [],
+
   createdBy = {},
   style = {},
-  groups = [getEmptyGroup()]
+  groups = [getEmptyGroup()],
+  members = userService.getDefaultMembers()
 ) {
   return {
     title,
@@ -73,6 +86,7 @@ function getEmptyBoard(
     labels: getDefaultEmptyLabels(),
     createdBy,
     groups,
+    members,
   }
 }
 
@@ -96,7 +110,11 @@ function getEmptyTask(
   description = '',
   labels = [],
   members = [],
-  cover = null
+  cover = {},
+  files = [],
+  checklists = [],
+  comments = [],
+  activities = []
 ) {
   return {
     id: utilService.makeId(),
@@ -108,7 +126,11 @@ function getEmptyTask(
     },
     description,
     labels,
+    files,
+    checklists,
     members,
+    comments,
+    activities,
   }
 }
 
@@ -164,7 +186,86 @@ function getDefaultEmptyLabel() {
     color: '#d6ecd2',
   }
 }
+function _getRandomGroups(count = 4) {
+  const groups = []
+  for (let i = 0; i < count; i++) {
+    let currGroup = _getRandomGroup(utilService.getRandomIntInclusive(2, 6))
+    currGroup.title = utilService.getRandomLabelTitle()
+    if (i === 0) currGroup.title = 'In Development'
+    if (i === 1) currGroup.title = 'Backlog-Server'
+    if (i === 2) currGroup.title = 'Done'
+    if (i === 3) currGroup.title = 'QA'
+    if (i === 4) currGroup.title = 'Ready for production'
+    groups.push(currGroup)
+  }
+  return groups
+}
 
+function _getRandomGroup(count = 5) {
+  const group = getEmptyGroup()
+  for (let i = 0; i < count; i++) {
+    let currTask = getRandomTask()
+    currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(0, 5))
+    currTask.cover = getRandomCover()
+    let currChecklist =
+      i % 2 === 0 ? _getRandomChecklist(false) : _getRandomChecklist(true)
+    currTask.checklists.push(currChecklist)
+    currTask.members = i % 3 === 0 ? getRandomMembers() : []
+    group.tasks.push(currTask)
+  }
+  return group
+}
+
+function getRandomMembers() {
+  let members = [
+    {
+      _id: 'u101',
+      fullname: 'Yohai Korem',
+      imgUrl: '',
+    },
+    {
+      _id: 'u102',
+      fullname: 'Ori Krispel',
+      imgUrl: '',
+    },
+    {
+      _id: 'u103',
+      fullname: 'Ori Teicher',
+      imgUrl: '',
+    },
+  ]
+  members.splice(0, utilService.getRandomIntInclusive(0, 2))
+  return members
+}
+
+function _getRandomChecklist(isDone = true) {
+  const checklist = {
+    id: 'cl' + utilService.makeId(5),
+    title: 'Checklist',
+    todos: [
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish UI',
+        isDone,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish UX',
+        isDone,
+      },
+      {
+        id: 'td' + utilService.makeId(5),
+        title: 'Finish filters',
+        isDone,
+      },
+    ],
+  }
+  return checklist
+}
+
+function getRandomCover() {
+  return { color: getRandomCoverColor(), type: getRandomCoverType() }
+}
 function getRandomTask(
   title = utilService.getRandomTaskTitles(),
   description = utilService.getRandomTaskDesc(),
@@ -177,6 +278,16 @@ function getRandomTask(
     [userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]]
   )
   return res
+}
+
+function getRandomCoverColor() {
+  const colorItems = ['#7bc86c', '#f5dd29', '#ffaf3f', '#cd8de5', '#5ba4c1']
+  return colorItems[utilService.getRandomIntInclusive(0, 4)]
+}
+
+function getRandomCoverType() {
+  const types = ['', 'semi', 'semi', 'full', '', '']
+  return types[utilService.getRandomIntInclusive(0, 5)]
 }
 
 function _getBoardRandomGradient() {
@@ -227,8 +338,31 @@ async function _createBoards(amount = 20) {
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
-
+  _setRandomImgs(boards[5])
+  _setRandomImgs(boards[9])
+  _setRandomImgs(boards[12])
+  let demoBoard = await getDemoData()
+  boards.unshift(demoBoard)
   return boards
+}
+
+async function getDemoData() {
+  let board = getEmptyBoard(
+    'Project Managment',
+    false,
+    userService.getRandomDefaultMember(),
+    {
+      imgUrls: '',
+      backgroundColor:
+        'linear-gradient(32deg, rgba(206,185,70,0.9), rgba(204,43,250,0.9))',
+    },
+    _getRandomGroups(6)
+  )
+  board.labels = getRandomLabels(8)
+
+  board = await save(board)
+  console.log('hi from demo data', board)
+  return board
 }
 
 function randomStarBoard() {
@@ -248,11 +382,18 @@ function getEmptyComment() {
 
 function getEmptyActivity() {
   return {
-    id: '',
+    id: utilService.makeId(),
     txt: '',
     createdAt: Date.now(),
     byMember: userService.getLoggedinUser(),
-    task: {},
+    task: null,
+  }
+}
+
+function _setRandomImgs(board) {
+  if (board) {
+    board.style.backgroundColor = ''
+    board.style.imgUrls = unsplashService.getRandomImg()
   }
 }
 
