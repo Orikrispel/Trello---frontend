@@ -207,7 +207,6 @@ function _getRandomGroup(count = 5) {
     let currTask = getRandomTask()
     if (i % 3 === 0) {
       currTask.cover = getRandomCover()
-      if (currTask.cover.type === 'semi') currTask.files.push(getFile(utilService.getRandomIntInclusive(0, 5)))
       currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
     }
     let currChecklist = i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
@@ -377,8 +376,15 @@ async function _createBoards(amount = 20) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
   let demoBoard = await getDemoData()
+  setGroupsWithFiles(demoBoard)
   boards.unshift(demoBoard)
   return boards
+}
+
+function setGroupsWithFiles(demoBoard) {
+  for (let i = 0; i < 4; i++) {
+    demoBoard.groups[i].tasks[0].files.push(getFile(i))
+  }
 }
 
 async function getDemoData() {
