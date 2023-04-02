@@ -2,47 +2,65 @@
   <section class="login-signup main flex column align-center">
     <img class="logo" src="../assets/logo colored.png" alt="Jello logo" />
 
-    <article v-if="!loggedinUser && loginClicked" class="login-form flex column">
+    <article
+      v-if="!loggedinUser && loginClicked"
+      class="login-form flex column">
       <h2>Log in to Jello</h2>
       <form @submit.prevent="login" class="flex column align-center">
-        <input type="text" v-model="credentials.username" placeholder="Enter username" />
-        <input type="password" v-model="credentials.password" placeholder="Enter password" />
+        <input
+          type="text"
+          v-model="credentials.username"
+          placeholder="Enter username" />
+        <input
+          type="password"
+          v-model="credentials.password"
+          placeholder="Enter password" />
         <button type="submit">Log in</button>
       </form>
 
       <div class="flex column status">
         <p class="seperator">OR</p>
-        <hr>
+        <hr />
         <p class="toggle-status" @click="toggleForm">Sign up for an account</p>
       </div>
     </article>
 
-    <article v-if="!loggedinUser && signupClicked" class="login-form flex column">
-      <h2 v-if="!loggedinUser">
-        Signup to Jello
-      </h2>
-      <form @submit.prevent="login" class="flex column align-center">
-        <input type="text" v-model="signupInfo.fullname" placeholder="Full name" />
-        <input type="text" v-model="signupInfo.username" placeholder="Username" />
-        <input type="password" v-model="signupInfo.password" placeholder="Password" />
+    <article
+      v-if="!loggedinUser && signupClicked"
+      class="login-form flex column">
+      <h2 v-if="!loggedinUser">Signup to Jello</h2>
+      <form @submit.prevent="signup" class="flex column align-center">
+        <input
+          type="text"
+          v-model="signupInfo.fullname"
+          placeholder="Full name" />
+        <input
+          type="text"
+          v-model="signupInfo.username"
+          placeholder="Username" />
+        <input
+          type="password"
+          v-model="signupInfo.password"
+          placeholder="Password" />
         <button type="submit">Signup</button>
       </form>
 
       <div class="flex column status">
         <p class="seperator">Already have an account?</p>
-        <hr>
+        <hr />
         <p class="toggle-status" @click="toggleForm">Log in</p>
       </div>
     </article>
 
-    <button v-if="loggedinUser" class=" btn btn-light" @click="logout">Logout</button>
+    <button v-if="loggedinUser" class="btn btn-light" @click="logout">
+      Logout
+    </button>
 
     <div class="img-comtainer flex justify-between">
       <img src="../assets/imgs/loginSingup/svg1.svg" />
       <img src="../assets/imgs/loginSingup/svg2.svg" />
     </div>
   </section>
-
 
   <!-- <section class="login-signup">
 
@@ -66,11 +84,6 @@
   </section> -->
 </template>
 <script>
-import {
-  showUserMsg,
-  showSuccessMsg,
-  showErrorMsg,
-} from '../services/event-bus.service'
 import { svgService } from '../services/svg.service'
 export default {
   data() {
@@ -104,7 +117,6 @@ export default {
         this.loginClicked = false
       } catch (err) {
         console.log('Cannot login', err)
-        showErrorMsg(`Cannot login`)
       }
     },
     async signup() {
@@ -116,7 +128,6 @@ export default {
         this.signupClicked = false
       } catch (err) {
         console.log('Cannot signup', err)
-        showErrorMsg(`Cannot signup`)
       }
     },
     async logout() {
@@ -130,7 +141,7 @@ export default {
     toggleForm() {
       this.signupClicked = !this.signupClicked
       this.loginClicked = !this.loginClicked
-    }
+    },
   },
 }
 </script>
