@@ -24,7 +24,8 @@ window.cs = boardService
 
 async function query(filterBy = { txt: '', price: 0 }) {
   let boards = await storageService.query(BOARD_STORAGE_KEY)
-  if (!boards || !boards.length) boards = _createBoards()
+  if (!boards || !boards.length) boards = _createBoards(15)
+  console.log('boards', boards)
   // if (filterBy.txt) {
   //   const regex = new RegExp(filterBy.txt, 'i')
   //   boards = boards.filter(
@@ -284,10 +285,11 @@ async function _createBoards(amount = 15) {
   for (let i = 0; i < amount; i++) {
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
   }
-  _setRandomImgs(boards[5])
-  _setRandomImgs(boards[9])
-  _setRandomImgs(boards[12])
+  // _setRandomImgs(boards[5])
+  // _setRandomImgs(boards[9])
+  // _setRandomImgs(boards[12])
   let demoBoard = await getDemoData()
+  console.log('demoBoard', demoBoard)
   boards.unshift(demoBoard)
   return boards
 }
@@ -313,9 +315,11 @@ function _getRandomGroup(count = 5) {
   const group = getEmptyGroup()
   for (let i = 0; i < count; i++) {
     let currTask = getRandomTask()
-    currTask.labels = getRandomLabels(getRandomIntInclusive(0, 5))
+    if (i % 3 === 0) {
+      currTask.labels = getRandomLabels(getRandomIntInclusive(0, 2))
+    }
     currTask.cover = getRandomCover()
-    let currChecklist = (i % 2 === 0) ? _getRandomChecklist(false) : _getRandomChecklist(true)
+    let currChecklist = (i % 4 === 0) ? _getRandomChecklist(false) : _getRandomChecklist(true)
     currTask.checklists.push(currChecklist)
     currTask.members = (i % 3 === 0) ? getRandomMembers() : []
     group.tasks.push(currTask)
