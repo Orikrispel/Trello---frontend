@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
 // import { boardService } from '../../services/board.service'
 import { boardService } from '../../services/board.service'
 import {
@@ -49,11 +48,10 @@ export default {
       try {
         console.log('ADDED board', board)
         await this.$store.dispatch({ type: 'addBoard', board })
-        showSuccessMsg('Board added')
+
         this.boardToAdd = boardService.getEmptyBoard()
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add board')
       }
     },
     async removeBoard(boardId) {
@@ -61,7 +59,6 @@ export default {
         await this.$store.dispatch(getActionRemoveBoard(boardId))
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot remove board')
       }
     },
     async starBoard(board) {
@@ -71,23 +68,17 @@ export default {
         await this.$store.dispatch(getActionStarBoard(newBoard))
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot star board')
       }
     },
     async updateBoard(board) {
       try {
         board = { ...board }
         await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg('Board updated')
       } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot update board')
       }
     },
-    // setCreateMode() {
-    //   this.isCreateMode = !this.isCreateMode
-    //   console.log('isCreateMode', this.isCreateMode)
-    // },
+
     setBoardImg(imgUrls) {
       this.boardToAdd.style.imgUrl = imgUrls
     },
@@ -104,17 +95,4 @@ export default {
     Loader,
   },
 }
-
-// async addBoardMsg(boardId) {
-//   try {
-//     await this.$store.dispatch(getActionAddBoardMsg(boardId))
-//     showSuccessMsg('Board msg added')
-//   } catch (err) {
-//     console.log(err)
-//     showErrorMsg('Cannot add board msg')
-//   }
-// },
-// printBoardToConsole(board) {
-//   console.log('Board msgs:', board.msgs)
-// }
 </script>

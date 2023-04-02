@@ -8,12 +8,18 @@
     <h4>Select a color</h4>
     <LabelColorPicker :quantity="30" @setColor="setColor" />
     <button class="btn btn-remove-color" @click="setColor('#e2e4e9')">
-      <span class="icon btn-close icon-close" v-close-popper></span> Remove color
+      <span class="icon btn-close icon-close" v-close-popper></span> Remove
+      color
     </button>
-    <hr>
+    <hr />
     <div class="label-btns-container">
-      <button class="btn btn-blue btn-label" @click="saveLabel">{{ creatingNewLabel ? 'Create' : 'Save' }}</button>
-      <button class="btn btn-red btn-label" v-if="!creatingNewLabel" @click="removeLabel">
+      <button class="btn btn-blue btn-label" @click="saveLabel">
+        {{ creatingNewLabel ? 'Create' : 'Save' }}
+      </button>
+      <button
+        class="btn btn-red btn-label"
+        v-if="!creatingNewLabel"
+        @click="removeLabel">
         Delete
       </button>
     </div>
@@ -21,8 +27,7 @@
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service'
-import { eventBus } from '../../services/event-bus.service';
+import { eventBus } from '../../services/event-bus.service'
 import LabelPreview from './LabelPreview.vue'
 import LabelColorPicker from '../../cmps/LabelColorPicker.vue'
 import { getActionUpdateBoard } from '../../store/board.store'
@@ -72,7 +77,6 @@ export default {
     removeLabel() {
       eventBus.emit('removeLabel', this.label.id)
       this.$emit('toggleLabelEdit')
-
     },
   },
   watch: {

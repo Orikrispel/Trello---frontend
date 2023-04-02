@@ -52,15 +52,12 @@ export default {
     })
     let { members } = this.board
 
-    if (!members || !members.length)
-      members = this.$store.getters.defaultMembers
     this.members = members
   },
   mounted() {
     setTimeout(() => {
       this.$refs.searchMember.focus()
     }, 100)
-    console.log('searchMember:', this.$refs.searchMember)
   },
   methods: {
     searchMembers() {
@@ -80,16 +77,19 @@ export default {
       let member = members.find((member) => {
         return member._id === memberId
       })
-      console.log(member)
       if (!task.members) task.members = []
-      let hasMember = task.members.some((member) => {
+      if (!member.tasks) member.tasks = []
+      let taskHasMember = task.members.some((member) => {
         return member._id === memberId
       })
-      if (hasMember) task = this.removeMemberFromTask(task, member)
-      else {
+      if (taskHasMember) {
+        task = this.removeMemberFromTask(task, member)
+      } else {
         member.isSelected = true
         task.members.push({ ...member })
+        member.tasks.push(task.id)
       }
+      console.log(member)
 
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
@@ -105,15 +105,19 @@ export default {
         task,
         activity,
       }
-
       eventBus.emit('updateTask', data)
+      this.$store.dispatch({ type: 'updateUser', user })
       this.task = task
     },
     removeMemberFromTask(task, member) {
       const memberToRemoveIdx = task.members.findIndex(
         (m) => m._id === member._id
       )
+      const taskToRemoveFromMemberIdx = member.tasks.findIndex((t) => {
+        t.id === task.id
+      })
       task.members.splice(memberToRemoveIdx, 1)
+      member.tasks.splice(taskToRemoveFromMemberIdx, 1)
       return task
     },
   },

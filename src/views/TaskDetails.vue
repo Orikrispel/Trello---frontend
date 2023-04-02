@@ -252,11 +252,7 @@
 </template>
 
 <script>
-import {
-  eventBus,
-  showErrorMsg,
-  showSuccessMsg,
-} from '../services/event-bus.service'
+import { eventBus } from '../services/event-bus.service'
 import { mapGetters } from 'vuex'
 import { svgService } from '../services/svg.service'
 import DatePicker from '../cmps/dates/DatePicker.vue'
@@ -360,10 +356,8 @@ export default {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
-        showSuccessMsg(successMsg)
       } catch (err) {
         console.log(err)
-        showErrorMsg(errMsg)
       }
     },
     removeLabel(labelId) {

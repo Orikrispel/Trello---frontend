@@ -7,7 +7,6 @@ import {
   SOCKET_EVENT_USER_UPDATED,
   SOCKET_EMIT_USER_WATCH,
 } from './socket.service'
-import { showSuccessMsg } from './event-bus.service'
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
@@ -33,12 +32,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) {
-  showSuccessMsg(
-    `This user  just got updated from socket, new score: ${user.score}`
-  )
-  store.dispatch({ type: 'setWatchedUser', user })
-}
+function onUserUpdate(user) {}
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -55,10 +49,9 @@ function remove(userId) {
   return httpService.delete(`user/${userId}`)
 }
 
-async function update({ _id, score }) {
+async function update(user) {
   // const user = await storageService.get('user', _id)
-  let user = getById(_id)
-  // user.score = score
+
   // await storageService.put('user', user)
 
   user = await httpService.put(`user/${user._id}`, user)
@@ -70,6 +63,8 @@ async function update({ _id, score }) {
 async function login(userCred) {
   // const users = await storageService.query('user')
   // const user = users.find(user => user.username === userCred.username)
+  debugger
+  console.log(userCred)
   const user = await httpService.post('auth/login', userCred)
   if (user) {
     socketService.login(user._id)
@@ -78,12 +73,13 @@ async function login(userCred) {
 }
 async function signup(userCred) {
   // userCred.score = 10000
+
   if (!userCred.imgUrl)
     userCred.imgUrl =
       'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
   // const user = await storageService.post('user', userCred)
   const user = await httpService.post('auth/signup', userCred)
-  socketService.login(user._id)
+  // socketService.login(user._id)
   return saveLocalUser(user)
 }
 async function logout() {
@@ -124,7 +120,7 @@ function getDefaultMembers() {
     {
       _id: '64251c27a476517cf20661ef',
       fullname: 'Yohai Korem',
-      imgUrl: '',
+      imgUrl: '../assets/imgs/memberImgs/memberImgYohai.jpg',
     },
     {
       _id: '64253e39a476517cf20661f0',

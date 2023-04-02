@@ -35,7 +35,7 @@ window.cs = boardService
 
 async function query() {
   let user = userService.getLoggedinUser()
-  let userId = user._id
+  // let userId = user._id
   let boards = await httpService.get(BASE_URL)
   if (!boards || !boards.length) boards = _createBoards(7)
   return boards
@@ -77,7 +77,7 @@ function getEmptyBoard(
   createdBy = {},
   style = {},
   groups = [getEmptyGroup()],
-  members = userService.getDefaultMembers()
+  members = []
 ) {
   return {
     title,
@@ -219,17 +219,17 @@ function _getRandomGroup(count = 5) {
 function getRandomMembers() {
   let members = [
     {
-      _id: 'u101',
+      _id: '64251c27a476517cf20661ef',
       fullname: 'Yohai Korem',
       imgUrl: '',
     },
     {
-      _id: 'u102',
+      _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
       imgUrl: '',
     },
     {
-      _id: 'u103',
+      _id: '64259a5c5e24b789998fc9a6',
       fullname: 'Ori Teicher',
       imgUrl: '',
     },
@@ -356,7 +356,8 @@ async function getDemoData() {
       backgroundColor:
         'linear-gradient(32deg, rgba(206,185,70,0.9), rgba(204,43,250,0.9))',
     },
-    _getRandomGroups(6)
+    _getRandomGroups(6),
+    userService.getDefaultMembers()
   )
   board.labels = getRandomLabels(8)
 
@@ -405,15 +406,16 @@ async function _createBoard(
     title,
     isStarred: randomStarBoard(),
     archivedAt: 1589983468418,
-    createdBy:
-      userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)],
+    createdBy: await userService.getUsers()[
+      utilService.getRandomIntInclusive(0, 2)
+    ],
     style: {
       backgroundColor: _getBoardRandomColor(),
       imgUrls: unsplashService.getRandomImg(),
       gradient: _getBoardRandomGradient(),
     },
     labels,
-    members: userService.getDefaultMembers(),
+    members: userService.getUsers(),
     groups: [
       {
         id: utilService.makeId(),
@@ -468,7 +470,9 @@ async function _createBoard(
                 id: 'ZdPnm',
                 txt: 'also @yaronb please CR this',
                 createdAt: 1590999817436,
-                byMember: userService.getRandomDefaultMember(),
+                byMember: await userService.getUsers()[
+                  utilService.getRandomIntInclusive(0, 2)
+                ],
               },
             ],
             checklists: [
@@ -487,7 +491,8 @@ async function _createBoard(
             memberIds: [userService.getRandomDefaultMember().id],
             labelIds: [getRandomLabel().id, getRandomLabel().id],
             dueDate: 16156215211,
-            byMember: userService.getRandomDefaultMember(),
+            byMember:
+              userService.getUsers()[utilService.getRandomIntInclusive(0, 2)],
             style: {
               bgColor: '#26de81',
             },
@@ -501,7 +506,8 @@ async function _createBoard(
         id: 'a101',
         txt: 'Changed Color',
         createdAt: 154514,
-        byMember: userService.getRandomDefaultMember(),
+        byMember:
+          userService.getUsers()[utilService.getRandomIntInclusive(0, 2)],
         task: {
           id: 'c101',
           title: 'Replace Logo',
