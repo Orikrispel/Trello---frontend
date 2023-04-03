@@ -183,7 +183,7 @@ export default {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
         if (!skipEmit) {
-          socketService.emit(SOCKET_EMIT_BOARD_UPDATED, Board)
+          socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
         }
       } catch (err) {
         console.log(err)
