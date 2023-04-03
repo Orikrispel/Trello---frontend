@@ -6,8 +6,8 @@
     </button>
     <button @click="this.$emit('changeCmp', 'ChangeBgMenu')">
       <div v-if="this.board" class="background-thumb" :style="{
-        background: board.style?.backgroundColor,
-        backgroundImage: getBoardBg() || board.style?.backgroundColor,
+        background: board.style?.gradient || '#014a75',
+        backgroundImage: getBoardBg(board) || board.style?.backgroundColor || 'linear-gradient(55.41deg, rgb(250, 165, 61) 2 %, rgb(89, 201, 2) 100 %)',
         backgroundSize: 'cover',
         'background-position': 'center',
       }"></div>
