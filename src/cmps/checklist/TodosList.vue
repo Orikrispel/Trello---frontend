@@ -3,7 +3,7 @@
         <ul class="todos-list list-style-none">
             <li v-for="todo in todos" :key="todo.id">
                 <button class="btn-sm btn-task light btn-delete-todo" @click="removeTodo(todo.id)"
-                    style="float:right;"><span class="icon icon-close"></span></button>
+                    style="float:right;"><span class="icon icon-overflow-menu-horizontal"></span></button>
                 <TodosPreview :todo="todo" @updateTodos="onUpdateTodos" />
             </li>
             <input type="text" v-model="addTodoTitle" ref="todoInput" placeholder="Add an item" class="add-todo-input"

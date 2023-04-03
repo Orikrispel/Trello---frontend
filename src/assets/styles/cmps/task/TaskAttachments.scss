@@ -12,6 +12,10 @@
     }
   }
 
+  .btn-date {
+    &:hover {}
+  }
+
   p:is(.checklist, .files, .date) {
     color: $font-clr3;
     align-items: center;
