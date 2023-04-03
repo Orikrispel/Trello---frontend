@@ -12,6 +12,16 @@
     }
   }
 
+  .btn-date {
+    z-index: 1;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: $secondary-clr4;
+
+    }
+  }
+
   p:is(.checklist, .files, .date) {
     color: $font-clr3;
     align-items: center;

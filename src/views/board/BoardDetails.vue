@@ -3,10 +3,10 @@
     v-if="board"
     class="board-container main flex column"
     :style="{
-      background: board.style?.backgroundColor || '#014a75',
-      backgroundImage: getBoardBg() || board.style?.backgroundColor,
+      background: board.style?.gradient || '#014a75',
+      backgroundImage: getBoardBg() || board.style?.gradient,
       backgroundSize: 'cover',
-      'background-position': 'center',
+      backgroundPosition: 'center',
     }">
     <header
       :class="[
@@ -33,7 +33,14 @@
         <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button> -->
-        <button class="btn btn-light">Share</button>
+        <button class="btn btn-light btn-share" @click="toggleInviteModal">
+          Share
+        </button>
+        <InviteModal
+          v-if="this.board"
+          v-show="showInviteModal"
+          @updateBoard="updateBoard"
+          @closeModal="toggleInviteModal" />
         <span class="board-header-btn-divider"></span>
         <button
           @click="openRightMenu"
@@ -46,8 +53,6 @@
         @setBgColor="setBgColor"
         @setBgImg="setBgImg" />
     </header>
-
-    <InviteModal v-if="board" @updateBoard="updateBoard" />
 
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
@@ -105,6 +110,7 @@ import {
   getActionUpdateBoard,
   getActionStarBoard,
 } from '../../store/board.store'
+import { utilService } from '../../services/util.service'
 
 export default {
   data() {
@@ -115,6 +121,7 @@ export default {
       showFilterMenu: false,
       isRightMenuOpen: false,
       isDark: true,
+      showInviteModal: false,
     }
   },
   async created() {
@@ -125,9 +132,9 @@ export default {
     })
     this.checkIsDark()
 
-    socketService.on(SOCKET_EVENT_BOARD_UPDATED, async (board) => {
-      await this.updateBoard(board, null, true)
-    })
+    // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+    //   this.updateBoard(board)
+    // })
   },
   computed: {
     ...mapGetters(['currBoard']),
@@ -152,8 +159,6 @@ export default {
     async setBgImg(newImgUrls) {
       const newBoard = JSON.parse(JSON.stringify(this.board))
       newBoard.style.imgUrls = newImgUrls
-      newBoard.style.backgroundColor = ''
-
       await this.updateBoard(newBoard)
     },
     async setBgColor(newBg) {
@@ -173,14 +178,10 @@ export default {
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
     },
-    async updateBoard(board, activity, skipEmit = false) {
-      // debugger
+    async updateBoard(board, activity) {
       try {
-        let savedBoard = await this.$store.dispatch(getActionUpdateBoard(board))
-        if (!skipEmit) {
-          socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
-        }
-        this.board = savedBoard
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
       } catch (err) {
         console.log(err)
       }
@@ -219,16 +220,16 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg() {
-      if (!this.board.style.imgUrls?.regular) return null
-      else return `url(${this.board.style.imgUrls?.regular})`
+      if (!this.board.style?.imgUrls?.regular) return null
+      else return `url(${this.board.style?.imgUrls?.regular})`
     },
     async checkIsDark() {
       const fac = new FastAverageColor()
       if (!this.board) return
-      if (this.board.style.imgUrls.regular) {
+      if (this.board.style?.imgUrls?.regular) {
         try {
           const color = await fac.getColorAsync(
-            this.board.style.imgUrls.regular
+            this.board.style?.imgUrls?.regular
           )
           this.isDark = color.isDark
         } catch (err) {
@@ -237,6 +238,9 @@ export default {
       } else {
         this.isDark = true
       }
+    },
+    toggleInviteModal() {
+      this.showInviteModal = !this.showInviteModal
     },
   },
   mounted() {

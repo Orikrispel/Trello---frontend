@@ -1,42 +1,46 @@
 <template>
-  <section class="invite-modal">
-    <header class="modal-header">
-      <h2>Share board</h2>
-      <button class="btn btn-blue" @click="debug">debug</button>
-      <button @click="isShow = !isShow" class="btn btn-close">X</button>
-    </header>
-    <div class="search-share">
-      <input
-        v-model="filterBy"
-        type="text"
-        placeholder="Email address or name"
-        @input="searchMembers"
-        ref="searchMember"
-        name="members-search" />
-      <button class="btn btn-blue">Share</button>
-    </div>
-    <div v-if="users" class="members-list-container">
-      <ul class="clean-list">
-        <li
-          @click="addUserToBoard(user._id)"
-          v-for="user in users"
-          :key="user._id"
-          :class="isUserAdmin(user._id) ? 'admin-member-preview' : ''">
-          <MemberPreview :member="user" />
-          <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)">
-            Member</span
-          >
-          <span v-if="isUserAdmin(user._id)">Admin</span>
-          <span
-            v-if="isUserMember(user._id) && !isUserAdmin(user._id)"
-            @click="removeMemberFromBoard(user._id)"
-            class="btn btn-light"
-            >Remove</span
-          >
-        </li>
-      </ul>
-    </div>
-  </section>
+  <div class="modal-overlay flex" @click="closeModal">
+    <section class="invite-modal" @click.stop>
+      <header class="modal-header flex align-center justify-between">
+        <h2>Share board</h2>
+        <button class="btn btn-blue" @click="debug">debug</button>
+        <button class="clean-btn btn-close" @click="closeModal">
+          <span class="icon icon-close"></span>
+        </button>
+      </header>
+      <div class="search-share-container flex">
+        <input
+          v-model="filterBy"
+          type="text"
+          placeholder="Email address or name"
+          @input="searchMembers"
+          ref="searchMember"
+          name="members-search" />
+        <button class="btn btn-blue">Share</button>
+      </div>
+      <div v-if="users" class="members-list-wrapper">
+        <ul class="clean-list flex column">
+          <li
+            @click="addUserToBoard(user._id)"
+            v-for="user in users"
+            :key="user._id"
+            :class="isUserAdmin(user._id) ? 'admin-member-preview' : ''">
+            <MemberPreview :member="user" />
+            <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)">
+              Member</span
+            >
+            <span v-if="isUserAdmin(user._id)">Admin</span>
+            <span
+              v-if="isUserMember(user._id) && !isUserAdmin(user._id)"
+              @click="removeMemberFromBoard(user._id)"
+              class="btn btn-light"
+              >Remove</span
+            >
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -53,7 +57,6 @@ export default {
       board: null,
       users: null,
       filterBy: '',
-      isShow: false,
     }
   },
   async created() {
@@ -199,6 +202,9 @@ export default {
     updateBoard(board) {
       this.$emit('updateBoard', board)
       this.board = board
+    },
+    closeModal() {
+      this.$emit('closeModal')
     },
   },
 

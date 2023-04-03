@@ -7,7 +7,7 @@
       </div>
       <ul class="board-list">
         <li v-for="board in starredBoards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          background: board.style?.backgroundColor || '#014a75',
+          background: board.style?.gradient || '#014a75',
           backgroundImage: getBoardBg(board) || board.style?.backgroundColor || 'linear-gradient(55.41deg, rgb(250, 165, 61) 2 %, rgb(89, 201, 2) 100 %)',
           backgroundSize: 'cover',
         }">
@@ -22,8 +22,8 @@
       </div>
       <ul class="board-list">
         <li v-for="board in boards" :key="board._id" @click="showBoardDetails(board._id)" :style="{
-          background: board.style?.backgroundColor || '#014a75',
-          backgroundImage: getBoardBg(board) || board.style?.backgroundColor || 'none',
+          background: board.style?.gradient || '#014a75',
+          backgroundImage: getBoardBg(board) || board.style?.gradient || 'none',
           backgroundSize: 'cover',
         }">
           <BoardPreview :board="board" @onRemoveBoard="removeBoard" @starBoard="starBoard" />
@@ -82,8 +82,8 @@ export default {
       return svgService.getSvg(iconName)
     },
     getBoardBg(board) {
-      if (!board.style.imgUrls?.thumb) return null
-      else return `url(${board.style.imgUrls.thumb})`
+      if (!board.style?.imgUrls?.thumb) return null
+      else return `url(${board.style?.imgUrls?.thumb})`
     },
     addBoard(board) {
       this.$emit('addBoard', board)

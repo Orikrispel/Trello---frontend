@@ -1,10 +1,70 @@
 .invite-modal {
-  background-color: $secondary-clr2;
-  width: 600px;
-  min-height: 400px;
+  background-color: $secondary-clr3;
+  width: calc(100vw - 24px);
+  min-height: 200px;
   position: absolute;
-  z-index: 10;
-  top: 20vh;
-  left: 20vw;
-  //   transform: translate(50% 50%);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  z-index: 20;
+  border-radius: 3px;
+  max-width: 584px;
+  padding: 20px 0px 0px 24px;
+  color: $font-clr1;
+
+  .modal-header {
+    min-height: 32px;
+    margin: 0px 24px 16px 0px;
+
+    h2 {
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .btn-close {
+      font-size: 24px;
+      color: $primary-clr5;
+    }
+  }
+
+  .search-share-container {
+    margin: 0px 24px 16px 0px;
+
+    input {
+      margin: 0 8px 0 0;
+      max-width: 380px;
+      padding: 6px 4px 6px 12px;
+      width: 100%;
+      border: none;
+      border-radius: 3px;
+      box-shadow: $input-shadow;
+      outline: none;
+      padding: 10px 12px;
+      width: 100%;
+
+      &:focus {
+        background-color: $secondary-clr1;
+        box-shadow: inset 0 0 0 2px $primary-clr4;
+        border: none;
+        outline: none;
+      }
+    }
+  }
+
+  .members-list-wrapper {
+    max-height: 488px;
+    padding-right: 20px;
+    margin-right: 4px;
+    overflow-y: auto;
+
+    li:last-child {
+      margin-bottom: 20px;
+    }
+
+    .member-preview {
+      display: flex;
+      padding-top: 16px;
+      align-items: center;
+    }
+  }
 }
