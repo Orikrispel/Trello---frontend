@@ -102,6 +102,14 @@
     }
   }
 
+  .share-svg {
+    display: flex;
+    svg {
+      width: 2px;
+      margin-right: 3px;
+    }
+  }
+
   main.groups-wrapper {
     height: 100%;
     overflow-x: scroll;
@@ -116,7 +124,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      &>button {
+      & > button {
         width: 100%;
         padding: 12px;
         margin: 0 4px 0 0;
@@ -203,10 +211,7 @@
       width: 28px;
       height: 28px;
       margin: 0 0 0 -2px;
-
-
     }
-
   }
 }
 

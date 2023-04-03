@@ -32,7 +32,9 @@
           </li>
         </ul>
 
-        <button class="btn btn-light btn-share" @click="toggleInviteModal">Share</button>
+        <button class="btn btn-blue btn-share" @click="toggleInviteModal"> <span class="share-svg"
+            v-html="getSvg('addMember')"> </span>
+          Share</button>
         <InviteModal v-if="this.board" v-show="showInviteModal" @updateBoard="updateBoard"
           @closeModal="toggleInviteModal" />
         <span class="board-header-btn-divider"></span>
