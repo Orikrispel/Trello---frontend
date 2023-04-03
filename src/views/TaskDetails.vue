@@ -121,11 +121,11 @@
               </div>
               <!-- <form class="comment-form" @submit.prevent="handleComment"> -->
               <div class="comment-box-input">
-                <img class="user-img" v-if="loggedinUser.imgUrl" :src="loggedinUser.imgUrl" alt="" />
+                <img class="user-img" v-if="loggedinUser?.imgUrl" :src="loggedinUser?.imgUrl" alt="" />
                 <div v-else class="member-img">
-                  <span>{{ loggedinUser.fullname.charAt(0).toUpperCase() }}</span>
-                  <Chat :task="task" />
+                  <span>{{ loggedinUser?.fullname.charAt(0).toUpperCase() }}</span>
                 </div>
+                <Chat :task="task" />
                 <ActivityList v-if="task.activities && task.activities.length"
                   :activities="activitiesForActivitiesList" />
                 <!-- </form> -->
