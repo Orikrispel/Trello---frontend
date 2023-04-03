@@ -186,6 +186,28 @@
 .board-right-actions {
   transition: margin 0.6s;
   margin-inline-end: 0px;
+
+  .member-list {
+    margin-right: 8px;
+
+    .member-preview {
+      padding: 0;
+
+      &:hover {
+        background-color: transparent;
+        opacity: 0.8;
+      }
+    }
+
+    .user-img {
+      width: 28px;
+      height: 28px;
+      margin: 0 0 0 -2px;
+
+
+    }
+
+  }
 }
 
 .move-right-actions {

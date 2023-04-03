@@ -241,17 +241,17 @@ function getDefaultMembers() {
     {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
     },
     {
       _id: 'u102',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
     {
       _id: 'u103',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
   ]
 }
@@ -261,17 +261,17 @@ function getRandomMembers() {
     {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
     },
     {
       _id: 'u102',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
     {
       _id: 'u103',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
   ]
   members.splice(0, getRandomIntInclusive(0, 2))

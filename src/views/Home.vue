@@ -18,6 +18,8 @@
           </div>
           <img class="intro-img" src="../../src/assets/imgs/homepage/homepage-2.png" />
         </div>
+
+        <img class="wave-divider" src="../../src/assets/imgs/homepage/white-wave.svg" />
       </section>
     </main>
   </section>

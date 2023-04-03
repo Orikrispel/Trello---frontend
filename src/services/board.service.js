@@ -196,15 +196,15 @@ function _getRandomGroups(count = 4) {
     currGroup.tasks[0].cover = { type: 'semi', color: '' }
     currGroup.tasks[0].files.push(getFile(i))
     if (i === 0) {
-      currGroup.title = 'In Development'
+      currGroup.title = '🗒 Backlog-Client'
       currGroup.tasks[0].title = 'Finish all HTML work for the app homepage'
       currGroup.tasks[0].checklists = []
       currGroup.tasks[0].checklists.push(_getDemoChecklist())
       currGroup.tasks[0].labels = []
       currGroup.tasks[0].cover = { type: 'semi', color: 'orange' }
     }
-    if (i === 1) currGroup.title = 'Backlog-Server'
-    if (i === 2) currGroup.title = 'Done'
+    if (i === 1) currGroup.title = 'In Development'
+    if (i === 2) currGroup.title = '📅 Working On'
     if (i === 3) currGroup.title = 'QA'
     if (i === 4) currGroup.title = 'Ready for production'
     groups.push(currGroup)
@@ -220,21 +220,21 @@ function _getDemoChecklist() {
       {
         id: 'td' + utilService.makeId(5),
         title: 'Finish basic design',
-        isDone: true,
+        isDone: false,
       },
       {
         id: 'td' + utilService.makeId(5),
         title: 'Finish board components',
-        isDone: true,
+        isDone: false,
       },
       {
         id: 'td' + utilService.makeId(5),
         title: 'Finish group components',
-        isDone: true,
+        isDone: false,
       },
       {
         id: 'td' + utilService.makeId(5),
-        title: 'Finish home filters.',
+        title: 'Finish homepage filters.',
         isDone: false,
       },
     ],
@@ -301,12 +301,12 @@ function getRandomMembers() {
     {
       _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
     {
       _id: '64259a5c5e24b789998fc9a6',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
   ]
   members.splice(utilService.getRandomIntInclusive(0, 2), 1)
