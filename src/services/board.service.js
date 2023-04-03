@@ -443,7 +443,7 @@ async function _createBoards(amount = 20) {
 
 async function getDemoData() {
   let board = getEmptyBoard(
-    'Project Managment',
+    "Pixel-Pro",
     false,
     userService.getRandomDefaultMember(),
     {
