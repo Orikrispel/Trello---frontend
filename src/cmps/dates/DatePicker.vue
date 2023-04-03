@@ -1,74 +1,45 @@
 <template>
   <section class="date-picker-container">
-    <v-date-picker
-      v-model="range"
-      locale="en-us"
-      is-range
-      :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }">
+    <v-date-picker v-model="range" locale="en-us" is-range :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }">
     </v-date-picker>
 
     <div class="custom-date-picker-component">
       <div class="inputs-container start-date-container">
         <label>Start date</label>
-        <input
-          type="checkbox"
-          class="start-date-checkbox"
-          v-model="isChooseStart" />
-        <div
-          :class="
+        <input type="checkbox" class="start-date-checkbox" v-model="isChooseStart" />
+        <div :class="
+          isChooseStart
+            ? ' txt-inputs-container'
+            : 'disabled txt-inputs-container'
+        ">
+          <input type="text" :class="
             isChooseStart
-              ? ' txt-inputs-container'
-              : 'disabled txt-inputs-container'
-          ">
-          <input
-            type="text"
-            :class="
-              isChooseStart
-                ? ' txt-input start-date-input'
-                : 'disabled txt-input start-date-input'
-            "
-            ref="startDateInput"
-            v-model="startDateForDisplay"
-            @focus="choosingStart = true"
-            @blur="updateStartDate($event)"
-            placeholder="M/D/YYY" />
+              ? ' txt-input start-date-input'
+              : 'disabled txt-input start-date-input'
+          " ref="startDateInput" v-model="startDateForDisplay" @focus="choosingStart = true"
+            @blur="updateStartDate($event)" placeholder="M/D/YYY" />
         </div>
       </div>
       <div class="inputs-container due-date-container">
         <label>Due date</label>
-        <input
-          type="checkbox"
-          class="due-date-checkbox"
-          v-model="isChooseDue" />
-        <div
-          :class="
+        <input type="checkbox" class="due-date-checkbox" v-model="isChooseDue" />
+        <div :class="
+          isChooseDue
+            ? ' txt-inputs-container'
+            : 'disabled txt-inputs-container'
+        ">
+          <input type="text" :class="
             isChooseDue
-              ? ' txt-inputs-container'
-              : 'disabled txt-inputs-container'
-          ">
-          <input
-            type="text"
-            :class="
-              isChooseDue
-                ? ' txt-input due-date-input'
-                : 'disabled txt-input due-date-input'
-            "
-            ref="dueDateInput"
-            v-model="dueDateForDisplay"
-            @focus="choosingDue = true"
-            @change="updateEndDate($event)"
+              ? ' txt-input due-date-input'
+              : 'disabled txt-input due-date-input'
+          " ref="dueDateInput" v-model="dueDateForDisplay" @focus="choosingDue = true" @change="updateEndDate($event)"
             placeholder="M/D/YYYY" />
           <v-date-picker mode="time">
-            <input
-              type="text"
-              :class="
-                isChooseDue
-                  ? ' txt-input due-time-input'
-                  : 'disabled txt-input due-time-input'
-              "
-              v-model="time"
-              @blur="validateTime()"
-              placeholder="h:mm A" />
+            <input type="text" :class="
+              isChooseDue
+                ? ' txt-input due-time-input'
+                : 'disabled txt-input due-time-input'
+            " v-model="time" @blur="validateTime()" placeholder="h:mm A" />
           </v-date-picker>
         </div>
       </div>
@@ -185,9 +156,8 @@ export default {
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
       if (user && activity) {
-        activity.txt = `set ${
-          task.title
-        } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
+        activity.txt = `set ${task.title
+          } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
         activity.task = { title: task.title, taskId: this.taskId }
         activity.type = 'date'
         activity.byMember = {
