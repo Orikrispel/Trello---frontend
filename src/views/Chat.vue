@@ -4,7 +4,7 @@
       <input @blur="handleBlur" @focus="isUserCommenting = true" class="comment-input" type="text" v-model="comment.txt"
         placeholder="Write a comment..." />
       <div :class="
-        isUserCommenting
+        true
           ? 'comment-editor-wrapper open'
           : 'comment-editor-wrapper'
       ">
