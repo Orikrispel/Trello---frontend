@@ -298,11 +298,6 @@ function getFile(num) {
 function getRandomMembers() {
   let members = [
     {
-      _id: '64251c27a476517cf20661ef',
-      fullname: 'Yohai Korem',
-      imgUrl: '',
-    },
-    {
       _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
       imgUrl: '',
@@ -354,7 +349,7 @@ function getRandomTask(
     title,
     description,
     [labels],
-    [userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]]
+    [userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 1)]]
   )
   return res
 }
@@ -602,7 +597,6 @@ async function _createBoard(
 }
 
 function getRandomBoardImg(idx) {
-  debugger
   const imgs = [
     {
       regular:
