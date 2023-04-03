@@ -102,14 +102,6 @@
     }
   }
 
-  .share-svg {
-    display: flex;
-    svg {
-      width: 2px;
-      margin-right: 3px;
-    }
-  }
-
   main.groups-wrapper {
     height: 100%;
     overflow-x: scroll;
@@ -272,4 +264,13 @@
   width: 95%;
   margin: auto;
   margin-bottom: 15px;
+}
+
+.share-svg {
+  display: flex;
+  font-size: 20px;
+  margin-right: 3px;
+  svg {
+    width: 18px;
+  }
 }
