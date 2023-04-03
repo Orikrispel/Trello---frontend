@@ -150,7 +150,8 @@ export default {
     async updateBoard(board, activity) {
       // console.log(activity)
       try {
-        this.board = await this.$store.dispatch(getActionUpdateBoard(board))
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
       } catch (err) {
         console.log(err)
       }
