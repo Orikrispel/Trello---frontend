@@ -383,10 +383,10 @@ export default {
       if (!task) return
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = JSON.parse(JSON.stringify(task))
-      if (!updatedTask.activities) updatedTask.activities = []
-      if (activity) {
-        updatedTask.activities.unshift(activity)
-      }
+      // if (!updatedTask.activities) updatedTask.activities = []
+      // if (activity) {
+      //   updatedTask.activities.unshift(activity)
+      // }
 
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
@@ -396,13 +396,12 @@ export default {
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
       if (!board.activities) board.activities = []
-      if (activity) {
-        board.activities.unshift(activity)
-      }
+      // if (activity) {
+      //   board.activities.unshift(activity)
+      // }
       this.task = updatedTask
 
       if (!skipEmit) {
-        console.log(updatedTask.members)
         socketService.emit(SOCKET_EMIT_TASK_UPDATED, updatedTask)
       }
       this.updateBoard(board)
@@ -419,8 +418,8 @@ export default {
       errMsg = "couldn't save board"
     ) {
       try {
-        this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
+        this.board = board
       } catch (err) {
         console.log(err)
       }

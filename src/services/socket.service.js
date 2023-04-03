@@ -12,6 +12,8 @@ export const SOCKET_EMIT_TASK_DROPPED = 'task-dropped'
 export const SOCKET_EVENT_TASK_DROPPED = 'task-dropped'
 export const SOCKET_EMIT_BOARD_UPDATED = 'board-updated'
 export const SOCKET_EVENT_BOARD_UPDATED = 'board-updated'
+export const SOCKET_EVENT_USER_INVITED = 'user-invited'
+export const SOCKET_EMIT_USER_INVITED = 'user-invited'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 

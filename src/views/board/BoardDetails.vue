@@ -125,9 +125,9 @@ export default {
     })
     this.checkIsDark()
 
-    // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
-    //   this.updateBoard(board)
-    // })
+    socketService.on(SOCKET_EVENT_BOARD_UPDATED, async (board) => {
+      await this.updateBoard(board, null, true)
+    })
   },
   computed: {
     ...mapGetters(['currBoard']),
@@ -173,10 +173,14 @@ export default {
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
     },
-    async updateBoard(board, activity) {
-      // console.log(activity)
+    async updateBoard(board, activity, skipEmit = false) {
+      // debugger
       try {
-        this.board = await this.$store.dispatch(getActionUpdateBoard(board))
+        let savedBoard = await this.$store.dispatch(getActionUpdateBoard(board))
+        if (!skipEmit) {
+          socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
+        }
+        this.board = savedBoard
       } catch (err) {
         console.log(err)
       }
@@ -238,9 +242,9 @@ export default {
   mounted() {
     this.taskDetailsIsOpen = false
     socketService.emit(SOCKET_EMIT_SET_TOPIC, this.boardId)
-    socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
-      this.board = board
-    })
+    // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+    //   this.board = board
+    // })
   },
   watch: {
     currBoard: {

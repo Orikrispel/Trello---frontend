@@ -60,7 +60,6 @@ async function save(board) {
     // savedBoard = await storageService.post(STORAGE_KEY, board)
     savedBoard = await httpService.post('board', board)
   }
-  socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
 
   return savedBoard
 }
@@ -234,7 +233,6 @@ function _getDemoChecklist() {
         isDone: false,
       },
     ],
-
   }
   return checklist
 }

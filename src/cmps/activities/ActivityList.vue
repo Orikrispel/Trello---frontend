@@ -32,7 +32,6 @@ export default {
     }
   },
   async created() {
-    console.log(this.activities)
     // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
     // socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
   },
