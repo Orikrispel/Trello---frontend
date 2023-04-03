@@ -155,7 +155,6 @@
         display: grid;
         grid-template-columns: 1fr;
 
-
         @include for-normal-layout {
           grid-template-columns: 568px 1fr;
         }
@@ -232,7 +231,11 @@
             }
           }
 
-          .icon:not(.icon-close, .attachments-icon, .icon-overflow-menu-horizontal) {
+          .icon:not(
+              .icon-close,
+              .attachments-icon,
+              .icon-overflow-menu-horizontal
+            ) {
             color: $primary-clr5;
             position: absolute;
             top: 8px;
@@ -334,6 +337,9 @@
           transition-duration: 85ms;
           transition-property: padding-bottom;
           transition-timing-function: ease;
+          .member-img {
+            margin: -5px 0px;
+          }
 
           textarea {
             overflow: hidden;
