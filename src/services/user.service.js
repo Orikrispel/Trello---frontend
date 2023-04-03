@@ -33,7 +33,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) {}
+function onUserUpdate(user) { }
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -123,11 +123,6 @@ async function getRandomUsers(amount = 5) {
 
 function getDefaultMembers() {
   return [
-    {
-      _id: '64251c27a476517cf20661ef',
-      fullname: 'Yohai Korem',
-      imgUrl: 'src/assets/imgs/memberImgs/memberImgYohai.jpg',
-    },
     {
       _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',

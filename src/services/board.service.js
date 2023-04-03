@@ -198,6 +198,7 @@ function _getRandomGroups(count = 4) {
     if (i === 0) {
       currGroup.title = 'In Development'
       currGroup.tasks[0].title = 'Finish all HTML work for the app homepage'
+      currGroup.tasks[0].checklists = []
       currGroup.tasks[0].checklists.push(_getDemoChecklist())
       currGroup.tasks[0].labels = []
       currGroup.tasks[0].cover = { type: 'semi', color: 'orange' }
@@ -360,8 +361,19 @@ function getRandomTask(
 }
 
 function getRandomCoverColor() {
-  const colorItems = ['#7bc86c', '#f5dd29', '#ffaf3f', '#cd8de5', '#5ba4c1']
-  return colorItems[utilService.getRandomIntInclusive(0, 4)]
+  const colorItems = [
+    '#7bc86c',
+    '#f5dd29',
+    '#ffaf3f',
+    '#ef7564',
+    '#cd8de5',
+    '#8bbdd9',
+    '#8fdfeb',
+    '#b3f1d0',
+    '#f9c2e4',
+    '#505f79',
+  ]
+  return colorItems[utilService.getRandomIntInclusive(0, 9)]
 }
 
 function getRandomCoverType() {
