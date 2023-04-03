@@ -184,17 +184,19 @@ export default {
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = `set ${
-        task.title
-      } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
-      activity.task = { title: task.title, taskId: this.taskId }
-      activity.type = 'date'
-      activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
+      if (user && activity) {
+        activity.txt = `set ${
+          task.title
+        } to be due ${utilService.formatDateString(dueDate)} at ${dueTime}`
+        activity.task = { title: task.title, taskId: this.taskId }
+        activity.type = 'date'
+        activity.byMember = {
+          fullname: user.fullname,
+          _id: user._id,
+        }
       }
-
-      eventBus.emit('updateTask', { task, activity })
+      const data = { task, activity }
+      eventBus.emit('updateTask', data)
       this.task = task
     },
     removeDate() {
@@ -202,16 +204,18 @@ export default {
       task.date = null
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
-      let user = this.$store.getters.loggedinUser
-      activity.txt = `removed due date from  ${task.title} `
-      activity.task = { title: task.title, taskId: this.taskId }
-      activity.type = 'date'
-      activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
+      if (activity && user) {
+        let user = this.$store.getters.loggedinUser
+        activity.txt = `removed due date from  ${task.title} `
+        activity.task = { title: task.title, taskId: this.taskId }
+        activity.type = 'date'
+        activity.byMember = {
+          fullname: user.fullname,
+          _id: user._id,
+        }
       }
-
-      eventBus.emit('updateTask', { task, activity })
+      const data = { task, activity }
+      eventBus.emit('updateTask', data)
       this.task = task
       this.range.start = null
       this.range.end = null

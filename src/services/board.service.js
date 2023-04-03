@@ -34,6 +34,7 @@ export const boardService = {
 window.cs = boardService
 
 let imgIdx = 0
+let labelIdx = 0
 
 async function query() {
   let user = userService.getLoggedinUser()
@@ -238,7 +239,6 @@ function _getDemoChecklist() {
         isDone: false,
       },
     ],
-
   }
   return checklist
 }
@@ -249,7 +249,7 @@ function _getRandomGroup(count = 5) {
     let currTask = getRandomTask()
     if (i % 2 === 0) {
       currTask.cover = getRandomCover()
-      currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
+      currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 4))
     }
     let currChecklist =
       i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
@@ -408,11 +408,21 @@ function _getBoardRandomColor() {
 function getRandomLabel(
   idx = utilService.getRandomIntInclusive(0, colorItems.length - 1)
 ) {
+  labelIdx++
+  if (labelIdx >= 8) labelIdx = 0
   return {
     id: utilService.makeId(),
-    title: utilService.getRandomLabelTitle(),
+    title: utilService.getRandomLabelTitle(labelIdx),
     color: colorItems[idx],
   }
+}
+
+function getRandomTaskLabels() {
+  let labels = []
+  for (let i = 0; i < amount; i++) {
+    labels.push(getRandomLabel(i))
+  }
+  return labels
 }
 
 function getRandomLabels(amount = 4) {
@@ -434,7 +444,6 @@ async function _createBoards(amount = 20) {
   boards.unshift(demoBoard)
   return boards
 }
-
 
 async function getDemoData() {
   let board = getEmptyBoard(
@@ -481,10 +490,10 @@ function getEmptyActivity() {
   }
 }
 
-
 async function _createBoard(
   title = 'Robot dev proj',
-  labels = getRandomLabels(8)) {
+  labels = getRandomLabels(8)
+) {
   let board = {
     title,
     isStarred: randomStarBoard(),
@@ -494,7 +503,7 @@ async function _createBoard(
     ],
     style: {
       backgroundColor: '',
-      imgUrls: (imgIdx <= 4) ? getRandomBoardImg(imgIdx) : {},
+      imgUrls: imgIdx <= 4 ? getRandomBoardImg(imgIdx) : {},
       gradient: _getBoardRandomGradient(),
     },
     labels,
@@ -606,24 +615,34 @@ async function _createBoard(
 function getRandomBoardImg(idx) {
   const imgs = [
     {
-      regular: '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080"',
-      thumb: '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200"',
+      regular:
+        '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080"',
+      thumb:
+        '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200"',
     },
     {
-      regular: 'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080',
-      thumb: 'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200',
+      regular:
+        'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb:
+        'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200',
     },
     {
-      regular: 'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=1080',
-      thumb: 'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=200',
+      regular:
+        'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb:
+        'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=200',
     },
     {
-      regular: 'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=1080',
-      thumb: 'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=200',
+      regular:
+        'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb:
+        'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=200',
     },
     {
-      thumb: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=200',
-      regular: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb:
+        'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=200',
+      regular:
+        'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=1080',
     },
   ]
   return imgs[idx]
