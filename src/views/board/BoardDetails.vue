@@ -23,9 +23,16 @@
         <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button> -->
-        <button class="btn btn-light btn-share" @click="toggleInviteModal">
-          Share
-        </button>
+        <ul class="member-list clean-list flex">
+          <li class="member-preview" v-for="member in board.members" :key="member._id">
+            <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+            <div v-else class="member-img">
+              <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
+            </div>
+          </li>
+        </ul>
+
+        <button class="btn btn-light btn-share" @click="toggleInviteModal">Share</button>
         <InviteModal v-if="this.board" v-show="showInviteModal" @updateBoard="updateBoard"
           @closeModal="toggleInviteModal" />
         <span class="board-header-btn-divider"></span>

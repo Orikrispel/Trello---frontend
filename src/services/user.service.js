@@ -33,7 +33,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) {}
+function onUserUpdate(user) { }
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -125,12 +125,12 @@ function getDefaultMembers() {
     {
       _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
     {
       _id: '64259a5c5e24b789998fc9a6',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
   ]
 }
