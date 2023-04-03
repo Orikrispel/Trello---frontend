@@ -4,13 +4,13 @@
       <span v-html="getSvg('addMember')" style="padding-top: 3px"></span>
       About this board
     </button>
-    <button @click="this.$emit('ChangeCmp', 'ChangeBgMenu')">
+    <button @click="this.$emit('changeCmp', 'ChangeBgMenu')">
       <span v-html="getSvg('pencil')" style="padding-top: 2px"></span>
       Change background
     </button>
   </section>
   <section class="right-menu-actions">
-    <ActivityList v-if="board" :activities="board.activities" />
+    <!-- <ActivityList v-if="board" :activities="board.activities" /> -->
   </section>
 </template>
 

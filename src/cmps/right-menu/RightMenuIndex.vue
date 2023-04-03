@@ -66,7 +66,6 @@ export default {
             this.$emit('setBgColor', color)
         },
         setBgImg(imgUrls) {
-            console.log('imgUrls', imgUrls)
             this.$emit('setBgImg', imgUrls)
         },
         setCmp() {

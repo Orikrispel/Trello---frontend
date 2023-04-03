@@ -33,6 +33,8 @@ export const boardService = {
 }
 window.cs = boardService
 
+let imgIdx = 0
+
 async function query() {
   let user = userService.getLoggedinUser()
   // let userId = user._id
@@ -53,6 +55,7 @@ async function save(board) {
   var savedBoard
   if (board._id) {
     // savedBoard = await storageService.put(STORAGE_KEY, board)
+    console.log('board', board)
     savedBoard = await httpService.put(`board/${board._id}`, board)
   } else {
     // Later, owner is set by the backend
@@ -60,7 +63,7 @@ async function save(board) {
     // savedBoard = await storageService.post(STORAGE_KEY, board)
     savedBoard = await httpService.post('board', board)
   }
-  socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
+  // socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
 
   return savedBoard
 }
@@ -375,7 +378,7 @@ function _getBoardRandomGradient() {
     'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
     'linear-gradient(55.41deg, rgb(250, 165, 61) 2%, rgb(89, 201, 2) 100%)',
   ]
-  return colorItems[utilService.getRandomIntInclusive(0, 6)]
+  return colorItems[utilService.getRandomIntInclusive(0, 5)]
 }
 
 function _getBoardRandomColor() {
@@ -411,21 +414,15 @@ function getRandomLabels(amount = 4) {
 async function _createBoards(amount = 20) {
   let boards = []
   for (let i = 0; i < amount; i++) {
+    console.log('imgIdx', imgIdx)
     boards.push(await _createBoard(utilService.getRandomProjectNames(i)))
+    imgIdx++
   }
   let demoBoard = await getDemoData()
   boards.unshift(demoBoard)
   return boards
 }
 
-function getGroupsWithFiles(demoBoard) {
-  let newBoard = JSON.parse(JSON.stringify(demoBoard))
-  for (let i = 0; i < 4; i++) {
-    newBoard.groups[i].tasks[0].cover.type = 'semi'
-    newBoard.groups[i].tasks[0].files.push(getFile(i))
-  }
-  return newBoard
-}
 
 async function getDemoData() {
   let board = getEmptyBoard(
@@ -434,7 +431,7 @@ async function getDemoData() {
     userService.getRandomDefaultMember(),
     {
       imgUrls: '',
-      backgroundColor:
+      gradient:
         'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
     },
     _getRandomGroups(6),
@@ -442,6 +439,7 @@ async function getDemoData() {
   )
   board.labels = getRandomLabels(8)
   board = await save(board)
+
   console.log('hi from demo data', board)
   return board
 }
@@ -471,17 +469,10 @@ function getEmptyActivity() {
   }
 }
 
-function _setRandomImgs(board) {
-  if (board) {
-    board.style.backgroundColor = ''
-    board.style.imgUrls = unsplashService.getRandomImg()
-  }
-}
 
 async function _createBoard(
   title = 'Robot dev proj',
-  labels = getRandomLabels(8)
-) {
+  labels = getRandomLabels(8)) {
   let board = {
     title,
     isStarred: randomStarBoard(),
@@ -490,8 +481,8 @@ async function _createBoard(
       utilService.getRandomIntInclusive(0, 2)
     ],
     style: {
-      backgroundColor: _getBoardRandomColor(),
-      imgUrls: {},
+      backgroundColor: '',
+      imgUrls: (imgIdx <= 4) ? getRandomBoardImg(imgIdx) : {},
       gradient: _getBoardRandomGradient(),
     },
     labels,
@@ -598,4 +589,31 @@ async function _createBoard(
   }
   board = await save(board)
   return board
+}
+
+function getRandomBoardImg(idx) {
+  debugger
+  const imgs = [
+    {
+      regular: '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080"',
+      thumb: '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200"',
+    },
+    {
+      regular: 'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb: 'https://images.unsplash.com/photo-1584949091598-c31daaaa4aa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw5fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=200',
+    },
+    {
+      regular: 'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb: 'https://images.unsplash.com/photo-1475070929565-c985b496cb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8ZGFya3xlbnwwfHx8fDE2ODA0NDI4OTg&ixlib=rb-4.0.3&q=80&w=200',
+    },
+    {
+      regular: 'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=1080',
+      thumb: 'https://images.unsplash.com/photo-1515021863624-9b325c51faab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8c2VhJTIwZGFya3xlbnwwfHx8fDE2ODA1MTMyMzA&ixlib=rb-4.0.3&q=80&w=200',
+    },
+    {
+      thumb: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=200',
+      regular: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=1080',
+    },
+  ]
+  return imgs[idx]
 }

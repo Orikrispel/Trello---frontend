@@ -2,10 +2,7 @@
 
 <template>
   <ul v-if="activities" class="clean-list">
-    <li
-      v-for="activity in activities"
-      :key="activity?.id"
-      class="activity-container">
+    <li v-for="activity in activities" :key="activity?.id" class="activity-container">
       <p class="activity-txt">
         <span class="activity-by">{{ activity?.byMember?.fullname }}</span>
         {{ linkCommon(activity) }}
@@ -32,7 +29,7 @@ export default {
     }
   },
   async created() {
-    console.log(this.activities)
+    // console.log(this.activities)
     // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
     // socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
   },

@@ -118,6 +118,8 @@ export const boardStore = {
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((b) => b._id === board._id)
+      console.log('state idx', idx)
+      console.log('boards[idx]', state.boards[idx])
       state.boards.splice(idx, 1, board)
     },
     starBoard(state, { board }) {
@@ -151,10 +153,8 @@ export const boardStore = {
     async updateBoard(context, { board }) {
       try {
         board = await boardService.save(board)
-
         context.commit(getActionUpdateBoard(board))
         context.commit({ type: 'setCurrBoard', board })
-
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
@@ -237,6 +237,6 @@ export const boardStore = {
       }
       commit({ type: 'setCurrLabel', label: currLabel })
     },
-    returnActivity({ state }, { data }) {},
+    returnActivity({ state }, { data }) { },
   },
 }

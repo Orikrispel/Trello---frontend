@@ -4,7 +4,7 @@
             <span v-html="getSvg('search')"></span>
             <input type="search" placeholder="Photos..." class="input" v-model="search" @input="searchImgLater">
         </div>
-        <div class="rightimg-picker-container" v-show="!isLoad">
+        <div class="rightimg-picker-container" v-show="!isLoading">
             <div :style="{ 'background': 'url(' + imgUrl.thumb + ')', 'background-size': 'cover' }"
                 v-for="(imgUrl, idx) in imgUrls" :key="idx" @click="setBgImg(imgUrl)" :class="['rightimg-picker-item']">
             </div>
@@ -43,7 +43,7 @@ export default {
                 .finally(() => this.isLoading = false)
         },
         setBgImg(imgUrl) {
-            console.log('this.imgUrl', imgUrl)
+            console.log('imgUrl.regular\n,imgUrl.thumb', imgUrl.regular, imgUrl.thumb)
             this.$emit('setBgImg', imgUrl)
         }
 
@@ -59,7 +59,7 @@ export default {
             console.log('error')
         }
     },
-    emits: ['setColor', 'onSetBoardImg'],
+    emits: ['setColor', 'onSetBoardImg', 'setBgImg'],
     components: {
         Loader,
     }
