@@ -13,7 +13,13 @@
   }
 
   .btn-date {
-    &:hover {}
+    z-index: 1;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: $secondary-clr4;
+
+    }
   }
 
   p:is(.checklist, .files, .date) {
