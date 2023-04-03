@@ -33,7 +33,7 @@ function getUsers() {
   return httpService.get(`user`)
 }
 
-function onUserUpdate(user) { }
+function onUserUpdate(user) {}
 
 async function getById(userId) {
   // const user = await storageService.get('user', userId)
@@ -110,7 +110,7 @@ function getLoggedinUser() {
 }
 
 function getRandomDefaultMember() {
-  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 1)]
 }
 
 async function getRandomUsers(amount = 5) {
@@ -120,7 +120,6 @@ async function getRandomUsers(amount = 5) {
     res.push(users[utilService.getRandomIntInclusive(0, users.length - 1)])
   }
 }
-
 function getDefaultMembers() {
   return [
     {
