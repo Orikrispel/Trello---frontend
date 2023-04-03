@@ -173,18 +173,18 @@ export default {
       let task = JSON.parse(JSON.stringify(this.task))
       task.date = null
       let activity = this.$store.getters.emptyActivity
-      activity = { ...activity }
-      if (activity && user) {
-        let user = this.$store.getters.loggedinUser
-        activity.txt = `removed due date from  ${task.title} `
-        activity.task = { title: task.title, taskId: this.taskId }
-        activity.type = 'date'
-        activity.byMember = {
-          fullname: user.fullname,
-          _id: user._id,
-        }
-      }
-      const data = { task, activity }
+      // activity = { ...activity }
+      // if (activity && user) {
+      //   let user = this.$store.getters.loggedinUser
+      //   activity.txt = `removed due date from  ${task.title} `
+      //   activity.task = { title: task.title, taskId: this.taskId }
+      //   activity.type = 'date'
+      //   activity.byMember = {
+      //     fullname: user.fullname,
+      //     _id: user._id,
+      //   }
+      // }
+      const data = { task }
       eventBus.emit('updateTask', data)
       this.task = task
       this.range.start = null
