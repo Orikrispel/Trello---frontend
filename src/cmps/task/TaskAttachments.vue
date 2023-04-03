@@ -25,6 +25,7 @@
     <ul class="clean-list flex">
       <li class="member-preview" v-for="member in task.members" :key="member._id">
         <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+
         <div v-else class="member-img">
           <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
         </div>

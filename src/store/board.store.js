@@ -119,7 +119,6 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((b) => b._id === board._id)
       console.log('state idx', idx)
-      console.log('boards[idx]', state.boards[idx])
       state.boards.splice(idx, 1, board)
     },
     starBoard(state, { board }) {

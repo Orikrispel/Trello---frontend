@@ -34,6 +34,7 @@ export const boardService = {
 window.cs = boardService
 
 let imgIdx = 0
+let labelIdx = 0
 
 async function query() {
   let user = userService.getLoggedinUser()
@@ -248,7 +249,7 @@ function _getRandomGroup(count = 5) {
     let currTask = getRandomTask()
     if (i % 2 === 0) {
       currTask.cover = getRandomCover()
-      currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 3))
+      currTask.labels = getRandomLabels(utilService.getRandomIntInclusive(1, 4))
     }
     let currChecklist =
       i % 4 === 0 ? _getRandomChecklist(true) : _getRandomChecklist(false)
@@ -402,11 +403,21 @@ function _getBoardRandomColor() {
 function getRandomLabel(
   idx = utilService.getRandomIntInclusive(0, colorItems.length - 1)
 ) {
+  labelIdx++
+  if (labelIdx >= 8) labelIdx = 0
   return {
     id: utilService.makeId(),
-    title: utilService.getRandomLabelTitle(),
+    title: utilService.getRandomLabelTitle(labelIdx),
     color: colorItems[idx],
   }
+}
+
+function getRandomTaskLabels() {
+  let labels = []
+  for (let i = 0; i < amount; i++) {
+    labels.push(getRandomLabel(i))
+  }
+  return labels
 }
 
 function getRandomLabels(amount = 4) {
