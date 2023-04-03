@@ -14,21 +14,35 @@
   button {
     display: flex;
     align-items: center;
-    gap: 5px;
-    width: 90%;
+    gap: 8px;
     color: $font-clr2;
     border: none;
     border-radius: 3px;
     background-color: $secondary-clr3;
-    font-weight: 700;
     height: 32px;
+    font-weight: 600;
     line-height: 20px;
-    margin-bottom: 8px;
     padding-left: 12px;
-    text-align: start;
+    text-align: left;
+    width: 100%;
 
     &:hover {
-      filter: brightness(97%);
+      background-color: $btn-clr6;
+    }
+  }
+
+  .activity-title {
+    width: 100%;
+    color: $font-clr1;
+    font-size: rem(14px);
+    gap: 8px;
+
+    .icon {
+      font-size: 20px;
+      height: 20px;
+      font-weight: normal;
+      color: $primary-clr5;
+
     }
   }
 }
@@ -64,12 +78,27 @@
 }
 
 .right-menu-actions {
-  width: 95%;
-  margin: auto;
+  padding: 12px 6px 8px 12px;
+  width: 100%;
   align-items: center;
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+hr {
+  background-color: #091e4221;
+  border: 0;
+  height: 1px;
+  margin: 8px 0;
+  padding: 0;
+  width: 100%;
+}
+
+.background-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
 }
 
 .right-menu-header {

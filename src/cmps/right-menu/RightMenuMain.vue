@@ -1,16 +1,24 @@
 <template>
   <section class="right-menu-actions">
     <button>
-      <span v-html="getSvg('addMember')" style="padding-top: 3px"></span>
+      <span v-html="getSvg('trello')" style="padding-top: 3px"></span>
       About this board
     </button>
     <button @click="this.$emit('changeCmp', 'ChangeBgMenu')">
-      <span v-html="getSvg('pencil')" style="padding-top: 2px"></span>
+      <div v-if="this.board" class="background-thumb" :style="{
+        background: board.style?.backgroundColor,
+        backgroundImage: getBoardBg() || board.style?.backgroundColor,
+        backgroundSize: 'cover',
+        'background-position': 'center',
+      }"></div>
       Change background
     </button>
-  </section>
-  <section class="right-menu-actions">
-    <!-- <ActivityList v-if="board" :activities="board.activities" /> -->
+
+    <hr>
+    <section class="right-menu-actions">
+      <h3 class="activity-title flex align-center"><span class="icon activity-icon"></span>Activity</h3>
+      <ActivityList v-if="board" :activities="board.activities" />
+    </section>
   </section>
 </template>
 
@@ -42,7 +50,12 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
+    getBoardBg() {
+      if (!this.board.style.imgUrls?.regular) return null
+      else return `url(${this.board.style.imgUrls?.regular})`
+    },
   },
+
   computed: {
     boardId() {
       const { boardId } = this.$route.params

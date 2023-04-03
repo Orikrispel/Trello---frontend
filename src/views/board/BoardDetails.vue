@@ -23,7 +23,9 @@
         <!-- <button class="btn btn-light btn-filter" @click="showFilterMenu = !showFilterMenu">
           <i v-html="getSvg('filter')"></i>Filter
         </button> -->
-        <button class="btn btn-light">Share</button>
+        <button class="btn btn-light btn-share" @click="toggleInviteModal">Share</button>
+        <InviteModal v-if="this.board" v-show="showInviteModal" @updateBoard="updateBoard"
+          @closeModal="toggleInviteModal" />
         <span class="board-header-btn-divider"></span>
         <button @click="openRightMenu" class="btn btn-light btn-sm btn-menu" v-if="!isRightMenuOpen"
           v-html="getSvg('threeDots')"></button>
@@ -31,7 +33,6 @@
       <RightMenuIndex @closeRightMenu="isRightMenuOpen = false" @setBgColor="setBgColor" @setBgImg="setBgImg" />
     </header>
 
-    <InviteModalVue @updateBoard="updateBoard" />
 
     <main class="groups-wrapper flex">
       <GroupList :board="board" @updateBoard="updateBoard" />
@@ -64,7 +65,7 @@ import {
   SOCKET_EMIT_BOARD_UPDATED,
   SOCKET_EMIT_SET_TOPIC,
 } from '../../services/socket.service'
-import InviteModalVue from '../../cmps/invite/InviteModal.vue'
+import InviteModal from '../../cmps/invite/InviteModal.vue'
 import RightMenuIndex from '../../cmps/right-menu/RightMenuIndex.vue'
 import { eventBus } from '../../services/event-bus.service'
 import DynamicModal from '../../cmps/DynamicModal.vue'
@@ -89,6 +90,7 @@ export default {
       showFilterMenu: false,
       isRightMenuOpen: false,
       isDark: true,
+      showInviteModal: false
     }
   },
   async created() {
@@ -147,7 +149,8 @@ export default {
     },
     async updateBoard(board, activity) {
       try {
-        this.board = await this.$store.dispatch(getActionUpdateBoard(board))
+        this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
       } catch (err) {
         console.log(err)
       }
@@ -206,6 +209,9 @@ export default {
         this.isDark = true
       }
     },
+    toggleInviteModal() {
+      this.showInviteModal = !this.showInviteModal
+    }
   },
   mounted() {
     this.taskDetailsIsOpen = false
@@ -228,7 +234,7 @@ export default {
     GroupFilter,
     DynamicModal,
     RightMenuIndex,
-    InviteModalVue,
+    InviteModal,
   },
 }
 </script>

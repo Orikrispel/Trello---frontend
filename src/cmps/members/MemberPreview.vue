@@ -1,7 +1,8 @@
 <template>
   <div class="member-preview">
-    <div class="member-img">
-      {{ member.imgUrl ? member.imgUrl : member.fullname.charAt(0).toUpperCase() }}
+    <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+    <div v-else class="member-img">
+      <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
     </div>
     <div>{{ member.fullname }}</div>
     <div>{{ member.isActive }}</div>

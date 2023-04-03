@@ -1,7 +1,7 @@
 <template>
   <section class="homepage-container">
     <header class="homepage-header flex justify-between">
-      <div class="logo flex flex-center"><img src="../assets/logo colored.png"></div>
+      <div class="logo flex flex-center"><img src="../assets/logo.png"></div>
       <nav class="nav-container flex">
         <RouterLink to="/login">Log in</RouterLink>
         <RouterLink to="/board">Start demo</RouterLink>

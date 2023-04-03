@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <nav class="flex gap">
-      <RouterLink class="flex" to="/"><img class="logo" src="../assets/logo white.png" alt="Jello logo" /></RouterLink>
+      <RouterLink class="flex" to="/"><img class="logo" src="../assets/logo-white.png" alt="Jello logo" /></RouterLink>
       <RouterLink to="/board">Boards</RouterLink>
       <button class="btn add-board" @click="isCreateMode = !isCreateMode">
         Create

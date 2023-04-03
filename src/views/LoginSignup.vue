@@ -1,6 +1,6 @@
 <template>
   <section class="login-signup main flex column align-center">
-    <img class="logo" src="../assets/logo colored.png" alt="Jello logo" />
+    <img class="logo" src="../assets/logo.png" alt="Jello logo" />
 
     <article v-if="!loggedinUser && loginClicked" class="login-form flex column">
       <h2>Log in to Jello</h2>
