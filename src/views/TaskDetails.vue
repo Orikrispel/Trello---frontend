@@ -120,23 +120,16 @@
                 <h3 class="activity-title">Activity</h3>
               </div>
               <!-- <form class="comment-form" @submit.prevent="handleComment"> -->
-              <div class="comment-box-input">
-                <img class="user-img" v-if="loggedinUser?.imgUrl" :src="loggedinUser?.imgUrl" alt="" />
-                <div v-else class="member-img">
-                  <span>{{ loggedinUser?.fullname.charAt(0).toUpperCase() }}</span>
-                </div>
-                <Chat :task="task" />
-                <ActivityList v-if="task.activities && task.activities.length"
-                  :activities="activitiesForActivitiesList" />
-                <!-- </form> -->
-                <!-- <ul
+
+              <!-- </form> -->
+              <!-- <ul
                 v-if="task.comments && task.comments.length"
                 class="clean-list">
                 <li v-for="(comment, idx) in task.comments" :key="idx">
                   {{ comment }}
                 </li>
               </ul> -->
-                <!-- <ul
+              <!-- <ul
                 v-if="task.activities && task.activities.length"
                 class="clean-list">
                 <li v-for="(activity, idx) in task.activities" :key="idx">
@@ -144,10 +137,17 @@
                 </li>
               </ul> -->
 
-                <!-- <div v-if="activities && activities.length" class="activities-container">
+              <!-- <div v-if="activities && activities.length" class="activities-container">
                 <ActivityList :activities="task.activities" />
               </div> -->
+            </div>
+            <div class="comment-box-input flex gap">
+              <img class="user-img" v-if="loggedinUser?.imgUrl" :src="loggedinUser?.imgUrl" alt="" />
+              <div v-else class="member-img">
+                <span>{{ loggedinUser?.fullname.charAt(0).toUpperCase() }}</span>
               </div>
+              <Chat :task="task" />
+              <ActivityList v-if="task.activities && task.activities.length" :activities="activitiesForActivitiesList" />
             </div>
           </main>
 

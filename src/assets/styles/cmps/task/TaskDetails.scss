@@ -8,7 +8,7 @@
 
   justify-content: center;
 
-  transition: all 0.3s;
+  transition: all 0.1s;
   position: fixed;
   top: 0;
   left: 0;
@@ -231,11 +231,9 @@
             }
           }
 
-          .icon:not(
-              .icon-close,
-              .attachments-icon,
-              .icon-overflow-menu-horizontal
-            ) {
+          .icon:not(.icon-close,
+            .attachments-icon,
+            .icon-overflow-menu-horizontal) {
             color: $primary-clr5;
             position: absolute;
             top: 8px;
@@ -338,6 +336,7 @@
           transition-duration: 85ms;
           transition-property: padding-bottom;
           transition-timing-function: ease;
+
           .member-img {
             margin: 0px -38px;
             margin-right: 15px;

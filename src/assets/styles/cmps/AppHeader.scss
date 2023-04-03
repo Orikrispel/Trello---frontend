@@ -8,7 +8,6 @@ header.app-header {
 
   .loggedin-user {
     background-color: $primary-clr1;
-    padding: 2px 8px;
     border-radius: 1em;
     align-self: flex-end;
     color: whitesmoke;
@@ -56,7 +55,6 @@ header.app-header {
     }
 
     .member-wrapper {
-      padding: 4px;
       border-radius: 50%;
     }
 
