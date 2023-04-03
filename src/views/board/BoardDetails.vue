@@ -132,9 +132,9 @@ export default {
     })
     this.checkIsDark()
 
-    // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
-    //   this.updateBoard(board)
-    // })
+    socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+      this.updateBoard(board, true)
+    })
   },
   computed: {
     ...mapGetters(['currBoard']),
@@ -178,10 +178,13 @@ export default {
       this.$refs.newGroup.value = ''
       this.toggleAddGroup()
     },
-    async updateBoard(board, activity) {
+    async updateBoard(board, skipEmit = false) {
       try {
         this.board = board
         await this.$store.dispatch(getActionUpdateBoard(board))
+        if (!skipEmit) {
+          socketService.emit(SOCKET_EMIT_BOARD_UPDATED, Board)
+        }
       } catch (err) {
         console.log(err)
       }
