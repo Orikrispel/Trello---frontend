@@ -64,7 +64,6 @@ async function save(board) {
     // savedBoard = await storageService.post(STORAGE_KEY, board)
     savedBoard = await httpService.post('board', board)
   }
-  // socketService.emit(SOCKET_EMIT_BOARD_UPDATED, savedBoard)
 
   return savedBoard
 }
@@ -300,11 +299,6 @@ function getFile(num) {
 function getRandomMembers() {
   let members = [
     {
-      _id: '64251c27a476517cf20661ef',
-      fullname: 'Yohai Korem',
-      imgUrl: '',
-    },
-    {
       _id: '64253e39a476517cf20661f0',
       fullname: 'Ori Krispel',
       imgUrl: '',
@@ -356,7 +350,7 @@ function getRandomTask(
     title,
     description,
     [labels],
-    [userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]]
+    [userService.getDefaultMembers()[utilService.getRandomIntInclusive(0, 1)]]
   )
   return res
 }
@@ -615,7 +609,6 @@ async function _createBoard(
 }
 
 function getRandomBoardImg(idx) {
-  debugger
   const imgs = [
     {
       regular: '"https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw3fHxjb2RlfGVufDB8fHx8MTY4MDUxMjcyNg&ixlib=rb-4.0.3&q=80&w=1080"',

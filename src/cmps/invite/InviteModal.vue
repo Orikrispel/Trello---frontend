@@ -3,39 +3,26 @@
     <section class="invite-modal" @click.stop>
       <header class="modal-header flex align-center justify-between">
         <h2>Share board</h2>
-        <button class="btn btn-blue" @click="debug">debug</button>
+        <!-- <button class="btn btn-blue" @click="debug">debug</button> -->
         <button class="clean-btn btn-close" @click="closeModal">
           <span class="icon icon-close"></span>
         </button>
       </header>
       <div class="search-share-container flex">
-        <input
-          v-model="filterBy"
-          type="text"
-          placeholder="Email address or name"
-          @input="searchMembers"
-          ref="searchMember"
-          name="members-search" />
+        <input v-model="filterBy" type="text" placeholder="Email address or name" @input="searchMembers"
+          ref="searchMember" name="members-search" />
         <button class="btn btn-blue">Share</button>
       </div>
       <div v-if="users" class="members-list-wrapper">
         <ul class="clean-list flex column">
-          <li
-            @click="addUserToBoard(user._id)"
-            v-for="user in users"
-            :key="user._id"
+          <li @click="addUserToBoard(user._id)" v-for="user in users" :key="user._id"
             :class="isUserAdmin(user._id) ? 'admin-member-preview' : ''">
             <MemberPreview :member="user" />
             <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)">
-              Member</span
-            >
+              Member</span>
             <span v-if="isUserAdmin(user._id)">Admin</span>
-            <span
-              v-if="isUserMember(user._id) && !isUserAdmin(user._id)"
-              @click="removeMemberFromBoard(user._id)"
-              class="btn btn-light"
-              >Remove</span
-            >
+            <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)" @click="removeMemberFromBoard(user._id)"
+              class="btn btn-light">Remove</span>
           </li>
         </ul>
       </div>

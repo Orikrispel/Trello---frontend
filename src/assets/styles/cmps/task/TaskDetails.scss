@@ -178,6 +178,10 @@
 
             .member-img {
               margin: 0 4px 4px 0;
+
+              span {
+                color: $secondary-clr1;
+              }
             }
 
             .btn-add-member,
