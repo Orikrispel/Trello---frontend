@@ -110,7 +110,7 @@ function getLoggedinUser() {
 }
 
 function getRandomDefaultMember() {
-  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 2)]
+  return getDefaultMembers()[utilService.getRandomIntInclusive(0, 1)]
 }
 
 async function getRandomUsers(amount = 5) {
