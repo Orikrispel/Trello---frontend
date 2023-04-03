@@ -85,28 +85,27 @@ export default {
       if (taskHasMember) {
         task = this.removeMemberFromTask(task, member)
       } else {
-        member.isSelected = true
         task.members.push({ ...member })
         member.tasks.push(task.id)
       }
 
-      let activity = this.$store.getters.emptyActivity
-      activity = { ...activity }
+      // let activity = this.$store.getters.emptyActivity
+      // activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      if (!user) return
-      activity.txt = ` added ${member?.fullname} to ${task.title}`
-      activity.task = { title: task.title, taskId: this.taskId }
-      activity.type = 'taskMember'
-      activity.byMember = {
-        fullname: user?.fullname,
-        _id: user?._id,
-      }
+      console.log(user)
+      // console.log(user)
+      // activity.txt = ` added ${member?.fullname} to ${task.title}`
+      // activity.task = { title: task.title, taskId: this.taskId }
+      // activity.type = 'taskMember'
+      // activity.byMember = {
+      //   fullname: user?.fullname,
+      //   _id: user?._id,
+      // }
       const data = {
         task,
-        activity,
       }
       eventBus.emit('updateTask', data)
-      this.$store.dispatch({ type: 'updateUser', user })
+      // this.$store.dispatch({ type: 'updateUser', user })
       this.task = task
     },
     removeMemberFromTask(task, member) {
