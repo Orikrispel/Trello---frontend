@@ -201,7 +201,7 @@ function _getRandomGroups(count = 4) {
       currGroup.tasks[0].checklists = []
       currGroup.tasks[0].checklists.push(_getDemoChecklist())
       currGroup.tasks[0].labels = []
-      currGroup.tasks[0].cover = { type: 'semi', color: 'orange' }
+      currGroup.tasks[0].cover = { type: 'semi', color: '' }
     }
     if (i === 1) currGroup.title = 'In Development'
     if (i === 2) currGroup.title = '📅 Working On'
@@ -436,14 +436,14 @@ async function _createBoards(amount = 20) {
     imgIdx++
   }
   let demoBoard = await getDemoData()
-  boards.unshift(demoBoard)
+  boards.push(demoBoard)
   return boards
 }
 
 
 async function getDemoData() {
   let board = getEmptyBoard(
-    'Project Managment',
+    "Pixel-Pro",
     false,
     userService.getRandomDefaultMember(),
     {
@@ -499,7 +499,7 @@ async function _createBoard(
     ],
     style: {
       backgroundColor: '',
-      imgUrls: (imgIdx <= 4) ? getRandomBoardImg(imgIdx) : {},
+      imgUrls: (imgIdx < 6) ? getRandomBoardImg(imgIdx) : {},
       gradient: _getBoardRandomGradient(),
     },
     labels,
@@ -629,6 +629,10 @@ function getRandomBoardImg(idx) {
     {
       thumb: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=200',
       regular: 'https://images.unsplash.com/photo-1525691710204-fc9678387f24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw2fHxkYXJrJTIwdmlld3xlbnwwfHx8fDE2ODA1MTMzMDY&ixlib=rb-4.0.3&q=80&w=1080',
+    },
+    {
+      thumb: '"https://images.unsplash.com/photo-1609451605790-efda1f13ba22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw0fHxsb25kb24lMjBuaWdodHxlbnwwfHx8fDE2ODA1NDE0ODA&ixlib=rb-4.0.3&q=80&w=200"',
+      regular: '"https://images.unsplash.com/photo-1609451605790-efda1f13ba22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHw0fHxsb25kb24lMjBuaWdodHxlbnwwfHx8fDE2ODA1NDE0ODA&ixlib=rb-4.0.3&q=80&w=1080"',
     },
   ]
   return imgs[idx]
