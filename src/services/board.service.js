@@ -201,7 +201,7 @@ function _getRandomGroups(count = 4) {
       currGroup.tasks[0].checklists = []
       currGroup.tasks[0].checklists.push(_getDemoChecklist())
       currGroup.tasks[0].labels = []
-      currGroup.tasks[0].cover = { type: 'semi', color: 'orange' }
+      currGroup.tasks[0].cover = { type: 'semi', color: '' }
     }
     if (i === 1) currGroup.title = 'In Development'
     if (i === 2) currGroup.title = '📅 Working On'
