@@ -3,11 +3,7 @@
     <form @submit.prevent="sendComment" class="comment-input-container">
       <input @blur="handleBlur" @focus="isUserCommenting = true" class="comment-input" type="text" v-model="comment.txt"
         placeholder="Write a comment..." />
-      <div :class="
-        true
-          ? 'comment-editor-wrapper open'
-          : 'comment-editor-wrapper'
-      ">
+      <div :class="isUserCommenting ? 'comment-editor-wrapper open' : 'comment-editor-wrapper'">
         <div v-if="isUserCommenting" class="comment-editor-container">
           <div :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
             <button @click.stop :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
