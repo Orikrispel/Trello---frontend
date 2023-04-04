@@ -148,7 +148,6 @@ export default {
     },
     isUserMember(userId) {
       let res = this.board.members.some((member) => member._id === userId)
-      console.log('res:', res)
       return res
     },
     async debug() {
@@ -183,7 +182,6 @@ export default {
       return user
     },
     async addUserToBoard(userId) {
-
       let board = JSON.parse(JSON.stringify(this.board))
       let user = await this.$store.dispatch({ type: 'getUser', userId })
       if (!user) return
@@ -193,6 +191,7 @@ export default {
       console.log(user.boards)
       try {
         user = await this.updateUser(userId)
+        this.filterBy = ''
       } catch (err) {
         console.log(err, 'cannot update user')
       }
@@ -239,16 +238,15 @@ export default {
       return members
     },
   },
-  // watch: {
-  //   'board.members': {
-  //     handler: function (newVal, oldVal) {
-  //       console.log('Board changed!', 'newVal', newVal.length)
-  //       console.log('oldVal', oldVal.length)
-  //       // Do something with the new value
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  watch: {
+    currBoard: {
+      handler(newBoard, oldBoard) {
+        this.board = newBoard
+        this.checkIsDark()
+      },
+      immediate: true,
+    },
+  },
   components: {
     MemberPreview,
   },

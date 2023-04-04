@@ -443,11 +443,14 @@ async function _createBoards(amount = 20) {
 
 async function getDemoData() {
   let board = getEmptyBoard(
-    "Pixel-Pro",
+    "Pixel-Pro Dev team",
     false,
     userService.getRandomDefaultMember(),
     {
-      imgUrls: '',
+      imgUrls: {
+        regular: 'https://images.unsplash.com/photo-1596034063901-7a9ed93eccac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8aXNyYWVsfGVufDB8fHx8MTY4MDUxNjQ3NA&ixlib=rb-4.0.3&q=80&w=1080',
+        thumb: 'https://images.unsplash.com/photo-1596034063901-7a9ed93eccac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw0MjYwNzZ8MHwxfHNlYXJjaHwxM3x8aXNyYWVsfGVufDB8fHx8MTY4MDUxNjQ3NA&ixlib=rb-4.0.3&q=80&w=200',
+      },
       gradient:
         'linear-gradient(55.41deg, rgb(227, 73, 53) 2%, rgb(250, 165, 61) 100%)',
     },
