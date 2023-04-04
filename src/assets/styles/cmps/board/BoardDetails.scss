@@ -28,8 +28,8 @@
     }
 
     button {
-      min-width: 36px;
-      min-height: 36px;
+      min-width: 32px;
+      min-height: 32px;
     }
 
     .btn-star {
@@ -74,6 +74,16 @@
       }
     }
 
+    // .btn-share {
+    //   color: $font-clr0;
+    //   fill: $font-clr0;
+    //   background-color: $secondary-clr1;
+
+    //   &:hover {
+    //     background-color: $btn-hover-clr5;
+    //   }
+    // }
+
     .board-header-btn-divider {
       border-left: 1px solid #ffffff29;
       float: left;
@@ -90,13 +100,23 @@
         }
       }
 
-      button:is(.btn-filter, .btn-star, .btn-menu, .btn-share) {
+      button:is(.btn-filter, .btn-star, .btn-menu) {
         color: $font-clr4;
         fill: $font-clr4;
         background-color: $btn-hover-clr3;
 
         &:hover {
           background-color: $btn-hover-clr4;
+        }
+      }
+
+      .btn-share {
+        color: $font-clr0;
+        fill: $font-clr0;
+        background-color: $secondary-clr1;
+
+        &:hover {
+          background-color: $btn-hover-clr5;
         }
       }
     }
@@ -116,7 +136,7 @@
       transition: background 85ms ease-in, opacity 40ms ease-in,
         border-color 85ms ease-in;
 
-      & > button {
+      &>button {
         width: 100%;
         padding: 12px;
         margin: 0 4px 0 0;
@@ -270,6 +290,7 @@
   display: flex;
   font-size: 20px;
   margin-right: 3px;
+
   svg {
     width: 18px;
   }

@@ -11,18 +11,47 @@
       <div class="search-share-container flex">
         <input v-model="filterBy" type="text" placeholder="Email address or name" @input="searchMembers"
           ref="searchMember" name="members-search" />
+        <div v-if="users" class="members-search-modal flex column" v-show="!!(filterBy)">
+          <ul class="clean-list">
+            <li @click="addUserToBoard(user._id)" v-for="user in users" :key="user._id">
+              <div class="member-preview flex align-center">
+                <img class="user-img" v-if="user.imgUrl" :src="user.imgUrl" alt="" />
+                <div v-else class="member-img">
+                  <span>{{ user.fullname.charAt(0).toUpperCase() }}</span>
+                </div>
+                <div>
+                  <div class="user-fullname">{{ user.fullname }}</div>
+                  <div class="workspace-title fs12">{{ isUserAdmin(user._id) ? 'Board admin' : '' }}</div>
+                  <div>{{ isUserMember(user._id) ? 'Board member' : '' }}</div>
+                </div>
+              </div>
+            </li>
+            <p v-show="!users.length">Looks like that person isn't a Trello member yet. Add their email address to
+              invite them.</p>
+          </ul>
+        </div>
+        <button class="btn btn-task light">Member</button>
         <button class="btn btn-blue">Share</button>
       </div>
-      <div v-if="users" class="members-list-wrapper">
+
+      <div v-if="board" class="members-list-wrapper">
         <ul class="clean-list flex column">
-          <li @click="addUserToBoard(user._id)" v-for="user in users" :key="user._id"
-            :class="isUserAdmin(user._id) ? 'admin-member-preview' : ''">
-            <MemberPreview :member="user" />
-            <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)">
-              Member</span>
-            <span v-if="isUserAdmin(user._id)">Admin</span>
-            <span v-if="isUserMember(user._id) && !isUserAdmin(user._id)" @click="removeMemberFromBoard(user._id)"
-              class="btn btn-light">Remove</span>
+          <li class="member-list-preview" v-for="member in board.members" :key="member._id"
+            :class="isUserAdmin(member._id) ? 'admin-member-preview' : ''">
+            <div class="member-preview flex align-center">
+              <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+              <div v-else class="member-img">
+                <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
+              </div>
+              <div>
+                <div class="user-fullname">{{ member.fullname + [loggedinUser.fullname === member.fullname ? ' (you)' :
+                  ''] }}
+                </div>
+                <div class="workspace-title fs12">@{{ member.fullname }} • Workspace <span>{{ isUserAdmin(member._id) ?
+                  'admin' : 'member'
+                }}</span></div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -44,6 +73,7 @@ export default {
       board: null,
       users: null,
       filterBy: '',
+      isMemberlistOpen: false,
     }
   },
   async created() {
@@ -118,6 +148,7 @@ export default {
     },
     isUserMember(userId) {
       let res = this.board.members.some((member) => member._id === userId)
+      console.log('res:', res)
       return res
     },
     async debug() {
@@ -125,6 +156,7 @@ export default {
       console.log(this.users)
     },
     async searchMembers() {
+      this.isMemberlistOpen = true
       let users
       if (this.filterBy) {
         const regex = new RegExp(this.filterBy, 'i')
@@ -137,6 +169,7 @@ export default {
         }
       }
       this.users = users
+      console.log('this.users:', this.users)
     },
     async updateUser(userId) {
       let user
@@ -150,11 +183,9 @@ export default {
       return user
     },
     async addUserToBoard(userId) {
-      let user
+
       let board = JSON.parse(JSON.stringify(this.board))
-
-      user = await this.$store.dispatch({ type: 'getUser', userId })
-
+      let user = await this.$store.dispatch({ type: 'getUser', userId })
       if (!user) return
       if (this.isUserMember(userId) || this.isUserAdmin(userId)) return
       if (!user.boards) user.boards = []

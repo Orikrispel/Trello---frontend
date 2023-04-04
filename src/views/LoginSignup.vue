@@ -13,21 +13,22 @@
       <div class="flex column align-center status">
         <p class="seperator">OR</p>
         <GoogleLogin :callback="callback" />
+        <hr>
         <p class="toggle-status" @click="toggleForm">Sign up for an account</p>
       </div>
     </article>
 
     <article v-if="!loggedinUser && signupClicked" class="login-form flex column">
-      <h2>Signup to Jello</h2>
+      <h2>Sign up to Jello</h2>
       <form @submit.prevent="signup" class="flex column align-center">
         <input type="text" v-model="signupInfo.fullname" placeholder="Full name" />
         <input type="text" v-model="signupInfo.username" placeholder="Username" />
         <input type="password" v-model="signupInfo.password" placeholder="Password" />
-        <button class="btn-login" type="submit">Signup</button>
+        <button class="btn-login" type="submit">Sign up</button>
       </form>
+      <hr>
       <div class="flex column status">
         <p class="seperator">Already have an account?</p>
-        <hr />
         <p class="toggle-status" @click="toggleForm">Log in</p>
       </div>
     </article>

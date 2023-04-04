@@ -28,12 +28,14 @@
   }
 
   .search-share-container {
+    position: relative;
     margin: 0px 24px 16px 0px;
 
     input {
-      margin: 0 8px 0 0;
       max-width: 380px;
       padding: 6px 4px 6px 12px;
+      margin: 0 8px 0 0;
+      flex-grow: 1;
       width: 100%;
       border: none;
       border-radius: 3px;
@@ -49,6 +51,29 @@
         outline: none;
       }
     }
+
+    .members-search-modal {
+      background-color: $secondary-clr2;
+      color: $font-clr3;
+      font-size: 14px;
+      padding: 20px;
+      border-radius: 3px;
+      box-shadow: 0 8px 16px -4px $shadow-clr1, 0 0 0 1px $btn-clr6;
+      left: 0;
+      margin: 4px 0 0;
+      overflow-y: visible;
+      position: absolute;
+      top: 105%;
+      width: 100%;
+      z-index: 10;
+      max-width: 380px;
+    }
+
+    .btn-task {
+      margin: 0 8px 0 0;
+      color: $primary-clr5;
+      font-weight: 600;
+    }
   }
 
   .members-list-wrapper {
@@ -63,8 +88,17 @@
 
     .member-preview {
       display: flex;
-      padding-top: 16px;
       align-items: center;
+
+      .user-img,
+      .member-img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .workspace-title {
+        color: $font-clr3;
+      }
     }
   }
 }
