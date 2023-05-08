@@ -7,10 +7,17 @@
   .homepage-main {
     .hero {
       justify-content: center;
-      background: url('src/assets/imgs/homepage/white-wave.svg') center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
-      background-blend-mode: normal, normal;
+      background: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
       color: $font-clr4;
       position: relative;
+
+      .wave-divider {
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        bottom: 0;
+        object-fit: contain;
+      }
 
 
       .hero-container {
@@ -19,17 +26,17 @@
         width: 90vw;
         max-width: 1200px;
 
-        @include for-normal-layout {
+        @include for-wide-layout {
           grid-template-columns: repeat(2, 1fr);
         }
 
         .hero-intro {
           text-align: center;
           padding: 8rem 1rem 1rem;
+          z-index: 1;
 
-          @include for-normal-layout {
+          @include for-wide-layout {
             text-align: left;
-            padding: 8rem 1rem;
 
             h1 {
               font-size: 3rem;
@@ -51,7 +58,7 @@
             color: $font-clr4;
 
             &:hover {
-              background-color: $btn-hover-clr5;
+              background-color: $btn-hover-clr6;
             }
           }
         }
@@ -59,9 +66,10 @@
         img {
           padding: 1rem;
           margin-bottom: -80px;
+          z-index: 1;
 
-          @include for-normal-layout {
-            padding: 8rem 1rem 6rem;
+          @include for-wide-layout {
+            padding: 8rem 1rem 0;
             margin-bottom: 0;
           }
         }
@@ -82,7 +90,7 @@
     top: 0;
     width: 100%;
     background-color: $secondary-clr1;
-    z-index: 1;
+    z-index: 10;
     transition: background-color 0.5s ease 0s, box-shadow 0.5s ease 0s;
 
     &:hover {
@@ -113,7 +121,7 @@
           transition: all 250ms ease-out;
 
           &:hover {
-            background-color: $btn-hover-clr5;
+            background-color: $btn-hover-clr6;
           }
         }
       }

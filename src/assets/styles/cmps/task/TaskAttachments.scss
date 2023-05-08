@@ -1,6 +1,7 @@
 .task-attachments {
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   .icon {
     color: $font-clr3;

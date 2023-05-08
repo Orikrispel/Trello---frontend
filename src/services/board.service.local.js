@@ -241,17 +241,17 @@ function getDefaultMembers() {
     {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
     },
     {
       _id: 'u102',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
     {
       _id: 'u103',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
   ]
 }
@@ -261,17 +261,17 @@ function getRandomMembers() {
     {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
     },
     {
       _id: 'u102',
       fullname: 'Ori Krispel',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516340/memberImgOriKrispel_uuyfeo.jpg',
     },
     {
       _id: 'u103',
       fullname: 'Ori Teicher',
-      imgUrl: '',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516345/memberImgOriTeicher_te0vcj.jpg',
     },
   ]
   members.splice(0, getRandomIntInclusive(0, 2))
@@ -415,7 +415,7 @@ async function _createBoard(
     createdBy: {
       _id: 'u101',
       fullname: 'Yohai Korem',
-      imgUrl: 'http://some-img',
+      imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
     },
     style: {
       backgroundColor: _getBoardRandomGradient(),
@@ -480,8 +480,7 @@ async function _createBoard(
                 byMember: {
                   _id: 'u101',
                   fullname: 'Yohai Korem',
-                  imgUrl:
-                    'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                  imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
                 },
               },
             ],
@@ -505,8 +504,7 @@ async function _createBoard(
               _id: 'u101',
               username: 'yoyo',
               fullname: 'Yohai Korem',
-              imgUrl:
-                'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+              imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
             },
             style: {
               bgColor: '#26de81',
@@ -524,7 +522,7 @@ async function _createBoard(
         byMember: {
           _id: 'u101',
           fullname: 'Yohai Korem',
-          imgUrl: 'http://some-img',
+          imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
         },
         task: {
           id: 'c101',
@@ -555,7 +553,7 @@ const demoBoardWorkFlow = {
   createdBy: {
     _id: '64251c27a476517cf20661ef',
     fullname: 'yohai korem',
-    imgUrl: null,
+    imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
   },
   style: {},
 }
@@ -589,7 +587,7 @@ export const demoBoards = [
       {
         _id: 'u101',
         fullname: 'Yohai Korem',
-        imgUrl: 'https://www.google.com',
+        imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
       },
     ],
     groups: [
@@ -655,8 +653,7 @@ export const demoBoards = [
                 byMember: {
                   _id: 'u101',
                   fullname: 'Yohai Korem',
-                  imgUrl:
-                    'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                  imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
                 },
               },
             ],
@@ -680,8 +677,7 @@ export const demoBoards = [
               _id: 'u101',
               username: 'Tal',
               fullname: 'Yohai Korem',
-              imgUrl:
-                'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+              imgUrl: 'https://res.cloudinary.com/dcg0ivasg/image/upload/v1680516350/memberImgYohai_xfmijp.jpg',
             },
             style: {
               bgColor: '#26de81',

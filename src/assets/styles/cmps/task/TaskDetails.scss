@@ -8,7 +8,7 @@
 
   justify-content: center;
 
-  transition: all 0.3s;
+  transition: all 0.1s;
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@
     background-color: $secondary-clr3;
     display: flex;
     flex-direction: column;
-    width: calc(100vw - 80px);
+    width: calc(100vw - 16px);
     margin: 48px 0 80px;
     overflow: visible;
 
@@ -155,7 +155,6 @@
         display: grid;
         grid-template-columns: 1fr;
 
-
         @include for-normal-layout {
           grid-template-columns: 568px 1fr;
         }
@@ -232,7 +231,9 @@
             }
           }
 
-          .icon:not(.icon-close, .attachments-icon, .icon-overflow-menu-horizontal) {
+          .icon:not(.icon-close,
+            .attachments-icon,
+            .icon-overflow-menu-horizontal) {
             color: $primary-clr5;
             position: absolute;
             top: 8px;
@@ -328,12 +329,19 @@
 
       .comments-activity-container {
         .comment-box-input {
+          position: absolute;
           display: flex;
           width: 100%;
           position: relative;
           transition-duration: 85ms;
           transition-property: padding-bottom;
           transition-timing-function: ease;
+
+          .member-img {
+            margin: 0px -38px;
+            margin-right: 15px;
+            margin-top: 3px;
+          }
 
           textarea {
             overflow: hidden;

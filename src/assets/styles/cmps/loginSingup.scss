@@ -90,7 +90,7 @@
 
     p.seperator {
       align-self: center;
-      margin: 20px 0;
+      margin: 8px 0;
       color: #4d4d4d;
       font-size: 1em;
       font-weight: 300;
@@ -120,5 +120,10 @@
       color: $font-clr3;
       margin: 0;
     }
+  }
+
+  .toggle-status {
+    margin-top: 8px;
+    cursor: pointer;
   }
 }

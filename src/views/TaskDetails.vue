@@ -1,29 +1,18 @@
 <template>
   <div class="modal-overlay flex" @click="closeTaskDetails">
     <section class="task-details" @click.stop>
-      <header
-        v-if="task.cover?.color"
-        class="task-cover"
-        :style="{ backgroundColor: task.cover?.color }">
+      <header v-if="task.cover?.color" class="task-cover" :style="{ backgroundColor: task.cover?.color }">
         <RouterLink :to="`/board/${boardId}`" class="icon icon-close fs20">
         </RouterLink>
       </header>
 
-      <RouterLink
-        v-if="!task.cover.color"
-        :to="`/board/${boardId}`"
-        class="icon icon-close fs20">
+      <RouterLink v-if="!task.cover.color" :to="`/board/${boardId}`" class="icon icon-close fs20">
       </RouterLink>
       <div class="task-container">
         <div class="task-container-heading flex column">
           <div class="task-title-wrapper">
-            <h2
-              class="task-title fs20"
-              contenteditable="true"
-              @blur="updateTitle">
-              <span
-                contenteditable="false"
-                class="icon header-icon icon-lg"></span>
+            <h2 class="task-title fs20" contenteditable="true" @blur="updateTitle">
+              <span contenteditable="false" class="icon header-icon icon-lg"></span>
               {{ task.title ? task.title : 'new title' }}
             </h2>
           </div>
@@ -35,20 +24,11 @@
         <div class="task-main-container">
           <main class="task-main">
             <div class="flex task-detail-data">
-              <div
-                v-show="task.members?.length"
-                class="member-container container">
+              <div v-show="task.members?.length" class="member-container container">
                 <h3 class="fs12 inner-title">Members</h3>
                 <ul class="task-heading-member-list flex clean-list">
-                  <li
-                    v-for="member in task.members"
-                    :key="member._id"
-                    class="member">
-                    <img
-                      class="user-img"
-                      v-if="member.imgUrl"
-                      :src="member.imgUrl"
-                      alt="" />
+                  <li v-for="member in task.members" :key="member._id" class="member">
+                    <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
                     <div v-else class="member-img">
                       <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
                     </div>
@@ -71,15 +51,10 @@
                 </ul>
               </div>
 
-              <div
-                v-show="task.labels?.length"
-                class="label-container container">
+              <div v-show="task.labels?.length" class="label-container container">
                 <h3 class="fs12 inner-title">Labels</h3>
                 <ul class="task-heading-label-list flex clean-list">
-                  <li
-                    class="label"
-                    v-for="label in task.labels"
-                    :key="label.id">
+                  <li class="label" v-for="label in task.labels" :key="label.id">
                     <LabelPreview :label="label" />
                   </li>
                   <VDropdown :distance="6" :placement="'left-start'">
@@ -109,22 +84,14 @@
             </div>
 
             <!-- description -->
-            <form
-              class="description-editor editor"
-              @submit.prevent="handleDesc">
+            <form class="description-editor editor" @submit.prevent="handleDesc">
               <span class="icon description-icon icon-lg"></span>
               <h3 class="title fs16">Description</h3>
-              <button
-                class="btn-task light btn-edit-desc"
-                v-if="!userIsEditing && task.description"
-                @click="handleDesc">
+              <button class="btn-task light btn-edit-desc" v-if="!userIsEditing && task.description" @click="handleDesc">
                 Edit
               </button>
 
-              <p
-                class="btn-task light btn-desc"
-                v-if="!userIsEditing && !task.description"
-                @click="handleDesc">
+              <p class="btn-task light btn-desc" v-if="!userIsEditing && !task.description" @click="handleDesc">
                 Add a more detailed description...
                 <br />
                 <br />
@@ -133,16 +100,9 @@
               <p v-if="!userIsEditing" @click="handleDesc">
                 {{ task.description }}
               </p>
-              <textarea
-                v-if="userIsEditing"
-                rows="5"
-                ref="taskDesc"
-                v-model="task.description"
+              <textarea v-if="userIsEditing" rows="5" ref="taskDesc" v-model="task.description"
                 @blur="userIsEditing = false"></textarea>
-              <button
-                class="btn-task blue"
-                v-if="userIsEditing"
-                @click="saveTask(task)">
+              <button class="btn-task blue" v-if="userIsEditing" @click="saveTask(task)">
                 Save
               </button>
               <button class="btn-task light btn-cancel" v-if="userIsEditing">
@@ -160,19 +120,7 @@
                 <h3 class="activity-title">Activity</h3>
               </div>
               <!-- <form class="comment-form" @submit.prevent="handleComment"> -->
-              <div class="comment-box-input">
-                <div class="member-img icon icon-lg">
-                  <!-- {{
-                    loggedinUser.imgUrl
-                    ? loggedinUser.imgUrl
-                    : loggedinUser.fullname.charAt(0).toUpperCase()
-                  }} -->
-                </div>
-                <Chat :task="task" />
-              </div>
-              <ActivityList
-                v-if="task.activities && task.activities.length"
-                :activities="activitiesForActivitiesList" />
+
               <!-- </form> -->
               <!-- <ul
                 v-if="task.comments && task.comments.length"
@@ -192,6 +140,14 @@
               <!-- <div v-if="activities && activities.length" class="activities-container">
                 <ActivityList :activities="task.activities" />
               </div> -->
+            </div>
+            <div class="comment-box-input flex gap">
+              <img class="user-img" v-if="loggedinUser?.imgUrl" :src="loggedinUser?.imgUrl" alt="" />
+              <div v-else class="member-img">
+                <span>{{ loggedinUser?.fullname.charAt(0).toUpperCase() }}</span>
+              </div>
+              <Chat :task="task" />
+              <ActivityList v-if="task.activities && task.activities.length" :activities="activitiesForActivitiesList" />
             </div>
           </main>
 
@@ -242,19 +198,14 @@
                   <template v-slot:title>Add checklist</template>
 
                   <template v-slot scope="props">
-                    <AddChecklist
-                      :actionData="{ task: task }"
-                      @setCreateModeOff="checklistMenuOpen = false" />
+                    <AddChecklist :actionData="{ task: task }" @setCreateModeOff="checklistMenuOpen = false" />
                   </template>
                 </DynamicModal>
               </template>
             </VDropdown>
             <VDropdown :distance="6" :placement="'left'">
               <button class="btn-task light">
-                <span
-                  class="icon icon-small time-icon"
-                  v-html="getSvg('watch')"></span
-                >Dates
+                <span class="icon icon-small time-icon" v-html="getSvg('watch')"></span>Dates
               </button>
 
               <template #popper>
@@ -283,11 +234,7 @@
                 <span class="icon icon-small card-cover-icon"></span>Cover
               </button>
               <template #popper>
-                <AddCover
-                  :task="task"
-                  @onUpdateTask="onUpdateTask"
-                  @setCover="setCover"
-                  @removeCover="removeCover" />
+                <AddCover :task="task" @onUpdateTask="onUpdateTask" @setCover="setCover" @removeCover="removeCover" />
               </template>
             </VDropdown>
           </aside>
