@@ -19,7 +19,6 @@
   .task-details {
     position: relative;
     height: max-content;
-    // min-height: 600px;
     z-index: 20;
     border-radius: 3px;
     background-color: $secondary-clr3;
@@ -231,9 +230,11 @@
             }
           }
 
-          .icon:not(.icon-close,
-            .attachments-icon,
-            .icon-overflow-menu-horizontal) {
+          .icon:not(
+              .icon-close,
+              .attachments-icon,
+              .icon-overflow-menu-horizontal
+            ) {
             color: $primary-clr5;
             position: absolute;
             top: 8px;
@@ -330,7 +331,6 @@
       .comments-activity-container {
         .comment-box-input {
           position: absolute;
-          display: flex;
           width: 100%;
           position: relative;
           transition-duration: 85ms;
@@ -360,6 +360,55 @@
             &:focus {
               line-height: 20px;
             }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: $narrow-breakpoint) {
+    overflow: hidden;
+    .task-details {
+      top: -$header-height;
+      height: 100vh;
+      width: 100vw;
+      overflow-y: scroll;
+
+      .mobile-quick-actions-menu {
+        flex-wrap: wrap;
+        position: relative;
+        width: 100%;
+        margin-block: 1em;
+
+        & .btn-task {
+          border-radius: 10px;
+        }
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          left: -20px;
+          width: 100vw;
+          border-top: 0.5px solid rgb(121, 105, 105);
+        }
+
+        &::before {
+          bottom: -5px;
+          transform: translateY(-10%);
+        }
+        &::after {
+          top: -5px;
+          transform: translateY(30%);
+        }
+
+        & > * {
+          flex-basis: 48%;
+
+          &:is(h3) {
+            flex-basis: 100%;
+          }
+          & > * {
+            width: 100%;
           }
         }
       }

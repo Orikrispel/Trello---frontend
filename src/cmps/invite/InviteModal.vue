@@ -9,25 +9,44 @@
         </button>
       </header>
       <div class="search-share-container flex">
-        <input v-model="filterBy" type="text" placeholder="Email address or name" @input="searchMembers"
-          ref="searchMember" name="members-search" />
-        <div v-if="users" class="members-search-modal flex column" v-show="!!(filterBy)">
+        <input
+          v-model="filterBy"
+          type="text"
+          placeholder="Email address or name"
+          @input="searchMembers"
+          ref="searchMember"
+          name="members-search" />
+        <div
+          v-if="users"
+          class="members-search-modal flex column"
+          v-show="!!filterBy">
           <ul class="clean-list">
-            <li @click="addUserToBoard(user._id)" v-for="user in users" :key="user._id">
+            <li
+              @click="addUserToBoard(user._id)"
+              v-for="user in users"
+              :key="user._id">
               <div class="member-preview flex align-center">
-                <img class="user-img" v-if="user.imgUrl" :src="user.imgUrl" alt="" />
+                <img
+                  class="user-img"
+                  v-if="user.imgUrl"
+                  :src="user.imgUrl"
+                  alt="" />
                 <div v-else class="member-img">
                   <span>{{ user.fullname.charAt(0).toUpperCase() }}</span>
                 </div>
                 <div>
                   <div class="user-fullname">{{ user.fullname }}</div>
-                  <div class="workspace-title fs12">{{ isUserAdmin(user._id) ? 'Board admin' : '' }}</div>
+                  <div class="workspace-title fs12">
+                    {{ isUserAdmin(user._id) ? 'Board admin' : '' }}
+                  </div>
                   <div>{{ isUserMember(user._id) ? 'Board member' : '' }}</div>
                 </div>
               </div>
             </li>
-            <p v-show="!users.length">Looks like that person isn't a Trello member yet. Add their email address to
-              invite them.</p>
+            <p v-show="!users.length">
+              Looks like that person isn't a Trello member yet. Add their email
+              address to invite them.
+            </p>
           </ul>
         </div>
         <button class="btn btn-task light">Member</button>
@@ -36,20 +55,33 @@
 
       <div v-if="board" class="members-list-wrapper">
         <ul class="clean-list flex column">
-          <li class="member-list-preview" v-for="member in board.members" :key="member._id"
+          <li
+            class="member-list-preview"
+            v-for="member in board.members"
+            :key="member._id"
             :class="isUserAdmin(member._id) ? 'admin-member-preview' : ''">
             <div class="member-preview flex align-center">
-              <img class="user-img" v-if="member.imgUrl" :src="member.imgUrl" alt="" />
+              <img
+                class="user-img"
+                v-if="member.imgUrl"
+                :src="member.imgUrl"
+                alt="" />
               <div v-else class="member-img">
                 <span>{{ member.fullname.charAt(0).toUpperCase() }}</span>
               </div>
               <div>
-                <div class="user-fullname">{{ member.fullname + [loggedinUser.fullname === member.fullname ? ' (you)' :
-                  ''] }}
+                <div class="user-fullname">
+                  {{
+                    member.fullname +
+                    [loggedinUser.fullname === member.fullname ? ' (you)' : '']
+                  }}
                 </div>
-                <div class="workspace-title fs12">@{{ member.fullname }} • Workspace <span>{{ isUserAdmin(member._id) ?
-                  'admin' : 'member'
-                }}</span></div>
+                <div class="workspace-title fs12">
+                  @{{ member.fullname }} • Workspace
+                  <span>{{
+                    isUserAdmin(member._id) ? 'admin' : 'member'
+                  }}</span>
+                </div>
               </div>
             </div>
           </li>
@@ -95,11 +127,7 @@ export default {
       console.log('socket works', data)
     })
   },
-  // mounted() {
-  //   setTimeout(() => {
-  //     this.$refs.searchMember.focus()
-  //   }, 100)
-  // },
+
   methods: {
     isUserAdmin(userId) {
       if (this.board) {
@@ -134,17 +162,6 @@ export default {
       } catch (err) {
         console.log(err, 'could not update user in invite modal')
       }
-
-      // let activity = this.$store.getters.emptyActivity
-      // activity = { ...activity }
-      // let loggedinUser = this.$store.getters.loggedinUser
-      // activity.txt = ` removed ${user.fullname} from ${board.title} workspace`
-      // activity.board = { title: board.title, boardId: this.boardId }
-      // activity.type = 'boardMember'
-      // activity.byMember = {
-      //   fullname: loggedinUser.fullname,
-      //   _id: loggedinUser._id,
-      // }
     },
     isUserMember(userId) {
       let res = this.board.members.some((member) => member._id === userId)
@@ -202,18 +219,7 @@ export default {
         type: SOCKET_EVENT_USER_INVITED,
       }
       socketService.emit(SOCKET_EVENT_USER_INVITED, data)
-      // let activity = this.$store.getters.emptyActivity
-      // activity = { ...activity }
-      // let loggedinUser = this.$store.getters.loggedinUser
-      // activity.txt = ` added ${user.fullname} to ${board.title} workspace`
-      // activity.board = { title: board.title, boardId: this.boardId }
-      // activity.type = 'boardMember'
-      // activity.byMember = {
-      //   fullname: loggedinUser.fullname,
-      //   _id: loggedinUser._id,
-      // }
-      // if (!board.activities) board.activities = []
-      // board.activities.push(activity)
+
       this.updateBoard(board)
     },
     updateBoard(board) {
@@ -242,7 +248,7 @@ export default {
     currBoard: {
       handler(newBoard, oldBoard) {
         this.board = newBoard
-        this.checkIsDark()
+        // this.checkIsDark()
       },
       immediate: true,
     },
