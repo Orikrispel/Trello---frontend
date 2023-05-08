@@ -301,6 +301,8 @@
 import {
   socketService,
   SOCKET_EMIT_TASK_UPDATED,
+  SOCKET_EVENT_BOARD_UPDATED,
+  SOCKET_EMIT_BOARD_UPDATED,
   SOCKET_EMIT_SET_TOPIC,
   SOCKET_EVENT_TASK_UPDATED,
   SOCKET_EVENT_USER_UPDATED,
@@ -335,8 +337,9 @@ export default {
     }
   },
   async created() {
-    eventBus.on('updateTask', ({ task, activity }) => {
-      this.saveTask(task, activity, true)
+    eventBus.on('updateTask', (data) => {
+      console.log(data)
+      this.addActivityToTask(data)
     })
     eventBus.on('updateBoard', (board) => {
       this.updateBoard(board)
@@ -349,8 +352,10 @@ export default {
       boardId: this.boardId,
     })
     socketService.on(SOCKET_EVENT_TASK_UPDATED, (task) => {
-      const activity = null
-      this.saveTask(task, activity, true)
+      this.task = task
+    })
+    socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+      this.updateBoard(board, true)
     })
     const { taskId } = this.$route.params
     let task = await this.$store.dispatch({ type: 'loadCurrTask', taskId })
@@ -365,7 +370,6 @@ export default {
         break
       }
     }
-    console.log('task.label:', task.labels)
   },
   methods: {
     updateTitle(ev) {
@@ -377,14 +381,23 @@ export default {
       this.userIsEditing = !this.userIsEditing
       if (this.userIsEditing) this.$nextTick(() => this.$refs.taskDesc.focus())
     },
-    saveTask(task, activity, skipEmit = false) {
+    addActivityToTask({ activity, task }, skipEmit = false) {
+      let updatedTask
+      if (activity) {
+        updatedTask = JSON.parse(JSON.stringify(task))
+        let isHasActivity = task.activities.some((a) => a.id === activity.id)
+        if (!isHasActivity) {
+          updatedTask.activities.unshift(activity)
+          // socketService.emit()
+        }
+      }
+      this.saveTask(updatedTask, skipEmit, activity)
+    },
+    saveTask(task, skipEmit = false, activity = null) {
       if (!task) return
+
       let board = JSON.parse(JSON.stringify(this.board))
       let updatedTask = JSON.parse(JSON.stringify(task))
-      // if (!updatedTask.activities) updatedTask.activities = []
-      // if (activity) {
-      //   updatedTask.activities.unshift(activity)
-      // }
 
       let group = board.groups.find((group) => {
         return group.tasks.some((t) => t.id === updatedTask.id)
@@ -393,12 +406,12 @@ export default {
       const taskIdx = group?.tasks.findIndex((t) => t.id === updatedTask.id)
       const groupIdx = board.groups.indexOf(group)
       board.groups[groupIdx].tasks.splice(taskIdx, 1, updatedTask)
-      if (!board.activities) board.activities = []
-      // if (activity) {
-      //   board.activities.unshift(activity)
-      // }
+
       this.task = updatedTask
 
+      if (activity) {
+        board.activities.unshift(activity)
+      }
       if (!skipEmit) {
         socketService.emit(SOCKET_EMIT_TASK_UPDATED, updatedTask)
       }
@@ -410,14 +423,13 @@ export default {
     getSvg(iconName) {
       return svgService.getSvg(iconName)
     },
-    async updateBoard(
-      board,
-      successMsg = 'board saved',
-      errMsg = "couldn't save board"
-    ) {
+    async updateBoard(board, skipEmit = false) {
+      if (!skipEmit) {
+        socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
+      }
       try {
-        await this.$store.dispatch(getActionUpdateBoard(board))
         this.board = board
+        await this.$store.dispatch(getActionUpdateBoard(board))
       } catch (err) {
         console.log(err)
       }
@@ -436,6 +448,7 @@ export default {
       this.saveTask(this.task)
     },
     onUpdateTask(newTask) {
+      console.log('newTask', newTask)
       eventBus.emit('updateTask', newTask)
     },
     setCover(type, color) {

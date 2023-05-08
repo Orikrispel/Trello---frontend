@@ -1,9 +1,16 @@
 <template>
   <section class="flex">
-    <Container v-if="boardCopy" class="flex" @drop="onDrop" orientation="horizontal"
+    <Container
+      v-if="boardCopy"
+      class="flex"
+      @drop="onDrop"
+      orientation="horizontal"
       :drop-placeholder="upperDropPlaceholderOptions">
       <Draggable v-for="group in boardCopy.groups" :key="group.id">
-        <GroupPreview :board="boardCopy" :group="group" @updateBoard="updateBoard" />
+        <GroupPreview
+          :board="boardCopy"
+          :group="group"
+          @updateBoard="updateBoard" />
       </Draggable>
     </Container>
   </section>
@@ -30,7 +37,6 @@ export default {
   },
   computed: {
     boardCopy() {
-      console.log('this.board', this.board)
       return JSON.parse(JSON.stringify(this.board))
     },
   },

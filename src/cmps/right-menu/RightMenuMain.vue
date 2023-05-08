@@ -5,24 +5,36 @@
       About this board
     </button>
     <button @click="this.$emit('changeCmp', 'ChangeBgMenu')">
-      <div v-if="this.board" class="background-thumb" :style="{
-        background: board.style?.gradient || '#014a75',
-        backgroundImage: getBoardBg(board) || board.style?.backgroundColor || 'linear-gradient(55.41deg, rgb(250, 165, 61) 2 %, rgb(89, 201, 2) 100 %)',
-        backgroundSize: 'cover',
-        'background-position': 'center',
-      }"></div>
+      <div
+        v-if="this.board"
+        class="background-thumb"
+        :style="{
+          background: board.style?.gradient || '#014a75',
+          backgroundImage:
+            getBoardBg(board) ||
+            board.style?.backgroundColor ||
+            'linear-gradient(55.41deg, rgb(250, 165, 61) 2 %, rgb(89, 201, 2) 100 %)',
+          backgroundSize: 'cover',
+          'background-position': 'center',
+        }"></div>
       Change background
     </button>
 
-    <hr>
+    <hr />
     <section class="right-menu-actions">
-      <h3 class="activity-title flex align-center"><span class="icon activity-icon"></span>Activity</h3>
+      <h3 class="activity-title flex align-center">
+        <span class="icon activity-icon"></span>Activity
+      </h3>
       <ActivityList v-if="board" :activities="board.activities" />
     </section>
   </section>
 </template>
 
 <script>
+import {
+  socketService,
+  SOCKET_EVENT_BOARD_UPDATED,
+} from '../../services/socket.service'
 import ActivityList from '../activities/ActivityList.vue'
 import { svgService } from '../../services/svg.service'
 import { eventBus } from '../../services/event-bus.service'
@@ -41,6 +53,9 @@ export default {
     this.board = await this.$store.dispatch({
       type: 'loadCurrBoard',
       boardId: this.boardId,
+    })
+    socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
+      this.board = board
     })
   },
   methods: {
@@ -62,7 +77,6 @@ export default {
       return boardId
     },
   },
-  emits: ['changeCmp', 'setBgColor', 'setBgImg']
-
+  emits: ['changeCmp', 'setBgColor', 'setBgImg'],
 }
 </script>

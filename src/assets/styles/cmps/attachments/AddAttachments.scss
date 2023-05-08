@@ -1,0 +1,41 @@
+.upload-img-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.attachment-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-attachments-preview {
+  display: flex;
+  background-color: aquamarine;
+  gap: 15px;
+}
+
+.right-attachments-preview {
+  display: flex;
+  background-color: lightblue;
+  flex-direction: column;
+  .attachment-links {
+    display: flex;
+    gap: 5px;
+  }
+}
+
+.attachment-img {
+  border-radius: 3px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 3px;
+  height: 70px;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  width: 112px;
+  z-index: 1;
+}

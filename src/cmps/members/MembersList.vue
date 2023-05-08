@@ -22,6 +22,7 @@
 import { userService } from '../../services/user.service'
 import { eventBus } from '../../services/event-bus.service'
 import MemberPreview from './MemberPreview.vue'
+import { store } from '../../store/store'
 export default {
   data() {
     return {
@@ -71,6 +72,8 @@ export default {
       this.members = members
     },
     async addMemberToTask(memberId) {
+      let user = this.$store.getters.loggedinUser
+      let activity
       let task = JSON.parse(JSON.stringify(this.task))
       let board = JSON.parse(JSON.stringify(this.board))
       let { members } = board
@@ -83,31 +86,48 @@ export default {
         return member._id === memberId
       })
       if (taskHasMember) {
-        task = this.removeMemberFromTask(task, member)
+        const data = this.removeMemberFromTask(task, member)
+        task = data.task
+        member = data.member
+
+        activity = await this.$store.dispatch({
+          type: 'returnActivity',
+          data: {
+            task: { title: this.task.title, taskId: this.taskId },
+            type: 'removeMemberFromTask',
+            byMember: {
+              fullname: user.fullname,
+              _id: user._id,
+            },
+            member,
+          },
+        })
       } else {
         task.members.push({ ...member })
         member.tasks.push(task.id)
+        activity = await this.$store.dispatch({
+          type: 'returnActivity',
+          data: {
+            task: { title: this.task.title, taskId: this.taskId },
+            type: 'addMemberToTask',
+            byMember: {
+              fullname: user.fullname,
+              _id: user._id,
+            },
+            member,
+          },
+        })
       }
 
-      // let activity = this.$store.getters.emptyActivity
-      // activity = { ...activity }
-      let user = this.$store.getters.loggedinUser
-      console.log(user)
-      // console.log(user)
-      // activity.txt = ` added ${member?.fullname} to ${task.title}`
-      // activity.task = { title: task.title, taskId: this.taskId }
-      // activity.type = 'taskMember'
-      // activity.byMember = {
-      //   fullname: user?.fullname,
-      //   _id: user?._id,
-      // }
       const data = {
         task,
+        activity,
       }
       eventBus.emit('updateTask', data)
-      // this.$store.dispatch({ type: 'updateUser', user })
+      this.$store.dispatch({ type: 'updateUser', user: member })
       this.task = task
     },
+
     removeMemberFromTask(task, member) {
       const memberToRemoveIdx = task.members.findIndex(
         (m) => m._id === member._id
@@ -117,7 +137,8 @@ export default {
       })
       task.members.splice(memberToRemoveIdx, 1)
       member.tasks.splice(taskToRemoveFromMemberIdx, 1)
-      return task
+      const data = { task, member }
+      return data
     },
   },
   components: {

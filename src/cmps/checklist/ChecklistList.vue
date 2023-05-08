@@ -38,23 +38,27 @@ export default {
     this.currTask = this.task
   },
   methods: {
-    removeChecklist(checklistId) {
+    async removeChecklist(checklistId) {
       let task = JSON.parse(JSON.stringify(this.task))
       const idx = task.checklists.findIndex(
         (checklist) => checklist.id === checklistId
       )
       const checklist = task.checklists[idx]
       task.checklists.splice(idx, 1)
-      let activity = this.$store.getters.emptyActivity
-      activity = { ...activity }
+
       let user = this.$store.getters.loggedinUser
-      activity.txt = ` removed ${checklist.title} from ${task.title}`
-      activity.task = { title: task.title, taskId: task.id }
-      activity.type = 'checklist'
-      activity.byMember = {
-        fullname: user.fullname,
-        _id: user._id,
-      }
+      let activity = await this.$store.dispatch({
+        type: 'returnActivity',
+        data: {
+          task: { title: this.task.title, taskId: this.taskId },
+          type: 'removeChecklist',
+          byMember: {
+            fullname: user.fullname,
+            _id: user._id,
+          },
+          checklist,
+        },
+      })
       const data = {
         task,
         activity,

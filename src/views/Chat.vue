@@ -100,6 +100,7 @@ export default {
       if (!updatedTask.comments) updatedTask.comments = []
       updatedTask.comments = updatedTask.comments.concat(comment)
       const data = { task: updatedTask, activity }
+      console.log(data)
       eventBus.emit('updateTask', data)
       // const activity = {
       //   id: this.$store.getters.makeId,

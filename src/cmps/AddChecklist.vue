@@ -7,6 +7,10 @@
 </template>
 
 <script>
+import {
+  socketService,
+  SOCKET_EVENT_TASK_UPDATED,
+} from '../services/socket.service'
 import { checklistService } from '../services/checklist.service'
 import { eventBus } from '../services/event-bus.service'
 import { utilService } from '../services/util.service'
@@ -31,14 +35,10 @@ export default {
     }, 100)
   },
   methods: {
-    addChecklist() {
-      this.checklistToAdd.id = 'cl' + utilService.makeId()
-      let task = JSON.parse(JSON.stringify(this.actionData.task))
-      if (!task.checklists) task.checklists = []
-      task.checklists.push(this.checklistToAdd)
-
+    getActivityToAdd(task) {
       let activity = this.$store.getters.emptyActivity
       activity = { ...activity }
+
       let user = this.$store.getters.loggedinUser
       activity.txt = ` added ${this.checklistToAdd.title} to ${task.title}`
       activity.task = { title: this.task.title, taskId: this.taskId }
@@ -47,16 +47,35 @@ export default {
         fullname: user.fullname,
         _id: user._id,
       }
+      return activity
+    },
+    async addChecklist() {
+      let user = this.$store.getters.loggedinUser
 
+      this.checklistToAdd.id = 'cl' + utilService.makeId()
+      let task = JSON.parse(JSON.stringify(this.actionData.task))
+      if (!task.checklists) task.checklists = []
+      task.checklists.push(this.checklistToAdd)
+      let activity = await this.$store.dispatch({
+        type: 'returnActivity',
+        data: {
+          task: { title: this.task.title, taskId: this.taskId },
+          type: 'addChecklist',
+          byMember: {
+            fullname: user.fullname,
+            _id: user._id,
+          },
+          checklist: this.checklistToAdd,
+        },
+      })
       const data = {
         task,
         activity,
       }
       this.checklistToAdd = checklistService.getEmptyChecklist()
-
       eventBus.emit('updateTask', data)
+      // socketService.emit(SOCKET_EVENT_TASK_UPDATED, task)
       this.$emit('setCreateModeOff')
-      console.log('checklist added')
     },
     closeModal() {
       this.$emit('setCreateModeOff')
@@ -64,6 +83,12 @@ export default {
   },
   created() {
     this.task = this.actionData.task
+  },
+  computed: {
+    taskId() {
+      const { taskId } = this.$route.params
+      return taskId
+    },
   },
   components: {},
 }

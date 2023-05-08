@@ -79,16 +79,32 @@ export default {
       return this.taskLabels.find((l) => l.id === labelId)
     },
     async addLabelToTask(label) {
+      let user = this.$store.getters.loggedinUser
+
       let task = JSON.parse(JSON.stringify(this.task))
       if (!task.labels) task.labels = []
       let hasLabel = task.labels.some((l) => l.id === label.id)
 
       if (hasLabel) task = this.removeLabelFromTask(task, label)
       else task.labels.push({ ...label })
-      const data = { task }
+
+      let activity = await this.$store.dispatch({
+        type: 'returnActivity',
+        data: {
+          task: { title: this.task.title, taskId: this.taskId },
+          type: 'label',
+          byMember: {
+            fullname: user.fullname,
+            _id: user._id,
+          },
+          label,
+        },
+      })
+      const data = { task, activity }
       eventBus.emit('updateTask', data)
       this.task = task
     },
+
     removeLabelFromTask(task, label) {
       const labelToRemoveIdx = task.labels.findIndex((l) => l.id === label.id)
       task.labels.splice(labelToRemoveIdx, 1)

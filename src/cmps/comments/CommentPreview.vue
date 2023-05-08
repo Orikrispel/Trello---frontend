@@ -16,12 +16,17 @@
       <a class="btn-comment btn-comment-edit" @click="isUserEditing = true"
         >Edit</a
       >
-      <a class="btn-comment btn-comment-delete">Delete</a>
+      <a
+        class="btn-comment btn-comment-delete"
+        @click="removeComment(comment.id)"
+        >Delete</a
+      >
     </div>
   </div>
 </template>
 
 <script>
+import { eventBus } from '../../services/event-bus.service'
 import { utilService } from '../../services/util.service'
 export default {
   name: 'CommentPreview',
@@ -35,10 +40,30 @@ export default {
   data() {
     return {
       isUserEditing: false,
+      task: null,
     }
   },
-  methods: {},
+  async created() {
+    this.task = await this.$store.dispatch({
+      type: 'loadCurrTask',
+      taskId: this.taskId,
+    })
+  },
+  methods: {
+    removeComment(commentId) {
+      let task = JSON.parse(JSON.stringify(this.task))
+      console.log(task)
+      const idx = task.comments.findIndex((comment) => comment.id === commentId)
+      task.comments.splice(idx, 1)
+      eventBus.emit('updateTask', task)
+      this.task = task
+    },
+  },
   computed: {
+    taskId() {
+      const { taskId } = this.$route.params
+      return taskId
+    },
     dateForDisplay() {
       const timestamp = this.comment.createdAt
       const now = Date.now()

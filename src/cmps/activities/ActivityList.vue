@@ -1,15 +1,20 @@
 <!-- know if its in board or task based on route params -->
 
 <template>
-  <ul v-if="activities" class="clean-list">
+  <ul v-if="activities" class="clean-list activity-list">
     <li
       v-for="activity in activities"
       :key="activity?.id"
       class="activity-container">
-      <p class="activity-txt">
+      <p v-if="activity" class="activity-txt">
         <span class="activity-by">{{ activity?.byMember?.fullname }}</span>
-        {{ linkCommon(activity) }}
-        <span class="activity-timestamp">{{ dateForDisplay }}</span>
+        <RouterLink
+          :to="`/board/${this.boardId}/task/${activity.task?.taskId}`">
+          {{ activity.txt }}
+        </RouterLink>
+        <!-- <p v-else>{{ activity.txt }}</p> -->
+
+        <span class="activity-timestamp">{{ dateForDisplay(activity) }}</span>
       </p>
     </li>
   </ul>
@@ -17,7 +22,7 @@
 
 <script>
 import { boardService } from '../../services/board.service'
-import { socketService } from '../../services/socket.service'
+
 export default {
   name: 'ActivityList',
   props: {
@@ -31,11 +36,7 @@ export default {
       activity: boardService.getEmptyActivity(),
     }
   },
-  async created() {
-    // console.log(this.activities)
-    // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskId)
-    // socketService.on(SOCKET_EVENT_UPDATE_TASK, this.addActivityToTask)
-  },
+  async created() {},
   computed: {
     loggedinUser() {
       let user = { ...this.$store.getters.loggedinUser }
@@ -49,8 +50,35 @@ export default {
       let { boardId } = this.$route.params
       return boardId
     },
-    dateForDisplay() {
-      const timestamp = this.activity.createdAt
+  },
+  methods: {
+    // linkCommon(activity) {
+    //   if (!activity.txt || !activity.task) return
+    //   let { txt, task } = activity
+    //   let { title } = task
+    //   let common = []
+    //   for (let i = 0; i < Math.min(txt.length, title.length); i++) {
+    //     if (txt[i] === title[i]) {
+    //       common.push(txt[i])
+    //     } else {
+    //       break
+    //     }
+    //   }
+    //   if (common.length) {
+    //     let res =
+    //       txt.slice(0, common.length) +
+    //       '<a href="#" class="activity-link">' +
+    //       common +
+    //       '</a>' +
+    //       txt.slice(common.length)
+    //     console.log('res', res)
+    //     return res
+    //   } else {
+    //     return txt
+    //   }
+    // },
+    dateForDisplay(activity) {
+      const timestamp = activity.createdAt
       const now = Date.now()
       const diff = now - timestamp
       const seconds = Math.floor(diff / 1000)
@@ -65,33 +93,6 @@ export default {
         return `${minutes} minutes ago`
       } else {
         return `${seconds} seconds ago`
-      }
-    },
-  },
-  methods: {
-    linkCommon(activity) {
-      if (!activity.txt || !activity.task) return
-      let { txt, task } = activity
-      let { title } = task
-      let common = []
-      for (let i = 0; i < Math.min(txt.length, title.length); i++) {
-        if (txt[i] === title[i]) {
-          common.push(txt[i])
-        } else {
-          break
-        }
-      }
-      if (common.length) {
-        let res =
-          txt.slice(0, common.length) +
-          '<a href="#" class="activity-link">' +
-          common +
-          '</a>' +
-          txt.slice(common.length)
-        console.log('res', res)
-        return res
-      } else {
-        return txt
       }
     },
   },

@@ -118,7 +118,6 @@ export const boardStore = {
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((b) => b._id === board._id)
-      console.log('state idx', idx)
       state.boards.splice(idx, 1, board)
     },
     starBoard(state, { board }) {
@@ -236,6 +235,52 @@ export const boardStore = {
       }
       commit({ type: 'setCurrLabel', label: currLabel })
     },
-    returnActivity({ state }, { data }) { },
+    returnActivity({ state }, { data }) {
+      let { task, type, byMember } = data
+      let activity = boardService.getEmptyActivity()
+      switch (type) {
+        case 'addMemberToTask': {
+          activity.txt = ` added ${data.member.fullname} to ${task.title}`
+
+          break
+        }
+        case 'removeMemberFromTask': {
+          activity.txt = ` removed ${data.member.fullname} from ${task.title}`
+
+          break
+        }
+        case 'label': {
+          activity.txt = ` labeled ${task.title} as ${data.label.title}`
+          break
+        }
+        case 'addChecklist': {
+          activity.txt = ` added ${data.checklist.title} to ${task.title}`
+          break
+        }
+        case 'removeChecklist': {
+          activity.txt = ` removed ${data.checklist.title} from ${task.title}`
+          break
+        }
+        case 'addDate': {
+          activity.txt = ` set ${
+            task.title
+          } to be due ${utilService.formatDateString(data.dueDate)} at ${
+            data.dueTime
+          }`
+          break
+        }
+        case 'movedTaskFromGroup': {
+          activity.txt = ` moved ${task.title} from ${data.from} to ${data.to}`
+          break
+        }
+        default: {
+          console.warn(`Unknown activity type ${type}`)
+          break
+        }
+      }
+      activity.byMember = byMember
+      activity.task = task
+      return activity
+    },
   },
 }

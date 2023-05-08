@@ -56,7 +56,6 @@ async function save(board) {
   var savedBoard
   if (board._id) {
     // savedBoard = await storageService.put(STORAGE_KEY, board)
-    console.log('board', board)
     savedBoard = await httpService.put(`board/${board._id}`, board)
   } else {
     // Later, owner is set by the backend
@@ -90,6 +89,7 @@ function getEmptyBoard(
     createdBy,
     groups,
     members,
+    activities: [],
   }
 }
 

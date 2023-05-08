@@ -8,13 +8,18 @@
           <button class="btn btn-list clean-btn" @click="onImgUpload">
             Computer
           </button>
-          <input class="upload-img-input" type="file" @change.prevent="onImgUpload" />
+          <input
+            class="upload-img-input"
+            type="file"
+            @change.prevent="onImgUpload" />
         </label>
         <hr />
         <form class="add-checklist-form">
           <h4>Attach a link</h4>
           <input type="text" placeholder="Paste any link here..." />
-          <button class="btn-task light btn-attach" @click.prevent="onImgUpload(event)">
+          <button
+            class="btn-task light btn-attach"
+            @click.prevent="onImgUpload(event)">
             Attach
           </button>
         </form>
@@ -43,6 +48,19 @@ export default {
     }
   },
   methods: {
+    getActivityToAdd(newTask, newFile) {
+      let activity = this.$store.getters.emptyActivity
+      activity = { ...activity }
+      let user = this.$store.getters.loggedinUser
+      activity.txt = ` attached ${newFile.name} to ${newTask.title}`
+      activity.task = { title: newTask.title, taskId: newTask.id }
+      activity.type = 'attachment'
+      activity.byMember = {
+        fullname: user?.fullname || 'Ori Teicher',
+        _id: user?._id || 'user1234',
+      }
+      return activity
+    },
     async onImgUpload(event) {
       const newTask = JSON.parse(JSON.stringify(this.task))
       const res = await uploadService.uploadImgToCloud(event)
@@ -61,23 +79,15 @@ export default {
         }
         newTask.files.push(newFile)
 
-        let activity = this.$store.getters.emptyActivity
-        activity = { ...activity }
-        let user = this.$store.getters.loggedinUser
-        activity.txt = ` attached ${newFile.name} to ${newTask.title}`
-        activity.task = { title: newTask.title, taskId: newTask.id }
-        activity.type = 'attachment'
-        activity.byMember = {
-          fullname: user?.fullname || 'Ori Teicher',
-          _id: user?._id || 'user1234',
-        }
+        const activity = this.getActivityToAdd(newTask, newFile)
+
         const data = {
           task: newTask,
           activity,
         }
         this.$emit('onUpdateTask', data)
       }
-    }
+    },
   },
   components: {
     DynamicModal,
