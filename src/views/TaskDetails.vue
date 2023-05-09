@@ -37,7 +37,7 @@
           <main class="task-main">
             <div
               v-if="isSmallScreen"
-              class="mobile-quick-actions-menu gap flex">
+              class="mobile-quick-actions-menu gap flex negative-margin">
               <h3>Quick actions</h3>
               <VDropdown :distance="6">
                 <button class="btn-task light">
@@ -121,6 +121,61 @@
               </div>
 
               <div
+                v-if="isSmallScreen"
+                class="mobile-regular-actions-list flex">
+                <div
+                  v-show="task.labels?.length"
+                  class="label-container container">
+                  <h3 class="fs12 inner-title">Labels</h3>
+                  <ul class="task-heading-label-list flex clean-list">
+                    <li
+                      class="label"
+                      v-for="label in task.labels"
+                      :key="label.id">
+                      <LabelPreview :label="label" />
+                    </li>
+                    <VDropdown :distance="6" :placement="'bottom'">
+                      <button class="btn-task light btn-add-label flex">
+                        <span class="icon icon-add"></span>
+                      </button>
+
+                      <template #popper>
+                        <DynamicModal>
+                          <template v-slot:title>{{
+                            userIsEditing ? 'Create a label' : 'Labels'
+                          }}</template>
+
+                          <template v-slot scope="props">
+                            <LabelMenu :taskLabels="task.labels" />
+                          </template>
+                        </DynamicModal>
+                      </template>
+                    </VDropdown>
+                  </ul>
+                </div>
+
+                <VDropdown :distance="6" :placement="dynamicModalPos">
+                  <button class="btn-task light">
+                    <span
+                      class="icon icon-small time-icon"
+                      v-html="getSvg('watch')"></span
+                    >Dates
+                  </button>
+
+                  <template #popper>
+                    <DynamicModal>
+                      <template v-slot:title>Dates</template>
+
+                      <template v-slot scope="props">
+                        <DatePicker />
+                      </template>
+                    </DynamicModal>
+                  </template>
+                </VDropdown>
+              </div>
+
+              <div
+                v-if="!isSmallScreen"
                 v-show="task.labels?.length"
                 class="label-container container">
                 <h3 class="fs12 inner-title">Labels</h3>
