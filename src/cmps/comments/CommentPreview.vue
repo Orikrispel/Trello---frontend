@@ -11,7 +11,7 @@
       @blur="isUserEditing = false">
       {{ comment?.txt }}
     </p>
-    <div class="btns-container-comment">
+    <div v-if="taskId" class="btns-container-comment">
       <span class="icon icon-sm icon-add-reaction"></span>
       <a class="btn-comment btn-comment-edit" @click="isUserEditing = true"
         >Edit</a

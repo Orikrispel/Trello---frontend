@@ -372,8 +372,21 @@
       height: 100vh;
       width: 100vw;
       overflow-y: scroll;
+      background-color: $secondary-clr2;
+
+      .task-container {
+        // background-color: #e7e9ed;
+        z-index: 19;
+      }
+
+      & > *:not(.task-container),
+      .container,
+      .editor {
+        width: 100%;
+      }
 
       .mobile-quick-actions-menu {
+        // background-color: $secondary-clr2;
         flex-wrap: wrap;
         position: relative;
         width: 100%;
@@ -441,5 +454,21 @@
         background-color: $btn-clr8;
       }
     }
+  }
+}
+
+.mobile-quick-actions-menu,
+.mobile-regular-actions-list,
+.editor {
+  width: 100%;
+}
+
+.mobile-regular-actions-list {
+  width: 100%;
+  flex-wrap: wrap;
+  & > *,
+  .btn-task {
+    width: 100%;
+    // background-color: #fff;
   }
 }

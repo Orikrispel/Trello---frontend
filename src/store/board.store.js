@@ -273,11 +273,15 @@ export const boardStore = {
           activity.txt = ` moved ${task.title} from ${data.from} to ${data.to}`
           break
         }
+        case 'comment': {
+          activity.txt = ` ${data.comment.txt} on ${task.title}`
+        }
         default: {
           console.warn(`Unknown activity type ${type}`)
           break
         }
       }
+      activity.type = type
       activity.byMember = byMember
       activity.task = task
       return activity

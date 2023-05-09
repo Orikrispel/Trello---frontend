@@ -1,12 +1,25 @@
 <template>
   <div class="chat-container">
     <form @submit.prevent="sendComment" class="comment-input-container">
-      <input @blur="handleBlur" @focus="isUserCommenting = true" class="comment-input" type="text" v-model="comment.txt"
+      <input
+        @blur="handleBlur"
+        @focus="isUserCommenting = true"
+        class="comment-input"
+        type="text"
+        v-model="comment.txt"
         placeholder="Write a comment..." />
-      <div :class="isUserCommenting ? 'comment-editor-wrapper open' : 'comment-editor-wrapper'">
+      <div
+        :class="
+          isUserCommenting
+            ? 'comment-editor-wrapper open'
+            : 'comment-editor-wrapper'
+        ">
         <div v-if="isUserCommenting" class="comment-editor-container">
-          <div :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
-            <button @click.stop :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
+          <div
+            :class="isUserCommenting ? 'btn-wrapper no-clicks' : 'btn-wrapper'">
+            <button
+              @click.stop
+              :class="comment.txt ? 'btn btn-blue' : 'btn btn-light disabled'">
               Save
             </button>
           </div>
@@ -72,30 +85,26 @@ export default {
       }, 500)
     },
     async addCommentToTask(comment) {
-      let activity = this.$store.getters.emptyActivity
-      activity = { ...activity }
       let user = this.$store.getters.loggedinUser
-      activity.txt = `${comment.txt}`
-      activity.task = { title: this.task.title, taskId: this.taskId }
-      activity.type = 'comment'
-      activity.byMember = {
-        fullname: user?.fullname || 'Ori Teicher',
-        _id: user?._id || 'u12345',
-      }
+      let activity = await this.$store.dispatch({
+        type: 'returnActivity',
+        data: {
+          task: { title: this.task.title, taskId: this.taskId },
+          type: 'comment',
+          byMember: {
+            fullname: user.fullname,
+            _id: user._id,
+          },
+          comment,
+        },
+      })
+
       this.comments.push(comment)
       let updatedTask = { ...this.task }
       if (!updatedTask.comments) updatedTask.comments = []
       updatedTask.comments = updatedTask.comments.concat(comment)
       const data = { task: updatedTask, activity }
-      console.log(data)
       eventBus.emit('updateTask', data)
-      // const activity = {
-      //   id: this.$store.getters.makeId,
-      //   txt: 'commented',
-      //   createdAt: Date.now(),
-      //   byMember: this.loggedinUser,
-      //   task: updatedTask.id,
-      // }
     },
 
     async sendComment() {

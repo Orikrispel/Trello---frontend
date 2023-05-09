@@ -40,7 +40,7 @@
 .flex {
   display: flex;
 
-  >*.full {
+  > *.full {
     flex: 1;
   }
 
@@ -216,7 +216,7 @@
   width: 24px;
   height: 24px;
   background-color: #5243aa;
-  font-family: 'nunito regular'
+  font-family: 'nunito regular';
 }
 
 .user-img {
